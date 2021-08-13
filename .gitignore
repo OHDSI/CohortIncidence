@@ -1,0 +1,11 @@
+# Java build output
+/target/
+
+# History files
+.Rhistory
+
+# R data files from past sessions
+.Rdata
+.Rproj.user
+inst/doc
+/nbactions.xml

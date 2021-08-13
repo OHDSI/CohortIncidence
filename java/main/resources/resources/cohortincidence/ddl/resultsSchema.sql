@@ -1,0 +1,28 @@
+CREATE TABLE @schemaName.incidence_summary
+(  
+	ref_id int,
+	database_name varchar(255),
+	target_cohort_definition_id bigint,
+	target_name varchar(255),
+	time_at_risk_id bigint,
+	time_at_risk_start_offset bigint,
+	time_at_risk_start_index bigint,
+	time_at_risk_end_offset bigint,
+	time_at_risk_end_index bigint,
+	subgroup_id bigint,
+	subgroup_name varchar(255),
+	outcome_id bigint,
+	outcome_cohort_definition_id bigint,
+	outcome_name varchar(255),
+	clean_window bigint,
+	persons_pre_exclude bigint,
+	persons_at_risk bigint,
+	person_days_pre_exclude bigint,
+	person_days bigint,
+	person_outcomes_pre_exclude bigint,
+	person_outcomes bigint,
+	outcomes_pre_exclude bigint,
+	outcomes bigint,
+	incidence_proportion_p100p float,
+	incidence_rate_p100py float
+ );

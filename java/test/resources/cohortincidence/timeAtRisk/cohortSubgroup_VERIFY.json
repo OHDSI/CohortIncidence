@@ -1,0 +1,37 @@
+{
+  "cohort_subgroup.incidence_summary": [
+    {
+			"ref_id": 1,
+      "target_cohort_definition_id": 100,
+      "time_at_risk_id": 1,
+      "subgroup_id": 0,
+      "outcome_id": 1,
+      "persons_pre_exclude":2,
+      "persons_at_risk":2,
+      "person_days_pre_exclude":122,
+      "person_days":122,
+      "person_outcomes_pre_exclude": 0,
+      "person_outcomes":0,
+      "outcomes_pre_exclude":0,
+      "outcomes": 0,
+      "incidence_proportion_p100p": 0,
+      "incidence_rate_p100py": 0
+    },{
+			"ref_id": 1,
+      "target_cohort_definition_id": 100,
+      "time_at_risk_id": 1,
+      "subgroup_id": 1,
+      "outcome_id": 1,
+      "persons_pre_exclude":1,
+      "persons_at_risk":1,
+      "person_days_pre_exclude":61,
+      "person_days":61,
+      "person_outcomes_pre_exclude": 0,
+      "person_outcomes":0,
+      "outcomes_pre_exclude":0,
+      "outcomes": 0,
+      "incidence_proportion_p100p": 0,
+      "incidence_rate_p100py": 0
+    }
+  ]
+}

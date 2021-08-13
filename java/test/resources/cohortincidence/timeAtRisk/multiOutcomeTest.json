@@ -1,0 +1,36 @@
+{
+	"targetDefs": [
+		{
+			"id": 100,
+			"name": "Target Cohort 1"
+		}
+	],
+	"outcomeDefs": [
+		{
+			"id": 1,
+			"name": "Outcome Cohort 1",
+			"cohortId": 200,
+			"cleanWindow": 10
+		}
+	],
+	"timeAtRiskDefs": [
+		{
+			"id": 1,
+			"start": {
+				"dateField": "StartDate",
+				"offset": 0
+			},
+			"end": {
+				"dateField": "StartDate",
+				"offset": 60
+			}
+		}
+	],
+	"analysisList": [
+		{
+			"targets": [100],
+			"outcomes": [1],
+			"tars": [1]
+		}
+	]
+}

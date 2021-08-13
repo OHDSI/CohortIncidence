@@ -1,0 +1,136 @@
+---
+title: "Using CohortIncidence"
+author: "Christopher Knoll"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    number_sections: yes
+    toc: yes
+  pdf_document:
+    number_sections: yes
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Using CohortIncidence}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  error = FALSE,
+  comment = "#>"
+)
+```
+
+```{r, setup, echo=FALSE}
+library(CohortIncidence)
+```
+
+# Introduction
+
+This vignette describes how to use the `CohortIncidence` package to perform a single incidence rate analysis for a given target and outcome cohort, with a few settings for Time At Risk and Clean Window.
+
+# Installation instructions
+
+Before installing the `CohortIncidence` package make sure you have Java available.  Java can be downloaded from [www.java.com](http://www.java.com). For Windows users, RTools is also necessary.  RTools can be downloaded from [CRAN](http://cran.r-project.org/bin/windows/Rtools/).
+
+The `CohortIncidence` package is currently maintained in a [Github repository](https://github.com/OHDSI/CohortIncidence).
+
+```{r eval=FALSE}
+install.packages("remotes")
+remotes::install_github("ohdsi/CohortIncidence")
+```
+
+Once installed, you can type `library(CohortIncidence)` to load the package.
+
+# Database Preparation
+
+The results of the anlaysis SQL will assume a final table: `@results_database_schema.incidence_summary`.  The DDL for this table can be fetched from the package via the following:
+
+```{r, comment = ""}
+# Fetch DDL from package
+ddl <- CohortIncidence::getResultsDdl();
+cat(ddl)
+```
+
+Using `SqlRender` and `DatabaseConnector`, you can execute the above on your target database platform in order to deploy the table.  Remember to replace `@schemaName` with the appropriate schema.  You can also 'hack' the `@schemaName` paramater to apply a prefix by specifying the SqlRender paramater of `schemaName.incidence_summary` to a target table ie: `mySchema.prefix_incidence_summary`.  Using the same paramater name/value in `buildQuery()` will allow you to provide a prefix to the result table name instead of having to declare a separate schema.
+
+```{r, eval = FALSE}
+connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = "postgresql",server={Sys.getenv("server")}, port = Sys.getenv("port"));
+
+# to specify the target schema (the typical use case):
+ddl <- SqlRender::render(CohortIncidence::getResultsDdl(), schemaName = "mySchema");
+
+# a work-around to provide a prefix to the result table, in case creating new schema is restricted
+ddlPrefix <- SqlRender::render(CohortIncidence::getResultsDdl(), "schemaName.incidence_summary" = "mySchema.prefix_incidence_summary");
+
+con <- DatabaseConnector::connect(connectionDetails);
+DatabaseConnector::executeSql(ddl);
+DatabaseConnector::disconnect(con);
+
+```
+
+# A simple example
+
+This example will create a CohortIncidence design containing a single target, outcome, and time at risk.
+
+## Build the design
+
+The following script builds a single T, O and Time at Risk, and assembles those element into a design.  Finally, the resulting JSON is printed.
+
+```{r}
+t1 <- CohortIncidence::createCohortRef(id=1, name="Target cohort 1");
+
+o1 <- CohortIncidence::createOutcomeDef(id=1,name="Outcome 1, 30d Clean", 
+                                               cohortId =2,
+                                               cleanWindow =30);
+
+tar1 <- CohortIncidence::createTimeAtRiskDef(id=1, 
+                                             startDateField="StartDate", 
+                                             endDateField="StartDate", 
+                                             endOffset=30);
+
+# Note: c() is used when dealing with an array of numbers, 
+# later we use list() when dealing with an array of objects
+analysis1 <- CohortIncidence::createIncidenceAnalysis(targets = c(t1$id),
+                                                      outcomes = c(o1$id),
+                                                      tars = c(tar1$id));
+
+subgroup1 <- CohortIncidence::createCohortSubgroup(id=1, name="Subgroup 1", cohortRef = createCohortRef(id=300));
+
+
+# Create Design (note use of list() here):
+irDesign <- CohortIncidence::createIncidenceDesign(targetDefs = list(t1),
+                                                   outcomeDefs = list(o1),
+                                                   tars=list(tar1),
+                                                   analysisList = list(analysis1),
+                                                   subgroups = list(subgroup1));
+# Render the design as JSON
+jsonlite::toJSON(irDesign,pretty = T)
+
+```
+
+## Build analysis SQL from design
+
+From the previous design, the `CohortIncidence::buildQuery()` method is used to generate the analysis SQL:
+
+```{r}
+
+buildOptions <- CohortIncidence::buildOptions(cohortTable = "demoCohortSchema.cohort",
+                                              cdmSchema = "mycdm",
+                                              resultsSchema = "myresults",
+                                              refId = 1)
+
+analysisSql <- CohortIncidence::buildQuery(incidenceDesign =  as.character(jsonlite::toJSON(irDesign)),
+                                           buildOptions = buildOptions);
+cat(analysisSql)
+
+```
+
+## Render SQL with paramaters and execute
+
+
+

@@ -1,0 +1,21 @@
+{
+  "no_exclude_outcome.incidence_summary": [
+    {
+			"ref_id": 1,
+      "target_cohort_definition_id": 100,
+      "time_at_risk_id": 1,
+      "subgroup_id": 0,
+      "outcome_id": 1,
+      "persons_pre_exclude":1,
+      "persons_at_risk":1,
+      "person_days_pre_exclude":31,
+      "person_days":31,
+      "person_outcomes_pre_exclude": 1,
+      "person_outcomes":1,
+      "outcomes_pre_exclude":5,
+      "outcomes": 5,
+      "incidence_proportion_p100p": 100,
+      "incidence_rate_p100py": 5891.129
+    }
+  ]
+}
