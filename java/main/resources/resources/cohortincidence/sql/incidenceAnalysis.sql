@@ -32,22 +32,22 @@ FROM (
 		tar1.time_at_risk_id,
 		subject_id,
 		case 
-			when tar1.time_at_risk_start_index = 0 then
+			when tar1.time_at_risk_start_index = 1 then
 				case when dateadd(dd,tar1.time_at_risk_start_offset,tc1.cohort_start_date) < op1.observation_period_end_date then dateadd(dd,tar1.time_at_risk_start_offset,tc1.cohort_start_date)
 					when dateadd(dd,tar1.time_at_risk_start_offset,tc1.cohort_start_date) >= op1.observation_period_end_date then op1.observation_period_end_date
 				end
-			when tar1.time_at_risk_start_index = 1 then
+			when tar1.time_at_risk_start_index = 0 then
 				case when dateadd(dd,tar1.time_at_risk_start_offset,tc1.cohort_end_date) < op1.observation_period_end_date then dateadd(dd,tar1.time_at_risk_start_offset,tc1.cohort_end_date)
 					when dateadd(dd,tar1.time_at_risk_start_offset,tc1.cohort_end_date) >= op1.observation_period_end_date then op1.observation_period_end_date
 				end
 			else null --shouldnt get here if tar set properly
 		end as start_date,
 		case 
-			when tar1.time_at_risk_end_index = 0 then
+			when tar1.time_at_risk_end_index = 1 then
 				case when dateadd(dd,tar1.time_at_risk_end_offset,tc1.cohort_start_date) < op1.observation_period_end_date then dateadd(dd,tar1.time_at_risk_end_offset,tc1.cohort_start_date)
 					when dateadd(dd,tar1.time_at_risk_end_offset,tc1.cohort_start_date) >= op1.observation_period_end_date then op1.observation_period_end_date
 				end
-			when tar1.time_at_risk_end_index = 1 then
+			when tar1.time_at_risk_end_index = 0 then
 				case when dateadd(dd,tar1.time_at_risk_end_offset,tc1.cohort_end_date) < op1.observation_period_end_date then dateadd(dd,tar1.time_at_risk_end_offset,tc1.cohort_end_date)
 					when dateadd(dd,tar1.time_at_risk_end_offset,tc1.cohort_end_date) >= op1.observation_period_end_date then op1.observation_period_end_date
 				end
