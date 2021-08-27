@@ -3,10 +3,10 @@ title: "Using CohortIncidence"
 author: "Christopher Knoll"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  pdf_document:
     number_sections: yes
     toc: yes
-  pdf_document:
+  html_document:
     number_sections: yes
     toc: yes
 vignette: >
