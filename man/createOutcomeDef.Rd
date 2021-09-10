@@ -11,9 +11,9 @@ createOutcomeDef(id, name, cohortId = 0, cleanWindow = 0, excludeCohortId)
 
 \item{name}{an optional name for this outcome definition}
 
-\item{cleanWindow}{the number of days for the clean window of this outcome definition}
+\item{cohortId}{the cohort id reference for this outcome}
 
-\item{cohortRef}{the cohort reference for this outcome, see createCohortRef()}
+\item{cleanWindow}{the number of days for the clean window of this outcome definition}
 
 \item{excludeCohortRef}{a cohort reference for the cohort to use to exclude time at risk}
 }

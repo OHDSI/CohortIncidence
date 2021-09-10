@@ -72,7 +72,7 @@ createCohortRef <- function(id, name, description) {
 #'
 #' @param id the unique identifier for this outcome definition
 #' @param name an optional name for this outcome definition
-#' @param cohortRef the cohort reference for this outcome, see createCohortRef()
+#' @param cohortId the cohort id reference for this outcome
 #' @param cleanWindow the number of days for the clean window of this outcome definition
 #' @param excludeCohortRef a cohort reference for the cohort to use to exclude time at risk
 #' @return an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.Outcome JSON format.
