@@ -1,2 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+.github
+deploy.sh
+compare_versions
+^target$

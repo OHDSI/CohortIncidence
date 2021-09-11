@@ -18,6 +18,13 @@
 
 #' Creates R object for Incidence Design
 #'
+#' @param cohortDefs The set of cohort definitions.  Optional.
+#' @param targetDefs A list of target definitions, each created with createCohortRef.
+#' @param outcomeDefs A list of outcome definitions, each created with createOutcomeDef.
+#' @param tars A list of TAR definitions, each created with createTimeAtRiskDef.
+#' @param analysisList A list of analysis definitions, each created with createIncidenceAnalysis.
+#' @param conceptSets A list of concept sets, currently unused.
+#' @param subgroups A list of cohort subgroups, creatd with createCohortSubgroup.
 #' @return SQL code in MS Sql Server dialect, if it's required to run analysis on another DBMS
 #'         you have to use \code{\link[SqlRender]{translateSql}} function in the SqlRender package.
 #' 
@@ -36,6 +43,13 @@ createIncidenceDesign <- function(cohortDefs = list(), targetDefs = list(), outc
   return (design);
 }
 
+#' Helper function for creatingIncidenceAnalysis, which encapsulates the target-outcome-timeAtRisk pairs for a given analysis.
+#'
+#' @param targets A vector of target IDs from target definitions.
+#' @param outcomes A vector of outcome IDs from outcome definitions.
+#' @param tars A vector of TAR IDs from time-at-risk definitions.
+#' @return an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.IncidenceAnalysis JSON format.
+#' 
 #' @export
 createIncidenceAnalysis <- function(targets, outcomes, tars) {
   analysis <- {};
@@ -74,7 +88,7 @@ createCohortRef <- function(id, name, description) {
 #' @param name an optional name for this outcome definition
 #' @param cohortId the cohort id reference for this outcome
 #' @param cleanWindow the number of days for the clean window of this outcome definition
-#' @param excludeCohortRef a cohort reference for the cohort to use to exclude time at risk
+#' @param excludeCohortId a cohort ID for the cohort to use to exclude time at risk
 #' @return an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.Outcome JSON format.
 #' 
 #' @export

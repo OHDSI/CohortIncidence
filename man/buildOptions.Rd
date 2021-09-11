@@ -19,17 +19,21 @@ buildOptions(
 \arguments{
 \item{cohortTable}{The name of table with cohorts}
 
+\item{outcomeCohortTable}{The name of table with outcome cohorts, defaults to cohortTable param.}
+
+\item{subgroupCohortTable}{The name of table with subgroup cohorts, defaults to cohortTable param.}
+
+\item{databaseName}{A value to inject to the results table for the database name.}
+
 \item{cdmSchema}{the name of schema containing data in CDM format}
 
 \item{resultsSchema}{the name of schema where results would be placed}
 
-\item{vocabularySchema}{the name of schema with vocabularies}
+\item{vocabularySchema}{the name of schema with vocabulary tables, defaults to cdmSchema param}
 
-\item{tempSchema}{the name of database temp schema}
+\item{tempSchema}{the name of database temp schema, defaults to resultsSchema param.}
 
-\item{sessionId}{session identifier using to build temporary tables}
-
-\item{analysisId}{analysis identifier}
+\item{refId}{A number tagged to the results for retrieval purposes.}
 }
 \value{
 a BuilderOptions object used in buildQuery.

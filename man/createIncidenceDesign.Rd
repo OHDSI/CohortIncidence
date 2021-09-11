@@ -14,6 +14,21 @@ createIncidenceDesign(
   subgroups = list()
 )
 }
+\arguments{
+\item{cohortDefs}{The set of cohort definitions.  Optional.}
+
+\item{targetDefs}{A list of target definitions, each created with createCohortRef.}
+
+\item{outcomeDefs}{A list of outcome definitions, each created with createOutcomeDef.}
+
+\item{tars}{A list of TAR definitions, each created with createTimeAtRiskDef.}
+
+\item{analysisList}{A list of analysis definitions, each created with createIncidenceAnalysis.}
+
+\item{conceptSets}{A list of concept sets, currently unused.}
+
+\item{subgroups}{A list of cohort subgroups, creatd with createCohortSubgroup.}
+}
 \value{
 SQL code in MS Sql Server dialect, if it's required to run analysis on another DBMS
         you have to use \code{\link[SqlRender]{translateSql}} function in the SqlRender package.

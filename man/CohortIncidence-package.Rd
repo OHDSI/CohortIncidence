@@ -6,7 +6,7 @@
 \alias{CohortIncidence-package}
 \title{CohortIncidence: Assembles SQL to running Cohort Incidence analysis}
 \description{
-An R package that produces SQL queries for execute Cohort Incidence analyses
+An R package that produces SQL queries for executing Cohort Incidence analyses.
 }
 \seealso{
 Useful links:

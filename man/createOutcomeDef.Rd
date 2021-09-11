@@ -15,7 +15,7 @@ createOutcomeDef(id, name, cohortId = 0, cleanWindow = 0, excludeCohortId)
 
 \item{cleanWindow}{the number of days for the clean window of this outcome definition}
 
-\item{excludeCohortRef}{a cohort reference for the cohort to use to exclude time at risk}
+\item{excludeCohortId}{a cohort ID for the cohort to use to exclude time at risk}
 }
 \value{
 an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.Outcome JSON format.

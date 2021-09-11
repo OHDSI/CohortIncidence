@@ -40,12 +40,14 @@ buildQuery <- function(incidenceDesign,
 #' Builds the BuilderOptions jObject with the specified paramaters
 #'
 #' @param cohortTable The name of table with cohorts
-#' @param sessionId session identifier using to build temporary tables
+#' @param outcomeCohortTable The name of table with outcome cohorts, defaults to cohortTable param.
+#' @param subgroupCohortTable The name of table with subgroup cohorts, defaults to cohortTable param.
+#' @param databaseName A value to inject to the results table for the database name.
 #' @param cdmSchema the name of schema containing data in CDM format
 #' @param resultsSchema the name of schema where results would be placed
-#' @param vocabularySchema the name of schema with vocabularies
-#' @param tempSchema the name of database temp schema
-#' @param analysisId analysis identifier
+#' @param vocabularySchema the name of schema with vocabulary tables, defaults to cdmSchema param
+#' @param tempSchema the name of database temp schema, defaults to resultsSchema param.
+#' @param refId A number tagged to the results for retrieval purposes.
 #' @return a BuilderOptions object used in buildQuery.
 #' 
 #' @export
