@@ -4,3 +4,6 @@
 deploy.sh
 compare_versions
 ^target$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

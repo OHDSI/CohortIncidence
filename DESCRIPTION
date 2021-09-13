@@ -1,8 +1,8 @@
 Package: CohortIncidence
 Type: Package
 Title: Assembles SQL to running Cohort Incidence analysis
-Version: 0.9.0
-Date: 2021-06-14
+Version: 1.0.0
+Date: 2021-09-12
 Author: Christopher Knoll
 Maintainer: Christopher Knoll <cknoll@ohdsi.org>
 Description: An R package that produces SQL queries for executing Cohort Incidence analyses.
