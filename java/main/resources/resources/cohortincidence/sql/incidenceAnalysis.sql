@@ -171,7 +171,7 @@ FROM (
 -- find excluded time from outcome cohorts
 -- note, clean window added to event end date
 --HINT DISTRIBUTE_ON_KEY(subject_id)
-select or1.outcome_id, oc1.subject_id, dateadd(dd,1,oc1.cohort_end_date) as cohort_start_date, dateadd(dd,or1.clean_window, oc1.cohort_start_date) as cohort_end_date
+select or1.outcome_id, oc1.subject_id, dateadd(dd,1,oc1.cohort_start_date) as cohort_start_date, dateadd(dd,or1.clean_window, oc1.cohort_end_date) as cohort_end_date
 into #excluded_tar_cohort
 from @outcomeCohortTable oc1
 inner join (
@@ -429,7 +429,7 @@ from
     t0.time_at_risk_id,
 		t0.subgroup_id,
     t0.subject_id,
-    sum(datediff(dd,t0.start_date,t0.end_date)) as person_days
+    sum(datediff(dd,t0.start_date,t0.end_date)+1) as person_days
   from #TTAR_erafied t0
   inner join (select distinct target_cohort_definition_id, subject_id from #exc_TTAR_o_erafied) e0 on t0.subject_id = e0.subject_id
 		and t0.cohort_definition_id = e0.target_cohort_definition_id
@@ -444,7 +444,7 @@ inner join
     time_at_risk_id,
     outcome_id,
     subject_id,
-    sum(datediff(dd,start_date,end_date)) as person_days
+    sum(datediff(dd,start_date,end_date)+1) as person_days
   from #exc_TTAR_o_erafied
   group by target_cohort_definition_id,
     time_at_risk_id,
