@@ -63,10 +63,6 @@ WHERE TAR.start_date <= TAR.end_date
 ;
 
 --find the records that need to be era-fied
-
---HINT DISTRIBUTE_ON_KEY(subject_id)
-
-
 --era-building script for the 'TTAR_to_erafy' records
 --insert records from era-building script into #TTAR_erafied
 --HINT DISTRIBUTE_ON_KEY(subject_id)
@@ -531,7 +527,7 @@ from
 		select oref.outcome_id, oc.subject_id, oc.cohort_start_date, oc.cohort_end_date 
 		from @outcomeCohortTable oc 
 		JOIN #outcome_ref oref on oc.cohort_definition_id = oref.outcome_cohort_definition_id
-		where cohort_definition_id in (@outcomeIds)
+		where oref.outcome_id in (@outcomeIds)
 	) o1 on t0.subject_id = o1.subject_id
     and t0.start_date <= o1.cohort_start_date
     and t0.end_date >= o1.cohort_start_date
@@ -545,6 +541,7 @@ inner join
 (
   select et1.target_cohort_definition_id,
     et1.time_at_risk_id,
+		t1.subgroup_id,
     et1.subject_id,
     et1.outcome_id,
     count(o1.subject_id) as num_outcomes
@@ -565,12 +562,14 @@ inner join
     and et1.end_date >= o1.cohort_start_date
   group by  et1.target_cohort_definition_id,
     et1.time_at_risk_id,
+		t1.subgroup_id,
     et1.subject_id,
     et1.outcome_id
 ) et1 on t1.subject_id = et1.subject_id
   and t1.target_cohort_definition_id = et1.target_cohort_definition_id
   and t1.outcome_id = et1.outcome_id
   and t1.time_at_risk_id = et1.time_at_risk_id
+	and t1.subgroup_id = et1.subgroup_id
   and t1.num_outcomes = et1.num_outcomes
 group by t1.target_cohort_definition_id,
   t1.time_at_risk_id,
@@ -627,40 +626,27 @@ select tr1.target_cohort_definition_id,
 		(100.0 * cast((coalesce(ospe1.num_outcomes,0) - coalesce(eo1.num_outcomes,0)) as float) / ( cast(coalesce(arspe1.person_days,0) - coalesce(epy1.person_days,0) as float) / 365.25))
 		else NULL end AS incidence_rate_p100py
 into #incidence_summary
-from
-#tscotar_ref tr1
-left join
-#at_risk_smry_pre_xcl arspe1
-	on tr1.target_cohort_definition_id = arspe1.target_cohort_definition_id
+from #tscotar_ref tr1
+left join #at_risk_smry_pre_xcl arspe1 on tr1.target_cohort_definition_id = arspe1.target_cohort_definition_id
 	and tr1.time_at_risk_id = arspe1.time_at_risk_id
 	and tr1.subgroup_id = arspe1.subgroup_id
-left join
-#outcome_smry_pre_xcl ospe1
-	on tr1.target_cohort_definition_id = ospe1.target_cohort_definition_id
+left join #outcome_smry_pre_xcl ospe1 on tr1.target_cohort_definition_id = ospe1.target_cohort_definition_id
 	and tr1.time_at_risk_id = ospe1.time_at_risk_id
 	and tr1.subgroup_id = ospe1.subgroup_id
 	and tr1.outcome_id = ospe1.outcome_id
-left join
-  #excluded_person_days  epy1
-    on tr1.target_cohort_definition_id = epy1.target_cohort_definition_id
+left join #excluded_person_days  epy1 on tr1.target_cohort_definition_id = epy1.target_cohort_definition_id
   	and tr1.time_at_risk_id = epy1.time_at_risk_id
   	and tr1.subgroup_id = epy1.subgroup_id
   	and tr1.outcome_id = epy1.outcome_id
-left join
-  #excluded_persons ep1
-    on tr1.target_cohort_definition_id = ep1.target_cohort_definition_id
+left join #excluded_persons ep1 on tr1.target_cohort_definition_id = ep1.target_cohort_definition_id
   	and tr1.time_at_risk_id = ep1.time_at_risk_id
   	and tr1.subgroup_id = ep1.subgroup_id
   	and tr1.outcome_id = ep1.outcome_id
-left join
-  #excluded_outcomes eo1
-    on tr1.target_cohort_definition_id = eo1.target_cohort_definition_id
+left join #excluded_outcomes eo1 on tr1.target_cohort_definition_id = eo1.target_cohort_definition_id
   	and tr1.time_at_risk_id = eo1.time_at_risk_id
   	and tr1.subgroup_id = eo1.subgroup_id
   	and tr1.outcome_id = eo1.outcome_id
-left join
-  #excl_persons_w_o epo1
-    on tr1.target_cohort_definition_id = epo1.target_cohort_definition_id
+left join #excl_persons_w_o epo1 on tr1.target_cohort_definition_id = epo1.target_cohort_definition_id
   	and tr1.time_at_risk_id = epo1.time_at_risk_id
   	and tr1.subgroup_id = epo1.subgroup_id
   	and tr1.outcome_id = epo1.outcome_id
