@@ -63,5 +63,7 @@ test_that("build query works", {
   
   analysisSql <- CohortIncidence::buildQuery(incidenceDesign =  as.character(jsonlite::toJSON(irDesign)),
                                              buildOptions = buildOptions);    
+  
+  expect_true(nchar(analysisSql) > 0)
 
 })
