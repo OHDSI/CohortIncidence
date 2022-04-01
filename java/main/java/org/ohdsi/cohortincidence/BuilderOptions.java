@@ -9,4 +9,5 @@ public class BuilderOptions {
 	public String resultsSchema;
 	public String vocabularySchema;
 	public Integer refId;
+	public boolean useTempTables;
 }

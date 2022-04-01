@@ -94,3 +94,12 @@ test_that("createCohortSubgroup works", {
   expect_equal(as.character(jsonlite::toJSON(list(subgroup1))), '[{"CohortSubgroup":{"id":1,"name":"Subgroup 1","cohort":{"id":100}}}]');
   
 })
+
+test_that("createStrataSettings works", {
+  strataSettings <- CohortIncidence::createStrataSettings(byYear=T)
+  expect_equal(as.character(jsonlite::toJSON(strataSettings)), '{"byAge":false,"byGender":false,"byYear":true}');
+  
+  strataSettings <- CohortIncidence::createStrataSettings(byAge=T, ageBreaks = c(17,34,65))
+  expect_equal(as.character(jsonlite::toJSON(strataSettings)), '{"byAge":true,"byGender":false,"byYear":false,"ageBreaks":[17,34,65]}');
+  
+})

@@ -26,7 +26,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.ohdsi.cohortincidence;
 
 import java.sql.SQLException;
@@ -47,33 +46,34 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class AbstractDatabaseTest {
 
-  @ClassRule
-  public static PostgresSingletonRule pg = new PostgresSingletonRule(58915);
+	@ClassRule
+	public static PostgresSingletonRule pg = new PostgresSingletonRule(58915);
 
-  protected static JdbcTemplate jdbcTemplate;
+	protected static JdbcTemplate jdbcTemplate;
 
-  protected static DataSource getDataSource() {
-      return pg.getEmbeddedPostgres().getPostgresDatabase();
-  }
+	protected static DataSource getDataSource() {
+		return pg.getEmbeddedPostgres().getPostgresDatabase();
+	}
 
-  protected static IDatabaseConnection getConnection() throws SQLException {
-    final IDatabaseConnection con = new DatabaseDataSourceConnection(getDataSource());
-    con.getConfig().setProperty(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true);
-    con.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new PostgresqlDataTypeFactory());
-    return con;
-  }
-  
-  protected static void prepareSchema(final String schemaName, final String schemaDDL) {
-    final String sql = StringUtils.replace(schemaDDL, "@schemaName", schemaName);
-    jdbcTemplate.execute(String.format("DROP SCHEMA IF EXISTS %s CASCADE", schemaName));
-    jdbcTemplate.execute(String.format("CREATE SCHEMA %s", schemaName));
-    jdbcTemplate.batchUpdate(SqlSplit.splitSql(sql));
-  }
-  
-  protected void truncateTable (String tableName) {
-    jdbcTemplate.execute(String.format("TRUNCATE %s CASCADE",tableName));
-  }
-  protected void resetSequence(String sequenceName) {
-    jdbcTemplate.execute(String.format("ALTER SEQUENCE %s RESTART WITH 1", sequenceName));
-  }
+	protected static IDatabaseConnection getConnection() throws SQLException {
+		final IDatabaseConnection con = new DatabaseDataSourceConnection(getDataSource());
+		con.getConfig().setProperty(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true);
+		con.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new PostgresqlDataTypeFactory());
+		return con;
+	}
+
+	protected static void prepareSchema(final String schemaName, final String schemaDDL) {
+		final String sql = StringUtils.replace(schemaDDL, "@schemaName", schemaName);
+		jdbcTemplate.execute(String.format("DROP SCHEMA IF EXISTS %s CASCADE", schemaName));
+		jdbcTemplate.execute(String.format("CREATE SCHEMA %s", schemaName));
+		jdbcTemplate.batchUpdate(SqlSplit.splitSql(sql));
+	}
+
+	protected void truncateTable(String tableName) {
+		jdbcTemplate.execute(String.format("TRUNCATE %s CASCADE", tableName));
+	}
+
+	protected void resetSequence(String sequenceName) {
+		jdbcTemplate.execute(String.format("ALTER SEQUENCE %s RESTART WITH 1", sequenceName));
+	}
 }

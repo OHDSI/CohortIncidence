@@ -24,7 +24,11 @@ public class CohortIncidenceQueryBuilder {
 	private static final String OUTCOME_REF_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/outcomeRefTemplate.sql");
 	private static final String SUBGROUP_REF_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/subgroupRefTemplate.sql");
 	private static final String COHORT_SUBGROUP_TEMPTABLE_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/cohortSubgroupTempTable.sql");
+	private static final String STRATA_QUERY_TEMPTABLE_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/strataQueryTemplate.sql");
+	private static final String AGE_GROUP_SELECT_TEMPLATE = "select %d as age_id, '%s' as group_name, cast(%s as int) as min_age, cast(%s as int) as max_age";
 
+	private static final String NULL_STRATA = "cast(null as int)";
+	
 	public CohortIncidence getDesign() {
 		return design;
 	}
@@ -64,7 +68,9 @@ public class CohortIncidenceQueryBuilder {
 			finalSql = StringUtils.replace(finalSql, "@cdm_database_schema", this.options.cdmSchema);
 		}
 		
-		if (options.resultsSchema != null) {
+		if (options.useTempTables) {
+			finalSql = StringUtils.replace(finalSql, "@results_database_schema.", "#");
+		} else if (options.resultsSchema != null) {
 			finalSql = StringUtils.replace(finalSql, "@results_database_schema", this.options.resultsSchema);
 		}
 		
@@ -82,6 +88,7 @@ public class CohortIncidenceQueryBuilder {
 		sql = StringUtils.replace(sql, "@tarRefUnion", this.getTarRefQuery());
 		sql = StringUtils.replace(sql, "@outcomeRefUnion", this.getOutcomeRefQuery());
 		sql = StringUtils.replace(sql, "@subgroupRefUnion", this.getSubgroupRefQuery());
+		sql = StringUtils.replace(sql, "@ageGroupInsert", this.getAgeGroupInsert());
 		sql = StringUtils.replace(sql, "@analysisSql", this.buildAnalysisQueries());
 		
 		if (this.options != null) {
@@ -131,7 +138,10 @@ public class CohortIncidenceQueryBuilder {
 							
 							// handle subgroups
 							analysisQuery = StringUtils.replace(analysisQuery, "@subgroupQueries", buildSubgroupQueries());
-							
+
+							// handle strata options
+							analysisQuery = StringUtils.replace(analysisQuery, "@strataQueries", getStrataQueries());
+
 							return analysisQuery;
 						})
 						.collect(Collectors.toList());
@@ -209,14 +219,14 @@ public class CohortIncidenceQueryBuilder {
 		return StringUtils.join(unions, "\nUNION ALL\n");
 	}
 	/**
-	 * Returns EITHER an INSERT..INTO or an empty table definition, depending on the content of the subgroup defintions.
+	 * Returns EITHER an INSERT..INTO or an empty table definition, depending on the content of the subgroup definitions.
 	 * @return String
 	 */	
 	private String getSubgroupRefQuery() {
 		
 		ArrayList<String> unions = new ArrayList<>();
 		
-		unions.add(String.format(SUBGROUP_REF_TEMPLATE, 0, "All"));
+		unions.add(String.format(SUBGROUP_REF_TEMPLATE, 0, "All", "null"));
 		
 		unions.addAll(this.design.subgroups.stream()
 						.map(subgroup -> {
@@ -250,5 +260,104 @@ public class CohortIncidenceQueryBuilder {
 		query = StringUtils.replace(query,"@cohortId",Integer.toString(sg.cohort.getId()));
 		
 		return query;
+	}
+	
+	private String buildStrataQuery(String[] selectCols, String[] groupCols) {
+		String query = StringUtils.replace(STRATA_QUERY_TEMPTABLE_TEMPLATE, "@selectCols", StringUtils.join(selectCols, ",\n"));
+		query = StringUtils.replace(query, "@groupCols", StringUtils.join(groupCols, ","));
+		return query;
+	}
+	
+	private String getStrataQueries() {
+		if (this.design.strataSettings == null)
+			return "";
+		
+		ArrayList<String> queries = new ArrayList<>();
+
+		// by age
+		if (this.design.strataSettings.byAge) {
+			queries.add(buildStrataQuery(
+							new String[] {"irs.age_id", NULL_STRATA + " as gender_id", NULL_STRATA + " as start_year"},
+							new String[] {"irs.age_id"}
+			));
+
+			// by age, by gender
+			if (this.design.strataSettings.byGender) {
+				queries.add(buildStrataQuery(
+								new String[] {"irs.age_id", "irs.gender_id", NULL_STRATA + " as start_year"},
+								new String[] {"irs.age_id", "irs.gender_id"}
+				));
+			}
+
+			// by age, by year
+			if (this.design.strataSettings.byGender) {
+				queries.add(buildStrataQuery(
+								new String[] {"irs.age_id", NULL_STRATA + " as gender_id", "irs.start_year"},
+								new String[] {"irs.age_id", "irs.start_year"}
+				));
+			}
+
+			// by age, by gender, by year
+			if (this.design.strataSettings.byGender && this.design.strataSettings.byYear) {
+				queries.add(buildStrataQuery(
+								new String[] {"irs.age_id", "irs.gender_id", "irs.start_year"},
+								new String[] {"irs.age_id", "irs.gender_id", "irs.start_year"}
+				));
+			}
+		}
+		
+		// by gender
+		if (this.design.strataSettings.byGender) {
+			queries.add(buildStrataQuery(
+							new String[] {NULL_STRATA + " as age_id", "irs.gender_id", NULL_STRATA + " as start_year"},
+							new String[] {"irs.gender_id"}
+			));
+			
+			// by gender, by year
+			if (this.design.strataSettings.byYear) {
+				queries.add(buildStrataQuery(
+								new String[] {NULL_STRATA + " as age_id", "irs.gender_id", "irs.start_year"},
+								new String[] {"irs.gender_id", "irs.start_year"}
+				));
+			}
+		}
+		
+		// by year
+		if (this.design.strataSettings.byYear) {
+			queries.add(buildStrataQuery(
+							new String[] {NULL_STRATA + " as age_id", NULL_STRATA + "as gender_id", "irs.start_year"},
+							new String[] {"irs.start_year"}
+			));
+		}
+		
+		return "UNION ALL\n" + StringUtils.join(queries, "\nUNION ALL\n");
+	}
+	
+	/**
+	 * Creates the set of SELECT... statements to put into the age_group ref table.
+	 * The first break is considered less than, the last break is considered greater than or equal
+	 * The intermediate breaks is defined as the age greater or equal to [i] and less than [i+1]. 
+	 * @return 
+	 */
+	private String getAgeGroupInsert() {
+		if (this.design.strataSettings == null)
+			return "";
+		
+		if (this.design.strataSettings.ageBreaks.isEmpty())
+			throw new IllegalArgumentException("Invalid strataSettings:  ageBreaks can not be empty.");
+		
+		ArrayList<String> selects = new ArrayList<>();
+		// "select %d as age_id, '%s' as group_name, cast(%s as int) as min_age, cast(%s as int) as max_age"
+		List<Integer> ageBreaks = this.design.strataSettings.ageBreaks;
+		selects.add(String.format(AGE_GROUP_SELECT_TEMPLATE, 1, "<" + ageBreaks.get(0),"null", ageBreaks.get(0)));
+		
+		for (int i = 0; i < ageBreaks.size() - 1; i++)
+		{
+			selects.add(String.format(AGE_GROUP_SELECT_TEMPLATE, i+2, "" + ageBreaks.get(i) + " - " + (ageBreaks.get(i+1)-1),ageBreaks.get(i), ageBreaks.get(i+1)));
+		}
+		selects.add(String.format(AGE_GROUP_SELECT_TEMPLATE, ageBreaks.size()+1, ">=" + ageBreaks.get(ageBreaks.size()-1),ageBreaks.get(ageBreaks.size()-1), "null"));
+		
+		return String.format("insert into #age_group (age_id, group_name, min_age, max_age)\nselect age_id, group_name, min_age, max_age from (\n%s\n) ag;", 
+						StringUtils.join(selects, "\nUNION ALL\n"));
 	}
 }

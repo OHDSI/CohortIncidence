@@ -12,7 +12,7 @@ buildOptions(
   cdmSchema,
   resultsSchema,
   vocabularySchema = cdmSchema,
-  tempSchema = resultsSchema,
+  useTempTables = F,
   refId
 )
 }
@@ -31,7 +31,7 @@ buildOptions(
 
 \item{vocabularySchema}{the name of schema with vocabulary tables, defaults to cdmSchema param}
 
-\item{tempSchema}{the name of database temp schema, defaults to resultsSchema param.}
+\item{useTempTables}{use temp tables instead of a results schema.}
 
 \item{refId}{A number tagged to the results for retrieval purposes.}
 }

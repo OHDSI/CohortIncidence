@@ -46,7 +46,7 @@ buildQuery <- function(incidenceDesign,
 #' @param cdmSchema the name of schema containing data in CDM format
 #' @param resultsSchema the name of schema where results would be placed
 #' @param vocabularySchema the name of schema with vocabulary tables, defaults to cdmSchema param
-#' @param tempSchema the name of database temp schema, defaults to resultsSchema param.
+#' @param useTempTables use temp tables instead of a results schema.
 #' @param refId A number tagged to the results for retrieval purposes.
 #' @return a BuilderOptions object used in buildQuery.
 #' 
@@ -58,7 +58,7 @@ buildOptions <- function(cohortTable,
                          cdmSchema,
                          resultsSchema,
                          vocabularySchema = cdmSchema,
-                         tempSchema = resultsSchema,
+                         useTempTables = F,
                          refId) {
   builderOptions <- rJava::new(rJava::J("org.ohdsi.cohortincidence.BuilderOptions"));
   
@@ -111,11 +111,11 @@ buildOptions <- function(cohortTable,
     builderOptions$vocabularySchema = vocabularySchema;
   }
 
-  if (missing(tempSchema) || is.null(tempSchema)) {
-    builderOptions$tempSchema = rJava::.jnull(class="java/lang/String");
+  if (missing(useTempTables) || is.null(useTempTables)) {
+    builderOptions$useTempTables = F;
   }
   else {
-    builderOptions$tempSchema = tempSchema;
+    builderOptions$useTempTables = useTempTables;
   }
   
   if (missing(refId) || is.null(refId)) {

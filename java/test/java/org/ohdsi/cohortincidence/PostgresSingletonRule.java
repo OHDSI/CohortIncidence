@@ -40,63 +40,63 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Based off of com.opentable.db.postgres.junit.SingleInstancePostgresRule, but
- * instantiates a single instance of an EmbeddedPostgres that cleans up when JVM
- * shuts down.
+ * Based off of com.opentable.db.postgres.junit.SingleInstancePostgresRule, but instantiates a single instance of an
+ * EmbeddedPostgres that cleans up when JVM shuts down.
  */
 public class PostgresSingletonRule extends ExternalResource {
 
-  private volatile EmbeddedPostgres epg;
-  private volatile Connection postgresConnection;
-  private static final Logger LOG = LoggerFactory.getLogger(PostgresSingletonRule.class);
+	private volatile EmbeddedPostgres epg;
+	private volatile Connection postgresConnection;
+	private static final Logger LOG = LoggerFactory.getLogger(PostgresSingletonRule.class);
 	private Optional<Integer> port = Optional.empty();
 
-  PostgresSingletonRule() {}
-	
+	PostgresSingletonRule() {
+	}
+
 	PostgresSingletonRule(int port) {
 		this.port = Optional.of(port);
 	}
 
-  @Override
-  protected void before() throws Throwable {
-    super.before();
-    synchronized (PostgresSingletonRule.class) {
-      if (epg == null) {
-        LOG.info("Starting singleton Postgres instance...");
-        epg = pg();
-        postgresConnection = epg.getPostgresDatabase().getConnection();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> shutdown()));        
-      }
-    }
-  }
+	@Override
+	protected void before() throws Throwable {
+		super.before();
+		synchronized (PostgresSingletonRule.class) {
+			if (epg == null) {
+				LOG.info("Starting singleton Postgres instance...");
+				epg = pg();
+				postgresConnection = epg.getPostgresDatabase().getConnection();
+				Runtime.getRuntime().addShutdownHook(new Thread(() -> shutdown()));
+			}
+		}
+	}
 
-  private EmbeddedPostgres pg() throws IOException {
-    Builder b = EmbeddedPostgres.builder();
+	private EmbeddedPostgres pg() throws IOException {
+		Builder b = EmbeddedPostgres.builder();
 		if (this.port.isPresent()) {
 			b.setPort(port.get());
 		}
 		return b.start();
-  }
+	}
 
-  public EmbeddedPostgres getEmbeddedPostgres() {
-    EmbeddedPostgres epg = this.epg;
-    if (epg == null) {
-      throw new AssertionError("JUnit tests not started yet!");
-    }
-    return epg;
-  }
+	public EmbeddedPostgres getEmbeddedPostgres() {
+		EmbeddedPostgres epg = this.epg;
+		if (epg == null) {
+			throw new AssertionError("JUnit tests not started yet!");
+		}
+		return epg;
+	}
 
-  private void shutdown() {
-    LOG.info("Shutdown singleton Postgres instance...");
-    try {
-      postgresConnection.close();
-    } catch (SQLException e) {
-      throw new AssertionError(e);
-    }
-    try {
-      epg.close();
-    } catch (IOException e) {
-      throw new AssertionError(e);
-    }
-  }
+	private void shutdown() {
+		LOG.info("Shutdown singleton Postgres instance...");
+		try {
+			postgresConnection.close();
+		} catch (SQLException e) {
+			throw new AssertionError(e);
+		}
+		try {
+			epg.close();
+		} catch (IOException e) {
+			throw new AssertionError(e);
+		}
+	}
 }

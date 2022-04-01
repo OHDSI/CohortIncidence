@@ -1,46 +1,106 @@
 {
-  "cdm.person": [
-    {
-      "person_id":1,
-      "gender_concept_id":0,
-      "year_of_birth":0,
-      "race_concept_id":0,
-      "ethnicity_concept_id":0
-    }
-  ],
-  "cdm.observation_period" : [
-    {
-      "observation_period_id": 1,
-      "person_id":1,
-      "observation_period_start_date":"2000-01-01",
-      "observation_period_end_date":"2001-01-01",
-      "period_type_concept_id": 0
-    }
-  ],
-  "multi_outcome.cohort" : [
-    {
-      "cohort_definition_id": 100,
-      "subject_id": 1,
-      "cohort_start_date": "2000-03-01",
-      "cohort_end_date": "2000-03-01"
-    },
-    {
-      "cohort_definition_id": 200,
-      "subject_id": 1,
-      "cohort_start_date": "2000-02-25",
-      "cohort_end_date": "2000-02-25"
-    },
-    {
-      "cohort_definition_id": 200,
-      "subject_id": 1,
-      "cohort_start_date": "2000-04-01",
-      "cohort_end_date": "2000-04-01"
-    },
-    {
-      "cohort_definition_id": 200,
-      "subject_id": 1,
-      "cohort_start_date": "2000-04-25",
-      "cohort_end_date": "2000-04-25"
-    }
-  ]
+	"cdm.person": [
+		{
+			"person_id": 1,
+			"gender_concept_id": 0,
+			"year_of_birth": 1980,
+			"race_concept_id": 0,
+			"ethnicity_concept_id": 0
+		},
+		{
+			"person_id": 2,
+			"gender_concept_id": 0,
+			"year_of_birth": 1980,
+			"race_concept_id": 0,
+			"ethnicity_concept_id": 0
+		}
+	],
+	"cdm.observation_period": [
+		{
+			"observation_period_id": 1,
+			"person_id": 1,
+			"observation_period_start_date": "2000-01-01",
+			"observation_period_end_date": "2001-01-01",
+			"period_type_concept_id": 0
+		},{
+			"observation_period_id": 2,
+			"person_id": 2,
+			"observation_period_start_date": "2000-01-01",
+			"observation_period_end_date": "2001-01-01",
+			"period_type_concept_id": 0
+		}
+	],
+	"multi_outcome.cohort": [
+		{
+			"cohort_definition_id": 100,
+			"subject_id": 1,
+			"cohort_start_date": "2000-03-01",
+			"cohort_end_date": "2000-03-01"
+		},
+		{
+			"cohort_definition_id": 200,
+			"subject_id": 1,
+			"cohort_start_date": "2000-02-25",
+			"cohort_end_date": "2000-02-25"
+		},
+		{
+			"cohort_definition_id": 200,
+			"subject_id": 1,
+			"cohort_start_date": "2000-04-01",
+			"cohort_end_date": "2000-04-01"
+		},
+		{
+			"cohort_definition_id": 200,
+			"subject_id": 1,
+			"cohort_start_date": "2000-04-05",
+			"cohort_end_date": "2000-04-05"
+		},
+		{
+			"cohort_definition_id": 200,
+			"subject_id": 1,
+			"cohort_start_date": "2000-04-10",
+			"cohort_end_date": "2000-04-10"
+		},
+		{
+			"cohort_definition_id": 200,
+			"subject_id": 1,
+			"cohort_start_date": "2000-04-25",
+			"cohort_end_date": "2000-04-25"
+		},{
+			"cohort_definition_id": 100,
+			"subject_id": 2,
+			"cohort_start_date": "2000-03-01",
+			"cohort_end_date": "2000-03-01"
+		},
+		{
+			"cohort_definition_id": 200,
+			"subject_id": 2,
+			"cohort_start_date": "2000-02-25",
+			"cohort_end_date": "2000-12-31"
+		},
+		{
+			"cohort_definition_id": 200,
+			"subject_id": 2,
+			"cohort_start_date": "2000-04-01",
+			"cohort_end_date": "2000-12-31"
+		},
+		{
+			"cohort_definition_id": 200,
+			"subject_id": 2,
+			"cohort_start_date": "2000-04-05",
+			"cohort_end_date": "2000-12-31"
+		},
+		{
+			"cohort_definition_id": 200,
+			"subject_id": 2,
+			"cohort_start_date": "2000-04-10",
+			"cohort_end_date": "2000-12-31"
+		},
+		{
+			"cohort_definition_id": 200,
+			"subject_id": 2,
+			"cohort_start_date": "2000-04-25",
+			"cohort_end_date": "2000-12-31"
+		}
+	]
 }
