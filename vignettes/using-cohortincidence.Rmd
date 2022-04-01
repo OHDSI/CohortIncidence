@@ -125,7 +125,7 @@ irDesignWithStrata <- CohortIncidence::createIncidenceDesign(targetDefs = list(t
                                                    analysisList = list(analysis1),
                                                    subgroups = list(subgroup1),
                                                    #add by age and by gender strata, but don't do by start year.
-                                                   strataSettigns = CohortIncidence::createStrataSettings(byGender=T, byAge=T, ageBreaks = c(17,34,65)));
+                                                   strataSettings = CohortIncidence::createStrataSettings(byGender=T, byAge=T, ageBreaks = c(17,34,65)));
 ```
 
 
