@@ -13,6 +13,7 @@ buildOptions(
   resultsSchema,
   vocabularySchema = cdmSchema,
   tempSchema = resultsSchema,
+  useTempTables = F,
   refId
 )
 }

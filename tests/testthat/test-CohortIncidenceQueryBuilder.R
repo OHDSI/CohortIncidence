@@ -9,5 +9,6 @@ test_that("buildOptions works", {
   expect_equal(as.character(buildOptions$targetCohortTable), "demoCohortSchema.cohort")
   expect_equal(as.character(buildOptions$outcomeCohortTable), "outcomeCohortSchema.cohort")
   expect_equal(as.character(buildOptions$subgroupCohortTable), "subgroupCohortSchema.cohort")
-
+  expect_equal(as.character(buildOptions$useTempTables), "FALSE")
+  
 })

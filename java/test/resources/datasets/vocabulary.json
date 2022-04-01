@@ -65,6 +65,28 @@
       "standard_concept": "S",
       "valid_start_date": "1900-01-01",
       "valid_end_date": "2099-01-01"
+    },
+    {
+      "concept_id": 8532,
+      "concept_name": "FEMALE",
+      "domain_id": "Gender",
+      "vocabulary_id": "Gender",
+      "concept_class_id": "Gender",
+      "concept_code": "F",
+      "standard_concept": "S",
+      "valid_start_date": "1900-01-01",
+      "valid_end_date": "2099-01-01"
+    },
+    {
+      "concept_id": 8507,
+      "concept_name": "MALE",
+      "domain_id": "Gender",
+      "vocabulary_id": "Gender",
+      "concept_class_id": "Gender",
+      "concept_code": "F",
+      "standard_concept": "S",
+      "valid_start_date": "1900-01-01",
+      "valid_end_date": "2099-01-01"
     }
   ],
   "cdm.concept_ancestor": [

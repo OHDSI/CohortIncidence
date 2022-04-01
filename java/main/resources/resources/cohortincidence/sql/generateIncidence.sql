@@ -5,7 +5,7 @@ from (
 ) O
 ;
 
-select time_at_risk_id, time_at_risk_start_index, time_at_risk_start_offset, time_at_risk_end_index, time_at_risk_end_offset
+select tar_id, tar_start_index, tar_start_offset, tar_end_index, tar_end_offset
 into #tar_ref 
 FROM (
 @tarRefUnion
@@ -19,7 +19,6 @@ from (
 ) O
 ;
 
--- Will figure out subgroup mechanics at a later time
 select subgroup_id, subgroup_name
 INTO #subgroup_ref
 FROM (
@@ -27,9 +26,21 @@ FROM (
 ) S
 ;
 
+create table #age_group
+(
+	age_id int NOT NULL,
+	group_name varchar(50) NOT NULL,
+	min_age int NULL,
+	max_age int NULL
+
+);
+
+@ageGroupInsert
+
 @analysisSql
 
 DROP TABLE #target_ref;
 DROP TABLE #tar_ref;
 DROP TABLE #outcome_ref;
 DROP TABLE #subgroup_ref;
+DROP TABLE #age_group;

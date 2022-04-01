@@ -29,7 +29,7 @@
 #'         you have to use \code{\link[SqlRender]{translateSql}} function in the SqlRender package.
 #' 
 #' @export
-createIncidenceDesign <- function(cohortDefs = list(), targetDefs = list(), outcomeDefs=list(), tars=list(), analysisList=list(), conceptSets=list(), subgroups=list()) {
+createIncidenceDesign <- function(cohortDefs = list(), targetDefs = list(), outcomeDefs=list(), tars=list(), analysisList=list(), conceptSets=list(), subgroups=list(), strataSettings=NULL) {
 
   design <- {};
   design$cohortDefs <- cohortDefs;
@@ -39,6 +39,7 @@ createIncidenceDesign <- function(cohortDefs = list(), targetDefs = list(), outc
   design$analysisList <- analysisList;
   design$conceptSets <- conceptSets;
   design$subgroups <- subgroups;
+  design$strataSettings <- strataSettings;
 
   return (design);
 }
@@ -160,6 +161,25 @@ createCohortSubgroup <- function (id, name, description, cohortRef) {
   cohortSubgroup$cohort <- cohortRef;
   
   return(list("CohortSubgroup" = cohortSubgroup));
+}
+
+#' Helper function for creating strata settings
+#'
+#' @param byAge a boolean indicating to stratify by age
+#' @param byGender a boolean indicating to stratify by gender
+#' @param byYear a boolean indicating to stratify by year
+#' @param ageBreaks a vector of integers indicating the age group bounds.
+#' @return an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.StratifySettings JSON format.
+#' @export
+createStrataSettings <- function (byAge = F, byGender = F, byYear = F, ageBreaks = NULL) {
+  strataSettings <- {};
+  
+  strataSettings$byAge <- jsonlite::unbox(byAge);
+  strataSettings$byGender <- jsonlite::unbox(byGender);
+  strataSettings$byYear <- jsonlite::unbox(byYear);
+  strataSettings$ageBreaks <- ageBreaks;
+
+  return(strataSettings);
 }
 
 

@@ -11,7 +11,8 @@ createIncidenceDesign(
   tars = list(),
   analysisList = list(),
   conceptSets = list(),
-  subgroups = list()
+  subgroups = list(),
+  strataSettings = NULL
 )
 }
 \arguments{
