@@ -24,7 +24,8 @@
 #' @param tars A list of TAR definitions, each created with createTimeAtRiskDef.
 #' @param analysisList A list of analysis definitions, each created with createIncidenceAnalysis.
 #' @param conceptSets A list of concept sets, currently unused.
-#' @param subgroups A list of cohort subgroups, creatd with createCohortSubgroup.
+#' @param subgroups A list of cohort subgroups, created with createCohortSubgroup. 
+#' @param strataSettings The strata settings used in the anlaysis, created with createStrataSettings..
 #' @return SQL code in MS Sql Server dialect, if it's required to run analysis on another DBMS
 #'         you have to use \code{\link[SqlRender]{translateSql}} function in the SqlRender package.
 #' 

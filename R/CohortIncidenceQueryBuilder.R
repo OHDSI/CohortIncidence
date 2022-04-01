@@ -47,6 +47,7 @@ buildQuery <- function(incidenceDesign,
 #' @param resultsSchema the name of schema where results would be placed
 #' @param vocabularySchema the name of schema with vocabulary tables, defaults to cdmSchema param
 #' @param tempSchema the name of database temp schema, defaults to resultsSchema param.
+#' @param useTempTables use temp tables instead of a results schema.
 #' @param refId A number tagged to the results for retrieval purposes.
 #' @return a BuilderOptions object used in buildQuery.
 #' 
