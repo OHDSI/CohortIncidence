@@ -211,5 +211,18 @@ DatabaseConnector::dbDisconnect(conn);
 
 ```
 
+## Using executeAnalysis()
+
+If there is no need to see the analysis sql or control the output of the analysis to a permenant table, the `executeAnalysis()` function
+can be used to perform the cohort incidence using a simple API:
+
+```{r, eval=FALSE}
+executeResults <- CohortIncidence::executeAnalysis(connectionDetails = connectionDetails,
+                                                   incidenceDesign = irDesign,
+                                                   buildOptions = buildOptions)
+```
+
+The results will contain the same table structure as the results schema `incidence_summary`.
+
 
 

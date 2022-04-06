@@ -19,7 +19,7 @@
 #' Builds SQL code to run analyses according given Cohort Characterization design
 #'
 #' @param incidenceDesign  A string object containing valid JSON that represents cohort incidence design
-#' @param buildOptions the paramaters to use in building the analysis queries, created by buildOptions()
+#' @param buildOptions the parameters to use in building the analysis queries, created by buildOptions()
 #' @return SQL code in MS Sql Server dialect, if it's required to run analysis on another DBMS
 #'         you have to use \code{\link[SqlRender]{translateSql}} function in the SqlRender package.
 #' 
