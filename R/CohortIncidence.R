@@ -27,6 +27,7 @@
 #'                               should be specified.
 #' @param incidenceDesign  A string object containing valid JSON that represents cohort incidence design
 #' @param buildOptions the parameters to use in building the analysis queries, created by buildOptions()
+#' @param databaseName the database name to attach to the results
 #' @return a \code{data.frame} containing the IR results
 #' 
 #' @export

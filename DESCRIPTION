@@ -21,6 +21,8 @@ NeedsCompilation: yes
 LazyData: TRUE
 RoxygenNote: 7.1.2
 Encoding: UTF-8
+Remotes:
+    OHDSI/Eunomia
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
