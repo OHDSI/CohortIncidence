@@ -85,6 +85,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          remotes::install_github("OHDSI/Eunomia",  INSTALL_opts=c("--no-multiarch"))
           remotes::install_deps(dependencies = TRUE, INSTALL_opts=c("--no-multiarch"))
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
