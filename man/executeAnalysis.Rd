@@ -26,6 +26,8 @@ should be specified.}
 \item{incidenceDesign}{A string object containing valid JSON that represents cohort incidence design}
 
 \item{buildOptions}{the parameters to use in building the analysis queries, created by buildOptions()}
+
+\item{databaseName}{the database name to attach to the results}
 }
 \value{
 a \code{data.frame} containing the IR results
