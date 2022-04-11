@@ -2,8 +2,8 @@ test_that("buildOptions works", {
   buildOptions <- CohortIncidence::buildOptions(cohortTable = "demoCohortSchema.cohort",
                                                 outcomeCohortTable = "outcomeCohortSchema.cohort",
                                                 subgroupCohortTable = "subgroupCohortSchema.cohort",
-                                                cdmSchema = "mycdm",
-                                                resultsSchema = "myresults",
+                                                cdmDatabaseSchema = "mycdm",
+                                                resultsDatabaseSchema = "myresults",
                                                 refId = 1);
   
   expect_equal(as.character(buildOptions$targetCohortTable), "demoCohortSchema.cohort")
@@ -57,8 +57,8 @@ test_that("build query works", {
                                                      subgroups = list(subgroup1));
 
   buildOptions <- CohortIncidence::buildOptions(cohortTable = "demoCohortSchema.cohort",
-                                                cdmSchema = "mycdm",
-                                                resultsSchema = "myresults",
+                                                cdmDatabaseSchema = "mycdm",
+                                                resultsDatabaseSchema = "myresults",
                                                 refId = 1)
   
   analysisSql <- CohortIncidence::buildQuery(incidenceDesign =  as.character(jsonlite::toJSON(irDesign)),

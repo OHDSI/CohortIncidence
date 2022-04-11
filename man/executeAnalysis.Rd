@@ -9,7 +9,7 @@ executeAnalysis(
   connection = NULL,
   incidenceDesign,
   buildOptions,
-  databaseName = "default"
+  sourceName = "default"
 )
 }
 \arguments{
@@ -27,7 +27,7 @@ should be specified.}
 
 \item{buildOptions}{the parameters to use in building the analysis queries, created by buildOptions()}
 
-\item{databaseName}{the database name to attach to the results}
+\item{sourceName}{the source name to attach to the results}
 }
 \value{
 a \code{data.frame} containing the IR results

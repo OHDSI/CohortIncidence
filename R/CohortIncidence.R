@@ -27,7 +27,7 @@
 #'                               should be specified.
 #' @param incidenceDesign  A string object containing valid JSON that represents cohort incidence design
 #' @param buildOptions the parameters to use in building the analysis queries, created by buildOptions()
-#' @param databaseName the database name to attach to the results
+#' @param sourceName the source name to attach to the results
 #' @return a \code{data.frame} containing the IR results
 #' 
 #' @export
@@ -35,7 +35,7 @@ executeAnalysis <- function(connectionDetails = NULL,
                             connection = NULL,
                             incidenceDesign, 
                             buildOptions,
-                            databaseName = "default") {
+                            sourceName = "default") {
   if (is.null(connectionDetails) && is.null(connection)) {
     stop("Need to provide either connectionDetails or connection")
   }
@@ -67,7 +67,7 @@ executeAnalysis <- function(connectionDetails = NULL,
   analysisSql <- CohortIncidence::buildQuery(incidenceDesign =  as.character(jsonlite::toJSON(irDesign)),
                                              buildOptions = buildOptions);
   
-  analysisSql <- SqlRender::render(analysisSql, "databaseName"=databaseName);
+  analysisSql <- SqlRender::render(analysisSql, "sourceName"=sourceName);
   
   analysisSql <- SqlRender::translate(analysisSql, targetDialect = targetDialect);
 
