@@ -65,15 +65,15 @@ createIncidenceAnalysis <- function(targets, outcomes, tars) {
 #' Helper function for creating Cohort References, which are used in different parts of a design to reference a cohort definition
 #' and, optionally, to provide a name.
 #'
-#' @param id the unique identifier for this outcome definition
+#' @param cohortId the cohort id that is being referenced
 #' @param name the name to use for this reference
 #' @param description an optional description to use for this reference.
 #' @return an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.CohortRef JSON format.
 #' 
 #' @export
-createCohortRef <- function(id, name, description) {
+createCohortRef <- function(cohortId, name, description) {
   cohortRef <- {};
-  cohortRef$id <- jsonlite::unbox(id);
+  cohortRef$id <- jsonlite::unbox(cohortId);
   if (!missing(name)) {
     cohortRef$name = jsonlite::unbox(name);
   }
