@@ -5,10 +5,10 @@
 \title{Helper function for creating Cohort References, which are used in different parts of a design to reference a cohort definition
 and, optionally, to provide a name.}
 \usage{
-createCohortRef(cohortId, name, description)
+createCohortRef(id, name, description)
 }
 \arguments{
-\item{cohortId}{the cohort id that is being referenced}
+\item{id}{the cohort id that is being referenced}
 
 \item{name}{the name to use for this reference}
 
