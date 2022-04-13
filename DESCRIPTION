@@ -27,5 +27,8 @@ Suggests:
     testthat (>= 3.0.0),
     knitr,
     rmarkdown,
-    Eunomia
+    Eunomia,
+    withr,
+    readr,
+    RSQLite (> 2.1.1)
 Config/testthat/edition: 3

@@ -36,6 +36,11 @@ executeAnalysis <- function(connectionDetails = NULL,
                             incidenceDesign, 
                             buildOptions,
                             sourceName = "default") {
+  irDesign <- incidenceDesign;
+  if (is.list(incidenceDesign)) {
+    irDesign <- as.character(jsonlite::toJSON(irDesign)); 
+  }
+  
   if (is.null(connectionDetails) && is.null(connection)) {
     stop("Need to provide either connectionDetails or connection")
   }
@@ -58,20 +63,21 @@ executeAnalysis <- function(connectionDetails = NULL,
   # Force useTempTables for analysis
   buildOptions$useTempTables = T
   
-  targetDialect = attr(conn, "dbms")
-  
+  targetDialect <- attr(conn, "dbms")
+
   tempDDL <- SqlRender::translate(CohortIncidence::getResultsDdl(useTempTables=T), targetDialect = targetDialect); 
   DatabaseConnector::executeSql(conn, tempDDL);
   
   #execute analysis
-  analysisSql <- CohortIncidence::buildQuery(incidenceDesign =  as.character(jsonlite::toJSON(irDesign)),
+  analysisSql <- CohortIncidence::buildQuery(incidenceDesign =  irDesign,
                                              buildOptions = buildOptions);
   
-  analysisSql <- SqlRender::render(analysisSql, "sourceName"=sourceName);
+  analysisSql <- SqlRender::render(analysisSql, "databaseName"=sourceName);
   
   analysisSql <- SqlRender::translate(analysisSql, targetDialect = targetDialect);
 
-    
+  analysisSqlQuries <- SqlRender::splitSql(analysisSql);
+  
   DatabaseConnector::executeSql(conn, analysisSql);
   
   #download results into dataframe

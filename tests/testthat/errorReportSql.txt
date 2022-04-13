@@ -1,0 +1,28 @@
+DBMS:
+sqlite extended
+
+Error:
+no such table: main.TTAR
+
+SQL:
+SELECT  * FROM main.TTAR LIMIT 1000;
+
+R version:
+R version 4.1.2 (2021-11-01)
+
+Platform:
+x86_64-w64-mingw32
+
+Attached base packages:
+- stats
+- graphics
+- grDevices
+- utils
+- datasets
+- methods
+- base
+
+Other attached packages:
+- testthat (3.1.2)
+- CohortIncidence (2.0.0)
+- DatabaseConnector (5.0.2)

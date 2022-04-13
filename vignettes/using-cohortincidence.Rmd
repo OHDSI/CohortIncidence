@@ -177,7 +177,7 @@ With the previous analysis design and options used to generate the analysisSql, 
 
 ```{r, eval=FALSE}
 
-analysisSql <- SqlRender::render(analysisSql, "sourceName" = "OptumDOD")
+analysisSql <- SqlRender::render(analysisSql, "databaseName" = "OptumDOD")
 analysisSql <- SqlRender::translate(analysisSql, "postgresql")
 
 cat(analysisSql)
