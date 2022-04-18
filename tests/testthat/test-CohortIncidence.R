@@ -1,8 +1,10 @@
 test_that("executeAnalysis() works", {
-  cdmDbFile<- withr::local_tempfile(fileext=".sqlite");
+  
+  skip('No suitable test DB implementaton for this test.')
+  cdmDbFile<- withr::local_tempfile(fileext=".duckdb");
   initDb(cdmDbFile, "resources/dbtest");
   
-  connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = "sqlite", server = cdmDbFile);
+  connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = "duckdb", server = cdmDbFile);
   designJSON <-readr::read_file(testthat::test_path("resources/strataAllTest.json"));
   buildOptions <- CohortIncidence::buildOptions(cohortTable = "main.cohort",
                                                 cdmDatabaseSchema = "main",
@@ -12,5 +14,4 @@ test_that("executeAnalysis() works", {
                                                      incidenceDesign = designJSON,
                                                      buildOptions = buildOptions);
   
-  browser();
 })

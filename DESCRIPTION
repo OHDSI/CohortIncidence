@@ -30,5 +30,5 @@ Suggests:
     Eunomia,
     withr,
     readr,
-    RSQLite (> 2.1.1)
+    duckdb
 Config/testthat/edition: 3

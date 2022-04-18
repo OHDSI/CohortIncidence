@@ -89,8 +89,8 @@ createCohortRef <- function(id, name, description) {
 #' @param id the unique identifier for this outcome definition
 #' @param name an optional name for this outcome definition
 #' @param cohortId the cohort id reference for this outcome
-#' @param cleanWindow the number of days for the clean window of this outcome definition
-#' @param excludeCohortId a cohort ID for the cohort to use to exclude time at risk
+#' @param cleanWindow the number of days to extend the outcome cohort’s end date
+#' @param excludeCohortId a cohort ID from the outcomeCohrotTable that is used to exclude time at risk
 #' @return an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.Outcome JSON format.
 #' 
 #' @export
@@ -117,28 +117,28 @@ createOutcomeDef <- function(id, name, cohortId = 0, cleanWindow = 0, excludeCoh
 #' Helper function for creating TAR Definitions
 #'
 #' @param id the unique identifier for this outcome definition
-#' @param startDateField Specifies the field (start or end) to offset from for the TAR start.  Allowed values: 'StartDate', 'EndDate'
+#' @param startWith Specifies the field (start or end) to offset from for the TAR start.  Allowed values: 'start', 'end'
 #' @param startOffset The number of days to offset for the TAR start, defaults to 0.
-#' @param endDateField Specifies the field (start or end) to offset from for the TAR end.  Allowed values: 'StartDate', 'EndDate'
+#' @param endWith Specifies the field (start or end) to offset from for the TAR end.  Allowed values: 'start', 'end'
 #' @param endOffset The number of days to offset for the TAR start, defaults to 0.
 #' @return an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.TimeAtRisk JSON format.
 #' 
 #' @export
-createTimeAtRiskDef <- function(id, startDateField = "StartDate", startOffset = 0, endDateField="EndDate", endOffset=0) {
+createTimeAtRiskDef <- function(id, startWith = "start", startOffset = 0, endWith="end", endOffset=0) {
   tarDef <- {};
   
   tarDef$id <- jsonlite::unbox(id);
   
-  if (!(startDateField %in% c("StartDate", "EndDate"))) {
-    stop(paste0("Invalid startDateField option:", startDateField, ". Valid options are StartDate, EndDate."));
+  if (!(startWith %in% c("start", "end"))) {
+    stop(paste0("Invalid startWith option:", startWith, ". Valid options are start, end"));
   } else {
-    tarDef$start = list("dateField" = jsonlite::unbox(startDateField), "offset"=jsonlite::unbox(startOffset));
+    tarDef$start = list("dateField" = jsonlite::unbox(startWith), "offset"=jsonlite::unbox(startOffset));
   }
   
-  if (!(endDateField %in% c("StartDate", "EndDate"))) {
-    stop(paste0("Invalid endDateField option:", endDateField, ". Valid options are StartDate, EndDate."));
+  if (!(endWith %in% c("start", "end"))) {
+    stop(paste0("Invalid endWith option:", endWith, ". Valid options are start, end"));
   } else {
-    tarDef$end = list("dateField" = jsonlite::unbox(endDateField), "offset"=jsonlite::unbox(endOffset));
+    tarDef$end = list("dateField" = jsonlite::unbox(endWith), "offset"=jsonlite::unbox(endOffset));
   }
 
   return (tarDef);

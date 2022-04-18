@@ -175,9 +175,9 @@ public class CohortIncidenceQueryBuilder {
 						.map(tar -> {
 							return String.format(TAR_REF_TEMPLATE,
 											tar.id, 
-											tar.start.dateField == FieldOffset.DateField.StartDate ? 1 : 0,
+											tar.start.dateField == FieldOffset.DateField.Start ? 1 : 0,
 											tar.start.offset,
-											tar.end.dateField == FieldOffset.DateField.StartDate ? 1 : 0,
+											tar.end.dateField == FieldOffset.DateField.Start ? 1 : 0,
 											tar.end.offset
 							);
 						})

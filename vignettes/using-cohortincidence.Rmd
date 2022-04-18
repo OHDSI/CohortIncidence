@@ -89,8 +89,8 @@ o1 <- CohortIncidence::createOutcomeDef(id=1,name="Outcome 1, 30d Clean",
                                                cleanWindow =30)
 
 tar1 <- CohortIncidence::createTimeAtRiskDef(id=1, 
-                                             startDateField="StartDate", 
-                                             endDateField="StartDate", 
+                                             startWith="start", 
+                                             endWith="end", 
                                              endOffset=30)
 
 # Note: c() is used when dealing with an array of numbers, 

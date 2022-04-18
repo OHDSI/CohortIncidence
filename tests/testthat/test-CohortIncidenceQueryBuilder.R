@@ -36,8 +36,8 @@ test_that("build query works", {
                                           cleanWindow =30);
   
   tar1 <- CohortIncidence::createTimeAtRiskDef(id=1, 
-                                               startDateField="StartDate", 
-                                               endDateField="StartDate", 
+                                               startWith="start", 
+                                               endWith="end", 
                                                endOffset=30);
   
   # Note: c() is used when dealing with an array of numbers, 

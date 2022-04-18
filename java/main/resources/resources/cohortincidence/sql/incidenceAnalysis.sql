@@ -56,12 +56,12 @@ FROM (
 				end
 			else null --shouldnt get here if tar set properly
 		end as end_date
-	from (select tar_id, tar_start_index, tar_start_offset, tar_end_index, tar_end_offset  from #tar_ref where tar_id in (@timeAtRiskIds)) tar1,
-	(select cohort_definition_id, subject_id, cohort_start_date, cohort_end_date from @targetCohortTable where cohort_definition_id in (@targetIds)) tc1
+	from (select tar_id, tar_start_index, tar_start_offset, tar_end_index, tar_end_offset  from #tar_ref where tar_id in (@timeAtRiskIds)) AS tar1,
+	(select cohort_definition_id, subject_id, cohort_start_date, cohort_end_date from @targetCohortTable where cohort_definition_id in (@targetIds)) AS tc1
 	inner join @cdm_database_schema.observation_period op1 on tc1.subject_id = op1.person_id
 		and tc1.cohort_start_date >= op1.observation_period_start_date
 		and tc1.cohort_start_date <= op1.observation_period_end_date
-) TAR
+) AS TAR
 WHERE TAR.start_date <= TAR.end_date
 ;
 
