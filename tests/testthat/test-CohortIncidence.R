@@ -1,6 +1,7 @@
 test_that("executeAnalysis() works", {
   
   skip('No suitable test DB implementaton for this test.')
+
   cdmDbFile<- withr::local_tempfile(fileext=".duckdb");
   initDb(cdmDbFile, "resources/dbtest");
   

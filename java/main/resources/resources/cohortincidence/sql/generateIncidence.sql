@@ -5,7 +5,7 @@ from (
 ) O
 ;
 
-select tar_id, tar_start_index, tar_start_offset, tar_end_index, tar_end_offset
+select tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset
 into #tar_ref 
 FROM (
 @tarRefUnion

@@ -1,554 +1,550 @@
-CREATE TABLE @schemaName.concept (
-  concept_id			INTEGER			NOT NULL,
-  concept_name			VARCHAR(255)	NOT NULL,
-  domain_id				VARCHAR(20)		NOT NULL,
-  vocabulary_id			VARCHAR(20)		NOT NULL,
-  concept_class_id		VARCHAR(20)		NOT NULL,
-  standard_concept		VARCHAR(1)		NULL,
-  concept_code			VARCHAR(50)		NOT NULL,
-  valid_start_date		VARCHAR(10)			NOT NULL,
-  valid_end_date		VARCHAR(10)			NOT NULL,
-  invalid_reason		VARCHAR(1)		NULL
-)
-;
+--postgresql CDM DDL Specification for OMOP Common Data Model 5.4
 
-CREATE TABLE @schemaName.vocabulary (
-  vocabulary_id			VARCHAR(20)		NOT NULL,
-  vocabulary_name		VARCHAR(255)	NOT NULL,
-  vocabulary_reference	VARCHAR(255)	NULL,
-  vocabulary_version	VARCHAR(255)	NULL,
-  vocabulary_concept_id	INTEGER			NOT NULL
-)
-;
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.PERSON (
+			person_id integer NOT NULL,
+			gender_concept_id integer NOT NULL,
+			year_of_birth integer NOT NULL,
+			month_of_birth integer NULL,
+			day_of_birth integer NULL,
+			birth_datetime TIMESTAMP NULL,
+			race_concept_id integer NOT NULL,
+			ethnicity_concept_id integer NOT NULL,
+			location_id integer NULL,
+			provider_id integer NULL,
+			care_site_id integer NULL,
+			person_source_value varchar(50) NULL,
+			gender_source_value varchar(50) NULL,
+			gender_source_concept_id integer NULL,
+			race_source_value varchar(50) NULL,
+			race_source_concept_id integer NULL,
+			ethnicity_source_value varchar(50) NULL,
+			ethnicity_source_concept_id integer NULL );
 
-CREATE TABLE @schemaName.domain (
-  domain_id			VARCHAR(20)		NOT NULL,
-  domain_name		VARCHAR(255)	NOT NULL,
-  domain_concept_id	INTEGER			NOT NULL
-)
-;
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.OBSERVATION_PERIOD (
+			observation_period_id integer NOT NULL,
+			person_id integer NOT NULL,
+			observation_period_start_date date NOT NULL,
+			observation_period_end_date date NOT NULL,
+			period_type_concept_id integer NOT NULL );
 
-CREATE TABLE @schemaName.concept_class (
-  concept_class_id			VARCHAR(20)		NOT NULL,
-  concept_class_name		VARCHAR(255)	NOT NULL,
-  concept_class_concept_id	INTEGER			NOT NULL
-)
-;
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.VISIT_OCCURRENCE (
+			visit_occurrence_id integer NOT NULL,
+			person_id integer NOT NULL,
+			visit_concept_id integer NOT NULL,
+			visit_start_date date NOT NULL,
+			visit_start_datetime TIMESTAMP NULL,
+			visit_end_date date NOT NULL,
+			visit_end_datetime TIMESTAMP NULL,
+			visit_type_concept_id Integer NOT NULL,
+			provider_id integer NULL,
+			care_site_id integer NULL,
+			visit_source_value varchar(50) NULL,
+			visit_source_concept_id integer NULL,
+			admitted_from_concept_id integer NULL,
+			admitted_from_source_value varchar(50) NULL,
+			discharged_to_concept_id integer NULL,
+			discharged_to_source_value varchar(50) NULL,
+			preceding_visit_occurrence_id integer NULL );
 
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.VISIT_DETAIL (
+			visit_detail_id integer NOT NULL,
+			person_id integer NOT NULL,
+			visit_detail_concept_id integer NOT NULL,
+			visit_detail_start_date date NOT NULL,
+			visit_detail_start_datetime TIMESTAMP NULL,
+			visit_detail_end_date date NOT NULL,
+			visit_detail_end_datetime TIMESTAMP NULL,
+			visit_detail_type_concept_id integer NOT NULL,
+			provider_id integer NULL,
+			care_site_id integer NULL,
+			visit_detail_source_value varchar(50) NULL,
+			visit_detail_source_concept_id Integer NULL,
+			admitted_from_concept_id Integer NULL,
+			admitted_from_source_value varchar(50) NULL,
+			discharged_to_source_value varchar(50) NULL,
+			discharged_to_concept_id integer NULL,
+			preceding_visit_detail_id integer NULL,
+			parent_visit_detail_id integer NULL,
+			visit_occurrence_id integer NOT NULL );
 
-CREATE TABLE @schemaName.concept_relationship (
-  concept_id_1			INTEGER			NOT NULL,
-  concept_id_2			INTEGER			NOT NULL,
-  relationship_id		VARCHAR(20)		NOT NULL,
-  valid_start_date		VARCHAR(10)			NOT NULL,
-  valid_end_date		VARCHAR(10)			NOT NULL,
-  invalid_reason		VARCHAR(1)		NULL)
-;
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.CONDITION_OCCURRENCE (
+			condition_occurrence_id integer NOT NULL,
+			person_id integer NOT NULL,
+			condition_concept_id integer NOT NULL,
+			condition_start_date date NOT NULL,
+			condition_start_datetime TIMESTAMP NULL,
+			condition_end_date date NULL,
+			condition_end_datetime TIMESTAMP NULL,
+			condition_type_concept_id integer NOT NULL,
+			condition_status_concept_id integer NULL,
+			stop_reason varchar(20) NULL,
+			provider_id integer NULL,
+			visit_occurrence_id integer NULL,
+			visit_detail_id integer NULL,
+			condition_source_value varchar(50) NULL,
+			condition_source_concept_id integer NULL,
+			condition_status_source_value varchar(50) NULL );
 
-CREATE TABLE @schemaName.relationship (
-  relationship_id			VARCHAR(20)		NOT NULL,
-  relationship_name			VARCHAR(255)	NOT NULL,
-  is_hierarchical			VARCHAR(1)		NOT NULL,
-  defines_ancestry			VARCHAR(1)		NOT NULL,
-  reverse_relationship_id	VARCHAR(20)		NOT NULL,
-  relationship_concept_id	INTEGER			NOT NULL
-)
-;
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.DRUG_EXPOSURE (
+			drug_exposure_id integer NOT NULL,
+			person_id integer NOT NULL,
+			drug_concept_id integer NOT NULL,
+			drug_exposure_start_date date NOT NULL,
+			drug_exposure_start_datetime TIMESTAMP NULL,
+			drug_exposure_end_date date NOT NULL,
+			drug_exposure_end_datetime TIMESTAMP NULL,
+			verbatim_end_date date NULL,
+			drug_type_concept_id integer NOT NULL,
+			stop_reason varchar(20) NULL,
+			refills integer NULL,
+			quantity NUMERIC NULL,
+			days_supply integer NULL,
+			sig TEXT NULL,
+			route_concept_id integer NULL,
+			lot_number varchar(50) NULL,
+			provider_id integer NULL,
+			visit_occurrence_id integer NULL,
+			visit_detail_id integer NULL,
+			drug_source_value varchar(50) NULL,
+			drug_source_concept_id integer NULL,
+			route_source_value varchar(50) NULL,
+			dose_unit_source_value varchar(50) NULL );
 
-CREATE TABLE @schemaName.concept_synonym (
-  concept_id			INTEGER			NOT NULL,
-  concept_synonym_name	VARCHAR(1000)	NOT NULL,
-  language_concept_id	INTEGER			NOT NULL
-)
-;
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.PROCEDURE_OCCURRENCE (
+			procedure_occurrence_id integer NOT NULL,
+			person_id integer NOT NULL,
+			procedure_concept_id integer NOT NULL,
+			procedure_date date NOT NULL,
+			procedure_datetime TIMESTAMP NULL,
+			procedure_end_date date NULL,
+			procedure_end_datetime TIMESTAMP NULL,
+			procedure_type_concept_id integer NOT NULL,
+			modifier_concept_id integer NULL,
+			quantity integer NULL,
+			provider_id integer NULL,
+			visit_occurrence_id integer NULL,
+			visit_detail_id integer NULL,
+			procedure_source_value varchar(50) NULL,
+			procedure_source_concept_id integer NULL,
+			modifier_source_value varchar(50) NULL );
 
-CREATE TABLE @schemaName.concept_ancestor (
-  ancestor_concept_id		INTEGER		NOT NULL,
-  descendant_concept_id		INTEGER		NOT NULL,
-  min_levels_of_separation	INTEGER		NOT NULL,
-  max_levels_of_separation	INTEGER		NOT NULL
-)
-;
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.DEVICE_EXPOSURE (
+			device_exposure_id integer NOT NULL,
+			person_id integer NOT NULL,
+			device_concept_id integer NOT NULL,
+			device_exposure_start_date date NOT NULL,
+			device_exposure_start_datetime TIMESTAMP NULL,
+			device_exposure_end_date date NULL,
+			device_exposure_end_datetime TIMESTAMP NULL,
+			device_type_concept_id integer NOT NULL,
+			unique_device_id varchar(255) NULL,
+			production_id varchar(255) NULL,
+			quantity integer NULL,
+			provider_id integer NULL,
+			visit_occurrence_id integer NULL,
+			visit_detail_id integer NULL,
+			device_source_value varchar(50) NULL,
+			device_source_concept_id integer NULL,
+			unit_concept_id integer NULL,
+			unit_source_value varchar(50) NULL,
+			unit_source_concept_id integer NULL );
 
-CREATE TABLE @schemaName.source_to_concept_map (
-  source_code				VARCHAR(50)		NOT NULL,
-  source_concept_id			INTEGER			NOT NULL,
-  source_vocabulary_id		VARCHAR(20)		NOT NULL,
-  source_code_description	VARCHAR(255)	NULL,
-  target_concept_id			INTEGER			NOT NULL,
-  target_vocabulary_id		VARCHAR(20)		NOT NULL,
-  valid_start_date			VARCHAR(10)			NOT NULL,
-  valid_end_date			VARCHAR(10)			NOT NULL,
-  invalid_reason			VARCHAR(1)		NULL
-)
-;
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.MEASUREMENT (
+			measurement_id integer NOT NULL,
+			person_id integer NOT NULL,
+			measurement_concept_id integer NOT NULL,
+			measurement_date date NOT NULL,
+			measurement_datetime TIMESTAMP NULL,
+			measurement_time varchar(10) NULL,
+			measurement_type_concept_id integer NOT NULL,
+			operator_concept_id integer NULL,
+			value_as_number NUMERIC NULL,
+			value_as_concept_id integer NULL,
+			unit_concept_id integer NULL,
+			range_low NUMERIC NULL,
+			range_high NUMERIC NULL,
+			provider_id integer NULL,
+			visit_occurrence_id integer NULL,
+			visit_detail_id integer NULL,
+			measurement_source_value varchar(50) NULL,
+			measurement_source_concept_id integer NULL,
+			unit_source_value varchar(50) NULL,
+			unit_source_concept_id integer NULL,
+			value_source_value varchar(50) NULL,
+			measurement_event_id bigint NULL,
+			meas_event_field_concept_id integer NULL );
 
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.OBSERVATION (
+			observation_id integer NOT NULL,
+			person_id integer NOT NULL,
+			observation_concept_id integer NOT NULL,
+			observation_date date NOT NULL,
+			observation_datetime TIMESTAMP NULL,
+			observation_type_concept_id integer NOT NULL,
+			value_as_number NUMERIC NULL,
+			value_as_string varchar(60) NULL,
+			value_as_concept_id Integer NULL,
+			qualifier_concept_id integer NULL,
+			unit_concept_id integer NULL,
+			provider_id integer NULL,
+			visit_occurrence_id integer NULL,
+			visit_detail_id integer NULL,
+			observation_source_value varchar(50) NULL,
+			observation_source_concept_id integer NULL,
+			unit_source_value varchar(50) NULL,
+			qualifier_source_value varchar(50) NULL,
+			value_source_value varchar(50) NULL,
+			observation_event_id bigint NULL,
+			obs_event_field_concept_id integer NULL );
 
-CREATE TABLE @schemaName.drug_strength (
-  drug_concept_id				INTEGER		NOT NULL,
-  ingredient_concept_id			INTEGER		NOT NULL,
-  amount_value					NUMERIC		NULL,
-  amount_unit_concept_id		INTEGER		NULL,
-  numerator_value				NUMERIC		NULL,
-  numerator_unit_concept_id		INTEGER		NULL,
-  denominator_unit_concept_id	INTEGER		NULL,
-  valid_start_date				VARCHAR(10)		NOT NULL,
-  valid_end_date				VARCHAR(10)		NOT NULL,
-  invalid_reason				VARCHAR(1)	NULL
-)
-;
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.DEATH (
+			person_id integer NOT NULL,
+			death_date date NOT NULL,
+			death_datetime TIMESTAMP NULL,
+			death_type_concept_id integer NULL,
+			cause_concept_id integer NULL,
+			cause_source_value varchar(50) NULL,
+			cause_source_concept_id integer NULL );
 
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.NOTE (
+			note_id integer NOT NULL,
+			person_id integer NOT NULL,
+			note_date date NOT NULL,
+			note_datetime TIMESTAMP NULL,
+			note_type_concept_id integer NOT NULL,
+			note_class_concept_id integer NOT NULL,
+			note_title varchar(250) NULL,
+			note_text TEXT NOT NULL,
+			encoding_concept_id integer NOT NULL,
+			language_concept_id integer NOT NULL,
+			provider_id integer NULL,
+			visit_occurrence_id integer NULL,
+			visit_detail_id integer NULL,
+			note_source_value varchar(50) NULL,
+			note_event_id bigint NULL,
+			note_event_field_concept_id integer NULL );
 
-CREATE TABLE @schemaName.cohort_definition (
-  cohort_definition_id				INTEGER			NOT NULL,
-  cohort_definition_name			VARCHAR(255)	NOT NULL,
-  cohort_definition_description		TEXT	NULL,
-  definition_type_concept_id		INTEGER			NOT NULL,
-  cohort_definition_syntax			TEXT	NULL,
-  subject_concept_id				INTEGER			NOT NULL,
-  cohort_initiation_date			VARCHAR(10)			NULL
-)
-;
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.NOTE_NLP (
+			note_nlp_id integer NOT NULL,
+			note_id integer NOT NULL,
+			section_concept_id integer NULL,
+			snippet varchar(250) NULL,
+			"offset" varchar(50) NULL,
+			lexical_variant varchar(250) NOT NULL,
+			note_nlp_concept_id integer NULL,
+			note_nlp_source_concept_id integer NULL,
+			nlp_system varchar(250) NULL,
+			nlp_date date NOT NULL,
+			nlp_datetime TIMESTAMP NULL,
+			term_exists varchar(1) NULL,
+			term_temporal varchar(50) NULL,
+			term_modifiers varchar(2000) NULL );
 
-CREATE TABLE @schemaName.attribute_definition (
-  attribute_definition_id		INTEGER			NOT NULL,
-  attribute_name				VARCHAR(255)	NOT NULL,
-  attribute_description			TEXT	NULL,
-  attribute_type_concept_id		INTEGER			NOT NULL,
-  attribute_syntax				TEXT	NULL
-)
-;
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.SPECIMEN (
+			specimen_id integer NOT NULL,
+			person_id integer NOT NULL,
+			specimen_concept_id integer NOT NULL,
+			specimen_type_concept_id integer NOT NULL,
+			specimen_date date NOT NULL,
+			specimen_datetime TIMESTAMP NULL,
+			quantity NUMERIC NULL,
+			unit_concept_id integer NULL,
+			anatomic_site_concept_id integer NULL,
+			disease_status_concept_id integer NULL,
+			specimen_source_id varchar(50) NULL,
+			specimen_source_value varchar(50) NULL,
+			unit_source_value varchar(50) NULL,
+			anatomic_site_source_value varchar(50) NULL,
+			disease_status_source_value varchar(50) NULL );
 
-CREATE TABLE @schemaName.cdm_source 
-    (  
-     cdm_source_name					VARCHAR(255)	NOT NULL,
-	 cdm_source_abbreviation			VARCHAR(25)		NULL,
-	 cdm_holder							VARCHAR(255)	NULL,
-	 source_description					TEXT	NULL,
-	 source_documentation_reference		VARCHAR(255)	NULL,
-	 cdm_etl_reference					VARCHAR(255)	NULL,
-	 source_release_date				VARCHAR(10)			NULL,
-	 cdm_release_date					VARCHAR(10)			NULL,
-	 cdm_version						VARCHAR(10)		NULL,
-	 vocabulary_version					VARCHAR(20)		NULL
-    ) 
-;
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.FACT_RELATIONSHIP (
+			domain_concept_id_1 integer NOT NULL,
+			fact_id_1 integer NOT NULL,
+			domain_concept_id_2 integer NOT NULL,
+			fact_id_2 integer NOT NULL,
+			relationship_concept_id integer NOT NULL );
 
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.LOCATION (
+			location_id integer NOT NULL,
+			address_1 varchar(50) NULL,
+			address_2 varchar(50) NULL,
+			city varchar(50) NULL,
+			state varchar(2) NULL,
+			zip varchar(9) NULL,
+			county varchar(20) NULL,
+			location_source_value varchar(50) NULL,
+			country_concept_id integer NULL,
+			country_source_value varchar(80) NULL,
+			latitude NUMERIC NULL,
+			longitude NUMERIC NULL );
 
-CREATE TABLE @schemaName.person (
-  person_id integer NOT NULL,
-  gender_concept_id integer NOT NULL,
-  year_of_birth integer NOT NULL,
-  month_of_birth integer NULL,
-  day_of_birth integer NULL,
-  birth_datetime datetime NULL,
-  race_concept_id integer NOT NULL,
-  ethnicity_concept_id integer NOT NULL,
-  location_id integer NULL,
-  provider_id integer NULL,
-  care_site_id integer NULL,
-  person_source_value varchar(50) NULL,
-  gender_source_value varchar(50) NULL,
-  gender_source_concept_id integer NULL,
-  race_source_value varchar(50) NULL,
-  race_source_concept_id integer NULL,
-  ethnicity_source_value varchar(50) NULL,
-  ethnicity_source_concept_id integer NULL 
-);
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.CARE_SITE (
+			care_site_id integer NOT NULL,
+			care_site_name varchar(255) NULL,
+			place_of_service_concept_id integer NULL,
+			location_id integer NULL,
+			care_site_source_value varchar(50) NULL,
+			place_of_service_source_value varchar(50) NULL );
 
-CREATE TABLE @schemaName.observation_period 
-    ( 
-     observation_period_id				INTEGER		NOT NULL , 
-     person_id							INTEGER		NOT NULL , 
-     observation_period_start_date		VARCHAR(10)		NOT NULL , 
-     observation_period_end_date		VARCHAR(10)		NOT NULL ,
-	 period_type_concept_id				INTEGER		NOT NULL
-    ) 
-;
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.PROVIDER (
+			provider_id integer NOT NULL,
+			provider_name varchar(255) NULL,
+			npi varchar(20) NULL,
+			dea varchar(20) NULL,
+			specialty_concept_id integer NULL,
+			care_site_id integer NULL,
+			year_of_birth integer NULL,
+			gender_concept_id integer NULL,
+			provider_source_value varchar(50) NULL,
+			specialty_source_value varchar(50) NULL,
+			specialty_source_concept_id integer NULL,
+			gender_source_value varchar(50) NULL,
+			gender_source_concept_id integer NULL );
 
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.PAYER_PLAN_PERIOD (
+			payer_plan_period_id integer NOT NULL,
+			person_id integer NOT NULL,
+			payer_plan_period_start_date date NOT NULL,
+			payer_plan_period_end_date date NOT NULL,
+			payer_concept_id integer NULL,
+			payer_source_value varchar(50) NULL,
+			payer_source_concept_id integer NULL,
+			plan_concept_id integer NULL,
+			plan_source_value varchar(50) NULL,
+			plan_source_concept_id integer NULL,
+			sponsor_concept_id integer NULL,
+			sponsor_source_value varchar(50) NULL,
+			sponsor_source_concept_id integer NULL,
+			family_source_value varchar(50) NULL,
+			stop_reason_concept_id integer NULL,
+			stop_reason_source_value varchar(50) NULL,
+			stop_reason_source_concept_id integer NULL );
 
-CREATE TABLE @schemaName.specimen
-    ( 
-     specimen_id						INTEGER			NOT NULL ,
-	 person_id							INTEGER			NOT NULL ,
-	 specimen_concept_id				INTEGER			NOT NULL ,
-	 specimen_type_concept_id			INTEGER			NOT NULL ,
-	 specimen_date						VARCHAR(10)			NOT NULL ,
-	 specimen_time						VARCHAR(10)		NULL ,
-	 quantity							NUMERIC			NULL ,
-	 unit_concept_id					INTEGER			NULL ,
-	 anatomic_site_concept_id			INTEGER			NULL ,
-	 disease_status_concept_id			INTEGER			NULL ,
-	 specimen_source_id					VARCHAR(50)		NULL ,
-	 specimen_source_value				VARCHAR(50)		NULL ,
-	 unit_source_value					VARCHAR(50)		NULL ,
-	 anatomic_site_source_value			VARCHAR(50)		NULL ,
-	 disease_status_source_value		VARCHAR(50)		NULL
-	)
-;
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.COST (
+			cost_id integer NOT NULL,
+			cost_event_id integer NOT NULL,
+			cost_domain_id varchar(20) NOT NULL,
+			cost_type_concept_id integer NOT NULL,
+			currency_concept_id integer NULL,
+			total_charge NUMERIC NULL,
+			total_cost NUMERIC NULL,
+			total_paid NUMERIC NULL,
+			paid_by_payer NUMERIC NULL,
+			paid_by_patient NUMERIC NULL,
+			paid_patient_copay NUMERIC NULL,
+			paid_patient_coinsurance NUMERIC NULL,
+			paid_patient_deductible NUMERIC NULL,
+			paid_by_primary NUMERIC NULL,
+			paid_ingredient_cost NUMERIC NULL,
+			paid_dispensing_fee NUMERIC NULL,
+			payer_plan_period_id integer NULL,
+			amount_allowed NUMERIC NULL,
+			revenue_code_concept_id integer NULL,
+			revenue_code_source_value varchar(50) NULL,
+			drg_concept_id integer NULL,
+			drg_source_value varchar(3) NULL );
 
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.DRUG_ERA (
+			drug_era_id integer NOT NULL,
+			person_id integer NOT NULL,
+			drug_concept_id integer NOT NULL,
+			drug_era_start_date TIMESTAMP NOT NULL,
+			drug_era_end_date TIMESTAMP NOT NULL,
+			drug_exposure_count integer NULL,
+			gap_days integer NULL );
 
-CREATE TABLE @schemaName.death 
-    ( 
-     person_id							INTEGER			NOT NULL , 
-     death_date							VARCHAR(10)			NOT NULL , 
-     death_type_concept_id				INTEGER			NOT NULL , 
-     cause_concept_id					INTEGER			NULL , 
-     cause_source_value					VARCHAR(50)		NULL,
-	 cause_source_concept_id			INTEGER			NULL
-    ) 
-;
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.DOSE_ERA (
+			dose_era_id integer NOT NULL,
+			person_id integer NOT NULL,
+			drug_concept_id integer NOT NULL,
+			unit_concept_id integer NOT NULL,
+			dose_value NUMERIC NOT NULL,
+			dose_era_start_date TIMESTAMP NOT NULL,
+			dose_era_end_date TIMESTAMP NOT NULL );
 
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.CONDITION_ERA (
+			condition_era_id integer NOT NULL,
+			person_id integer NOT NULL,
+			condition_concept_id integer NOT NULL,
+			condition_era_start_date TIMESTAMP NOT NULL,
+			condition_era_end_date TIMESTAMP NOT NULL,
+			condition_occurrence_count integer NULL );
 
-CREATE TABLE @schemaName.visit_occurrence 
-    ( 
-     visit_occurrence_id			INTEGER			NOT NULL , 
-     person_id						INTEGER			NOT NULL , 
-     visit_concept_id				INTEGER			NOT NULL , 
-	 visit_start_date				VARCHAR(10)			NOT NULL , 
-	 visit_start_time				VARCHAR(10)		NULL ,
-     visit_end_date					VARCHAR(10)			NOT NULL ,
-	 visit_end_time					VARCHAR(10)		NULL , 
-	 visit_type_concept_id			INTEGER			NOT NULL ,
-	 provider_id					INTEGER			NULL,
-     care_site_id					INTEGER			NULL, 
-     visit_source_value				VARCHAR(50)		NULL,
-	 visit_source_concept_id		INTEGER			NULL
-    ) 
-;
+--HINT DISTRIBUTE ON KEY (person_id)
+CREATE TABLE @schemaName.EPISODE (
+			episode_id bigint NOT NULL,
+			person_id bigint NOT NULL,
+			episode_concept_id integer NOT NULL,
+			episode_start_date date NOT NULL,
+			episode_start_datetime TIMESTAMP NULL,
+			episode_end_date date NULL,
+			episode_end_datetime TIMESTAMP NULL,
+			episode_parent_id bigint NULL,
+			episode_number integer NULL,
+			episode_object_concept_id integer NOT NULL,
+			episode_type_concept_id integer NOT NULL,
+			episode_source_value varchar(50) NULL,
+			episode_source_concept_id integer NULL );
 
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.EPISODE_EVENT (
+			episode_id bigint NOT NULL,
+			event_id bigint NOT NULL,
+			episode_event_field_concept_id integer NOT NULL );
 
-CREATE TABLE @schemaName.procedure_occurrence 
-    ( 
-     procedure_occurrence_id		INTEGER			NOT NULL , 
-     person_id						INTEGER			NOT NULL , 
-     procedure_concept_id			INTEGER			NOT NULL , 
-     procedure_date					VARCHAR(10)			NOT NULL , 
-     procedure_type_concept_id		INTEGER			NOT NULL ,
-	 modifier_concept_id			INTEGER			NULL ,
-	 quantity						INTEGER			NULL , 
-     provider_id					INTEGER			NULL , 
-     visit_occurrence_id			INTEGER			NULL , 
-     procedure_source_value			VARCHAR(50)		NULL ,
-	 procedure_source_concept_id	INTEGER			NULL ,
-	 qualifier_source_value			VARCHAR(50)		NULL
-    ) 
-;
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.METADATA (
+			metadata_id integer NOT NULL,
+			metadata_concept_id integer NOT NULL,
+			metadata_type_concept_id integer NOT NULL,
+			name varchar(250) NOT NULL,
+			value_as_string varchar(250) NULL,
+			value_as_concept_id integer NULL,
+			value_as_number NUMERIC NULL,
+			metadata_date date NULL,
+			metadata_datetime TIMESTAMP NULL );
 
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.CDM_SOURCE (
+			cdm_source_name varchar(255) NOT NULL,
+			cdm_source_abbreviation varchar(25) NOT NULL,
+			cdm_holder varchar(255) NOT NULL,
+			source_description TEXT NULL,
+			source_documentation_reference varchar(255) NULL,
+			cdm_etl_reference varchar(255) NULL,
+			source_release_date date NOT NULL,
+			cdm_release_date date NOT NULL,
+			cdm_version varchar(10) NULL,
+			cdm_version_concept_id integer NOT NULL,
+			vocabulary_version varchar(20) NOT NULL );
 
-CREATE TABLE @schemaName.drug_exposure 
-    ( 
-     drug_exposure_id				INTEGER			NOT NULL , 
-     person_id						INTEGER			NOT NULL , 
-     drug_concept_id				INTEGER			NOT NULL , 
-     drug_exposure_start_date		VARCHAR(10)			NOT NULL , 
-     drug_exposure_end_date			VARCHAR(10)			NULL , 
-     drug_type_concept_id			INTEGER			NOT NULL , 
-     stop_reason					VARCHAR(20)		NULL , 
-     refills						INTEGER			NULL , 
-     quantity						NUMERIC			NULL , 
-     days_supply					INTEGER			NULL , 
-     sig							TEXT	NULL , 
-	 route_concept_id				INTEGER			NULL ,
-	 effective_drug_dose			NUMERIC			NULL ,
-	 dose_unit_concept_id			INTEGER			NULL ,
-	 lot_number						VARCHAR(50)		NULL ,
-     provider_id					INTEGER			NULL , 
-     visit_occurrence_id			INTEGER			NULL , 
-     drug_source_value				VARCHAR(50)		NULL ,
-	 drug_source_concept_id			INTEGER			NULL ,
-	 route_source_value				VARCHAR(50)		NULL ,
-	 dose_unit_source_value			VARCHAR(50)		NULL
-    ) 
-;
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.CONCEPT (
+			concept_id integer NOT NULL,
+			concept_name varchar(255) NOT NULL,
+			domain_id varchar(20) NOT NULL,
+			vocabulary_id varchar(20) NOT NULL,
+			concept_class_id varchar(20) NOT NULL,
+			standard_concept varchar(1) NULL,
+			concept_code varchar(50) NOT NULL,
+			valid_start_date date NOT NULL,
+			valid_end_date date NOT NULL,
+			invalid_reason varchar(1) NULL );
 
-CREATE TABLE @schemaName.device_exposure 
-    ( 
-     device_exposure_id				INTEGER			NOT NULL , 
-     person_id						INTEGER			NOT NULL , 
-     device_concept_id				INTEGER			NOT NULL , 
-     device_exposure_start_date		VARCHAR(10)			NOT NULL , 
-     device_exposure_end_date		VARCHAR(10)			NULL , 
-     device_type_concept_id			INTEGER			NOT NULL , 
-     unique_device_id      VARCHAR(50)		NULL ,
-     quantity						INTEGER			NULL ,
-     provider_id					INTEGER			NULL , 
-     visit_occurrence_id			INTEGER			NULL , 
-     device_source_value			VARCHAR(100)	NULL ,
-	 device_source_concept_id		INTEGER			NULL
-    ) 
-;
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.VOCABULARY (
+			vocabulary_id varchar(20) NOT NULL,
+			vocabulary_name varchar(255) NOT NULL,
+			vocabulary_reference varchar(255) NULL,
+			vocabulary_version varchar(255) NULL,
+			vocabulary_concept_id integer NOT NULL );
 
-CREATE TABLE @schemaName.condition_occurrence 
-    ( 
-     condition_occurrence_id		INTEGER			NOT NULL , 
-     person_id						INTEGER			NOT NULL , 
-     condition_concept_id			INTEGER			NOT NULL , 
-     condition_start_date			VARCHAR(10)			NOT NULL , 
-     condition_end_date				VARCHAR(10)			NULL , 
-     condition_type_concept_id		INTEGER			NOT NULL , 
-     stop_reason					VARCHAR(20)		NULL , 
-     provider_id					INTEGER			NULL , 
-     visit_occurrence_id			INTEGER			NULL , 
-     condition_source_value			VARCHAR(50)		NULL ,
-     condition_source_concept_id	INTEGER			NULL
-    ) 
-;
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.DOMAIN (
+			domain_id varchar(20) NOT NULL,
+			domain_name varchar(255) NOT NULL,
+			domain_concept_id integer NOT NULL );
 
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.CONCEPT_CLASS (
+			concept_class_id varchar(20) NOT NULL,
+			concept_class_name varchar(255) NOT NULL,
+			concept_class_concept_id integer NOT NULL );
 
-CREATE TABLE @schemaName.measurement 
-    ( 
-     measurement_id					INTEGER			NOT NULL , 
-     person_id						INTEGER			NOT NULL , 
-     measurement_concept_id			INTEGER			NOT NULL , 
-     measurement_date				VARCHAR(10)			NOT NULL , 
-     measurement_time				VARCHAR(10)		NULL ,
-	 measurement_type_concept_id	INTEGER			NOT NULL ,
-	 operator_concept_id			INTEGER			NULL , 
-     value_as_number				NUMERIC			NULL , 
-     value_as_concept_id			INTEGER			NULL , 
-     unit_concept_id				INTEGER			NULL , 
-     range_low						NUMERIC			NULL , 
-     range_high						NUMERIC			NULL , 
-     provider_id					INTEGER			NULL , 
-     visit_occurrence_id			INTEGER			NULL ,  
-     measurement_source_value		VARCHAR(50)		NULL , 
-	 measurement_source_concept_id	INTEGER			NULL ,
-     unit_source_value				VARCHAR(50)		NULL ,
-	 value_source_value				VARCHAR(50)		NULL
-    ) 
-;
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.CONCEPT_RELATIONSHIP (
+			concept_id_1 integer NOT NULL,
+			concept_id_2 integer NOT NULL,
+			relationship_id varchar(20) NOT NULL,
+			valid_start_date date NOT NULL,
+			valid_end_date date NOT NULL,
+			invalid_reason varchar(1) NULL );
 
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.RELATIONSHIP (
+			relationship_id varchar(20) NOT NULL,
+			relationship_name varchar(255) NOT NULL,
+			is_hierarchical varchar(1) NOT NULL,
+			defines_ancestry varchar(1) NOT NULL,
+			reverse_relationship_id varchar(20) NOT NULL,
+			relationship_concept_id integer NOT NULL );
 
-CREATE TABLE @schemaName.note 
-    ( 
-     note_id						INTEGER			NOT NULL , 
-     person_id						INTEGER			NOT NULL , 
-     note_date						VARCHAR(10)			NOT NULL ,
-	 note_time						VARCHAR(10)		NULL ,
-	 note_type_concept_id			INTEGER			NOT NULL ,
-	 note_text						TEXT	NOT NULL ,
-     provider_id					INTEGER			NULL ,
-	 visit_occurrence_id			INTEGER			NULL ,
-	 note_source_value				VARCHAR(50)		NULL
-    ) 
-;
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.CONCEPT_SYNONYM (
+			concept_id integer NOT NULL,
+			concept_synonym_name varchar(1000) NOT NULL,
+			language_concept_id integer NOT NULL );
 
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.CONCEPT_ANCESTOR (
+			ancestor_concept_id integer NOT NULL,
+			descendant_concept_id integer NOT NULL,
+			min_levels_of_separation integer NOT NULL,
+			max_levels_of_separation integer NOT NULL );
 
-CREATE TABLE @schemaName.observation 
-    ( 
-     observation_id					INTEGER			NOT NULL , 
-     person_id						INTEGER			NOT NULL , 
-     observation_concept_id			INTEGER			NOT NULL , 
-     observation_date				VARCHAR(10)			NOT NULL , 
-     observation_time				VARCHAR(10)		NULL , 
-     observation_type_concept_id	INTEGER			NOT NULL , 
-	 value_as_number				NUMERIC			NULL , 
-     value_as_string				VARCHAR(60)		NULL , 
-     value_as_concept_id			INTEGER			NULL , 
-	 qualifier_concept_id			INTEGER			NULL ,
-     unit_concept_id				INTEGER			NULL , 
-     provider_id					INTEGER			NULL , 
-     visit_occurrence_id			INTEGER			NULL , 
-     observation_source_value		VARCHAR(50)		NULL ,
-	 observation_source_concept_id	INTEGER			NULL , 
-     unit_source_value				VARCHAR(50)		NULL ,
-	 qualifier_source_value			VARCHAR(50)		NULL
-    ) 
-;
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.SOURCE_TO_CONCEPT_MAP (
+			source_code varchar(50) NOT NULL,
+			source_concept_id integer NOT NULL,
+			source_vocabulary_id varchar(20) NOT NULL,
+			source_code_description varchar(255) NULL,
+			target_concept_id integer NOT NULL,
+			target_vocabulary_id varchar(20) NOT NULL,
+			valid_start_date date NOT NULL,
+			valid_end_date date NOT NULL,
+			invalid_reason varchar(1) NULL );
 
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.DRUG_STRENGTH (
+			drug_concept_id integer NOT NULL,
+			ingredient_concept_id integer NOT NULL,
+			amount_value NUMERIC NULL,
+			amount_unit_concept_id integer NULL,
+			numerator_value NUMERIC NULL,
+			numerator_unit_concept_id integer NULL,
+			denominator_value NUMERIC NULL,
+			denominator_unit_concept_id integer NULL,
+			box_size integer NULL,
+			valid_start_date date NOT NULL,
+			valid_end_date date NOT NULL,
+			invalid_reason varchar(1) NULL );
 
-CREATE TABLE @schemaName.fact_relationship 
-    ( 
-     domain_concept_id_1			INTEGER			NOT NULL , 
-	 fact_id_1						INTEGER			NOT NULL ,
-	 domain_concept_id_2			INTEGER			NOT NULL ,
-	 fact_id_2						INTEGER			NOT NULL ,
-	 relationship_concept_id		INTEGER			NOT NULL
-	)
-;
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.COHORT (
+			cohort_definition_id integer NOT NULL,
+			subject_id integer NOT NULL,
+			cohort_start_date date NOT NULL,
+			cohort_end_date date NOT NULL );
 
-CREATE TABLE @schemaName.location 
-    ( 
-     location_id					INTEGER			NOT NULL , 
-     address_1						VARCHAR(50)		NULL , 
-     address_2						VARCHAR(50)		NULL , 
-     city							VARCHAR(50)		NULL , 
-     state							VARCHAR(2)		NULL , 
-     zip							VARCHAR(9)		NULL , 
-     county							VARCHAR(20)		NULL , 
-     location_source_value			VARCHAR(50)		NULL
-    ) 
-;
-
-CREATE TABLE @schemaName.care_site 
-    ( 
-     care_site_id						INTEGER			NOT NULL , 
-	 care_site_name						VARCHAR(255)	NULL ,
-     place_of_service_concept_id		INTEGER			NULL ,
-     location_id						INTEGER			NULL , 
-     care_site_source_value				VARCHAR(50)		NULL , 
-     place_of_service_source_value		VARCHAR(50)		NULL
-    ) 
-;
-
-
-CREATE TABLE @schemaName.provider 
-    ( 
-     provider_id					INTEGER			NOT NULL ,
-	 provider_name					VARCHAR(255)	NULL , 
-     NPI							VARCHAR(20)		NULL , 
-     DEA							VARCHAR(20)		NULL , 
-     specialty_concept_id			INTEGER			NULL , 
-     care_site_id					INTEGER			NULL , 
-	 year_of_birth					INTEGER			NULL ,
-	 gender_concept_id				INTEGER			NULL ,
-     provider_source_value			VARCHAR(50)		NULL , 
-     specialty_source_value			VARCHAR(50)		NULL ,
-	 specialty_source_concept_id	INTEGER			NULL , 
-	 gender_source_value			VARCHAR(50)		NULL ,
-	 gender_source_concept_id		INTEGER			NULL
-    ) 
-;
-
-CREATE TABLE @schemaName.payer_plan_period 
-    ( 
-     payer_plan_period_id			INTEGER			NOT NULL , 
-     person_id						INTEGER			NOT NULL , 
-     payer_plan_period_start_date	VARCHAR(10)			NOT NULL , 
-     payer_plan_period_end_date		VARCHAR(10)			NOT NULL , 
-     payer_source_value				VARCHAR (50)	NULL , 
-     plan_source_value				VARCHAR (50)	NULL , 
-     family_source_value			VARCHAR (50)	NULL 
-    ) 
-;
-
-
-CREATE TABLE @schemaName.visit_cost 
-    ( 
-     visit_cost_id					INTEGER			NOT NULL , 
-     visit_occurrence_id			INTEGER			NOT NULL , 
-	 currency_concept_id			INTEGER			NULL ,
-     paid_copay						NUMERIC			NULL , 
-     paid_coinsurance				NUMERIC			NULL , 
-     paid_toward_deductible			NUMERIC			NULL , 
-     paid_by_payer					NUMERIC			NULL , 
-     paid_by_coordination_benefits	NUMERIC			NULL , 
-     total_out_of_pocket			NUMERIC			NULL , 
-     total_paid						NUMERIC			NULL ,  
-     payer_plan_period_id			INTEGER			NULL
-    ) 
-;
-
-
-CREATE TABLE @schemaName.procedure_cost 
-    ( 
-     procedure_cost_id				INTEGER			NOT NULL , 
-     procedure_occurrence_id		INTEGER			NOT NULL , 
-     currency_concept_id			INTEGER			NULL ,
-     paid_copay						NUMERIC			NULL , 
-     paid_coinsurance				NUMERIC			NULL , 
-     paid_toward_deductible			NUMERIC			NULL , 
-     paid_by_payer					NUMERIC			NULL , 
-     paid_by_coordination_benefits	NUMERIC			NULL , 
-     total_out_of_pocket			NUMERIC			NULL , 
-     total_paid						NUMERIC			NULL ,
-	 revenue_code_concept_id		INTEGER			NULL ,  
-     payer_plan_period_id			INTEGER			NULL ,
-	 revenue_code_source_value		VARCHAR(50)		NULL
-	) 
-;
-
-CREATE TABLE @schemaName.drug_cost 
-    (
-     drug_cost_id					INTEGER			NOT NULL , 
-     drug_exposure_id				INTEGER			NOT NULL , 
-     currency_concept_id			INTEGER			NULL ,
-     paid_copay						NUMERIC			NULL , 
-     paid_coinsurance				NUMERIC			NULL , 
-     paid_toward_deductible			NUMERIC			NULL , 
-     paid_by_payer					NUMERIC			NULL , 
-     paid_by_coordination_benefits	NUMERIC			NULL , 
-     total_out_of_pocket			NUMERIC			NULL , 
-     total_paid						NUMERIC			NULL , 
-     ingredient_cost				NUMERIC			NULL , 
-     dispensing_fee					NUMERIC			NULL , 
-     average_wholesale_price		NUMERIC			NULL , 
-     payer_plan_period_id			INTEGER			NULL
-    ) 
-;
-
-CREATE TABLE @schemaName.device_cost 
-    (
-     device_cost_id					INTEGER			NOT NULL , 
-     device_exposure_id				INTEGER			NOT NULL , 
-     currency_concept_id			INTEGER			NULL ,
-     paid_copay						NUMERIC			NULL , 
-     paid_coinsurance				NUMERIC			NULL , 
-     paid_toward_deductible			NUMERIC			NULL , 
-     paid_by_payer					NUMERIC			NULL , 
-     paid_by_coordination_benefits	NUMERIC			NULL , 
-     total_out_of_pocket			NUMERIC			NULL , 
-     total_paid						NUMERIC			NULL , 
-     payer_plan_period_id			INTEGER			NULL
-    ) 
-;
-
-
-CREATE TABLE @schemaName.cohort 
-    ( 
-	 cohort_definition_id			INTEGER			NOT NULL , 
-     subject_id						INTEGER			NOT NULL ,
-	 cohort_start_date				VARCHAR(10)			NOT NULL , 
-     cohort_end_date				VARCHAR(10)			NOT NULL
-    ) 
-;
-
-
-CREATE TABLE @schemaName.cohort_attribute 
-    ( 
-	 cohort_definition_id			INTEGER			NOT NULL , 
-     cohort_start_date				VARCHAR(10)			NOT NULL , 
-     cohort_end_date				VARCHAR(10)			NOT NULL , 
-     subject_id						INTEGER			NOT NULL , 
-     attribute_definition_id		INTEGER			NOT NULL ,
-	 value_as_number				NUMERIC			NULL ,
-	 value_as_concept_id			INTEGER			NULL
-    ) 
-;
-
-CREATE TABLE @schemaName.drug_era 
-    ( 
-     drug_era_id					INTEGER			NOT NULL , 
-     person_id						INTEGER			NOT NULL , 
-     drug_concept_id				INTEGER			NOT NULL , 
-     drug_era_start_date			VARCHAR(10)			NOT NULL , 
-     drug_era_end_date				VARCHAR(10)			NOT NULL , 
-     drug_exposure_count			INTEGER			NULL ,
-	 gap_days						INTEGER			NULL
-    ) 
-;
-
-CREATE TABLE @schemaName.dose_era 
-    (
-     dose_era_id					INTEGER			NOT NULL , 
-     person_id						INTEGER			NOT NULL , 
-     drug_concept_id				INTEGER			NOT NULL , 
-	 unit_concept_id				INTEGER			NOT NULL ,
-	 dose_value						NUMERIC			NOT NULL ,
-     dose_era_start_date			VARCHAR(10)			NOT NULL , 
-     dose_era_end_date				VARCHAR(10)			NOT NULL 
-    ) 
-;
-
-
-CREATE TABLE @schemaName.condition_era 
-    ( 
-     condition_era_id				INTEGER			NOT NULL , 
-     person_id						INTEGER			NOT NULL , 
-     condition_concept_id			INTEGER			NOT NULL , 
-     condition_era_start_date		VARCHAR(10)			NOT NULL , 
-     condition_era_end_date			VARCHAR(10)			NOT NULL , 
-     condition_occurrence_count		INTEGER			NULL
-    ) 
-;
+--HINT DISTRIBUTE ON RANDOM
+CREATE TABLE @schemaName.COHORT_DEFINITION (
+			cohort_definition_id integer NOT NULL,
+			cohort_definition_name varchar(255) NOT NULL,
+			cohort_definition_description TEXT NULL,
+			definition_type_concept_id integer NOT NULL,
+			cohort_definition_syntax TEXT NULL,
+			subject_concept_id integer NOT NULL,
+			cohort_initiation_date date NULL );

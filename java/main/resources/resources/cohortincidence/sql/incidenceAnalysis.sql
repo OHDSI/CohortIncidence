@@ -35,33 +35,33 @@ FROM (
 		tar1.tar_id,
 		subject_id,
 		case 
-			when tar1.tar_start_index = 1 then
+			when tar1.tar_start_with = 'start' then
 				case when dateadd(dd,tar1.tar_start_offset,tc1.cohort_start_date) < op1.observation_period_end_date then dateadd(dd,tar1.tar_start_offset,tc1.cohort_start_date)
 					when dateadd(dd,tar1.tar_start_offset,tc1.cohort_start_date) >= op1.observation_period_end_date then op1.observation_period_end_date
 				end
-			when tar1.tar_start_index = 0 then
+			when tar1.tar_start_with = 'end' then
 				case when dateadd(dd,tar1.tar_start_offset,tc1.cohort_end_date) < op1.observation_period_end_date then dateadd(dd,tar1.tar_start_offset,tc1.cohort_end_date)
 					when dateadd(dd,tar1.tar_start_offset,tc1.cohort_end_date) >= op1.observation_period_end_date then op1.observation_period_end_date
 				end
 			else null --shouldnt get here if tar set properly
 		end as start_date,
 		case 
-			when tar1.tar_end_index = 1 then
+			when tar1.tar_end_with = 'start' then
 				case when dateadd(dd,tar1.tar_end_offset,tc1.cohort_start_date) < op1.observation_period_end_date then dateadd(dd,tar1.tar_end_offset,tc1.cohort_start_date)
 					when dateadd(dd,tar1.tar_end_offset,tc1.cohort_start_date) >= op1.observation_period_end_date then op1.observation_period_end_date
 				end
-			when tar1.tar_end_index = 0 then
+			when tar1.tar_end_with = 'end' then
 				case when dateadd(dd,tar1.tar_end_offset,tc1.cohort_end_date) < op1.observation_period_end_date then dateadd(dd,tar1.tar_end_offset,tc1.cohort_end_date)
 					when dateadd(dd,tar1.tar_end_offset,tc1.cohort_end_date) >= op1.observation_period_end_date then op1.observation_period_end_date
 				end
 			else null --shouldnt get here if tar set properly
 		end as end_date
-	from (select tar_id, tar_start_index, tar_start_offset, tar_end_index, tar_end_offset  from #tar_ref where tar_id in (@timeAtRiskIds)) AS tar1,
-	(select cohort_definition_id, subject_id, cohort_start_date, cohort_end_date from @targetCohortTable where cohort_definition_id in (@targetIds)) AS tc1
+	from (select tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset  from #tar_ref where tar_id in (@timeAtRiskIds)) tar1,
+	(select cohort_definition_id, subject_id, cohort_start_date, cohort_end_date from @targetCohortTable where cohort_definition_id in (@targetIds)) tc1
 	inner join @cdm_database_schema.observation_period op1 on tc1.subject_id = op1.person_id
 		and tc1.cohort_start_date >= op1.observation_period_start_date
 		and tc1.cohort_start_date <= op1.observation_period_end_date
-) AS TAR
+) TAR
 WHERE TAR.start_date <= TAR.end_date
 ;
 
@@ -437,9 +437,9 @@ select t1.target_cohort_definition_id,
   t1.target_name,
 	tar1.tar_id,
 	tar1.tar_start_offset,
-	tar1.tar_start_index,
+	tar1.tar_start_with,
 	tar1.tar_end_offset,
-	tar1.tar_end_index,
+	tar1.tar_end_with,
 	s1.subgroup_id,
 	s1.subgroup_name,
 	o1.outcome_id,
@@ -448,7 +448,7 @@ select t1.target_cohort_definition_id,
 	o1.clean_window
 into #tscotar_ref
 from (select target_cohort_definition_id, target_name from #target_ref where target_cohort_definition_id in (@targetIds))  t1,
-	(select tar_id, tar_start_offset, tar_start_index, tar_end_offset, tar_end_index from #tar_ref where tar_id in (@timeAtRiskIds)) tar1,
+	(select tar_id, tar_start_offset, tar_start_with, tar_end_offset, tar_end_with from #tar_ref where tar_id in (@timeAtRiskIds)) tar1,
 	(select subgroup_id, subgroup_name from #subgroup_ref) s1,
 	(select outcome_id, outcome_cohort_definition_id, outcome_name, clean_window from #outcome_ref where outcome_id in (@outcomeIds)) o1
 ;
@@ -496,16 +496,16 @@ from (
 	@strataQueries
 ) IR;
 
-insert into @results_database_schema.incidence_summary (ref_id, database_name, target_cohort_definition_id, target_name,
-	tar_id, tar_start_offset, tar_start_index, tar_end_offset, tar_end_index, 
+insert into @results_database_schema.incidence_summary (ref_id, source_name, target_cohort_definition_id, target_name,
+	tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset, 
 	subgroup_id, subgroup_name,
 	outcome_id, outcome_cohort_definition_id, outcome_name, clean_window,
 	age_id, age_group_name, gender_id, gender_name, start_year,
 	persons_at_risk_pe, persons_at_risk, person_days_pe, person_days, 
 	person_outcomes_pe, person_outcomes, outcomes_pe, outcomes,
 	incidence_proportion_p100p, incidence_rate_p100py)
-select CAST(@ref_id as int) as ref_id, '@databaseName' as database_name, tref.target_cohort_definition_id, tref.target_name,
-	tref.tar_id, tref.tar_start_offset, tref.tar_start_index, tref.tar_end_offset, tref.tar_end_index,
+select CAST(@ref_id as int) as ref_id, '@sourceName' as source_name, tref.target_cohort_definition_id, tref.target_name,
+	tref.tar_id, tref.tar_start_with, tref.tar_start_offset, tref.tar_end_with, tref.tar_end_offset,
 	tref.subgroup_id, tref.subgroup_name,
 	tref.outcome_id, tref.outcome_cohort_definition_id, tref.outcome_name, tref.clean_window,
 	irs.age_id, ag.group_name, irs.gender_id, c.concept_name as gender_name, irs.start_year,

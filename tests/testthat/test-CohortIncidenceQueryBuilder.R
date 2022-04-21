@@ -4,11 +4,14 @@ test_that("buildOptions works", {
                                                 subgroupCohortTable = "subgroupCohortSchema.cohort",
                                                 cdmDatabaseSchema = "mycdm",
                                                 resultsDatabaseSchema = "myresults",
+                                                sourceName = "mysource",
                                                 refId = 1);
   
   expect_equal(as.character(buildOptions$targetCohortTable), "demoCohortSchema.cohort")
   expect_equal(as.character(buildOptions$outcomeCohortTable), "outcomeCohortSchema.cohort")
   expect_equal(as.character(buildOptions$subgroupCohortTable), "subgroupCohortSchema.cohort")
+  expect_equal(as.character(buildOptions$sourceName), "mysource")
+  expect_equal(as.character(buildOptions$refId$toString()), "1")
   expect_equal(as.character(buildOptions$useTempTables), "FALSE")
   
 })
@@ -19,7 +22,7 @@ test_that("buildOptions correct null values", {
   expect_true(rJava::is.jnull(buildOptions$targetCohortTable))
   expect_true(rJava::is.jnull(buildOptions$outcomeCohortTable))
   expect_true(rJava::is.jnull(buildOptions$subgroupCohortTable))
-  expect_true(rJava::is.jnull(buildOptions$databaseName))
+  expect_true(rJava::is.jnull(buildOptions$sourceName))
   expect_true(rJava::is.jnull(buildOptions$cdmSchema))
   expect_true(rJava::is.jnull(buildOptions$resultsSchema ))
   expect_true(rJava::is.jnull(buildOptions$vocabularySchema))

@@ -84,10 +84,10 @@ buildOptions <- function(cohortTable,
   }
   
   if (missing(sourceName) || is.null(sourceName)) {
-    builderOptions$databaseName = rJava::.jnull(class="java/lang/String");  
+    builderOptions$sourceName = rJava::.jnull(class="java/lang/String");  
   }
   else {
-    builderOptions$databaseName = sourceName;
+    builderOptions$sourceName = sourceName;
   }
 
   if (missing(cdmDatabaseSchema) || is.null(cdmDatabaseSchema)) {

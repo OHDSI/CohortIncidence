@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">CohortIncidence</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -64,7 +60,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/OHDSI/CohortIncidence/">
+  <a href="https://github.com/OHDSI/CohortIncidence/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -82,108 +78,119 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="cohortincidence" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#cohortincidence" class="anchor"></a>CohortIncidence</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="cohortincidence">CohortIncidence<a class="anchor" aria-label="anchor" href="#cohortincidence"></a>
+</h1></div>
 
 </div>
-<div id="introduction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>An R package and Java library for calculating incidence rates on the OMOP CDM.</p>
+<div class="section level1">
+<h1 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h1>
+<p>An R package and Java library for calculating incidence rates on the
+OMOP CDM.</p>
 </div>
-<div id="features" class="section level1">
-<h1 class="hasAnchor">
-<a href="#features" class="anchor"></a>Features</h1>
+<div class="section level1">
+<h1 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
+</h1>
 <ul>
-<li>Handles specifications of T-O-TAR-Subgroup pairs, and performs the calculation on the cross-product of the elements.</li>
-<li>Specify clean windows to account for immortal time after outcome.</li>
-<li>Allows multiple exposure and multiple outcomes per person accounting for time at risk and clean window paramaters.</li>
+<li>Handles specifications of T-O-TAR-Subgroup pairs, and performs the
+calculation on the cross-product of the elements.</li>
+<li>Specify clean windows to account for immortal time after
+outcome.</li>
+<li>Allows multiple exposure and multiple outcomes per person accounting
+for time at risk and clean window paramaters.</li>
 </ul>
 </div>
-<div id="technology" class="section level1">
-<h1 class="hasAnchor">
-<a href="#technology" class="anchor"></a>Technology</h1>
-<p>CohortIncidence is an R package which wraps a Java library that implements most of the functions of the package.</p>
+<div class="section level1">
+<h1 id="technology">Technology<a class="anchor" aria-label="anchor" href="#technology"></a>
+</h1>
+<p>CohortIncidence is an R package which wraps a Java library that
+implements most of the functions of the package.</p>
 </div>
-<div id="system-requirements" class="section level1">
-<h1 class="hasAnchor">
-<a href="#system-requirements" class="anchor"></a>System Requirements</h1>
+<div class="section level1">
+<h1 id="system-requirements">System Requirements<a class="anchor" aria-label="anchor" href="#system-requirements"></a>
+</h1>
 <p>Requires R and Java.</p>
 </div>
-<div id="getting-started" class="section level1">
-<h1 class="hasAnchor">
-<a href="#getting-started" class="anchor"></a>Getting Started</h1>
-<div id="r-package" class="section level2">
-<h2 class="hasAnchor">
-<a href="#r-package" class="anchor"></a>R package</h2>
-<ol>
-<li><p>See the instructions <a href="https://ohdsi.github.io/Hades/rSetup.html">here</a> for configuring your R environment, including Java.</p></li>
-<li><p>In R, use the following commands to download and install CohortIncidence:</p></li>
+<div class="section level1">
+<h1 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h1>
+<div class="section level2">
+<h2 id="r-package">R package<a class="anchor" aria-label="anchor" href="#r-package"></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li><p>See the instructions <a href="https://ohdsi.github.io/Hades/rSetup.html" class="external-link">here</a> for
+configuring your R environment, including Java.</p></li>
+<li><p>In R, use the following commands to download and install
+CohortIncidence:</p></li>
 </ol>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org">remotes</a></span><span class="op">)</span>
-<span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"ohdsi/CohortIncidence"</span><span class="op">)</span> </code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org" class="external-link">remotes</a></span><span class="op">)</span>
+<span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ohdsi/CohortIncidence"</span><span class="op">)</span> </code></pre></div>
 </div>
-<div id="java-library" class="section level2">
-<h2 class="hasAnchor">
-<a href="#java-library" class="anchor"></a>Java library</h2>
-<p>The Java library is hosted in an OHDSI Nexus repo, so you only need to add the repository and dependnecy to your maven.xml file in order to use it in your own Java project.</p>
-<ol>
-<li>First add the OHDSI Nexus repository so that maven can find and download the artifact automatically:</li>
+<div class="section level2">
+<h2 id="java-library">Java library<a class="anchor" aria-label="anchor" href="#java-library"></a>
+</h2>
+<p>The Java library is hosted in an OHDSI Nexus repo, so you only need
+to add the repository and dependnecy to your maven.xml file in order to
+use it in your own Java project.</p>
+<ol style="list-style-type: decimal">
+<li>First add the OHDSI Nexus repository so that maven can find and
+download the artifact automatically:</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;repositories&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;repository&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;id&gt;</span>ohdsi<span class="kw">&lt;/id&gt;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;name&gt;</span>repo.ohdsi.org<span class="kw">&lt;/name&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;url&gt;</span>https://repo.ohdsi.org/nexus/content/groups/public<span class="kw">&lt;/url&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/repository&gt;</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/repositories&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">repositories</span>&gt;</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">repository</span>&gt;</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">id</span>&gt;ohdsi&lt;/<span class="kw">id</span>&gt;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">name</span>&gt;repo.ohdsi.org&lt;/<span class="kw">name</span>&gt;</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">url</span>&gt;https://repo.ohdsi.org/nexus/content/groups/public&lt;/<span class="kw">url</span>&gt;</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">repository</span>&gt;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  &lt;/<span class="kw">repositories</span>&gt;</span></code></pre></div>
 <p>2: Include the CohortIncidence dependency in your pom.xml</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;dependency&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;groupId&gt;</span>org.ohdsi.sql<span class="kw">&lt;/groupId&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;artifactId&gt;</span>CohortIncidence<span class="kw">&lt;/artifactId&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;version&gt;</span>{latest version}<span class="kw">&lt;/version&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/dependency&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">dependency</span>&gt;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">groupId</span>&gt;org.ohdsi.sql&lt;/<span class="kw">groupId</span>&gt;</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">artifactId</span>&gt;CohortIncidence&lt;/<span class="kw">artifactId</span>&gt;</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">version</span>&gt;{latest version}&lt;/<span class="kw">version</span>&gt;</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">dependency</span>&gt;</span></code></pre></div>
 </div>
 </div>
-<div id="user-documentation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#user-documentation" class="anchor"></a>User Documentation</h1>
-<p>Documentation can be found on the <a href="https://ohdsi.github.io/CohortIncidence">package website</a>.</p>
-<p>PDF versions of the documentation are also available:</p>
+<div class="section level1">
+<h1 id="user-documentation">User Documentation<a class="anchor" aria-label="anchor" href="#user-documentation"></a>
+</h1>
+<p>Documentation can be found on the <a href="https://ohdsi.github.io/CohortIncidence" class="external-link">package website</a>.</p>
+<p>PDF versions of the documentation are also available: * Vignette: <a href="https://raw.githubusercontent.com/OHDSI/CohortIncidence/master/vignettes/using-cohortincidence.pdf" class="external-link">Using
+CohortIncidence</a></p>
+</div>
+<div class="section level1">
+<h1 id="support">Support<a class="anchor" aria-label="anchor" href="#support"></a>
+</h1>
 <ul>
-<li>Vignette: <a href="https://raw.githubusercontent.com/OHDSI/CohortIncidence/master/vignettes/using-cohortincidence.pdf">Using CohortIncidence</a>
+<li>Developer questions/comments/feedback:
+<a href="http://forums.ohdsi.org/c/developers" class="external-link">OHDSI Forum</a>
 </li>
+<li>We use the
+<a href="https://github.com/OHDSI/CohortIncidence/issues" class="external-link">GitHub issue
+tracker</a> for all bugs/issues/enhancements</li>
 </ul>
 </div>
-<div id="support" class="section level1">
-<h1 class="hasAnchor">
-<a href="#support" class="anchor"></a>Support</h1>
-<ul>
-<li>Developer questions/comments/feedback: <a href="http://forums.ohdsi.org/c/developers">OHDSI Forum</a>
-</li>
-<li>We use the <a href="https://github.com/OHDSI/CohortIncidence/issues">GitHub issue tracker</a> for all bugs/issues/enhancements</li>
-</ul>
+<div class="section level1">
+<h1 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
+</h1>
+<p>Read <a href="https://ohdsi.github.io/Hades/contribute.html" class="external-link">here</a>
+how you can contribute to this package.</p>
 </div>
-<div id="contributing" class="section level1">
-<h1 class="hasAnchor">
-<a href="#contributing" class="anchor"></a>Contributing</h1>
-<p>Read <a href="https://ohdsi.github.io/Hades/contribute.html">here</a> how you can contribute to this package.</p>
-</div>
-<div id="license" class="section level1">
-<h1 class="hasAnchor">
-<a href="#license" class="anchor"></a>License</h1>
+<div class="section level1">
+<h1 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h1>
 <p>CohortIncidence is licensed under Apache License 2.0</p>
 </div>
-<div id="development" class="section level1">
-<h1 class="hasAnchor">
-<a href="#development" class="anchor"></a>Development</h1>
+<div class="section level1">
+<h1 id="development">Development<a class="anchor" aria-label="anchor" href="#development"></a>
+</h1>
 <p>CohortIncidence is being developed in R Studio.</p>
-<div id="development-status" class="section level3">
-<h3 class="hasAnchor">
-<a href="#development-status" class="anchor"></a>Development status</h3>
+<div class="section level3">
+<h3 id="development-status">Development status<a class="anchor" aria-label="anchor" href="#development-status"></a>
+</h3>
 <p>Released, Under Active Development</p>
 </div>
 </div>
@@ -192,44 +199,56 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/OHDSI/CohortIncidence/">https://​github.com/​OHDSI/​CohortIncidence/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/OHDSI/CohortIncidence/issues">https://​github.com/​OHDSI/​CohortIncidence/​issues</a>
-</li>
+<li><a href="https://github.com/OHDSI/CohortIncidence/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/OHDSI/CohortIncidence/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>Apache License 2.0</li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing CohortIncidence</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Christopher Knoll <br><small class="roles"> Maintainer </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/OHDSI/CohortIncidence/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/OHDSI/CohortIncidence/workflows/R-CMD-check/badge.svg" alt="Build Status"></a></li>
-<li><a href="https://codecov.io/github/OHDSI/CohortIncidence?branch=master"><img src="https://codecov.io/github/OHDSI/CohortIncidence/coverage.svg?branch=master" alt="codecov.io"></a></li>
+<li><a href="https://github.com/OHDSI/CohortIncidence/actions?query=workflow%3AR-CMD-check" class="external-link"><img src="https://github.com/OHDSI/CohortIncidence/workflows/R-CMD-check/badge.svg" alt="Build Status"></a></li>
+<li><a href="https://codecov.io/github/OHDSI/CohortIncidence?branch=master" class="external-link"><img src="https://codecov.io/github/OHDSI/CohortIncidence/coverage.svg?branch=master" alt="codecov.io"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Christopher Knoll.</p>
+  <p></p>
+<p>Developed by Christopher Knoll.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>
@@ -237,6 +256,8 @@
 
   
 
+
+  
 
   </body>
 </html>
