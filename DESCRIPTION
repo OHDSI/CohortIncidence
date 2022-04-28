@@ -1,6 +1,6 @@
 Package: CohortIncidence
 Type: Package
-Title: Assembles SQL to running Cohort Incidence analysis
+Title: CohortIncidence
 Version: 2.0.0
 Date: 2021-09-12
 Author: Christopher Knoll
@@ -26,5 +26,6 @@ Suggests:
     knitr,
     rmarkdown,
     withr,
-    readr
+    readr,
+    duckdb
 Config/testthat/edition: 3
