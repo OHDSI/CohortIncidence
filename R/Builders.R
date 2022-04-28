@@ -24,12 +24,13 @@
 #' @param tars A list of TAR definitions, each created with createTimeAtRiskDef.
 #' @param analysisList A list of analysis definitions, each created with createIncidenceAnalysis.
 #' @param conceptSets A list of concept sets, currently unused.
-#' @param subgroups A list of cohort subgroups, creatd with createCohortSubgroup.
+#' @param subgroups A list of cohort subgroups, created with createCohortSubgroup. 
+#' @param strataSettings The strata settings used in the anlaysis, created with createStrataSettings..
 #' @return SQL code in MS Sql Server dialect, if it's required to run analysis on another DBMS
 #'         you have to use \code{\link[SqlRender]{translateSql}} function in the SqlRender package.
 #' 
 #' @export
-createIncidenceDesign <- function(cohortDefs = list(), targetDefs = list(), outcomeDefs=list(), tars=list(), analysisList=list(), conceptSets=list(), subgroups=list()) {
+createIncidenceDesign <- function(cohortDefs = list(), targetDefs = list(), outcomeDefs=list(), tars=list(), analysisList=list(), conceptSets=list(), subgroups=list(), strataSettings=NULL) {
 
   design <- {};
   design$cohortDefs <- cohortDefs;
@@ -39,6 +40,7 @@ createIncidenceDesign <- function(cohortDefs = list(), targetDefs = list(), outc
   design$analysisList <- analysisList;
   design$conceptSets <- conceptSets;
   design$subgroups <- subgroups;
+  design$strataSettings <- strataSettings;
 
   return (design);
 }
@@ -63,7 +65,7 @@ createIncidenceAnalysis <- function(targets, outcomes, tars) {
 #' Helper function for creating Cohort References, which are used in different parts of a design to reference a cohort definition
 #' and, optionally, to provide a name.
 #'
-#' @param id the unique identifier for this outcome definition
+#' @param id the cohort id that is being referenced
 #' @param name the name to use for this reference
 #' @param description an optional description to use for this reference.
 #' @return an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.CohortRef JSON format.
@@ -87,8 +89,8 @@ createCohortRef <- function(id, name, description) {
 #' @param id the unique identifier for this outcome definition
 #' @param name an optional name for this outcome definition
 #' @param cohortId the cohort id reference for this outcome
-#' @param cleanWindow the number of days for the clean window of this outcome definition
-#' @param excludeCohortId a cohort ID for the cohort to use to exclude time at risk
+#' @param cleanWindow the number of days to extend the outcome cohort’s end date. See \code{executeAnalysis()} for details on how this is applied.
+#' @param excludeCohortId a cohort ID from the outcomeCohrotTable that is used to exclude time at risk. See \code{executeAnalysis()} for details on how this is applied.
 #' @return an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.Outcome JSON format.
 #' 
 #' @export
@@ -115,28 +117,28 @@ createOutcomeDef <- function(id, name, cohortId = 0, cleanWindow = 0, excludeCoh
 #' Helper function for creating TAR Definitions
 #'
 #' @param id the unique identifier for this outcome definition
-#' @param startDateField Specifies the field (start or end) to offset from for the TAR start.  Allowed values: 'StartDate', 'EndDate'
+#' @param startWith Specifies the field (start or end) to offset from for the TAR start.  Allowed values: 'start', 'end'
 #' @param startOffset The number of days to offset for the TAR start, defaults to 0.
-#' @param endDateField Specifies the field (start or end) to offset from for the TAR end.  Allowed values: 'StartDate', 'EndDate'
+#' @param endWith Specifies the field (start or end) to offset from for the TAR end.  Allowed values: 'start', 'end'
 #' @param endOffset The number of days to offset for the TAR start, defaults to 0.
 #' @return an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.TimeAtRisk JSON format.
 #' 
 #' @export
-createTimeAtRiskDef <- function(id, startDateField = "StartDate", startOffset = 0, endDateField="EndDate", endOffset=0) {
+createTimeAtRiskDef <- function(id, startWith = "start", startOffset = 0, endWith="end", endOffset=0) {
   tarDef <- {};
   
   tarDef$id <- jsonlite::unbox(id);
   
-  if (!(startDateField %in% c("StartDate", "EndDate"))) {
-    stop(paste0("Invalid startDateField option:", startDateField, ". Valid options are StartDate, EndDate."));
+  if (!(startWith %in% c("start", "end"))) {
+    stop(paste0("Invalid startWith option:", startWith, ". Valid options are start, end"));
   } else {
-    tarDef$start = list("dateField" = jsonlite::unbox(startDateField), "offset"=jsonlite::unbox(startOffset));
+    tarDef$start = list("dateField" = jsonlite::unbox(startWith), "offset"=jsonlite::unbox(startOffset));
   }
   
-  if (!(endDateField %in% c("StartDate", "EndDate"))) {
-    stop(paste0("Invalid endDateField option:", endDateField, ". Valid options are StartDate, EndDate."));
+  if (!(endWith %in% c("start", "end"))) {
+    stop(paste0("Invalid endWith option:", endWith, ". Valid options are start, end"));
   } else {
-    tarDef$end = list("dateField" = jsonlite::unbox(endDateField), "offset"=jsonlite::unbox(endOffset));
+    tarDef$end = list("dateField" = jsonlite::unbox(endWith), "offset"=jsonlite::unbox(endOffset));
   }
 
   return (tarDef);
@@ -160,6 +162,25 @@ createCohortSubgroup <- function (id, name, description, cohortRef) {
   cohortSubgroup$cohort <- cohortRef;
   
   return(list("CohortSubgroup" = cohortSubgroup));
+}
+
+#' Helper function for creating strata settings
+#'
+#' @param byAge a boolean indicating to stratify by age
+#' @param byGender a boolean indicating to stratify by gender
+#' @param byYear a boolean indicating to stratify by year
+#' @param ageBreaks a vector of integers indicating the age group bounds.
+#' @return an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.StratifySettings JSON format.
+#' @export
+createStrataSettings <- function (byAge = F, byGender = F, byYear = F, ageBreaks = NULL) {
+  strataSettings <- {};
+  
+  strataSettings$byAge <- jsonlite::unbox(byAge);
+  strataSettings$byGender <- jsonlite::unbox(byGender);
+  strataSettings$byYear <- jsonlite::unbox(byYear);
+  strataSettings$ageBreaks <- ageBreaks;
+
+  return(strataSettings);
 }
 
 

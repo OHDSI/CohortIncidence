@@ -4,7 +4,10 @@
 \alias{getResultsDdl}
 \title{Gets the results schema DDL for Incidence Analysis}
 \usage{
-getResultsDdl()
+getResultsDdl(useTempTables = F)
+}
+\arguments{
+\item{useTempTables}{if true, then temp table notation will be used.}
 }
 \value{
 SQL code in MS Sql Server dialect, if it's required to run analysis on another DBMS

@@ -6,20 +6,20 @@
 \usage{
 createTimeAtRiskDef(
   id,
-  startDateField = "StartDate",
+  startWith = "start",
   startOffset = 0,
-  endDateField = "EndDate",
+  endWith = "end",
   endOffset = 0
 )
 }
 \arguments{
 \item{id}{the unique identifier for this outcome definition}
 
-\item{startDateField}{Specifies the field (start or end) to offset from for the TAR start.  Allowed values: 'StartDate', 'EndDate'}
+\item{startWith}{Specifies the field (start or end) to offset from for the TAR start.  Allowed values: 'start', 'end'}
 
 \item{startOffset}{The number of days to offset for the TAR start, defaults to 0.}
 
-\item{endDateField}{Specifies the field (start or end) to offset from for the TAR end.  Allowed values: 'StartDate', 'EndDate'}
+\item{endWith}{Specifies the field (start or end) to offset from for the TAR end.  Allowed values: 'start', 'end'}
 
 \item{endOffset}{The number of days to offset for the TAR start, defaults to 0.}
 }

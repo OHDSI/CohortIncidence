@@ -1,21 +1,21 @@
 {
-  "multi_outcome.incidence_summary": [
-    {
+	"multi_outcome.incidence_summary": [
+		{
 			"ref_id": 1,
-      "target_cohort_definition_id": 100,
-      "time_at_risk_id": 1,
-      "subgroup_id": 0,
-      "outcome_id": 1,
-      "persons_pre_exclude":1,
-      "persons_at_risk":1,
-      "person_days_pre_exclude":61,
-      "person_days":40,
-      "person_outcomes_pre_exclude": 1,
-      "person_outcomes":1,
-      "outcomes_pre_exclude":2,
-      "outcomes": 2,
-      "incidence_proportion_p100p": 100,
-      "incidence_rate_p100py": 1826.25
-    }
-  ]
+			"target_cohort_definition_id": 100,
+			"tar_id": 1,
+			"subgroup_id": 0,
+			"outcome_id": 1,
+			"persons_at_risk_pe":2,
+			"persons_at_risk":1,
+			"person_days_pe":122,
+			"person_days":31,
+			"person_outcomes_pe": 2,
+			"person_outcomes":1,
+			"outcomes_pe":8,
+			"outcomes": 2,
+			"incidence_proportion_p100p": 100,
+			"incidence_rate_p100py": 2356.4516
+		}
+	]
 }

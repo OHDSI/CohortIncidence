@@ -11,7 +11,8 @@ createIncidenceDesign(
   tars = list(),
   analysisList = list(),
   conceptSets = list(),
-  subgroups = list()
+  subgroups = list(),
+  strataSettings = NULL
 )
 }
 \arguments{
@@ -27,7 +28,9 @@ createIncidenceDesign(
 
 \item{conceptSets}{A list of concept sets, currently unused.}
 
-\item{subgroups}{A list of cohort subgroups, creatd with createCohortSubgroup.}
+\item{subgroups}{A list of cohort subgroups, created with createCohortSubgroup.}
+
+\item{strataSettings}{The strata settings used in the anlaysis, created with createStrataSettings..}
 }
 \value{
 SQL code in MS Sql Server dialect, if it's required to run analysis on another DBMS

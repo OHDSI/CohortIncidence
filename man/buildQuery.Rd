@@ -9,7 +9,7 @@ buildQuery(incidenceDesign, buildOptions)
 \arguments{
 \item{incidenceDesign}{A string object containing valid JSON that represents cohort incidence design}
 
-\item{buildOptions}{the paramaters to use in building the analysis queries, created by buildOptions()}
+\item{buildOptions}{the parameters to use in building the analysis queries, created by buildOptions()}
 }
 \value{
 SQL code in MS Sql Server dialect, if it's required to run analysis on another DBMS

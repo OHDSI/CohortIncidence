@@ -8,11 +8,11 @@ buildOptions(
   cohortTable,
   outcomeCohortTable = cohortTable,
   subgroupCohortTable = cohortTable,
-  databaseName,
-  cdmSchema,
-  resultsSchema,
-  vocabularySchema = cdmSchema,
-  tempSchema = resultsSchema,
+  sourceName,
+  cdmDatabaseSchema,
+  resultsDatabaseSchema,
+  vocabularySchema = cdmDatabaseSchema,
+  useTempTables = F,
   refId
 )
 }
@@ -23,15 +23,15 @@ buildOptions(
 
 \item{subgroupCohortTable}{The name of table with subgroup cohorts, defaults to cohortTable param.}
 
-\item{databaseName}{A value to inject to the results table for the database name.}
+\item{sourceName}{A value to inject to the results table for the source name.}
 
-\item{cdmSchema}{the name of schema containing data in CDM format}
+\item{cdmDatabaseSchema}{the name of schema containing data in CDM format}
 
-\item{resultsSchema}{the name of schema where results would be placed}
+\item{resultsDatabaseSchema}{the name of schema where results would be placed}
 
-\item{vocabularySchema}{the name of schema with vocabulary tables, defaults to cdmSchema param}
+\item{vocabularySchema}{the name of schema with vocabulary tables, defaults to cdmDatabaseSchema param}
 
-\item{tempSchema}{the name of database temp schema, defaults to resultsSchema param.}
+\item{useTempTables}{use temp tables instead of a results schema.}
 
 \item{refId}{A number tagged to the results for retrieval purposes.}
 }

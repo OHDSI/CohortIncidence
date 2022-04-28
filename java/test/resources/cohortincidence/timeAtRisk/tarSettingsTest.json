@@ -17,41 +17,41 @@
 		{
 			"id": 1,
 			"start": {
-				"dateField": "StartDate",
+				"dateField": "start",
 				"offset": 0
 			},
 			"end": {
-				"dateField": "StartDate",
+				"dateField": "start",
 				"offset": 60
 			}
 		},{
 			"id": 2,
 			"start": {
-				"dateField": "StartDate",
+				"dateField": "start",
 				"offset": 0
 			},
 			"end": {
-				"dateField": "EndDate",
+				"dateField": "end",
 				"offset": 0
 			}
 		},{
 			"id": 3,
 			"start": {
-				"dateField": "StartDate",
+				"dateField": "start",
 				"offset": 0
 			},
 			"end": {
-				"dateField": "EndDate",
+				"dateField": "end",
 				"offset": 9999
 			}
 		},{
 			"id": 4,
 			"start": {
-				"dateField": "StartDate",
+				"dateField": "start",
 				"offset": 9999
 			},
 			"end": {
-				"dateField": "EndDate",
+				"dateField": "end",
 				"offset": 0
 			}
 		}

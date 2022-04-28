@@ -52,24 +52,24 @@ The results of the anlaysis SQL will assume a final table: `@results_database_sc
 
 ```{r, comment = ""}
 # Fetch DDL from package
-ddl <- CohortIncidence::getResultsDdl();
+ddl <- CohortIncidence::getResultsDdl()
 cat(ddl)
 ```
 
 Using `SqlRender` and `DatabaseConnector`, you can execute the above on your target database platform in order to deploy the table.  Remember to replace `@schemaName` with the appropriate schema.  You can also 'hack' the `@schemaName` paramater to apply a prefix by specifying the SqlRender paramater of `schemaName.incidence_summary` to a target table ie: `mySchema.prefix_incidence_summary`.  Using the same paramater name/value in `buildQuery()` will allow you to provide a prefix to the result table name instead of having to declare a separate schema.
 
 ```{r, eval = FALSE}
-connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = "postgresql",server={Sys.getenv("server")}, port = Sys.getenv("port"));
+connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = "postgresql",server={Sys.getenv("server")}, port = Sys.getenv("port"))
 
 # to specify the target schema (the typical use case):
-ddl <- SqlRender::render(CohortIncidence::getResultsDdl(), schemaName = "mySchema");
+ddl <- SqlRender::render(CohortIncidence::getResultsDdl(), schemaName = "mySchema")
 
 # a work-around to provide a prefix to the result table, in case creating new schema is restricted
-ddlPrefix <- SqlRender::render(CohortIncidence::getResultsDdl(), "schemaName.incidence_summary" = "mySchema.prefix_incidence_summary");
+ddlPrefix <- SqlRender::render(CohortIncidence::getResultsDdl(), "schemaName.incidence_summary" = "mySchema.prefix_incidence_summary")
 
-con <- DatabaseConnector::connect(connectionDetails);
-DatabaseConnector::executeSql(ddl);
-DatabaseConnector::disconnect(con);
+con <- DatabaseConnector::connect(connectionDetails)
+DatabaseConnector::executeSql(ddl)
+DatabaseConnector::disconnect(con)
 
 ```
 
@@ -82,24 +82,24 @@ This example will create a CohortIncidence design containing a single target, ou
 The following script builds a single T, O and Time at Risk, and assembles those element into a design.  Finally, the resulting JSON is printed.
 
 ```{r}
-t1 <- CohortIncidence::createCohortRef(id=1, name="Target cohort 1");
+t1 <- CohortIncidence::createCohortRef(id=1, name="Target cohort 1")
 
 o1 <- CohortIncidence::createOutcomeDef(id=1,name="Outcome 1, 30d Clean", 
                                                cohortId =2,
-                                               cleanWindow =30);
+                                               cleanWindow =30)
 
 tar1 <- CohortIncidence::createTimeAtRiskDef(id=1, 
-                                             startDateField="StartDate", 
-                                             endDateField="StartDate", 
-                                             endOffset=30);
+                                             startWith="start", 
+                                             endWith="end", 
+                                             endOffset=30)
 
 # Note: c() is used when dealing with an array of numbers, 
 # later we use list() when dealing with an array of objects
 analysis1 <- CohortIncidence::createIncidenceAnalysis(targets = c(t1$id),
                                                       outcomes = c(o1$id),
-                                                      tars = c(tar1$id));
+                                                      tars = c(tar1$id))
 
-subgroup1 <- CohortIncidence::createCohortSubgroup(id=1, name="Subgroup 1", cohortRef = createCohortRef(id=300));
+subgroup1 <- CohortIncidence::createCohortSubgroup(id=1, name="Subgroup 1", cohortRef = createCohortRef(id=300))
 
 
 # Create Design (note use of list() here):
@@ -107,30 +107,167 @@ irDesign <- CohortIncidence::createIncidenceDesign(targetDefs = list(t1),
                                                    outcomeDefs = list(o1),
                                                    tars=list(tar1),
                                                    analysisList = list(analysis1),
-                                                   subgroups = list(subgroup1));
+                                                   subgroups = list(subgroup1))
 # Render the design as JSON
 jsonlite::toJSON(irDesign,pretty = T)
 
 ```
 
-## Build analysis SQL from design
+## Using age, gender and start year strata
+
+The IR design can also include settings to specify if an analysis should be done at the age, gender or start year levels (or any combination of those choices).
+To use this function, you create the strata settings with the `CohortIncidence::createStrataSettings)` function:
+
+```{r}
+irDesignWithStrata <- CohortIncidence::createIncidenceDesign(targetDefs = list(t1),
+                                                   outcomeDefs = list(o1),
+                                                   tars=list(tar1),
+                                                   analysisList = list(analysis1),
+                                                   subgroups = list(subgroup1),
+                                                   #add by age and by gender strata, but don't do by start year.
+                                                   strataSettings = CohortIncidence::createStrataSettings(byGender=T, byAge=T, ageBreaks = c(17,34,65)))
+```
+
+## Using executeAnalysis()
+
+If there is no need to see the analysis sql or control the output of the analysis to a permenant table, the `executeAnalysis()` function
+can be used to perform the cohort incidence using a simple API:
+
+```{r, eval=FALSE}
+
+buildOptions <- CohortIncidence::buildOptions(cohortTable = "demoCohortSchema.cohort",
+                                              cdmDatabaseSchema = "mycdm",
+                                              sourceName = "mysource",
+                                              refId = 1)
+
+
+executeResults <- CohortIncidence::executeAnalysis(connectionDetails = connectionDetails,
+                                                   incidenceDesign = irDesign,
+                                                   buildOptions = buildOptions)
+```
+
+The results will contain the same table structure as the results schema `incidence_summary`:
+
+|Name |Description|
+|-----|--------|
+|REF_ID|The reference id specified in buildOptions() to track results to the analysis execution.|
+|SOURCE_NAME|The name of the source for these results|
+|TARGET_COHORT_DEFIITION_ID|The cohort ID of the target population|
+|TARGET_NAME|The name of the target cohort|
+|TAR_ID|The TAR identifier|
+|TAR_START_WITH|Indicates if the TAR starts with the 'start' or 'end' of the target cohort episode|
+|TAR_START_OFFSET|The days added to the date field specified in TAR_START_WITH|
+|TAR_END_WITH|Indicates if the TAR ends with the 'start' or 'end' of the target cohort episode|
+|TAR_END_OFFSET|The days added to the date field specified in TAR_END_WITH|
+|SUBGROUP_ID|The subgroup identifier|
+|SUBGROUP_NAME|The name of the subgroup|
+|OUTCOME_ID|The outcome identifier|
+|OUTCOME_COHORT_DEFINITION_ID|The cohort ID of the outcome population|
+|OUTCOME_NAME|The outcome name|
+|CLEAN_WINDOW|The clean window for this outcome definition|
+|AGE_ID|The age ID for this strata representing the age band specified in the strata settings|
+|AGE_GROUP_NAME|The name for this age group|
+|GENDER_ID| The gender concept ID for this gender strata|
+|GENDER_NAME| The name of the gender|
+|START_YEAR|The year strata, defined by using the year the TAR started|
+|PERSONS_AT_RISK_PE|Distinct persons at risk before removing excluded time from TAR|
+|PERSONS_AT_RISK|Distinct persons at risk after removing excluded time from TAR.  A person must have at least 1 day TAR to be included.|
+|PERSON_DAYS_PE|Total TAR (in days) before excluded time was removed from TAR.|
+|PERSON_DAYS|Total TAR (in days) after excluded time was removed from TAR.|
+|PERSON_OUTCOMES_PE|Distinct persons with outcome before removing excluded time from TAR|
+|PERSON_OUTCOMES|Distinct persons with outcome after removing excluded time from TAR.  A person must have at least 1 day TAR to be included.|
+|OUTCOMES_PE|Number of cases before excluding TAR.|
+|OUTCOMES|Number of cases after excluding TAR.|
+|INCIDENCE_PROPORTION_P100P|The Incidence Proportion (per 100 people), calculated by person_outcomes / persons_at_risk * 100|
+|INCIDENCE_RATE_P100PY|The Incidence Rate (per 100 person years), calculated by outcomes / person_days / 365.25 * 100|
+
+
+# Advanced Usage: Budling and Executing SQL manually
+
+There may be a reason (debugging or special processing steps) Where you would want to access the analysis SQL before execution.  
+The following sections describe how to fetch the SQL, translate and execute the statements.
+
+##  Build analysis SQL from design
 
 From the previous design, the `CohortIncidence::buildQuery()` method is used to generate the analysis SQL:
 
 ```{r}
 
 buildOptions <- CohortIncidence::buildOptions(cohortTable = "demoCohortSchema.cohort",
-                                              cdmSchema = "mycdm",
-                                              resultsSchema = "myresults",
+                                              cdmDatabaseSchema = "mycdm",
+                                              resultsDatabaseSchema = "myresults",
+                                              sourceName = "mysource",
                                               refId = 1)
 
 analysisSql <- CohortIncidence::buildQuery(incidenceDesign =  as.character(jsonlite::toJSON(irDesign)),
-                                           buildOptions = buildOptions);
+                                           buildOptions = buildOptions)
 cat(analysisSql)
 
 ```
 
 ## Render SQL with paramaters and execute
 
+With the previous analysis design and options used to generate the analysisSql, the next step is to render the SQL to provide any remaining parameters, translate, and execute on the database:
+
+```{r, eval=FALSE}
+
+# if you didn't pass sourceName to buildOptions(), you can render it here
+analysisSql <- SqlRender::render(analysisSql, "sourceName" = "OptumDOD")
+analysisSql <- SqlRender::translate(analysisSql, "postgresql")
+
+cat(analysisSql)
+
+conn <- DatabaseConnector::connect(connectionDetails)
+DatabaseConnector::executeSql(conn, paste0("DELETE FROM myresults.incidence_summary WHERE ref_id = ", buildOptions$refId$intValue()))
+DatabaseConnector::executeSql(conn, analysisSql)
+DatabaseConnector::disconnect(conn)
+
+```
+
+## Using Temp Tables
+
+Sometimes, it is not convenient or possible to create dedicated tables to store the results.  Instead, the useTempTables option can be used to 
+place the incidence results into a temp table 'incidence_summary', where they can be ETL'd to another table or exported to a CSV.
+
+The following example demonstrates the additional steps that are necessary if you want to use temp tables:
+
+```{r, eval=FALSE}
+
+# given the prior irDesign constructed from the previous example
+buildOptions <- CohortIncidence::buildOptions(cohortTable = "demoCohortSchema.cohort",
+                                              cdmDatabaseSchema = "mycdm",
+                                              sourceName = "mysource"
+                                              useTempTables = T,
+                                              refId = 2)
+
+analysisSql <- CohortIncidence::buildQuery(incidenceDesign = as.character(jsonlite::toJSON(irDesign)),
+                                           buildOptions = buildOptions)
+analysisSql <- SqlRender::translate(analysisSql, "postgresql")
+
+# if we are using temp tables, the steps to execute the analysis are 
+#   1) create result temp tables
+#   2) execute the analysis query, placing the results into the temp table incidence_summary
+#   3) Extract/copy the results from the temp tables
+#   4) clean up temp tables
+
+conn <- DatabaseConnector::connect(connectionDetails)
+
+tempDDL <- SqlRender::translate(CohortIncidence::getResultsDdl(useTempTables=T), "postgresql")
+DatabaseConnector::executeSql(conn, tempDDL)
+DatabaseConnector::executeSql(conn, analysisSql)
+
+# In this example, copy to a permanent table from the temp table, but the results could be downloaded to CSV
+exportSql <- SqlRender::translate("insert into mySchema.prefix_incidence_summary select * from #incidence_summary", "postgresql");
+DatabaseConnector::executeSql(conn, exportSql)
+# or download the results to a dataframe
+results <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #incidence_summary", "postgresql"))
+
+# use the getCleanupSql to fetch the DROP TABLE expressions for the tables that were created in tempDDL.
+cleanupSql <- SqlRender::translate(CohortIncidence::getCleanupSql(useTempTables=T), "postgresql")  
+DatabaseConnector::executeSql(conn, cleanupSql)
+
+DatabaseConnector::dbDisconnect(conn)
+
+```
 
 

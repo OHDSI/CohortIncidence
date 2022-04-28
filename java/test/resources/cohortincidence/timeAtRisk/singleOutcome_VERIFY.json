@@ -1,53 +1,53 @@
 {
-  "single_outcome.incidence_summary": [
-    {
+	"single_outcome.incidence_summary": [
+		{
 			"ref_id": 1,
-      "target_cohort_definition_id": 100,
-      "time_at_risk_id": 1,
-      "subgroup_id": 0,
-      "outcome_id": 1,
-      "persons_pre_exclude":1,
-      "persons_at_risk":1,
-      "person_days_pre_exclude":61,
-      "person_days":32,
-      "person_outcomes_pre_exclude": 1,
-      "person_outcomes":1,
-      "outcomes_pre_exclude":1,
-      "outcomes": 1,
-      "incidence_proportion_p100p": 100,
-      "incidence_rate_p100py": 1141.4063
-    },{
+			"target_cohort_definition_id": 100,
+			"tar_id": 1,
+			"subgroup_id": 0,
+			"outcome_id": 1,
+			"persons_at_risk_pe": 1,
+			"persons_at_risk": 1,
+			"person_days_pe": 61,
+			"person_days": 32,
+			"person_outcomes_pe": 1,
+			"person_outcomes": 1,
+			"outcomes_pe": 1,
+			"outcomes": 1,
+			"incidence_proportion_p100p": 100,
+			"incidence_rate_p100py": 1141.4063
+		}, {
 			"ref_id": 1,
-      "target_cohort_definition_id": 100,
-      "time_at_risk_id": 2,
-      "subgroup_id": 0,
-      "outcome_id": 1,
-      "persons_pre_exclude":1,
-      "persons_at_risk":1,
-      "person_days_pre_exclude":1,
-      "person_days":1,
-      "person_outcomes_pre_exclude": 0,
-      "person_outcomes":0,
-      "outcomes_pre_exclude":0,
-      "outcomes": 0,
-      "incidence_proportion_p100p": 0,
-      "incidence_rate_p100py": 0
-    },{
+			"target_cohort_definition_id": 100,
+			"tar_id": 2,
+			"subgroup_id": 0,
+			"outcome_id": 1,
+			"persons_at_risk_pe": 1,
+			"persons_at_risk": 1,
+			"person_days_pe": 1,
+			"person_days": 1,
+			"person_outcomes_pe": 0,
+			"person_outcomes": 0,
+			"outcomes_pe": 0,
+			"outcomes": 0,
+			"incidence_proportion_p100p": 0,
+			"incidence_rate_p100py": 0
+		}, {
 			"ref_id": 1,
-      "target_cohort_definition_id": 100,
-      "time_at_risk_id": 3,
-      "subgroup_id": 0,
-      "outcome_id": 1,
-      "persons_pre_exclude":1,
-      "persons_at_risk":1,
-      "person_days_pre_exclude":307,
-      "person_days":277,
-      "person_outcomes_pre_exclude": 1,
-      "person_outcomes":1,
-      "outcomes_pre_exclude":1,
-      "outcomes": 1,
-      "incidence_proportion_p100p": 100.0,
-      "incidence_rate_p100py": 131.8592
-    }
-  ]
+			"target_cohort_definition_id": 100,
+			"tar_id": 3,
+			"subgroup_id": 0,
+			"outcome_id": 1,
+			"persons_at_risk_pe": 1,
+			"persons_at_risk": 1,
+			"person_days_pe": 307,
+			"person_days": 277,
+			"person_outcomes_pe": 1,
+			"person_outcomes": 1,
+			"outcomes_pe": 1,
+			"outcomes": 1,
+			"incidence_proportion_p100p": 100.0,
+			"incidence_rate_p100py": 131.8592
+		}
+	]
 }

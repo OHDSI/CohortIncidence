@@ -1,0 +1,42 @@
+{
+	"targetDefs": [
+		{
+			"id": 100,
+			"name": "Target Cohort 1"
+		}
+	],
+	"outcomeDefs": [
+		{
+			"id": 1,
+			"name": "Outcome Cohort 1",
+			"cohortId": 200,
+			"cleanWindow": 30
+		}
+	],
+	"timeAtRiskDefs": [
+		{
+			"id": 1,
+			"start": {
+				"dateField": "start",
+				"offset": 0
+			},
+			"end": {
+				"dateField": "start",
+				"offset": 90
+			}
+		}
+	],
+	"strataSettings": {
+		"byAge": true,
+		"byGender": true,
+		"byYear": true,
+		"ageBreaks": [17, 35, 65]
+	},
+	"analysisList": [
+		{
+			"targets": [100],
+			"outcomes": [1],
+			"tars": [1]
+		}
+	]
+}
