@@ -19,7 +19,7 @@
 #' Builds SQL code to run analyses according given Cohort Characterization design
 #'
 #' @param incidenceDesign  A string object containing valid JSON that represents cohort incidence design
-#' @param buildOptions the paramaters to use in building the analysis queries, created by buildOptions()
+#' @param buildOptions the parameters to use in building the analysis queries, created by buildOptions()
 #' @return SQL code in MS Sql Server dialect, if it's required to run analysis on another DBMS
 #'         you have to use \code{\link[SqlRender]{translateSql}} function in the SqlRender package.
 #' 
@@ -42,10 +42,10 @@ buildQuery <- function(incidenceDesign,
 #' @param cohortTable The name of table with cohorts
 #' @param outcomeCohortTable The name of table with outcome cohorts, defaults to cohortTable param.
 #' @param subgroupCohortTable The name of table with subgroup cohorts, defaults to cohortTable param.
-#' @param databaseName A value to inject to the results table for the database name.
-#' @param cdmSchema the name of schema containing data in CDM format
-#' @param resultsSchema the name of schema where results would be placed
-#' @param vocabularySchema the name of schema with vocabulary tables, defaults to cdmSchema param
+#' @param sourceName A value to inject to the results table for the source name.
+#' @param cdmDatabaseSchema the name of schema containing data in CDM format
+#' @param resultsDatabaseSchema the name of schema where results would be placed
+#' @param vocabularySchema the name of schema with vocabulary tables, defaults to cdmDatabaseSchema param
 #' @param useTempTables use temp tables instead of a results schema.
 #' @param refId A number tagged to the results for retrieval purposes.
 #' @return a BuilderOptions object used in buildQuery.
@@ -54,10 +54,10 @@ buildQuery <- function(incidenceDesign,
 buildOptions <- function(cohortTable,
                          outcomeCohortTable = cohortTable,
                          subgroupCohortTable = cohortTable,
-                         databaseName,
-                         cdmSchema,
-                         resultsSchema,
-                         vocabularySchema = cdmSchema,
+                         sourceName,
+                         cdmDatabaseSchema,
+                         resultsDatabaseSchema,
+                         vocabularySchema = cdmDatabaseSchema,
                          useTempTables = F,
                          refId) {
   builderOptions <- rJava::new(rJava::J("org.ohdsi.cohortincidence.BuilderOptions"));
@@ -83,25 +83,25 @@ buildOptions <- function(cohortTable,
     builderOptions$subgroupCohortTable = subgroupCohortTable;
   }
   
-  if (missing(databaseName) || is.null(databaseName)) {
-    builderOptions$databaseName = rJava::.jnull(class="java/lang/String");  
+  if (missing(sourceName) || is.null(sourceName)) {
+    builderOptions$sourceName = rJava::.jnull(class="java/lang/String");  
   }
   else {
-    builderOptions$databaseName = databaseName;
+    builderOptions$sourceName = sourceName;
   }
 
-  if (missing(cdmSchema) || is.null(cdmSchema)) {
+  if (missing(cdmDatabaseSchema) || is.null(cdmDatabaseSchema)) {
     builderOptions$cdmSchema = rJava::.jnull(class="java/lang/String");
   }
   else {
-    builderOptions$cdmSchema = cdmSchema;
+    builderOptions$cdmSchema = cdmDatabaseSchema;
   }
   
-  if (missing(resultsSchema) || is.null(resultsSchema)) {
+  if (missing(resultsDatabaseSchema) || is.null(resultsDatabaseSchema)) {
     builderOptions$resultsSchema = rJava::.jnull(class="java/lang/String");
   }
   else {
-    builderOptions$resultsSchema = resultsSchema;
+    builderOptions$resultsSchema = resultsDatabaseSchema;
   }
   
   if (missing(vocabularySchema) || is.null(vocabularySchema)) {

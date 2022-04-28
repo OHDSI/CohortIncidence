@@ -1,14 +1,14 @@
 CREATE TABLE @schemaName.incidence_summary
 (  
 	ref_id int,
-	database_name varchar(255),
+	source_name varchar(255),
 	target_cohort_definition_id bigint,
 	target_name varchar(255),
 	tar_id bigint,
+	tar_start_with varchar(10),
 	tar_start_offset bigint,
-	tar_start_index bigint,
+	tar_end_with varchar(10),
 	tar_end_offset bigint,
-	tar_end_index bigint,
 	subgroup_id bigint,
 	subgroup_name varchar(255),
 	outcome_id bigint,

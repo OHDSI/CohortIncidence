@@ -27,11 +27,11 @@
 		{
 			"id": 1,
 			"start": {
-				"dateField": "StartDate",
+				"dateField": "start",
 				"offset": 0
 			},
 			"end": {
-				"dateField": "StartDate",
+				"dateField": "start",
 				"offset": 30
 			}
 		}

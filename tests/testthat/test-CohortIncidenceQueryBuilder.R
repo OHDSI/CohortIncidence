@@ -2,13 +2,16 @@ test_that("buildOptions works", {
   buildOptions <- CohortIncidence::buildOptions(cohortTable = "demoCohortSchema.cohort",
                                                 outcomeCohortTable = "outcomeCohortSchema.cohort",
                                                 subgroupCohortTable = "subgroupCohortSchema.cohort",
-                                                cdmSchema = "mycdm",
-                                                resultsSchema = "myresults",
+                                                cdmDatabaseSchema = "mycdm",
+                                                resultsDatabaseSchema = "myresults",
+                                                sourceName = "mysource",
                                                 refId = 1);
   
   expect_equal(as.character(buildOptions$targetCohortTable), "demoCohortSchema.cohort")
   expect_equal(as.character(buildOptions$outcomeCohortTable), "outcomeCohortSchema.cohort")
   expect_equal(as.character(buildOptions$subgroupCohortTable), "subgroupCohortSchema.cohort")
+  expect_equal(as.character(buildOptions$sourceName), "mysource")
+  expect_equal(as.character(buildOptions$refId$toString()), "1")
   expect_equal(as.character(buildOptions$useTempTables), "FALSE")
   
 })
@@ -19,7 +22,7 @@ test_that("buildOptions correct null values", {
   expect_true(rJava::is.jnull(buildOptions$targetCohortTable))
   expect_true(rJava::is.jnull(buildOptions$outcomeCohortTable))
   expect_true(rJava::is.jnull(buildOptions$subgroupCohortTable))
-  expect_true(rJava::is.jnull(buildOptions$databaseName))
+  expect_true(rJava::is.jnull(buildOptions$sourceName))
   expect_true(rJava::is.jnull(buildOptions$cdmSchema))
   expect_true(rJava::is.jnull(buildOptions$resultsSchema ))
   expect_true(rJava::is.jnull(buildOptions$vocabularySchema))
@@ -36,8 +39,8 @@ test_that("build query works", {
                                           cleanWindow =30);
   
   tar1 <- CohortIncidence::createTimeAtRiskDef(id=1, 
-                                               startDateField="StartDate", 
-                                               endDateField="StartDate", 
+                                               startWith="start", 
+                                               endWith="end", 
                                                endOffset=30);
   
   # Note: c() is used when dealing with an array of numbers, 
@@ -57,8 +60,8 @@ test_that("build query works", {
                                                      subgroups = list(subgroup1));
 
   buildOptions <- CohortIncidence::buildOptions(cohortTable = "demoCohortSchema.cohort",
-                                                cdmSchema = "mycdm",
-                                                resultsSchema = "myresults",
+                                                cdmDatabaseSchema = "mycdm",
+                                                resultsDatabaseSchema = "myresults",
                                                 refId = 1)
   
   analysisSql <- CohortIncidence::buildQuery(incidenceDesign =  as.character(jsonlite::toJSON(irDesign)),

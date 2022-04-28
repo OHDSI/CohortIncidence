@@ -60,8 +60,8 @@ public class CohortIncidenceQueryBuilder {
 			finalSql = StringUtils.replace(finalSql, "@subgroupCohortTable", this.options.subgroupCohortTable != null ? this.options.subgroupCohortTable : this.options.targetCohortTable);
 		}
 
-		if (this.options.databaseName != null) {
-			finalSql = StringUtils.replace(finalSql, "@databaseName", !StringUtils.isEmpty(this.options.databaseName) ? this.options.databaseName : "");			
+		if (this.options.sourceName != null) {
+			finalSql = StringUtils.replace(finalSql, "@sourceName", !StringUtils.isEmpty(this.options.sourceName) ? this.options.sourceName : "");			
 		}
 		
 		if (options.cdmSchema != null) {
@@ -175,9 +175,9 @@ public class CohortIncidenceQueryBuilder {
 						.map(tar -> {
 							return String.format(TAR_REF_TEMPLATE,
 											tar.id, 
-											tar.start.dateField == FieldOffset.DateField.StartDate ? 1 : 0,
+											tar.start.dateField == FieldOffset.DateField.Start ? "start" : "end",
 											tar.start.offset,
-											tar.end.dateField == FieldOffset.DateField.StartDate ? 1 : 0,
+											tar.end.dateField == FieldOffset.DateField.Start ? "start" : "end",
 											tar.end.offset
 							);
 						})

@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CohortIncidence</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -64,7 +60,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/OHDSI/CohortIncidence/">
+  <a href="https://github.com/OHDSI/CohortIncidence/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -79,122 +75,151 @@
 
       
 
-      </header><script src="using-cohortincidence_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Using CohortIncidence</h1>
-                        <h4 class="author">Christopher Knoll</h4>
+                        <h4 data-toc-skip class="author">Christopher
+Knoll</h4>
             
-            <h4 class="date">2021-09-13</h4>
+            <h4 data-toc-skip class="date">2022-04-21</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/OHDSI/CohortIncidence/blob/master/vignettes/using-cohortincidence.Rmd"><code>vignettes/using-cohortincidence.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/OHDSI/CohortIncidence/blob/HEAD/vignettes/using-cohortincidence.Rmd" class="external-link"><code>vignettes/using-cohortincidence.Rmd</code></a></small>
       <div class="hidden name"><code>using-cohortincidence.Rmd</code></div>
 
     </div>
 
     
     
-<div id="introduction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>This vignette describes how to use the <code>CohortIncidence</code> package to perform a single incidence rate analysis for a given target and outcome cohort, with a few settings for Time At Risk and Clean Window.</p>
+<pre><code><span class="co">#&gt; Loading required package: DatabaseConnector</span></code></pre>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>This vignette describes how to use the <code>CohortIncidence</code>
+package to perform a single incidence rate analysis for a given target
+and outcome cohort, with a few settings for Time At Risk and Clean
+Window.</p>
 </div>
-<div id="installation-instructions" class="section level1">
-<h1 class="hasAnchor">
-<a href="#installation-instructions" class="anchor"></a>Installation instructions</h1>
-<p>Before installing the <code>CohortIncidence</code> package make sure you have Java available. Java can be downloaded from <a href="http://www.java.com">www.java.com</a>. For Windows users, RTools is also necessary. RTools can be downloaded from <a href="http://cran.r-project.org/bin/windows/Rtools/">CRAN</a>.</p>
-<p>The <code>CohortIncidence</code> package is currently maintained in a <a href="https://github.com/OHDSI/CohortIncidence">Github repository</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"ohdsi/CohortIncidence"</span><span class="op">)</span></code></pre></div>
-<p>Once installed, you can type <code><a href="https://github.com/OHDSI/CohortIncidence">library(CohortIncidence)</a></code> to load the package.</p>
+<div class="section level2">
+<h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
+</h2>
+<p>Before installing the <code>CohortIncidence</code> package make sure
+you have Java available. Java can be downloaded from <a href="http://www.java.com" class="external-link">www.java.com</a>. For Windows users, RTools
+is also necessary. RTools can be downloaded from <a href="http://cran.r-project.org/bin/windows/Rtools/" class="external-link">CRAN</a>.</p>
+<p>The <code>CohortIncidence</code> package is currently maintained in a
+<a href="https://github.com/OHDSI/CohortIncidence" class="external-link">Github
+repository</a>.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ohdsi/CohortIncidence"</span><span class="op">)</span></code></pre></div>
+<p>Once installed, you can type <code><a href="https://github.com/OHDSI/CohortIncidence" class="external-link">library(CohortIncidence)</a></code> to
+load the package.</p>
 </div>
-<div id="database-preparation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#database-preparation" class="anchor"></a>Database Preparation</h1>
-<p>The results of the anlaysis SQL will assume a final table: <code>@results_database_schema.incidence_summary</code>. The DDL for this table can be fetched from the package via the following:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fetch DDL from package</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ddl <span class="ot">&lt;-</span> CohortIncidence<span class="sc">::</span><span class="fu">getResultsDdl</span>();</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(ddl)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>CREATE TABLE <span class="sc">@</span>schemaName.incidence_summary</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>(  </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    ref_id int,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    database_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    target_cohort_definition_id bigint,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    target_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    time_at_risk_id bigint,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    time_at_risk_start_offset bigint,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    time_at_risk_start_index bigint,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    time_at_risk_end_offset bigint,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    time_at_risk_end_index bigint,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    subgroup_id bigint,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    subgroup_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    outcome_id bigint,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    outcome_cohort_definition_id bigint,</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    outcome_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    clean_window bigint,</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    persons_pre_exclude bigint,</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    persons_at_risk bigint,</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    person_days_pre_exclude bigint,</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    person_days bigint,</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    person_outcomes_pre_exclude bigint,</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    person_outcomes bigint,</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    outcomes_pre_exclude bigint,</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    outcomes bigint,</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    incidence_proportion_p100p float,</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    incidence_rate_p100py float</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a> );</span></code></pre></div>
-<p>Using <code>SqlRender</code> and <code>DatabaseConnector</code>, you can execute the above on your target database platform in order to deploy the table. Remember to replace <code>@schemaName</code> with the appropriate schema. You can also ‘hack’ the <code>@schemaName</code> paramater to apply a prefix by specifying the SqlRender paramater of <code>schemaName.incidence_summary</code> to a target table ie: <code>mySchema.prefix_incidence_summary</code>. Using the same paramater name/value in <code><a href="../reference/buildQuery.html">buildQuery()</a></code> will allow you to provide a prefix to the result table name instead of having to declare a separate schema.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">connectionDetails</span> <span class="op">&lt;-</span> <span class="fu">DatabaseConnector</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/DatabaseConnector/reference/createConnectionDetails.html">createConnectionDetails</a></span><span class="op">(</span>dbms <span class="op">=</span> <span class="st">"postgresql"</span>,server<span class="op">=</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span><span class="op">(</span><span class="st">"server"</span><span class="op">)</span><span class="op">}</span>, port <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span><span class="op">(</span><span class="st">"port"</span><span class="op">)</span><span class="op">)</span>;
+<div class="section level2">
+<h2 id="database-preparation">Database Preparation<a class="anchor" aria-label="anchor" href="#database-preparation"></a>
+</h2>
+<p>The results of the anlaysis SQL will assume a final table:
+<code>@results_database_schema.incidence_summary</code>. The DDL for
+this table can be fetched from the package via the following:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fetch DDL from package</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ddl <span class="ot">&lt;-</span> CohortIncidence<span class="sc">::</span><span class="fu">getResultsDdl</span>()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(ddl)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>CREATE TABLE <span class="sc">@</span>schemaName.incidence_summary</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>(  </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    ref_id int,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    source_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    target_cohort_definition_id bigint,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    target_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    tar_id bigint,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    tar_start_with <span class="fu">varchar</span>(<span class="dv">10</span>),</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    tar_start_offset bigint,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    tar_end_with <span class="fu">varchar</span>(<span class="dv">10</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    tar_end_offset bigint,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    subgroup_id bigint,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    subgroup_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    outcome_id bigint,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    outcome_cohort_definition_id bigint,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    outcome_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    clean_window bigint,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    age_id int,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    age_group_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    gender_id int,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    gender_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    start_year int,</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    persons_at_risk_pe bigint,</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    persons_at_risk bigint,</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    person_days_pe bigint,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    person_days bigint,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    person_outcomes_pe bigint,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    person_outcomes bigint,</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    outcomes_pe bigint,</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    outcomes bigint,</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    incidence_proportion_p100p float,</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    incidence_rate_p100py float</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a> );</span></code></pre></div>
+<p>Using <code>SqlRender</code> and <code>DatabaseConnector</code>, you
+can execute the above on your target database platform in order to
+deploy the table. Remember to replace <code>@schemaName</code> with the
+appropriate schema. You can also ‘hack’ the <code>@schemaName</code>
+paramater to apply a prefix by specifying the SqlRender paramater of
+<code>schemaName.incidence_summary</code> to a target table ie:
+<code>mySchema.prefix_incidence_summary</code>. Using the same paramater
+name/value in <code><a href="../reference/buildQuery.html">buildQuery()</a></code> will allow you to provide a
+prefix to the result table name instead of having to declare a separate
+schema.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">connectionDetails</span> <span class="op">&lt;-</span> <span class="fu">DatabaseConnector</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/DatabaseConnector/reference/createConnectionDetails.html" class="external-link">createConnectionDetails</a></span><span class="op">(</span>dbms <span class="op">=</span> <span class="st">"postgresql"</span>,server<span class="op">=</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"server"</span><span class="op">)</span><span class="op">}</span>, port <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"port"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># to specify the target schema (the typical use case):</span>
-<span class="va">ddl</span> <span class="op">&lt;-</span> <span class="fu">SqlRender</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/SqlRender/reference/render.html">render</a></span><span class="op">(</span><span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/getResultsDdl.html">getResultsDdl</a></span><span class="op">(</span><span class="op">)</span>, schemaName <span class="op">=</span> <span class="st">"mySchema"</span><span class="op">)</span>;
+<span class="va">ddl</span> <span class="op">&lt;-</span> <span class="fu">SqlRender</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/SqlRender/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/getResultsDdl.html">getResultsDdl</a></span><span class="op">(</span><span class="op">)</span>, schemaName <span class="op">=</span> <span class="st">"mySchema"</span><span class="op">)</span>
 
 <span class="co"># a work-around to provide a prefix to the result table, in case creating new schema is restricted</span>
-<span class="va">ddlPrefix</span> <span class="op">&lt;-</span> <span class="fu">SqlRender</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/SqlRender/reference/render.html">render</a></span><span class="op">(</span><span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/getResultsDdl.html">getResultsDdl</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"schemaName.incidence_summary"</span> <span class="op">=</span> <span class="st">"mySchema.prefix_incidence_summary"</span><span class="op">)</span>;
+<span class="va">ddlPrefix</span> <span class="op">&lt;-</span> <span class="fu">SqlRender</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/SqlRender/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/getResultsDdl.html">getResultsDdl</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"schemaName.incidence_summary"</span> <span class="op">=</span> <span class="st">"mySchema.prefix_incidence_summary"</span><span class="op">)</span>
 
-<span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">DatabaseConnector</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/DatabaseConnector/reference/connect.html">connect</a></span><span class="op">(</span><span class="va">connectionDetails</span><span class="op">)</span>;
-<span class="fu">DatabaseConnector</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/DatabaseConnector/reference/executeSql.html">executeSql</a></span><span class="op">(</span><span class="va">ddl</span><span class="op">)</span>;
-<span class="fu">DatabaseConnector</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/DatabaseConnector/reference/disconnect.html">disconnect</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span>;</code></pre></div>
+<span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">DatabaseConnector</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/DatabaseConnector/reference/connect.html" class="external-link">connect</a></span><span class="op">(</span><span class="va">connectionDetails</span><span class="op">)</span>
+<span class="fu">DatabaseConnector</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/DatabaseConnector/reference/executeSql.html" class="external-link">executeSql</a></span><span class="op">(</span><span class="va">ddl</span><span class="op">)</span>
+<span class="fu">DatabaseConnector</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/DatabaseConnector/reference/disconnect.html" class="external-link">disconnect</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="a-simple-example" class="section level1">
-<h1 class="hasAnchor">
-<a href="#a-simple-example" class="anchor"></a>A simple example</h1>
-<p>This example will create a CohortIncidence design containing a single target, outcome, and time at risk.</p>
-<div id="build-the-design" class="section level2">
-<h2 class="hasAnchor">
-<a href="#build-the-design" class="anchor"></a>Build the design</h2>
-<p>The following script builds a single T, O and Time at Risk, and assembles those element into a design. Finally, the resulting JSON is printed.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">t1</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createCohortRef.html">createCohortRef</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">1</span>, name<span class="op">=</span><span class="st">"Target cohort 1"</span><span class="op">)</span>;
+<div class="section level2">
+<h2 id="a-simple-example">A simple example<a class="anchor" aria-label="anchor" href="#a-simple-example"></a>
+</h2>
+<p>This example will create a CohortIncidence design containing a single
+target, outcome, and time at risk.</p>
+<div class="section level3">
+<h3 id="build-the-design">Build the design<a class="anchor" aria-label="anchor" href="#build-the-design"></a>
+</h3>
+<p>The following script builds a single T, O and Time at Risk, and
+assembles those element into a design. Finally, the resulting JSON is
+printed.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">t1</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createCohortRef.html">createCohortRef</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">1</span>, name<span class="op">=</span><span class="st">"Target cohort 1"</span><span class="op">)</span>
 
 <span class="va">o1</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createOutcomeDef.html">createOutcomeDef</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">1</span>,name<span class="op">=</span><span class="st">"Outcome 1, 30d Clean"</span>, 
                                                cohortId <span class="op">=</span><span class="fl">2</span>,
-                                               cleanWindow <span class="op">=</span><span class="fl">30</span><span class="op">)</span>;
+                                               cleanWindow <span class="op">=</span><span class="fl">30</span><span class="op">)</span>
 
 <span class="va">tar1</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createTimeAtRiskDef.html">createTimeAtRiskDef</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">1</span>, 
-                                             startDateField<span class="op">=</span><span class="st">"StartDate"</span>, 
-                                             endDateField<span class="op">=</span><span class="st">"StartDate"</span>, 
-                                             endOffset<span class="op">=</span><span class="fl">30</span><span class="op">)</span>;
+                                             startWith<span class="op">=</span><span class="st">"start"</span>, 
+                                             endWith<span class="op">=</span><span class="st">"end"</span>, 
+                                             endOffset<span class="op">=</span><span class="fl">30</span><span class="op">)</span>
 
 <span class="co"># Note: c() is used when dealing with an array of numbers, </span>
 <span class="co"># later we use list() when dealing with an array of objects</span>
-<span class="va">analysis1</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createIncidenceAnalysis.html">createIncidenceAnalysis</a></span><span class="op">(</span>targets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">t1</span><span class="op">$</span><span class="va">id</span><span class="op">)</span>,
-                                                      outcomes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">o1</span><span class="op">$</span><span class="va">id</span><span class="op">)</span>,
-                                                      tars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">tar1</span><span class="op">$</span><span class="va">id</span><span class="op">)</span><span class="op">)</span>;
+<span class="va">analysis1</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createIncidenceAnalysis.html">createIncidenceAnalysis</a></span><span class="op">(</span>targets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">t1</span><span class="op">$</span><span class="va">id</span><span class="op">)</span>,
+                                                      outcomes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">o1</span><span class="op">$</span><span class="va">id</span><span class="op">)</span>,
+                                                      tars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">tar1</span><span class="op">$</span><span class="va">id</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">subgroup1</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createCohortSubgroup.html">createCohortSubgroup</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">1</span>, name<span class="op">=</span><span class="st">"Subgroup 1"</span>, cohortRef <span class="op">=</span> <span class="fu"><a href="../reference/createCohortRef.html">createCohortRef</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">300</span><span class="op">)</span><span class="op">)</span>;
+<span class="va">subgroup1</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createCohortSubgroup.html">createCohortSubgroup</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">1</span>, name<span class="op">=</span><span class="st">"Subgroup 1"</span>, cohortRef <span class="op">=</span> <span class="fu"><a href="../reference/createCohortRef.html">createCohortRef</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">300</span><span class="op">)</span><span class="op">)</span>
 
 
 <span class="co"># Create Design (note use of list() here):</span>
-<span class="va">irDesign</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createIncidenceDesign.html">createIncidenceDesign</a></span><span class="op">(</span>targetDefs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">t1</span><span class="op">)</span>,
-                                                   outcomeDefs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">o1</span><span class="op">)</span>,
-                                                   tars<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">tar1</span><span class="op">)</span>,
-                                                   analysisList <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">analysis1</span><span class="op">)</span>,
-                                                   subgroups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">subgroup1</span><span class="op">)</span><span class="op">)</span>;
+<span class="va">irDesign</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createIncidenceDesign.html">createIncidenceDesign</a></span><span class="op">(</span>targetDefs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">t1</span><span class="op">)</span>,
+                                                   outcomeDefs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">o1</span><span class="op">)</span>,
+                                                   tars<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">tar1</span><span class="op">)</span>,
+                                                   analysisList <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">analysis1</span><span class="op">)</span>,
+                                                   subgroups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">subgroup1</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># Render the design as JSON</span>
-<span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">toJSON</a></span><span class="op">(</span><span class="va">irDesign</span>,pretty <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
+<span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html" class="external-link">toJSON</a></span><span class="op">(</span><span class="va">irDesign</span>,pretty <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
 <span class="co">#&gt; {</span>
 <span class="co">#&gt;   "cohortDefs": [],</span>
 <span class="co">#&gt;   "targetDefs": [</span>
@@ -215,11 +240,11 @@
 <span class="co">#&gt;     {</span>
 <span class="co">#&gt;       "id": 1,</span>
 <span class="co">#&gt;       "start": {</span>
-<span class="co">#&gt;         "dateField": "StartDate",</span>
+<span class="co">#&gt;         "dateField": "start",</span>
 <span class="co">#&gt;         "offset": 0</span>
 <span class="co">#&gt;       },</span>
 <span class="co">#&gt;       "end": {</span>
-<span class="co">#&gt;         "dateField": "StartDate",</span>
+<span class="co">#&gt;         "dateField": "end",</span>
 <span class="co">#&gt;         "offset": 30</span>
 <span class="co">#&gt;       }</span>
 <span class="co">#&gt;     }</span>
@@ -245,20 +270,210 @@
 <span class="co">#&gt;   ]</span>
 <span class="co">#&gt; }</span></code></pre></div>
 </div>
-<div id="build-analysis-sql-from-design" class="section level2">
-<h2 class="hasAnchor">
-<a href="#build-analysis-sql-from-design" class="anchor"></a>Build analysis SQL from design</h2>
-<p>From the previous design, the <code><a href="../reference/buildQuery.html">CohortIncidence::buildQuery()</a></code> method is used to generate the analysis SQL:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="section level3">
+<h3 id="using-age-gender-and-start-year-strata">Using age, gender and start year strata<a class="anchor" aria-label="anchor" href="#using-age-gender-and-start-year-strata"></a>
+</h3>
+<p>The IR design can also include settings to specify if an analysis
+should be done at the age, gender or start year levels (or any
+combination of those choices). To use this function, you create the
+strata settings with the
+<code>CohortIncidence::createStrataSettings)</code> function:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">irDesignWithStrata</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createIncidenceDesign.html">createIncidenceDesign</a></span><span class="op">(</span>targetDefs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">t1</span><span class="op">)</span>,
+                                                   outcomeDefs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">o1</span><span class="op">)</span>,
+                                                   tars<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">tar1</span><span class="op">)</span>,
+                                                   analysisList <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">analysis1</span><span class="op">)</span>,
+                                                   subgroups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">subgroup1</span><span class="op">)</span>,
+                                                   <span class="co">#add by age and by gender strata, but don't do by start year.</span>
+                                                   strataSettings <span class="op">=</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createStrataSettings.html">createStrataSettings</a></span><span class="op">(</span>byGender<span class="op">=</span><span class="cn">T</span>, byAge<span class="op">=</span><span class="cn">T</span>, ageBreaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">17</span>,<span class="fl">34</span>,<span class="fl">65</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="using-executeanalysis">Using executeAnalysis()<a class="anchor" aria-label="anchor" href="#using-executeanalysis"></a>
+</h3>
+<p>If there is no need to see the analysis sql or control the output of
+the analysis to a permenant table, the <code><a href="../reference/executeAnalysis.html">executeAnalysis()</a></code>
+function can be used to perform the cohort incidence using a simple
+API:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">buildOptions</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/buildOptions.html">buildOptions</a></span><span class="op">(</span>cohortTable <span class="op">=</span> <span class="st">"demoCohortSchema.cohort"</span>,
-                                              cdmSchema <span class="op">=</span> <span class="st">"mycdm"</span>,
-                                              resultsSchema <span class="op">=</span> <span class="st">"myresults"</span>,
+                                              cdmDatabaseSchema <span class="op">=</span> <span class="st">"mycdm"</span>,
+                                              sourceName <span class="op">=</span> <span class="st">"mysource"</span>,
                                               refId <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 
-<span class="va">analysisSql</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/buildQuery.html">buildQuery</a></span><span class="op">(</span>incidenceDesign <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">toJSON</a></span><span class="op">(</span><span class="va">irDesign</span><span class="op">)</span><span class="op">)</span>,
-                                           buildOptions <span class="op">=</span> <span class="va">buildOptions</span><span class="op">)</span>;
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">analysisSql</span><span class="op">)</span>
+
+<span class="va">executeResults</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/executeAnalysis.html">executeAnalysis</a></span><span class="op">(</span>connectionDetails <span class="op">=</span> <span class="va">connectionDetails</span>,
+                                                   incidenceDesign <span class="op">=</span> <span class="va">irDesign</span>,
+                                                   buildOptions <span class="op">=</span> <span class="va">buildOptions</span><span class="op">)</span></code></pre></div>
+<p>The results will contain the same table structure as the results
+schema <code>incidence_summary</code>:</p>
+<table class="table">
+<colgroup>
+<col width="38%">
+<col width="61%">
+</colgroup>
+<thead><tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>REF_ID</td>
+<td>The reference id specified in buildOptions() to track results to the
+analysis execution.</td>
+</tr>
+<tr class="even">
+<td>SOURCE_NAME</td>
+<td>The name of the source for these results</td>
+</tr>
+<tr class="odd">
+<td>TARGET_COHORT_DEFIITION_ID</td>
+<td>The cohort ID of the target population</td>
+</tr>
+<tr class="even">
+<td>TARGET_NAME</td>
+<td>The name of the target cohort</td>
+</tr>
+<tr class="odd">
+<td>TAR_ID</td>
+<td>The TAR identifier</td>
+</tr>
+<tr class="even">
+<td>TAR_START_WITH</td>
+<td>Indicates if the TAR starts with the ‘start’ or ‘end’ of the target
+cohort episode</td>
+</tr>
+<tr class="odd">
+<td>TAR_START_OFFSET</td>
+<td>The days added to the date field specified in TAR_START_WITH</td>
+</tr>
+<tr class="even">
+<td>TAR_END_WITH</td>
+<td>Indicates if the TAR ends with the ‘start’ or ‘end’ of the target
+cohort episode</td>
+</tr>
+<tr class="odd">
+<td>TAR_END_OFFSET</td>
+<td>The days added to the date field specified in TAR_END_WITH</td>
+</tr>
+<tr class="even">
+<td>SUBGROUP_ID</td>
+<td>The subgroup identifier</td>
+</tr>
+<tr class="odd">
+<td>SUBGROUP_NAME</td>
+<td>The name of the subgroup</td>
+</tr>
+<tr class="even">
+<td>OUTCOME_ID</td>
+<td>The outcome identifier</td>
+</tr>
+<tr class="odd">
+<td>OUTCOME_COHORT_DEFINITION_ID</td>
+<td>The cohort ID of the outcome population</td>
+</tr>
+<tr class="even">
+<td>OUTCOME_NAME</td>
+<td>The outcome name</td>
+</tr>
+<tr class="odd">
+<td>CLEAN_WINDOW</td>
+<td>The clean window for this outcome definition</td>
+</tr>
+<tr class="even">
+<td>AGE_ID</td>
+<td>The age ID for this strata representing the age band specified in
+the strata settings</td>
+</tr>
+<tr class="odd">
+<td>AGE_GROUP_NAME</td>
+<td>The name for this age group</td>
+</tr>
+<tr class="even">
+<td>GENDER_ID</td>
+<td>The gender concept ID for this gender strata</td>
+</tr>
+<tr class="odd">
+<td>GENDER_NAME</td>
+<td>The name of the gender</td>
+</tr>
+<tr class="even">
+<td>START_YEAR</td>
+<td>The year strata, defined by using the year the TAR started</td>
+</tr>
+<tr class="odd">
+<td>PERSONS_AT_RISK_PE</td>
+<td>Distinct persons at risk before removing excluded time from TAR</td>
+</tr>
+<tr class="even">
+<td>PERSONS_AT_RISK</td>
+<td>Distinct persons at risk after removing excluded time from TAR. A
+person must have at least 1 day TAR to be included.</td>
+</tr>
+<tr class="odd">
+<td>PERSON_DAYS_PE</td>
+<td>Total TAR (in days) before excluded time was removed from TAR.</td>
+</tr>
+<tr class="even">
+<td>PERSON_DAYS</td>
+<td>Total TAR (in days) after excluded time was removed from TAR.</td>
+</tr>
+<tr class="odd">
+<td>PERSON_OUTCOMES_PE</td>
+<td>Distinct persons with outcome before removing excluded time from
+TAR</td>
+</tr>
+<tr class="even">
+<td>PERSON_OUTCOMES</td>
+<td>Distinct persons with outcome after removing excluded time from TAR.
+A person must have at least 1 day TAR to be included.</td>
+</tr>
+<tr class="odd">
+<td>OUTCOMES_PE</td>
+<td>Number of cases before excluding TAR.</td>
+</tr>
+<tr class="even">
+<td>OUTCOMES</td>
+<td>Number of cases after excluding TAR.</td>
+</tr>
+<tr class="odd">
+<td>INCIDENCE_PROPORTION_P100P</td>
+<td>The Incidence Proportion (per 100 people), calculated by
+person_outcomes / persons_at_risk * 100</td>
+</tr>
+<tr class="even">
+<td>INCIDENCE_RATE_P100PY</td>
+<td>The Incidence Rate (per 100 person years), calculated by outcomes /
+person_days / 365.25 * 100</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section level2">
+<h2 id="advanced-usage-budling-and-executing-sql-manually">Advanced Usage: Budling and Executing SQL manually<a class="anchor" aria-label="anchor" href="#advanced-usage-budling-and-executing-sql-manually"></a>
+</h2>
+<p>There may be a reason (debugging or special processing steps) Where
+you would want to access the analysis SQL before execution.<br>
+The following sections describe how to fetch the SQL, translate and
+execute the statements.</p>
+<div class="section level3">
+<h3 id="build-analysis-sql-from-design">Build analysis SQL from design<a class="anchor" aria-label="anchor" href="#build-analysis-sql-from-design"></a>
+</h3>
+<p>From the previous design, the
+<code><a href="../reference/buildQuery.html">CohortIncidence::buildQuery()</a></code> method is used to generate
+the analysis SQL:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="va">buildOptions</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/buildOptions.html">buildOptions</a></span><span class="op">(</span>cohortTable <span class="op">=</span> <span class="st">"demoCohortSchema.cohort"</span>,
+                                              cdmDatabaseSchema <span class="op">=</span> <span class="st">"mycdm"</span>,
+                                              resultsDatabaseSchema <span class="op">=</span> <span class="st">"myresults"</span>,
+                                              sourceName <span class="op">=</span> <span class="st">"mysource"</span>,
+                                              refId <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+
+<span class="va">analysisSql</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/buildQuery.html">buildQuery</a></span><span class="op">(</span>incidenceDesign <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html" class="external-link">toJSON</a></span><span class="op">(</span><span class="va">irDesign</span><span class="op">)</span><span class="op">)</span>,
+                                           buildOptions <span class="op">=</span> <span class="va">buildOptions</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">analysisSql</span><span class="op">)</span>
 <span class="co">#&gt; select target_cohort_definition_id, target_name</span>
 <span class="co">#&gt; into #target_ref</span>
 <span class="co">#&gt; from (</span>
@@ -267,12 +482,12 @@
 <span class="co">#&gt; ) O</span>
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; select time_at_risk_id, time_at_risk_start_index, time_at_risk_start_offset, time_at_risk_end_index, time_at_risk_end_offset</span>
+<span class="co">#&gt; select tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset</span>
 <span class="co">#&gt; into #tar_ref </span>
 <span class="co">#&gt; FROM (</span>
-<span class="co">#&gt; select cast(1 as int) as time_at_risk_id, </span>
-<span class="co">#&gt;  cast (1 as int) as time_at_risk_start_index, cast (0 as int) as time_at_risk_start_offset,</span>
-<span class="co">#&gt;  cast (1 as int) as time_at_risk_end_index, cast (30 as int) as time_at_risk_end_offset</span>
+<span class="co">#&gt; select cast(1 as int) as tar_id, </span>
+<span class="co">#&gt;  cast ('start' as varchar(10)) as tar_start_with, cast (0 as int) as tar_start_offset,</span>
+<span class="co">#&gt;  cast ('end' as varchar(10)) as tar_end_with, cast (30 as int) as tar_end_offset</span>
 <span class="co">#&gt; ) T</span>
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
@@ -282,11 +497,10 @@
 <span class="co">#&gt; select cast(1 as int) as outcome_id, cast(2 as int) as outcome_cohort_definition_id,</span>
 <span class="co">#&gt;  cast ('Outcome 1, 30d Clean' as varchar(255)) as outcome_name,</span>
 <span class="co">#&gt;  cast (30 as int) as clean_window,</span>
-<span class="co">#&gt;   cast (0 as int) as excluded_cohort_definition_id</span>
+<span class="co">#&gt;  cast (0 as int) as excluded_cohort_definition_id</span>
 <span class="co">#&gt; ) O</span>
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; -- Will figure out subgroup mechanics at a later time</span>
 <span class="co">#&gt; select subgroup_id, subgroup_name</span>
 <span class="co">#&gt; INTO #subgroup_ref</span>
 <span class="co">#&gt; FROM (</span>
@@ -298,6 +512,17 @@
 <span class="co">#&gt; ) S</span>
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
+<span class="co">#&gt; create table #age_group</span>
+<span class="co">#&gt; (</span>
+<span class="co">#&gt;  age_id int NOT NULL,</span>
+<span class="co">#&gt;  group_name varchar(50) NOT NULL,</span>
+<span class="co">#&gt;  min_age int NULL,</span>
+<span class="co">#&gt;  max_age int NULL</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; );</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; --</span>
 <span class="co">#&gt; -- Begin analysis 0</span>
 <span class="co">#&gt; --</span>
@@ -306,54 +531,57 @@
 <span class="co">#&gt; code to implement calculation using the inputs above, no need to modify beyond this point</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; 1) create T + TAR periods</span>
-<span class="co">#&gt; 2) determine which TTAR periods require era-fying, and which don't</span>
-<span class="co">#&gt; 3) create table to store era-fied at-risk periods</span>
-<span class="co">#&gt;   put all periods that don't require erafying</span>
-<span class="co">#&gt;   era-fy those records that require it, then put them in table</span>
-<span class="co">#&gt; 4) create the exc_o periods,  per TTAR</span>
-<span class="co">#&gt; 5) create table to sore era-fied exc_at_risk periods</span>
-<span class="co">#&gt;   put all periods that don't require erafying</span>
-<span class="co">#&gt;   era-fy those records that require it, then put them in table</span>
-<span class="co">#&gt; 6) overall, T/O/TAR,  compute TAR = sum(at-risk_era) - sum(exc_at_risk_era),  num_events = sum(events during at_rik_era) - sum(events during exc_at_risk_era)</span>
-<span class="co">#&gt; 7) join to S and C, compute T/S/C/O/TAR   person-time, num_events</span>
+<span class="co">#&gt; 2) create table to store era-fied at-risk periods</span>
+<span class="co">#&gt;   UNION all periods that don't require erafying </span>
+<span class="co">#&gt;   with era-fy records that require it</span>
+<span class="co">#&gt; 3) create table to store era-fied excluded at-risk periods</span>
+<span class="co">#&gt;   UNION all periods that don't require erafying</span>
+<span class="co">#&gt;   with era-fy records that require it</span>
+<span class="co">#&gt; 4) calculate pre-exclude outcomes and outcomes </span>
+<span class="co">#&gt; 5) calculate exclsion time per T/O/TAR/Subject/start_date</span>
+<span class="co">#&gt; 6) generate raw result table with T/O/TAR/subject_id, start_date, pe_at_risk (datediff(d,start,end), at_risk (pe_at_risk - exclusion time), pe_outcomes, outcomes</span>
+<span class="co">#&gt;    attach age/gender/year columns</span>
+<span class="co">#&gt; 7) Create analysis_ref to produce each T/O/TAR combo</span>
+<span class="co">#&gt; 8) perform rollup to calculate IR at the T/O/TAR/S/[age|gender|year] inclusing distinct people and distinct cases for 'all' and each subgroup</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; **************************************/</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; --three ways for entry into excluded</span>
 <span class="co">#&gt; --1:  duration of outcome periods  (ex:  immortal time due to clean period)</span>
 <span class="co">#&gt; --2:  other periods excluded  (ex: persons post-appendectomy for appendicitis)</span>
-<span class="co">#&gt; --3:  if you wanted to exclude persons with prior events or set to '1st event only' (set exclusion from 1st date to all time forward?)</span>
 <span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; -- 1) create T + TAR periods</span>
 <span class="co">#&gt; --HINT DISTRIBUTE_ON_KEY(subject_id)</span>
-<span class="co">#&gt; select cohort_definition_id, time_at_risk_id, subject_id, start_date, end_date</span>
+<span class="co">#&gt; select cohort_definition_id, tar_id, subject_id, start_date, end_date</span>
 <span class="co">#&gt; into #TTAR</span>
 <span class="co">#&gt; FROM (</span>
 <span class="co">#&gt;  select tc1.cohort_definition_id,</span>
-<span class="co">#&gt;      tar1.time_at_risk_id,</span>
+<span class="co">#&gt;      tar1.tar_id,</span>
 <span class="co">#&gt;      subject_id,</span>
 <span class="co">#&gt;      case </span>
-<span class="co">#&gt;          when tar1.time_at_risk_start_index = 1 then</span>
-<span class="co">#&gt;              case when dateadd(dd,tar1.time_at_risk_start_offset,tc1.cohort_start_date) &lt; op1.observation_period_end_date then dateadd(dd,tar1.time_at_risk_start_offset,tc1.cohort_start_date)</span>
-<span class="co">#&gt;                  when dateadd(dd,tar1.time_at_risk_start_offset,tc1.cohort_start_date) &gt;= op1.observation_period_end_date then op1.observation_period_end_date</span>
+<span class="co">#&gt;          when tar1.tar_start_with = 'start' then</span>
+<span class="co">#&gt;              case when dateadd(dd,tar1.tar_start_offset,tc1.cohort_start_date) &lt; op1.observation_period_end_date then dateadd(dd,tar1.tar_start_offset,tc1.cohort_start_date)</span>
+<span class="co">#&gt;                  when dateadd(dd,tar1.tar_start_offset,tc1.cohort_start_date) &gt;= op1.observation_period_end_date then op1.observation_period_end_date</span>
 <span class="co">#&gt;              end</span>
-<span class="co">#&gt;          when tar1.time_at_risk_start_index = 0 then</span>
-<span class="co">#&gt;              case when dateadd(dd,tar1.time_at_risk_start_offset,tc1.cohort_end_date) &lt; op1.observation_period_end_date then dateadd(dd,tar1.time_at_risk_start_offset,tc1.cohort_end_date)</span>
-<span class="co">#&gt;                  when dateadd(dd,tar1.time_at_risk_start_offset,tc1.cohort_end_date) &gt;= op1.observation_period_end_date then op1.observation_period_end_date</span>
+<span class="co">#&gt;          when tar1.tar_start_with = 'end' then</span>
+<span class="co">#&gt;              case when dateadd(dd,tar1.tar_start_offset,tc1.cohort_end_date) &lt; op1.observation_period_end_date then dateadd(dd,tar1.tar_start_offset,tc1.cohort_end_date)</span>
+<span class="co">#&gt;                  when dateadd(dd,tar1.tar_start_offset,tc1.cohort_end_date) &gt;= op1.observation_period_end_date then op1.observation_period_end_date</span>
 <span class="co">#&gt;              end</span>
 <span class="co">#&gt;          else null --shouldnt get here if tar set properly</span>
 <span class="co">#&gt;      end as start_date,</span>
 <span class="co">#&gt;      case </span>
-<span class="co">#&gt;          when tar1.time_at_risk_end_index = 1 then</span>
-<span class="co">#&gt;              case when dateadd(dd,tar1.time_at_risk_end_offset,tc1.cohort_start_date) &lt; op1.observation_period_end_date then dateadd(dd,tar1.time_at_risk_end_offset,tc1.cohort_start_date)</span>
-<span class="co">#&gt;                  when dateadd(dd,tar1.time_at_risk_end_offset,tc1.cohort_start_date) &gt;= op1.observation_period_end_date then op1.observation_period_end_date</span>
+<span class="co">#&gt;          when tar1.tar_end_with = 'start' then</span>
+<span class="co">#&gt;              case when dateadd(dd,tar1.tar_end_offset,tc1.cohort_start_date) &lt; op1.observation_period_end_date then dateadd(dd,tar1.tar_end_offset,tc1.cohort_start_date)</span>
+<span class="co">#&gt;                  when dateadd(dd,tar1.tar_end_offset,tc1.cohort_start_date) &gt;= op1.observation_period_end_date then op1.observation_period_end_date</span>
 <span class="co">#&gt;              end</span>
-<span class="co">#&gt;          when tar1.time_at_risk_end_index = 0 then</span>
-<span class="co">#&gt;              case when dateadd(dd,tar1.time_at_risk_end_offset,tc1.cohort_end_date) &lt; op1.observation_period_end_date then dateadd(dd,tar1.time_at_risk_end_offset,tc1.cohort_end_date)</span>
-<span class="co">#&gt;                  when dateadd(dd,tar1.time_at_risk_end_offset,tc1.cohort_end_date) &gt;= op1.observation_period_end_date then op1.observation_period_end_date</span>
+<span class="co">#&gt;          when tar1.tar_end_with = 'end' then</span>
+<span class="co">#&gt;              case when dateadd(dd,tar1.tar_end_offset,tc1.cohort_end_date) &lt; op1.observation_period_end_date then dateadd(dd,tar1.tar_end_offset,tc1.cohort_end_date)</span>
+<span class="co">#&gt;                  when dateadd(dd,tar1.tar_end_offset,tc1.cohort_end_date) &gt;= op1.observation_period_end_date then op1.observation_period_end_date</span>
 <span class="co">#&gt;              end</span>
 <span class="co">#&gt;          else null --shouldnt get here if tar set properly</span>
 <span class="co">#&gt;      end as end_date</span>
-<span class="co">#&gt;  from (select time_at_risk_id, time_at_risk_start_index, time_at_risk_start_offset, time_at_risk_end_index, time_at_risk_end_offset  from #tar_ref where time_at_risk_id in (1)) tar1,</span>
+<span class="co">#&gt;  from (select tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset  from #tar_ref where tar_id in (1)) tar1,</span>
 <span class="co">#&gt;  (select cohort_definition_id, subject_id, cohort_start_date, cohort_end_date from demoCohortSchema.cohort where cohort_definition_id in (1)) tc1</span>
 <span class="co">#&gt;  inner join mycdm.observation_period op1 on tc1.subject_id = op1.person_id</span>
 <span class="co">#&gt;      and tc1.cohort_start_date &gt;= op1.observation_period_start_date</span>
@@ -362,19 +590,21 @@
 <span class="co">#&gt; WHERE TAR.start_date &lt;= TAR.end_date</span>
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
+<span class="co">#&gt; /*</span>
+<span class="co">#&gt; 2) create table to store era-fied at-risk periods</span>
+<span class="co">#&gt;   UNION all periods that don't require erafying </span>
+<span class="co">#&gt;   with era-fy records that require it</span>
+<span class="co">#&gt; */</span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; --find the records that need to be era-fied</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; --HINT DISTRIBUTE_ON_KEY(subject_id)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
 <span class="co">#&gt; --era-building script for the 'TTAR_to_erafy' records</span>
 <span class="co">#&gt; --insert records from era-building script into #TTAR_erafied</span>
 <span class="co">#&gt; --HINT DISTRIBUTE_ON_KEY(subject_id)</span>
-<span class="co">#&gt; select t1.cohort_definition_id, t1.time_at_risk_id, t1.subject_id, t1.start_date, t1.end_date</span>
+<span class="co">#&gt; select t1.cohort_definition_id, t1.tar_id, t1.subject_id, t1.start_date, t1.end_date</span>
 <span class="co">#&gt; INTO #TTAR_to_erafy</span>
 <span class="co">#&gt; from #TTAR t1</span>
 <span class="co">#&gt; inner join #TTAR t2 on t1.cohort_definition_id = t2.cohort_definition_id</span>
-<span class="co">#&gt;  and t1.time_at_risk_id = t2.time_at_risk_id</span>
+<span class="co">#&gt;  and t1.tar_id = t2.tar_id</span>
 <span class="co">#&gt;  and t1.subject_id = t2.subject_id</span>
 <span class="co">#&gt;  and t1.start_date &lt;= t2.end_date</span>
 <span class="co">#&gt;  and t1.end_date &gt;= t2.start_date</span>
@@ -382,81 +612,81 @@
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; --HINT DISTRIBUTE_ON_KEY(subject_id)</span>
-<span class="co">#&gt; with cteEndDates (cohort_definition_id, time_at_risk_id, subject_id, end_date) AS</span>
+<span class="co">#&gt; with cteEndDates (cohort_definition_id, tar_id, subject_id, end_date) AS</span>
 <span class="co">#&gt; (</span>
 <span class="co">#&gt;  SELECT</span>
-<span class="co">#&gt;        cohort_definition_id,</span>
-<span class="co">#&gt;          time_at_risk_id,</span>
-<span class="co">#&gt;          subject_id,</span>
-<span class="co">#&gt;        event_date as end_date</span>
+<span class="co">#&gt;      cohort_definition_id,</span>
+<span class="co">#&gt;      tar_id,</span>
+<span class="co">#&gt;      subject_id,</span>
+<span class="co">#&gt;      event_date as end_date</span>
 <span class="co">#&gt;  FROM</span>
 <span class="co">#&gt;  (</span>
 <span class="co">#&gt;      SELECT cohort_definition_id,</span>
-<span class="co">#&gt;          time_at_risk_id,</span>
+<span class="co">#&gt;          tar_id,</span>
 <span class="co">#&gt;          subject_id,</span>
 <span class="co">#&gt;          event_date,</span>
-<span class="co">#&gt;          SUM(event_type) OVER (PARTITION BY cohort_definition_id, time_at_risk_id, subject_id ORDER BY event_date ROWS UNBOUNDED PRECEDING) AS interval_status</span>
+<span class="co">#&gt;          SUM(event_type) OVER (PARTITION BY cohort_definition_id, tar_id, subject_id ORDER BY event_date ROWS UNBOUNDED PRECEDING) AS interval_status</span>
 <span class="co">#&gt;      FROM</span>
 <span class="co">#&gt;      (</span>
 <span class="co">#&gt;          SELECT</span>
 <span class="co">#&gt;              cohort_definition_id,</span>
-<span class="co">#&gt;              time_at_risk_id,</span>
+<span class="co">#&gt;              tar_id,</span>
 <span class="co">#&gt;              subject_id,</span>
 <span class="co">#&gt;              start_date AS event_date,</span>
-<span class="co">#&gt;            -1 AS event_type</span>
+<span class="co">#&gt;              -1 AS event_type</span>
 <span class="co">#&gt;          FROM #TTAR_to_erafy</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;          UNION ALL</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;          SELECT</span>
 <span class="co">#&gt;              cohort_definition_id,</span>
-<span class="co">#&gt;              time_at_risk_id,</span>
+<span class="co">#&gt;              tar_id,</span>
 <span class="co">#&gt;              subject_id,</span>
 <span class="co">#&gt;              end_date AS event_date,</span>
-<span class="co">#&gt;            1 AS event_type</span>
+<span class="co">#&gt;              1 AS event_type</span>
 <span class="co">#&gt;          FROM #TTAR_to_erafy</span>
 <span class="co">#&gt;      ) RAWDATA</span>
 <span class="co">#&gt;  ) e</span>
 <span class="co">#&gt;  WHERE interval_status = 0</span>
 <span class="co">#&gt; ),</span>
-<span class="co">#&gt; cteEnds (cohort_definition_id, time_at_risk_id, subject_id, start_date, end_date) AS</span>
+<span class="co">#&gt; cteEnds (cohort_definition_id, tar_id, subject_id, start_date, end_date) AS</span>
 <span class="co">#&gt; (</span>
 <span class="co">#&gt;  SELECT c.cohort_definition_id,</span>
-<span class="co">#&gt;      c.time_at_risk_id,</span>
+<span class="co">#&gt;      c.tar_id,</span>
 <span class="co">#&gt;      c.subject_id,</span>
 <span class="co">#&gt;      c.start_date,</span>
 <span class="co">#&gt;      MIN(e.end_date) AS end_date</span>
 <span class="co">#&gt;  FROM #TTAR_to_erafy c</span>
 <span class="co">#&gt;  INNER JOIN cteEndDates e ON c.subject_id = e.subject_id</span>
 <span class="co">#&gt;      AND c.cohort_definition_id = e.cohort_definition_id</span>
-<span class="co">#&gt;      AND c.time_at_risk_id = e.time_at_risk_id</span>
+<span class="co">#&gt;      AND c.tar_id = e.tar_id</span>
 <span class="co">#&gt;      AND e.end_date &gt;= c.start_date</span>
 <span class="co">#&gt;  GROUP BY  c.cohort_definition_id,</span>
-<span class="co">#&gt;      c.time_at_risk_id,</span>
+<span class="co">#&gt;      c.tar_id,</span>
 <span class="co">#&gt;      c.subject_id,</span>
 <span class="co">#&gt;      c.start_date</span>
 <span class="co">#&gt; )</span>
-<span class="co">#&gt; select cohort_definition_id, time_at_risk_id, subject_id, min(start_date) as start_date, end_date</span>
+<span class="co">#&gt; select cohort_definition_id, tar_id, subject_id, min(start_date) as start_date, end_date</span>
 <span class="co">#&gt; into #TTAR_era_overlaps</span>
 <span class="co">#&gt; from cteEnds</span>
-<span class="co">#&gt; group by cohort_definition_id, time_at_risk_id, subject_id, end_date</span>
+<span class="co">#&gt; group by cohort_definition_id, tar_id, subject_id, end_date</span>
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; --HINT DISTRIBUTE_ON_KEY(subject_id)</span>
-<span class="co">#&gt; select cohort_definition_id, cast(0 as int) as subgroup_id, time_at_risk_id, subject_id, start_date, end_date </span>
+<span class="co">#&gt; select cohort_definition_id, tar_id, subject_id, start_date, end_date </span>
 <span class="co">#&gt; into #TTAR_erafied</span>
 <span class="co">#&gt; FROM (</span>
-<span class="co">#&gt;  select cohort_definition_id, time_at_risk_id, subject_id, start_date, end_date</span>
+<span class="co">#&gt;  select cohort_definition_id, tar_id, subject_id, start_date, end_date</span>
 <span class="co">#&gt;  from #TTAR_era_overlaps</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  UNION ALL</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  --records that were already erafied and just need to be brought over directly</span>
-<span class="co">#&gt;  select distinct t1.cohort_definition_id, t1.time_at_risk_id, t1.subject_id, t1.start_date, t1.end_date</span>
+<span class="co">#&gt;  select distinct t1.cohort_definition_id, t1.tar_id, t1.subject_id, t1.start_date, t1.end_date</span>
 <span class="co">#&gt;  from #TTAR t1</span>
 <span class="co">#&gt;  left join #TTAR t2 on t1.cohort_definition_id = t2.cohort_definition_id</span>
-<span class="co">#&gt;      and t1.time_at_risk_id = t2.time_at_risk_id</span>
+<span class="co">#&gt;      and t1.tar_id = t2.tar_id</span>
 <span class="co">#&gt;      and t1.subject_id = t2.subject_id</span>
 <span class="co">#&gt;      and t1.start_date &lt;= t2.end_date</span>
 <span class="co">#&gt;      and t1.end_date &gt;= t2.start_date</span>
@@ -466,8 +696,16 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; INSERT INTO #TTAR_erafied (cohort_definition_id, subgroup_id, time_at_risk_id, subject_id, start_date, end_date)</span>
-<span class="co">#&gt; select t1.cohort_definition_id, cast(1 as int) as subgroup_id, t1.time_at_risk_id, t1.subject_id, t1.start_date, t1.end_date</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; create table #subgroup_person</span>
+<span class="co">#&gt; (</span>
+<span class="co">#&gt;  subgroup_id bigint NOT NULL,</span>
+<span class="co">#&gt;  subject_id bigint NOT NULL,</span>
+<span class="co">#&gt;  start_date date NOT NULL</span>
+<span class="co">#&gt; );</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; INSERT INTO #subgroup_person (subgroup_id, subject_id, start_date)</span>
+<span class="co">#&gt; select distinct cast(1 as int) as subgroup_id, t1.subject_id, t1.start_date</span>
 <span class="co">#&gt; FROM #TTAR_erafied t1</span>
 <span class="co">#&gt; JOIN demoCohortSchema.cohort s1 on t1.subject_id = s1.subject_id</span>
 <span class="co">#&gt;   and t1.start_date  &gt;= s1.cohort_start_date</span>
@@ -476,10 +714,16 @@
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; -- find excluded time from outcome cohorts</span>
+<span class="co">#&gt; /*</span>
+<span class="co">#&gt; 3) create table to store era-fied excluded at-risk periods</span>
+<span class="co">#&gt;   UNION all periods that don't require erafying</span>
+<span class="co">#&gt;   with era-fy records that require it</span>
+<span class="co">#&gt; */</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; -- find excluded time from outcome cohorts and exclusion cohorts</span>
 <span class="co">#&gt; -- note, clean window added to event end date</span>
 <span class="co">#&gt; --HINT DISTRIBUTE_ON_KEY(subject_id)</span>
-<span class="co">#&gt; select or1.outcome_id, oc1.subject_id, dateadd(dd,1,oc1.cohort_end_date) as cohort_start_date, dateadd(dd,or1.clean_window, oc1.cohort_start_date) as cohort_end_date</span>
+<span class="co">#&gt; select or1.outcome_id, oc1.subject_id, dateadd(dd,1,oc1.cohort_start_date) as cohort_start_date, dateadd(dd,or1.clean_window, oc1.cohort_end_date) as cohort_end_date</span>
 <span class="co">#&gt; into #excluded_tar_cohort</span>
 <span class="co">#&gt; from demoCohortSchema.cohort oc1</span>
 <span class="co">#&gt; inner join (</span>
@@ -502,7 +746,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; --HINT DISTRIBUTE_ON_KEY(subject_id)</span>
 <span class="co">#&gt; select te1.cohort_definition_id as target_cohort_definition_id,</span>
-<span class="co">#&gt;  te1.time_at_risk_id,</span>
+<span class="co">#&gt;  te1.tar_id,</span>
 <span class="co">#&gt;  ec1.outcome_id,</span>
 <span class="co">#&gt;  ec1.subject_id,</span>
 <span class="co">#&gt;  case when ec1.cohort_start_date &gt; te1.start_date then ec1.cohort_start_date else te1.start_date end as start_date,</span>
@@ -517,382 +761,218 @@
 <span class="co">#&gt; --find the records that need to be era-fied</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; --HINT DISTRIBUTE_ON_KEY(subject_id)</span>
-<span class="co">#&gt; select t1.target_cohort_definition_id, t1.time_at_risk_id, t1.outcome_id, t1.subject_id, t1.start_date, t1.end_date</span>
+<span class="co">#&gt; select t1.target_cohort_definition_id, t1.tar_id, t1.outcome_id, t1.subject_id, t1.start_date, t1.end_date</span>
 <span class="co">#&gt; into #exc_TTAR_o_to_erafy </span>
 <span class="co">#&gt; from #exc_TTAR_o t1</span>
 <span class="co">#&gt; inner join #exc_TTAR_o t2 on t1.target_cohort_definition_id = t2.target_cohort_definition_id</span>
-<span class="co">#&gt;   and t1.time_at_risk_id = t2.time_at_risk_id</span>
-<span class="co">#&gt;   and t1.outcome_id = t2.outcome_id</span>
-<span class="co">#&gt;   and t1.subject_id = t2.subject_id</span>
-<span class="co">#&gt;   and t1.start_date &lt; t2.end_date</span>
-<span class="co">#&gt;   and t1.end_date &gt; t2.start_date</span>
-<span class="co">#&gt;   and (t1.start_date &lt;&gt; t2.start_date or t1.end_date &lt;&gt; t2.end_date)</span>
+<span class="co">#&gt;  and t1.tar_id = t2.tar_id</span>
+<span class="co">#&gt;  and t1.outcome_id = t2.outcome_id</span>
+<span class="co">#&gt;  and t1.subject_id = t2.subject_id</span>
+<span class="co">#&gt;  and t1.start_date &lt; t2.end_date</span>
+<span class="co">#&gt;  and t1.end_date &gt; t2.start_date</span>
+<span class="co">#&gt;  and (t1.start_date &lt;&gt; t2.start_date or t1.end_date &lt;&gt; t2.end_date)</span>
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; --era-building script for the 'exc_TTAR_o_to_erafy ' records</span>
 <span class="co">#&gt; --insert records from era-building script into #TTAR_erafied</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; --HINT DISTRIBUTE_ON_KEY(subject_id)</span>
-<span class="co">#&gt; with cteEndDates (target_cohort_definition_id, time_at_risk_id, outcome_id, subject_id, end_date) AS</span>
+<span class="co">#&gt; with cteEndDates (target_cohort_definition_id, tar_id, outcome_id, subject_id, end_date) AS</span>
 <span class="co">#&gt; (</span>
 <span class="co">#&gt;  SELECT</span>
-<span class="co">#&gt;        target_cohort_definition_id,</span>
-<span class="co">#&gt;          time_at_risk_id,</span>
-<span class="co">#&gt;          outcome_id,</span>
-<span class="co">#&gt;          subject_id,</span>
-<span class="co">#&gt;        event_date as end_date</span>
+<span class="co">#&gt;      target_cohort_definition_id,</span>
+<span class="co">#&gt;      tar_id,</span>
+<span class="co">#&gt;      outcome_id,</span>
+<span class="co">#&gt;      subject_id,</span>
+<span class="co">#&gt;      event_date as end_date</span>
 <span class="co">#&gt;  FROM</span>
 <span class="co">#&gt;  (</span>
 <span class="co">#&gt;      SELECT</span>
 <span class="co">#&gt;          target_cohort_definition_id,</span>
-<span class="co">#&gt;              time_at_risk_id,</span>
-<span class="co">#&gt;              outcome_id,</span>
-<span class="co">#&gt;              subject_id,</span>
-<span class="co">#&gt;              event_date,</span>
-<span class="co">#&gt;              SUM(event_type) OVER (PARTITION BY target_cohort_definition_id, time_at_risk_id, outcome_id, subject_id ORDER BY event_date ROWS UNBOUNDED PRECEDING) AS interval_status</span>
+<span class="co">#&gt;          tar_id,</span>
+<span class="co">#&gt;          outcome_id,</span>
+<span class="co">#&gt;          subject_id,</span>
+<span class="co">#&gt;          event_date,</span>
+<span class="co">#&gt;          SUM(event_type) OVER (PARTITION BY target_cohort_definition_id, tar_id, outcome_id, subject_id ORDER BY event_date ROWS UNBOUNDED PRECEDING) AS interval_status</span>
 <span class="co">#&gt;      FROM</span>
 <span class="co">#&gt;      (</span>
 <span class="co">#&gt;          SELECT</span>
 <span class="co">#&gt;              target_cohort_definition_id,</span>
-<span class="co">#&gt;              time_at_risk_id,</span>
+<span class="co">#&gt;              tar_id,</span>
 <span class="co">#&gt;              outcome_id,</span>
 <span class="co">#&gt;              subject_id,</span>
 <span class="co">#&gt;              start_date AS event_date,</span>
-<span class="co">#&gt;            -1 AS event_type</span>
+<span class="co">#&gt;              -1 AS event_type</span>
 <span class="co">#&gt;          FROM #exc_TTAR_o_to_erafy</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;          UNION ALL</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;          SELECT</span>
 <span class="co">#&gt;              target_cohort_definition_id,</span>
-<span class="co">#&gt;              time_at_risk_id,</span>
+<span class="co">#&gt;              tar_id,</span>
 <span class="co">#&gt;              outcome_id,</span>
 <span class="co">#&gt;              subject_id,</span>
 <span class="co">#&gt;              end_date AS event_date,</span>
-<span class="co">#&gt;            1 AS event_type</span>
+<span class="co">#&gt;              1 AS event_type</span>
 <span class="co">#&gt;          FROM #exc_TTAR_o_to_erafy</span>
 <span class="co">#&gt;      ) RAWDATA</span>
 <span class="co">#&gt;  ) e</span>
 <span class="co">#&gt;  WHERE interval_status = 0</span>
 <span class="co">#&gt; ),</span>
-<span class="co">#&gt; cteEnds (target_cohort_definition_id, time_at_risk_id, outcome_id, subject_id, start_date, end_date) AS</span>
+<span class="co">#&gt; cteEnds (target_cohort_definition_id, tar_id, outcome_id, subject_id, start_date, end_date) AS</span>
 <span class="co">#&gt; (</span>
 <span class="co">#&gt;  SELECT c.target_cohort_definition_id,</span>
-<span class="co">#&gt;   c.time_at_risk_id,</span>
+<span class="co">#&gt;   c.tar_id,</span>
 <span class="co">#&gt;   c.outcome_id,</span>
 <span class="co">#&gt;       c.subject_id,</span>
 <span class="co">#&gt;      c.start_date,</span>
 <span class="co">#&gt;      MIN(e.end_date) AS end_date</span>
 <span class="co">#&gt;  FROM #exc_TTAR_o_to_erafy c</span>
-<span class="co">#&gt;  INNER JOIN cteEndDates e</span>
-<span class="co">#&gt;   ON c.subject_id = e.subject_id</span>
-<span class="co">#&gt;   AND c.target_cohort_definition_id = e.target_cohort_definition_id</span>
-<span class="co">#&gt;   AND c.time_at_risk_id = e.time_at_risk_id</span>
-<span class="co">#&gt;   AND c.outcome_id = e.outcome_id</span>
-<span class="co">#&gt;   AND e.end_date &gt;= c.start_date</span>
+<span class="co">#&gt;  INNER JOIN cteEndDates e ON c.subject_id = e.subject_id</span>
+<span class="co">#&gt;      AND c.target_cohort_definition_id = e.target_cohort_definition_id</span>
+<span class="co">#&gt;      AND c.tar_id = e.tar_id</span>
+<span class="co">#&gt;      AND c.outcome_id = e.outcome_id</span>
+<span class="co">#&gt;      AND e.end_date &gt;= c.start_date</span>
 <span class="co">#&gt;  GROUP BY  c.target_cohort_definition_id,</span>
-<span class="co">#&gt;   c.time_at_risk_id,</span>
+<span class="co">#&gt;   c.tar_id,</span>
 <span class="co">#&gt;   c.outcome_id,</span>
 <span class="co">#&gt;       c.subject_id,</span>
 <span class="co">#&gt;      c.start_date</span>
 <span class="co">#&gt; )</span>
-<span class="co">#&gt; select target_cohort_definition_id, time_at_risk_id, outcome_id, subject_id, min(start_date) as start_date, end_date</span>
+<span class="co">#&gt; select target_cohort_definition_id, tar_id, outcome_id, subject_id, min(start_date) as start_date, end_date</span>
 <span class="co">#&gt; into #ex_TTAR_o_overlaps</span>
 <span class="co">#&gt; from cteEnds</span>
-<span class="co">#&gt; group by target_cohort_definition_id, time_at_risk_id, outcome_id, subject_id, end_date</span>
+<span class="co">#&gt; group by target_cohort_definition_id, tar_id, outcome_id, subject_id, end_date</span>
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; --HINT DISTRIBUTE_ON_KEY(subject_id)</span>
-<span class="co">#&gt; select target_cohort_definition_id, time_at_risk_id, outcome_id, subject_id, start_date, end_date </span>
+<span class="co">#&gt; select target_cohort_definition_id, tar_id, outcome_id, subject_id, start_date, end_date </span>
 <span class="co">#&gt; into #exc_TTAR_o_erafied</span>
 <span class="co">#&gt; from #ex_TTAR_o_overlaps</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; UNION ALL</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; --records that were already erafied and just need to be brought over directly</span>
-<span class="co">#&gt; select distinct t1.target_cohort_definition_id, t1.time_at_risk_id, t1.outcome_id, t1.subject_id, t1.start_date, t1.end_date</span>
+<span class="co">#&gt; select distinct t1.target_cohort_definition_id, t1.tar_id, t1.outcome_id, t1.subject_id, t1.start_date, t1.end_date</span>
 <span class="co">#&gt; from #exc_TTAR_o t1</span>
 <span class="co">#&gt; left join #exc_TTAR_o t2 on t1.target_cohort_definition_id = t2.target_cohort_definition_id</span>
-<span class="co">#&gt;   and t1.time_at_risk_id = t2.time_at_risk_id</span>
-<span class="co">#&gt;   and t1.outcome_id = t2.outcome_id</span>
-<span class="co">#&gt;   and t1.subject_id = t2.subject_id</span>
-<span class="co">#&gt;   and t1.start_date &lt; t2.end_date</span>
-<span class="co">#&gt;   and t1.end_date &gt; t2.start_date</span>
-<span class="co">#&gt;   and (t1.start_date &lt;&gt; t2.start_date or t1.end_date &lt;&gt; t2.end_date)</span>
+<span class="co">#&gt;  and t1.tar_id = t2.tar_id</span>
+<span class="co">#&gt;  and t1.outcome_id = t2.outcome_id</span>
+<span class="co">#&gt;  and t1.subject_id = t2.subject_id</span>
+<span class="co">#&gt;  and t1.start_date &lt; t2.end_date</span>
+<span class="co">#&gt;  and t1.end_date &gt; t2.start_date</span>
+<span class="co">#&gt;  and (t1.start_date &lt;&gt; t2.start_date or t1.end_date &lt;&gt; t2.end_date)</span>
 <span class="co">#&gt; where t2.subject_id IS NULL</span>
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; --calculate time_at_risk</span>
+<span class="co">#&gt; -- 4) calculate pre-exclude outcomes and outcomes </span>
+<span class="co">#&gt; -- calculate pe_outcomes and outcomes by T, TAR, O, Subject, TAR start</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; create table #at_risk_smry_pre_xcl</span>
-<span class="co">#&gt; (</span>
-<span class="co">#&gt;   target_cohort_definition_id bigint,</span>
-<span class="co">#&gt;   time_at_risk_id int,</span>
-<span class="co">#&gt;   subgroup_id bigint,</span>
-<span class="co">#&gt;   num_persons bigint,</span>
-<span class="co">#&gt;   person_days bigint</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; INSERT INTO #at_risk_smry_pre_xcl (target_cohort_definition_id, time_at_risk_id,subgroup_id, num_persons, person_days)</span>
+<span class="co">#&gt; --HINT DISTRIBUTE_ON_KEY(subject_id)</span>
 <span class="co">#&gt; select t1.cohort_definition_id as target_cohort_definition_id,</span>
-<span class="co">#&gt;   t1.time_at_risk_id,</span>
-<span class="co">#&gt;  t1.subgroup_id,</span>
-<span class="co">#&gt;   count_big(distinct t1.subject_id) as num_persons,</span>
-<span class="co">#&gt;   sum((datediff(dd,t1.start_date, t1.end_date)+1)) as person_days</span>
-<span class="co">#&gt; from #TTAR_erafied t1</span>
-<span class="co">#&gt; group by t1.cohort_definition_id, t1.subgroup_id, t1.time_at_risk_id</span>
-<span class="co">#&gt; ;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; --calculate events during pre_exclude at risk</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; create table #outcome_smry_pre_xcl</span>
-<span class="co">#&gt; (</span>
-<span class="co">#&gt;   target_cohort_definition_id bigint,</span>
-<span class="co">#&gt;   time_at_risk_id int,</span>
-<span class="co">#&gt;   subgroup_id bigint,</span>
-<span class="co">#&gt;   outcome_id bigint,</span>
-<span class="co">#&gt;   num_person_outcomes bigint,</span>
-<span class="co">#&gt;   num_outcomes bigint</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; insert into #outcome_smry_pre_xcl (target_cohort_definition_id, time_at_risk_id,subgroup_id, outcome_id, num_person_outcomes, num_outcomes)</span>
-<span class="co">#&gt; select t1.cohort_definition_id as target_cohort_definition_id,</span>
-<span class="co">#&gt;   t1.time_at_risk_id,</span>
-<span class="co">#&gt;   t1.subgroup_id,</span>
-<span class="co">#&gt;   o1.outcome_id,</span>
-<span class="co">#&gt;   count_big(distinct o1.subject_id) as num_person_outcomes,</span>
-<span class="co">#&gt;   count_big(o1.subject_id) as num_outcomes</span>
+<span class="co">#&gt;  t1.tar_id,</span>
+<span class="co">#&gt;  t1.subject_id,</span>
+<span class="co">#&gt;  t1.start_date,</span>
+<span class="co">#&gt;  o1.outcome_id,</span>
+<span class="co">#&gt;  count_big(o1.subject_id) as pe_outcomes,</span>
+<span class="co">#&gt;  SUM(case when eo.tar_id is null then 1 else 0 end) as num_outcomes</span>
+<span class="co">#&gt; into #outcome_smry</span>
 <span class="co">#&gt; from #TTAR_erafied t1</span>
 <span class="co">#&gt; inner join (</span>
-<span class="co">#&gt;  select oref.outcome_id, oc.subject_id, oc.cohort_start_date, oc.cohort_end_date </span>
+<span class="co">#&gt;  select oref.outcome_id, oc.subject_id, oc.cohort_start_date</span>
 <span class="co">#&gt;  from demoCohortSchema.cohort oc </span>
 <span class="co">#&gt;  JOIN #outcome_ref oref on oc.cohort_definition_id = oref.outcome_cohort_definition_id</span>
 <span class="co">#&gt;  where oref.outcome_id in (1)</span>
 <span class="co">#&gt; ) o1 on t1.subject_id = o1.subject_id</span>
 <span class="co">#&gt;  and t1.start_date &lt;= o1.cohort_start_date</span>
 <span class="co">#&gt;  and t1.end_date &gt;= o1.cohort_start_date</span>
-<span class="co">#&gt; group by t1.cohort_definition_id, t1.subgroup_id, t1.time_at_risk_id, o1.outcome_id</span>
+<span class="co">#&gt; left join #exc_TTAR_o_erafied eo on t1.cohort_definition_id = eo.target_cohort_definition_id</span>
+<span class="co">#&gt;  and t1.tar_id = eo.tar_id</span>
+<span class="co">#&gt;  and o1.outcome_id = eo.outcome_id</span>
+<span class="co">#&gt;  and o1.subject_id = eo.subject_id</span>
+<span class="co">#&gt;  and eo.start_date &lt;= o1.cohort_start_date</span>
+<span class="co">#&gt;  and eo.end_date &gt;= o1.cohort_start_date</span>
+<span class="co">#&gt; group by t1.cohort_definition_id, t1.tar_id, t1.subject_id, t1.start_date, o1.outcome_id</span>
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; --4 statistics to calculate to exclude:</span>
-<span class="co">#&gt;   --1. person_days to exclude</span>
-<span class="co">#&gt;   --2. num persons w no tar after exclusion</span>
-<span class="co">#&gt;   --3. num outcomes to exclude</span>
-<span class="co">#&gt;   --4. num persons w no outcome after exclusion</span>
+<span class="co">#&gt; -- 5) calculate exclsion time per T/O/TAR/Subject/start_date</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; --1. person_days to exclude</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; create table #excluded_person_days</span>
-<span class="co">#&gt; (</span>
-<span class="co">#&gt;   target_cohort_definition_id bigint,</span>
-<span class="co">#&gt;   time_at_risk_id int,</span>
-<span class="co">#&gt;   subgroup_id bigint,</span>
-<span class="co">#&gt;   outcome_id bigint,</span>
-<span class="co">#&gt;   person_days bigint</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; INSERT INTO #excluded_person_days (target_cohort_definition_id, time_at_risk_id,subgroup_id, outcome_id, person_days)</span>
-<span class="co">#&gt; select et1.target_cohort_definition_id,</span>
-<span class="co">#&gt;   et1.time_at_risk_id,</span>
-<span class="co">#&gt;   t1.subgroup_id,</span>
-<span class="co">#&gt;   et1.outcome_id,</span>
-<span class="co">#&gt;   sum(datediff(dd,et1.start_date, et1.end_date) + 1) as person_days</span>
+<span class="co">#&gt; --HINT DISTRIBUTE_ON_KEY(subject_id)</span>
+<span class="co">#&gt; select t1.cohort_definition_id as target_cohort_definition_id,</span>
+<span class="co">#&gt;  t1.tar_id,</span>
+<span class="co">#&gt;  t1.subject_id,</span>
+<span class="co">#&gt;  t1.start_date,</span>
+<span class="co">#&gt;  et1.outcome_id,</span>
+<span class="co">#&gt;  sum(datediff(dd,et1.start_date, et1.end_date) + 1) as person_days</span>
+<span class="co">#&gt; INTO #excluded_person_days</span>
 <span class="co">#&gt; from #TTAR_erafied t1</span>
 <span class="co">#&gt; inner join #exc_TTAR_o_erafied et1 on t1.cohort_definition_id = et1.target_cohort_definition_id</span>
-<span class="co">#&gt;   and t1.time_at_risk_id = et1.time_at_risk_id</span>
-<span class="co">#&gt;   and t1.subject_id = et1.subject_id</span>
-<span class="co">#&gt;   and t1.start_date &lt;= et1.start_date</span>
-<span class="co">#&gt;   and t1.end_date &gt;= et1.end_date</span>
-<span class="co">#&gt; group by et1.target_cohort_definition_id, et1.time_at_risk_id, t1.subgroup_id, et1.outcome_id</span>
+<span class="co">#&gt;  and t1.tar_id = et1.tar_id</span>
+<span class="co">#&gt;  and t1.subject_id = et1.subject_id</span>
+<span class="co">#&gt;  and t1.start_date &lt;= et1.start_date</span>
+<span class="co">#&gt;  and t1.end_date &gt;= et1.end_date</span>
+<span class="co">#&gt; group by t1.cohort_definition_id,</span>
+<span class="co">#&gt;   t1.tar_id,</span>
+<span class="co">#&gt;   t1.subject_id,</span>
+<span class="co">#&gt;  t1.start_date,</span>
+<span class="co">#&gt;  et1.outcome_id</span>
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
+<span class="co">#&gt; /*</span>
+<span class="co">#&gt; 6) generate raw result table with T/O/TAR/subject_id,start_date, pe_at_risk (datediff(d,start,end), at_risk (pe_at_risk - exclusion time), pe_outcomes, outcomes</span>
+<span class="co">#&gt;    and attach age/gender/year columns</span>
+<span class="co">#&gt; */</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; --2. num persons w no tar after exclusion</span>
-<span class="co">#&gt; --find persons with &gt;=1d at-risk  (T - exc) &gt; 0</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; create table #excluded_persons</span>
-<span class="co">#&gt; (</span>
-<span class="co">#&gt;   target_cohort_definition_id bigint,</span>
-<span class="co">#&gt;   time_at_risk_id int,</span>
-<span class="co">#&gt;   subgroup_id bigint,</span>
-<span class="co">#&gt;   outcome_id  bigint,</span>
-<span class="co">#&gt;   num_persons_w_no_tar bigint</span>
-<span class="co">#&gt; );</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; insert into #excluded_persons (target_cohort_definition_id, time_at_risk_id, subgroup_id, outcome_id, num_persons_w_no_tar)</span>
+<span class="co">#&gt; --HINT DISTRIBUTE_ON_KEY(subject_id)</span>
 <span class="co">#&gt; select t1.target_cohort_definition_id,</span>
-<span class="co">#&gt;   t1.time_at_risk_id,</span>
-<span class="co">#&gt;   t1.subgroup_id,</span>
-<span class="co">#&gt;   et1.outcome_id,</span>
-<span class="co">#&gt;   count_big(distinct t1.subject_id) as num_persons_w_no_tar</span>
-<span class="co">#&gt; from</span>
-<span class="co">#&gt; (</span>
-<span class="co">#&gt;   select t0.cohort_definition_id as target_cohort_definition_id,</span>
-<span class="co">#&gt;     t0.time_at_risk_id,</span>
-<span class="co">#&gt;      t0.subgroup_id,</span>
-<span class="co">#&gt;     t0.subject_id,</span>
-<span class="co">#&gt;     sum(datediff(dd,t0.start_date,t0.end_date)) as person_days</span>
-<span class="co">#&gt;   from #TTAR_erafied t0</span>
-<span class="co">#&gt;   inner join (select distinct target_cohort_definition_id, subject_id from #exc_TTAR_o_erafied) e0 on t0.subject_id = e0.subject_id</span>
-<span class="co">#&gt;      and t0.cohort_definition_id = e0.target_cohort_definition_id</span>
-<span class="co">#&gt;   group by t0.cohort_definition_id,</span>
-<span class="co">#&gt;     t0.time_at_risk_id,</span>
-<span class="co">#&gt;      t0.subgroup_id,</span>
-<span class="co">#&gt;     t0.subject_id</span>
+<span class="co">#&gt;  o1.outcome_id,</span>
+<span class="co">#&gt;  t1.tar_id,</span>
+<span class="co">#&gt;  t1.subject_id,</span>
+<span class="co">#&gt;  t1.start_date,</span>
+<span class="co">#&gt;  ag.age_id,</span>
+<span class="co">#&gt;  t1.gender_id,</span>
+<span class="co">#&gt;  t1.start_year,</span>
+<span class="co">#&gt;  datediff(dd,t1.start_date, t1.end_date) + 1 as pe_person_days,</span>
+<span class="co">#&gt;  datediff(dd,t1.start_date, t1.end_date) + 1 - coalesce(te1.person_days,0) as person_days,</span>
+<span class="co">#&gt;  coalesce(os1.pe_outcomes,0) as pe_outcomes,</span>
+<span class="co">#&gt;  coalesce(os1.num_outcomes,0) as outcomes</span>
+<span class="co">#&gt; into #incidence_raw</span>
+<span class="co">#&gt; from (</span>
+<span class="co">#&gt;  select te.cohort_definition_id as target_cohort_definition_id,</span>
+<span class="co">#&gt;      te.tar_id,</span>
+<span class="co">#&gt;      te.subject_id,</span>
+<span class="co">#&gt;      te.start_date,</span>
+<span class="co">#&gt;      te.end_date,</span>
+<span class="co">#&gt;      YEAR(te.start_date) - p.year_of_birth as age,</span>
+<span class="co">#&gt;      p.gender_concept_id as gender_id,</span>
+<span class="co">#&gt;      YEAR(te.start_date) as start_year</span>
+<span class="co">#&gt;  from #TTAR_erafied te</span>
+<span class="co">#&gt;  join mycdm.person p on te.subject_id = p.person_id</span>
 <span class="co">#&gt; ) t1</span>
-<span class="co">#&gt; inner join</span>
-<span class="co">#&gt; (</span>
-<span class="co">#&gt;   select target_cohort_definition_id,</span>
-<span class="co">#&gt;     time_at_risk_id,</span>
-<span class="co">#&gt;     outcome_id,</span>
-<span class="co">#&gt;     subject_id,</span>
-<span class="co">#&gt;     sum(datediff(dd,start_date,end_date)) as person_days</span>
-<span class="co">#&gt;   from #exc_TTAR_o_erafied</span>
-<span class="co">#&gt;   group by target_cohort_definition_id,</span>
-<span class="co">#&gt;     time_at_risk_id,</span>
-<span class="co">#&gt;     outcome_id,</span>
-<span class="co">#&gt;     subject_id</span>
-<span class="co">#&gt; ) et1</span>
-<span class="co">#&gt;   on t1.subject_id = et1.subject_id</span>
-<span class="co">#&gt;   and t1.target_cohort_definition_id = et1.target_cohort_definition_id</span>
-<span class="co">#&gt;   and t1.time_at_risk_id = et1.time_at_risk_id</span>
-<span class="co">#&gt;   and t1.person_days = et1.person_days</span>
-<span class="co">#&gt; group by t1.target_cohort_definition_id,</span>
-<span class="co">#&gt;   t1.time_at_risk_id,</span>
-<span class="co">#&gt;  t1.subgroup_id,</span>
-<span class="co">#&gt;   et1.outcome_id</span>
+<span class="co">#&gt; cross join (select outcome_id from #outcome_ref where outcome_id in (1)) o1</span>
+<span class="co">#&gt; left join #excluded_person_days te1 on t1.target_cohort_definition_id = te1.target_cohort_definition_id</span>
+<span class="co">#&gt;  and t1.tar_id = te1.tar_id</span>
+<span class="co">#&gt;  and t1.subject_id = te1.subject_id</span>
+<span class="co">#&gt;  and t1.start_date = te1.start_date</span>
+<span class="co">#&gt;  and o1.outcome_id = te1.outcome_id</span>
+<span class="co">#&gt; left join #outcome_smry os1 on t1.target_cohort_definition_id = os1.target_cohort_definition_id</span>
+<span class="co">#&gt;  and t1.tar_id = os1.tar_id</span>
+<span class="co">#&gt;  and t1.subject_id = os1.subject_id</span>
+<span class="co">#&gt;  and t1.start_date = os1.start_date</span>
+<span class="co">#&gt;  and o1.outcome_id = os1.outcome_id</span>
+<span class="co">#&gt; left join #age_group ag on t1.age &gt;= coalesce(ag.min_age, -999) and t1.age &lt; coalesce(ag.max_age, 999)</span>
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; --3. num outcomes to exclude</span>
-<span class="co">#&gt; --calculate events during pre_exclude at risk</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; create table #excluded_outcomes</span>
-<span class="co">#&gt; (</span>
-<span class="co">#&gt;   target_cohort_definition_id bigint,</span>
-<span class="co">#&gt;   time_at_risk_id int,</span>
-<span class="co">#&gt;   subgroup_id bigint,</span>
-<span class="co">#&gt;   outcome_id bigint,</span>
-<span class="co">#&gt;   num_outcomes bigint</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; insert into #excluded_outcomes (target_cohort_definition_id, time_at_risk_id,subgroup_id,outcome_id, num_outcomes)</span>
-<span class="co">#&gt; select et1.target_cohort_definition_id,</span>
-<span class="co">#&gt;   et1.time_at_risk_id,</span>
-<span class="co">#&gt;   t1.subgroup_id,</span>
-<span class="co">#&gt;   et1.outcome_id,</span>
-<span class="co">#&gt;   count_big(o1.subject_id) as num_outcomes</span>
-<span class="co">#&gt; from #TTAR_erafied t1</span>
-<span class="co">#&gt; inner join #exc_TTAR_o_erafied et1 on t1.cohort_definition_id = et1.target_cohort_definition_id</span>
-<span class="co">#&gt;   and t1.time_at_risk_id = et1.time_at_risk_id</span>
-<span class="co">#&gt;   and t1.subject_id = et1.subject_id</span>
-<span class="co">#&gt;   and t1.start_date &lt;= et1.start_date</span>
-<span class="co">#&gt;   and t1.end_date &gt;= et1.end_date</span>
-<span class="co">#&gt; inner join (</span>
-<span class="co">#&gt;  select oref.outcome_id, oc.subject_id, oc.cohort_start_date, oc.cohort_end_date </span>
-<span class="co">#&gt;  from demoCohortSchema.cohort oc </span>
-<span class="co">#&gt;  JOIN #outcome_ref oref on oc.cohort_definition_id = oref.outcome_cohort_definition_id</span>
-<span class="co">#&gt;  where oref.outcome_id in (1)</span>
-<span class="co">#&gt; ) o1 on et1.subject_id = o1.subject_id</span>
-<span class="co">#&gt;  and et1.outcome_id = o1.outcome_id</span>
-<span class="co">#&gt;  and et1.start_date &lt;= o1.cohort_start_date</span>
-<span class="co">#&gt;  and et1.end_date &gt;= o1.cohort_start_date</span>
-<span class="co">#&gt; group by et1.target_cohort_definition_id, et1.time_at_risk_id, t1.subgroup_id, et1.outcome_id</span>
-<span class="co">#&gt; ;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; --4. num persons w no outcome after exclusion</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; create table #excl_persons_w_o</span>
-<span class="co">#&gt; (</span>
-<span class="co">#&gt;   target_cohort_definition_id bigint,</span>
-<span class="co">#&gt;   time_at_risk_id int,</span>
-<span class="co">#&gt;   subgroup_id bigint,</span>
-<span class="co">#&gt;   outcome_id  bigint,</span>
-<span class="co">#&gt;   num_persons_excluded_outcomes bigint</span>
-<span class="co">#&gt; );</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; insert into #excl_persons_w_o (target_cohort_definition_id, time_at_risk_id, subgroup_id, outcome_id, num_persons_excluded_outcomes)</span>
-<span class="co">#&gt; select t1.target_cohort_definition_id,</span>
-<span class="co">#&gt;   t1.time_at_risk_id,</span>
-<span class="co">#&gt;   t1.subgroup_id,</span>
-<span class="co">#&gt;   t1.outcome_id,</span>
-<span class="co">#&gt;   count_big(distinct t1.subject_id) as num_persons_excluded_outcomes</span>
-<span class="co">#&gt; from</span>
-<span class="co">#&gt; (</span>
-<span class="co">#&gt;   select t0.cohort_definition_id as target_cohort_definition_id,</span>
-<span class="co">#&gt;     t0.time_at_risk_id,</span>
-<span class="co">#&gt;     t0.subject_id,</span>
-<span class="co">#&gt;     t0.subgroup_id,</span>
-<span class="co">#&gt;     o1.outcome_id,</span>
-<span class="co">#&gt;     count(o1.subject_id) as num_outcomes</span>
-<span class="co">#&gt;   from #TTAR_erafied t0</span>
-<span class="co">#&gt;  inner join (select distinct target_cohort_definition_id, subject_id from #exc_TTAR_o_erafied) e0 on t0.subject_id = e0.subject_id</span>
-<span class="co">#&gt;      and t0.cohort_definition_id = e0.target_cohort_definition_id</span>
-<span class="co">#&gt;   inner join (</span>
-<span class="co">#&gt;      select oref.outcome_id, oc.subject_id, oc.cohort_start_date, oc.cohort_end_date </span>
-<span class="co">#&gt;      from demoCohortSchema.cohort oc </span>
-<span class="co">#&gt;      JOIN #outcome_ref oref on oc.cohort_definition_id = oref.outcome_cohort_definition_id</span>
-<span class="co">#&gt;      where cohort_definition_id in (1)</span>
-<span class="co">#&gt;  ) o1 on t0.subject_id = o1.subject_id</span>
-<span class="co">#&gt;     and t0.start_date &lt;= o1.cohort_start_date</span>
-<span class="co">#&gt;     and t0.end_date &gt;= o1.cohort_start_date</span>
-<span class="co">#&gt;   group by  t0.cohort_definition_id,</span>
-<span class="co">#&gt;     t0.time_at_risk_id,</span>
-<span class="co">#&gt;     t0.subgroup_id,</span>
-<span class="co">#&gt;     t0.subject_id,</span>
-<span class="co">#&gt;     o1.outcome_id</span>
-<span class="co">#&gt; ) t1</span>
-<span class="co">#&gt; inner join</span>
-<span class="co">#&gt; (</span>
-<span class="co">#&gt;   select et1.target_cohort_definition_id,</span>
-<span class="co">#&gt;     et1.time_at_risk_id,</span>
-<span class="co">#&gt;     et1.subject_id,</span>
-<span class="co">#&gt;     et1.outcome_id,</span>
-<span class="co">#&gt;     count(o1.subject_id) as num_outcomes</span>
-<span class="co">#&gt;   from #TTAR_erafied t1</span>
-<span class="co">#&gt;   inner join #exc_TTAR_o_erafied et1 on t1.cohort_definition_id = et1.target_cohort_definition_id</span>
-<span class="co">#&gt;     and t1.time_at_risk_id = et1.time_at_risk_id</span>
-<span class="co">#&gt;     and t1.subject_id = et1.subject_id</span>
-<span class="co">#&gt;     and t1.start_date &lt;= et1.start_date</span>
-<span class="co">#&gt;     and t1.end_date &gt;= et1.end_date</span>
-<span class="co">#&gt;   inner join (</span>
-<span class="co">#&gt;      select oref.outcome_id, oc.subject_id, oc.cohort_start_date, oc.cohort_end_date </span>
-<span class="co">#&gt;      from demoCohortSchema.cohort oc </span>
-<span class="co">#&gt;      JOIN #outcome_ref oref on oc.cohort_definition_id = oref.outcome_cohort_definition_id</span>
-<span class="co">#&gt;      where oref.outcome_id in (1)</span>
-<span class="co">#&gt;  ) o1 on et1.subject_id = o1.subject_id</span>
-<span class="co">#&gt;     and et1.outcome_id = o1.outcome_id</span>
-<span class="co">#&gt;     and et1.start_date &lt;= o1.cohort_start_date</span>
-<span class="co">#&gt;     and et1.end_date &gt;= o1.cohort_start_date</span>
-<span class="co">#&gt;   group by  et1.target_cohort_definition_id,</span>
-<span class="co">#&gt;     et1.time_at_risk_id,</span>
-<span class="co">#&gt;     et1.subject_id,</span>
-<span class="co">#&gt;     et1.outcome_id</span>
-<span class="co">#&gt; ) et1 on t1.subject_id = et1.subject_id</span>
-<span class="co">#&gt;   and t1.target_cohort_definition_id = et1.target_cohort_definition_id</span>
-<span class="co">#&gt;   and t1.outcome_id = et1.outcome_id</span>
-<span class="co">#&gt;   and t1.time_at_risk_id = et1.time_at_risk_id</span>
-<span class="co">#&gt;   and t1.num_outcomes = et1.num_outcomes</span>
-<span class="co">#&gt; group by t1.target_cohort_definition_id,</span>
-<span class="co">#&gt;   t1.time_at_risk_id,</span>
-<span class="co">#&gt;   t1.subgroup_id,</span>
-<span class="co">#&gt;   t1.outcome_id</span>
-<span class="co">#&gt; ;</span>
+<span class="co">#&gt; -- 7) Create analysis_ref to produce each T/O/TAR/S combo</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; select t1.target_cohort_definition_id,</span>
 <span class="co">#&gt;   t1.target_name,</span>
-<span class="co">#&gt;  tar1.time_at_risk_id,</span>
-<span class="co">#&gt;  tar1.time_at_risk_start_offset,</span>
-<span class="co">#&gt;  tar1.time_at_risk_start_index,</span>
-<span class="co">#&gt;  tar1.time_at_risk_end_offset,</span>
-<span class="co">#&gt;  tar1.time_at_risk_end_index,</span>
+<span class="co">#&gt;  tar1.tar_id,</span>
+<span class="co">#&gt;  tar1.tar_start_offset,</span>
+<span class="co">#&gt;  tar1.tar_start_with,</span>
+<span class="co">#&gt;  tar1.tar_end_offset,</span>
+<span class="co">#&gt;  tar1.tar_end_with,</span>
 <span class="co">#&gt;  s1.subgroup_id,</span>
 <span class="co">#&gt;  s1.subgroup_name,</span>
 <span class="co">#&gt;  o1.outcome_id,</span>
@@ -900,115 +980,108 @@
 <span class="co">#&gt;  o1.outcome_name,</span>
 <span class="co">#&gt;  o1.clean_window</span>
 <span class="co">#&gt; into #tscotar_ref</span>
-<span class="co">#&gt; from (select * from #target_ref where target_cohort_definition_id in (1))  t1,</span>
-<span class="co">#&gt;  (select * from #tar_ref where time_at_risk_id in (1)) tar1,</span>
+<span class="co">#&gt; from (select target_cohort_definition_id, target_name from #target_ref where target_cohort_definition_id in (1))  t1,</span>
+<span class="co">#&gt;  (select tar_id, tar_start_offset, tar_start_with, tar_end_offset, tar_end_with from #tar_ref where tar_id in (1)) tar1,</span>
 <span class="co">#&gt;  (select subgroup_id, subgroup_name from #subgroup_ref) s1,</span>
-<span class="co">#&gt;  (select * from #outcome_ref where outcome_id in (1)) o1</span>
+<span class="co">#&gt;  (select outcome_id, outcome_cohort_definition_id, outcome_name, clean_window from #outcome_ref where outcome_id in (1)) o1</span>
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
+<span class="co">#&gt; -- 8) perform rollup to calculate IR / IP at the T/O/TAR/S/[age|gender|year] level for 'all' and each subgroup</span>
+<span class="co">#&gt; -- and aggregate to the selected levels</span>
+<span class="co">#&gt; with incidence_w_subgroup (subgroup_id, target_cohort_definition_id, outcome_id, tar_id, subject_id, age_id, gender_id, start_year, pe_person_days, person_days, pe_outcomes, outcomes) as</span>
+<span class="co">#&gt; (</span>
+<span class="co">#&gt;  -- the 'all' group</span>
+<span class="co">#&gt;  select cast(0 as int) as subgroup_id, ir.target_cohort_definition_id, ir.outcome_id, ir.tar_id, </span>
+<span class="co">#&gt;      ir.subject_id, ir.age_id, ir.gender_id, ir.start_year, </span>
+<span class="co">#&gt;      ir.pe_person_days, ir.person_days, ir.pe_outcomes, ir.outcomes</span>
+<span class="co">#&gt;  from #incidence_raw ir</span>
+<span class="co">#&gt;  </span>
+<span class="co">#&gt;  UNION ALL</span>
+<span class="co">#&gt;  </span>
+<span class="co">#&gt;  -- select the individual subgroup members using the subgruop_person table</span>
+<span class="co">#&gt;  select s.subgroup_id as subgroup_id, ir.target_cohort_definition_id, ir.outcome_id, ir.tar_id, </span>
+<span class="co">#&gt;      ir.subject_id, ir.age_id, ir.gender_id, ir.start_year, </span>
+<span class="co">#&gt;      ir.pe_person_days, ir.person_days, ir.pe_outcomes, ir.outcomes</span>
+<span class="co">#&gt;  from #incidence_raw ir</span>
+<span class="co">#&gt;  join #subgroup_person s on ir.subject_id = s.subject_id and ir.start_date = s.start_date</span>
+<span class="co">#&gt; )</span>
+<span class="co">#&gt; select target_cohort_definition_id, tar_id, subgroup_id, outcome_id, age_id, gender_id, start_year,</span>
+<span class="co">#&gt;  persons_at_risk_pe, persons_at_risk, person_days_pe, person_days, person_outcomes_pe, person_outcomes, outcomes_pe, outcomes </span>
+<span class="co">#&gt; into #incidence_subgroups</span>
+<span class="co">#&gt; from (</span>
+<span class="co">#&gt;  select irs.target_cohort_definition_id,</span>
+<span class="co">#&gt;      irs.tar_id,</span>
+<span class="co">#&gt;      irs.subgroup_id,</span>
+<span class="co">#&gt;      irs.outcome_id,</span>
+<span class="co">#&gt;      cast (null as int) as age_id, </span>
+<span class="co">#&gt;      cast (null as int) as gender_id,</span>
+<span class="co">#&gt;      cast (null as int) as start_year,</span>
+<span class="co">#&gt;      count_big(distinct irs.subject_id) as persons_at_risk_pe,</span>
+<span class="co">#&gt;      count_big(distinct case when irs.person_days &gt; 0 then irs.subject_id end) as persons_at_risk,</span>
+<span class="co">#&gt;      sum(cast(irs.pe_person_days as bigint)) as person_days_pe,</span>
+<span class="co">#&gt;      sum(cast(irs.person_days as bigint)) as person_days,</span>
+<span class="co">#&gt;      count_big(distinct case when irs.pe_outcomes &gt; 0 then irs.subject_id end) as person_outcomes_pe,</span>
+<span class="co">#&gt;      count_big(distinct case when irs.outcomes &gt; 0 then irs.subject_id end) as person_outcomes,</span>
+<span class="co">#&gt;      sum(cast(irs.pe_outcomes as bigint)) as outcomes_pe,</span>
+<span class="co">#&gt;      sum(cast(irs.outcomes as bigint)) as outcomes</span>
+<span class="co">#&gt;  from incidence_w_subgroup irs</span>
+<span class="co">#&gt;  group by irs.target_cohort_definition_id, irs.tar_id, irs.subgroup_id, irs.outcome_id </span>
+<span class="co">#&gt;  </span>
+<span class="co">#&gt; ) IR;</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; select tr1.target_cohort_definition_id,</span>
-<span class="co">#&gt;   tr1.target_name,</span>
-<span class="co">#&gt;  tr1.time_at_risk_id,</span>
-<span class="co">#&gt;  tr1.time_at_risk_start_offset,</span>
-<span class="co">#&gt;  tr1.time_at_risk_start_index,</span>
-<span class="co">#&gt;  tr1.time_at_risk_end_offset,</span>
-<span class="co">#&gt;  tr1.time_at_risk_end_index,</span>
-<span class="co">#&gt;  tr1.subgroup_id,</span>
-<span class="co">#&gt;  tr1.subgroup_name,</span>
-<span class="co">#&gt;  tr1.outcome_id,</span>
-<span class="co">#&gt;  tr1.outcome_cohort_definition_id,</span>
-<span class="co">#&gt;  tr1.outcome_name,</span>
-<span class="co">#&gt;  tr1.clean_window,</span>
-<span class="co">#&gt;  coalesce(arspe1.num_persons,0)  as persons_pre_exclude,</span>
-<span class="co">#&gt;  coalesce(arspe1.num_persons,0) - coalesce(ep1.num_persons_w_no_tar,0)  as num_persons_at_risk,</span>
-<span class="co">#&gt;  coalesce(arspe1.person_days,0) as person_days_pre_exclude,</span>
-<span class="co">#&gt;  coalesce(arspe1.person_days,0) - coalesce(epy1.person_days,0) as person_days,</span>
-<span class="co">#&gt;  coalesce(ospe1.num_person_outcomes,0) as num_person_outcomes_pre_exclude,</span>
-<span class="co">#&gt;  coalesce(ospe1.num_person_outcomes,0) - coalesce(epo1.num_persons_excluded_outcomes,0) as num_person_outcomes,</span>
-<span class="co">#&gt;   coalesce(ospe1.num_outcomes,0) as num_outcomes_pre_exclude,</span>
-<span class="co">#&gt;  coalesce(ospe1.num_outcomes,0) - coalesce(eo1.num_outcomes,0) as num_outcomes,</span>
-<span class="co">#&gt;  case when coalesce(arspe1.num_persons,0) - coalesce(ep1.num_persons_w_no_tar,0) &gt; 0 then </span>
-<span class="co">#&gt;      (100.0 * cast(coalesce(ospe1.num_person_outcomes,0) - coalesce(epo1.num_persons_excluded_outcomes,0) as float) / (cast(coalesce(arspe1.num_persons,0) - coalesce(ep1.num_persons_w_no_tar,0) as float)))</span>
-<span class="co">#&gt;      else NULL end as incidence_proportion_p100p,</span>
-<span class="co">#&gt;  case when (coalesce(arspe1.person_days,0) - coalesce(epy1.person_days,0)) &gt; 0 then </span>
-<span class="co">#&gt;      (100.0 * cast((coalesce(ospe1.num_outcomes,0) - coalesce(eo1.num_outcomes,0)) as float) / ( cast(coalesce(arspe1.person_days,0) - coalesce(epy1.person_days,0) as float) / 365.25))</span>
-<span class="co">#&gt;      else NULL end AS incidence_rate_p100py</span>
-<span class="co">#&gt; into #incidence_summary</span>
-<span class="co">#&gt; from</span>
-<span class="co">#&gt; #tscotar_ref tr1</span>
-<span class="co">#&gt; left join</span>
-<span class="co">#&gt; #at_risk_smry_pre_xcl arspe1</span>
-<span class="co">#&gt;  on tr1.target_cohort_definition_id = arspe1.target_cohort_definition_id</span>
-<span class="co">#&gt;  and tr1.time_at_risk_id = arspe1.time_at_risk_id</span>
-<span class="co">#&gt;  and tr1.subgroup_id = arspe1.subgroup_id</span>
-<span class="co">#&gt; left join</span>
-<span class="co">#&gt; #outcome_smry_pre_xcl ospe1</span>
-<span class="co">#&gt;  on tr1.target_cohort_definition_id = ospe1.target_cohort_definition_id</span>
-<span class="co">#&gt;  and tr1.time_at_risk_id = ospe1.time_at_risk_id</span>
-<span class="co">#&gt;  and tr1.subgroup_id = ospe1.subgroup_id</span>
-<span class="co">#&gt;  and tr1.outcome_id = ospe1.outcome_id</span>
-<span class="co">#&gt; left join</span>
-<span class="co">#&gt;   #excluded_person_days  epy1</span>
-<span class="co">#&gt;     on tr1.target_cohort_definition_id = epy1.target_cohort_definition_id</span>
-<span class="co">#&gt;      and tr1.time_at_risk_id = epy1.time_at_risk_id</span>
-<span class="co">#&gt;      and tr1.subgroup_id = epy1.subgroup_id</span>
-<span class="co">#&gt;      and tr1.outcome_id = epy1.outcome_id</span>
-<span class="co">#&gt; left join</span>
-<span class="co">#&gt;   #excluded_persons ep1</span>
-<span class="co">#&gt;     on tr1.target_cohort_definition_id = ep1.target_cohort_definition_id</span>
-<span class="co">#&gt;      and tr1.time_at_risk_id = ep1.time_at_risk_id</span>
-<span class="co">#&gt;      and tr1.subgroup_id = ep1.subgroup_id</span>
-<span class="co">#&gt;      and tr1.outcome_id = ep1.outcome_id</span>
-<span class="co">#&gt; left join</span>
-<span class="co">#&gt;   #excluded_outcomes eo1</span>
-<span class="co">#&gt;     on tr1.target_cohort_definition_id = eo1.target_cohort_definition_id</span>
-<span class="co">#&gt;      and tr1.time_at_risk_id = eo1.time_at_risk_id</span>
-<span class="co">#&gt;      and tr1.subgroup_id = eo1.subgroup_id</span>
-<span class="co">#&gt;      and tr1.outcome_id = eo1.outcome_id</span>
-<span class="co">#&gt; left join</span>
-<span class="co">#&gt;   #excl_persons_w_o epo1</span>
-<span class="co">#&gt;     on tr1.target_cohort_definition_id = epo1.target_cohort_definition_id</span>
-<span class="co">#&gt;      and tr1.time_at_risk_id = epo1.time_at_risk_id</span>
-<span class="co">#&gt;      and tr1.subgroup_id = epo1.subgroup_id</span>
-<span class="co">#&gt;      and tr1.outcome_id = epo1.outcome_id</span>
-<span class="co">#&gt; ;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; insert into myresults.incidence_summary (ref_id, database_name, target_cohort_definition_id, target_name,</span>
-<span class="co">#&gt;  time_at_risk_id, time_at_risk_start_offset, time_at_risk_start_index, time_at_risk_end_offset, time_at_risk_end_index, </span>
+<span class="co">#&gt; insert into myresults.incidence_summary (ref_id, source_name, target_cohort_definition_id, target_name,</span>
+<span class="co">#&gt;  tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset, </span>
 <span class="co">#&gt;  subgroup_id, subgroup_name,</span>
 <span class="co">#&gt;  outcome_id, outcome_cohort_definition_id, outcome_name, clean_window,</span>
-<span class="co">#&gt;  persons_pre_exclude, persons_at_risk, person_days_pre_exclude, person_days, </span>
-<span class="co">#&gt;  person_outcomes_pre_exclude, person_outcomes, outcomes_pre_exclude, outcomes,</span>
+<span class="co">#&gt;  age_id, age_group_name, gender_id, gender_name, start_year,</span>
+<span class="co">#&gt;  persons_at_risk_pe, persons_at_risk, person_days_pe, person_days, </span>
+<span class="co">#&gt;  person_outcomes_pe, person_outcomes, outcomes_pe, outcomes,</span>
 <span class="co">#&gt;  incidence_proportion_p100p, incidence_rate_p100py)</span>
-<span class="co">#&gt; select CAST(1 as int) as ref_id, '@databaseName' as database_name, is1.target_cohort_definition_id, is1.target_name,</span>
-<span class="co">#&gt;  is1.time_at_risk_id, is1.time_at_risk_start_offset, is1.time_at_risk_start_index, is1.time_at_risk_end_offset, is1.time_at_risk_end_index,</span>
-<span class="co">#&gt;  is1.subgroup_id, is1.subgroup_name,</span>
-<span class="co">#&gt;  is1.outcome_id, is1.outcome_cohort_definition_id, is1.outcome_name, is1.clean_window,</span>
-<span class="co">#&gt;  is1.persons_pre_exclude, is1.num_persons_at_risk, is1.person_days_pre_exclude, is1.person_days,</span>
-<span class="co">#&gt;  is1.num_person_outcomes_pre_exclude, is1.num_person_outcomes, is1.num_outcomes_pre_exclude, is1.num_outcomes,</span>
-<span class="co">#&gt;  is1.incidence_proportion_p100p, is1.incidence_rate_p100py</span>
-<span class="co">#&gt; from #incidence_summary is1</span>
+<span class="co">#&gt; select CAST(1 as int) as ref_id, 'mysource' as source_name, tref.target_cohort_definition_id, tref.target_name,</span>
+<span class="co">#&gt;  tref.tar_id, tref.tar_start_with, tref.tar_start_offset, tref.tar_end_with, tref.tar_end_offset,</span>
+<span class="co">#&gt;  tref.subgroup_id, tref.subgroup_name,</span>
+<span class="co">#&gt;  tref.outcome_id, tref.outcome_cohort_definition_id, tref.outcome_name, tref.clean_window,</span>
+<span class="co">#&gt;  irs.age_id, ag.group_name, irs.gender_id, c.concept_name as gender_name, irs.start_year,</span>
+<span class="co">#&gt;  coalesce(irs.persons_at_risk_pe, 0) as persons_at_risk_pe, </span>
+<span class="co">#&gt;  coalesce(irs.persons_at_risk, 0) as persons_at_risk, </span>
+<span class="co">#&gt;  coalesce(irs.person_days_pe, 0) as  person_days_pe,</span>
+<span class="co">#&gt;  coalesce(irs.person_days, 0) as person_days,</span>
+<span class="co">#&gt;  coalesce(irs.person_outcomes_pe, 0) as person_outcomes_pe,</span>
+<span class="co">#&gt;  coalesce(irs.person_outcomes, 0) as person_outcomes, </span>
+<span class="co">#&gt;  coalesce(irs.outcomes_pe, 0) as outcomes_pe,</span>
+<span class="co">#&gt;  coalesce(irs.outcomes, 0) as outcomes,</span>
+<span class="co">#&gt;  case when coalesce(irs.persons_at_risk, 0) &gt; 0 then </span>
+<span class="co">#&gt;      (100.0 * cast(coalesce(irs.person_outcomes,0) as float) / (cast(coalesce(irs.persons_at_risk, 0) as float)))</span>
+<span class="co">#&gt;  end as incidence_proportion_p100p, </span>
+<span class="co">#&gt;  case when coalesce(irs.person_days,0) &gt; 0 then </span>
+<span class="co">#&gt;      (100.0 * cast(coalesce(irs.outcomes,0) as float) / (cast(coalesce(irs.person_days,0) as float) / 365.25))</span>
+<span class="co">#&gt;  end AS incidence_rate_p100py</span>
+<span class="co">#&gt; from #tscotar_ref tref</span>
+<span class="co">#&gt; left join #incidence_subgroups irs on tref.target_cohort_definition_id = irs.target_cohort_definition_id</span>
+<span class="co">#&gt;  and tref.tar_id = irs.tar_id</span>
+<span class="co">#&gt;  and tref.subgroup_id = irs.subgroup_id</span>
+<span class="co">#&gt;  and tref.outcome_id = irs.outcome_id</span>
+<span class="co">#&gt; left join #age_group ag on ag.age_id = irs.age_id</span>
+<span class="co">#&gt; left join mycdm.concept c on c.concept_id = irs.gender_id</span>
 <span class="co">#&gt; ;</span>
 <span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; -- CLEANUP TEMP TABLES</span>
-<span class="co">#&gt; DROP TABLE #excluded_tar_cohort;</span>
 <span class="co">#&gt; DROP TABLE #TTAR;</span>
 <span class="co">#&gt; DROP TABLE #TTAR_to_erafy;</span>
 <span class="co">#&gt; DROP TABLE #TTAR_era_overlaps;</span>
 <span class="co">#&gt; DROP TABLE #TTAR_erafied;</span>
+<span class="co">#&gt; DROP TABLE #subgroup_person;</span>
+<span class="co">#&gt; DROP TABLE #excluded_tar_cohort;</span>
 <span class="co">#&gt; DROP TABLE #exc_TTAR_o;</span>
-<span class="co">#&gt; DROP TABLE #exc_TTAR_o_to_erafy;</span>
 <span class="co">#&gt; DROP TABLE #ex_TTAR_o_overlaps;</span>
+<span class="co">#&gt; DROP TABLE #exc_TTAR_o_to_erafy;</span>
 <span class="co">#&gt; DROP TABLE #exc_TTAR_o_erafied;</span>
-<span class="co">#&gt; DROP TABLE #at_risk_smry_pre_xcl;</span>
-<span class="co">#&gt; DROP TABLE #outcome_smry_pre_xcl;</span>
+<span class="co">#&gt; DROP TABLE #outcome_smry;</span>
 <span class="co">#&gt; DROP TABLE #excluded_person_days;</span>
-<span class="co">#&gt; DROP TABLE #excluded_persons;</span>
-<span class="co">#&gt; DROP TABLE #excluded_outcomes;</span>
-<span class="co">#&gt; DROP TABLE #excl_persons_w_o;</span>
+<span class="co">#&gt; DROP TABLE #incidence_raw;</span>
 <span class="co">#&gt; DROP TABLE #tscotar_ref;</span>
-<span class="co">#&gt; DROP TABLE #incidence_summary;</span>
+<span class="co">#&gt; DROP TABLE #incidence_subgroups;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; --</span>
 <span class="co">#&gt; -- End analysis 0</span>
@@ -1017,11 +1090,73 @@
 <span class="co">#&gt; DROP TABLE #target_ref;</span>
 <span class="co">#&gt; DROP TABLE #tar_ref;</span>
 <span class="co">#&gt; DROP TABLE #outcome_ref;</span>
-<span class="co">#&gt; DROP TABLE #subgroup_ref;</span></code></pre></div>
+<span class="co">#&gt; DROP TABLE #subgroup_ref;</span>
+<span class="co">#&gt; DROP TABLE #age_group;</span></code></pre></div>
 </div>
-<div id="render-sql-with-paramaters-and-execute" class="section level2">
-<h2 class="hasAnchor">
-<a href="#render-sql-with-paramaters-and-execute" class="anchor"></a>Render SQL with paramaters and execute</h2>
+<div class="section level3">
+<h3 id="render-sql-with-paramaters-and-execute">Render SQL with paramaters and execute<a class="anchor" aria-label="anchor" href="#render-sql-with-paramaters-and-execute"></a>
+</h3>
+<p>With the previous analysis design and options used to generate the
+analysisSql, the next step is to render the SQL to provide any remaining
+parameters, translate, and execute on the database:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="co"># if you didn't pass sourceName to buildOptions(), you can render it here</span>
+<span class="va">analysisSql</span> <span class="op">&lt;-</span> <span class="fu">SqlRender</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/SqlRender/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="va">analysisSql</span>, <span class="st">"sourceName"</span> <span class="op">=</span> <span class="st">"OptumDOD"</span><span class="op">)</span>
+<span class="va">analysisSql</span> <span class="op">&lt;-</span> <span class="fu">SqlRender</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/SqlRender/reference/translate.html" class="external-link">translate</a></span><span class="op">(</span><span class="va">analysisSql</span>, <span class="st">"postgresql"</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">analysisSql</span><span class="op">)</span>
+
+<span class="va">conn</span> <span class="op">&lt;-</span> <span class="fu">DatabaseConnector</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/DatabaseConnector/reference/connect.html" class="external-link">connect</a></span><span class="op">(</span><span class="va">connectionDetails</span><span class="op">)</span>
+<span class="fu">DatabaseConnector</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/DatabaseConnector/reference/executeSql.html" class="external-link">executeSql</a></span><span class="op">(</span><span class="va">conn</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"DELETE FROM myresults.incidence_summary WHERE ref_id = "</span>, <span class="va">buildOptions</span><span class="op">$</span><span class="va">refId</span><span class="op">$</span><span class="fu">intValue</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">DatabaseConnector</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/DatabaseConnector/reference/executeSql.html" class="external-link">executeSql</a></span><span class="op">(</span><span class="va">conn</span>, <span class="va">analysisSql</span><span class="op">)</span>
+<span class="fu">DatabaseConnector</span><span class="fu">::</span><span class="fu"><a href="https://ohdsi.github.io/DatabaseConnector/reference/disconnect.html" class="external-link">disconnect</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="using-temp-tables">Using Temp Tables<a class="anchor" aria-label="anchor" href="#using-temp-tables"></a>
+</h3>
+<p>Sometimes, it is not convenient or possible to create dedicated
+tables to store the results. Instead, the useTempTables option can be
+used to place the incidence results into a temp table
+‘incidence_summary’, where they can be ETL’d to another table or
+exported to a CSV.</p>
+<p>The following example demonstrates the additional steps that are
+necessary if you want to use temp tables:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># given the prior irDesign constructed from the previous example</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>buildOptions <span class="ot">&lt;-</span> CohortIncidence<span class="sc">::</span><span class="fu">buildOptions</span>(<span class="at">cohortTable =</span> <span class="st">"demoCohortSchema.cohort"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">cdmDatabaseSchema =</span> <span class="st">"mycdm"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">sourceName =</span> <span class="st">"mysource"</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">useTempTables =</span> T,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">refId =</span> <span class="dv">2</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>analysisSql <span class="ot">&lt;-</span> CohortIncidence<span class="sc">::</span><span class="fu">buildQuery</span>(<span class="at">incidenceDesign =</span> <span class="fu">as.character</span>(jsonlite<span class="sc">::</span><span class="fu">toJSON</span>(irDesign)),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">buildOptions =</span> buildOptions)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>analysisSql <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">translate</span>(analysisSql, <span class="st">"postgresql"</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># if we are using temp tables, the steps to execute the analysis are </span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   1) create result temp tables</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   2) execute the analysis query, placing the results into the temp table incidence_summary</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   3) Extract/copy the results from the temp tables</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#   4) clean up temp tables</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>conn <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">connect</span>(connectionDetails)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>tempDDL <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">translate</span>(CohortIncidence<span class="sc">::</span><span class="fu">getResultsDdl</span>(<span class="at">useTempTables=</span>T), <span class="st">"postgresql"</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">executeSql</span>(conn, tempDDL)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">executeSql</span>(conn, analysisSql)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co"># In this example, copy to a permanent table from the temp table, but the results could be downloaded to CSV</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>exportSql <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">translate</span>(<span class="st">"insert into mySchema.prefix_incidence_summary select * from #incidence_summary"</span>, <span class="st">"postgresql"</span>);</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">executeSql</span>(conn, exportSql)</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co"># or download the results to a dataframe</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">querySql</span>(conn, SqlRender<span class="sc">::</span><span class="fu">translate</span>(<span class="st">"select * from #incidence_summary"</span>, <span class="st">"postgresql"</span>))</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co"># use the getCleanupSql to fetch the DROP TABLE expressions for the tables that were created in tempDDL.</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>cleanupSql <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">translate</span>(CohortIncidence<span class="sc">::</span><span class="fu">getCleanupSql</span>(<span class="at">useTempTables=</span>T), <span class="st">"postgresql"</span>)  </span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">executeSql</span>(conn, cleanupSql)</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">dbDisconnect</span>(conn)</span></code></pre></div>
 </div>
 </div>
   </div>
@@ -1037,11 +1172,14 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Christopher Knoll.</p>
+  <p></p>
+<p>Developed by Christopher Knoll.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>
@@ -1049,6 +1187,8 @@
 
   
 
+
+  
 
   </body>
 </html>

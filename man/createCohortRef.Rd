@@ -8,7 +8,7 @@ and, optionally, to provide a name.}
 createCohortRef(id, name, description)
 }
 \arguments{
-\item{id}{the unique identifier for this outcome definition}
+\item{id}{the cohort id that is being referenced}
 
 \item{name}{the name to use for this reference}
 
