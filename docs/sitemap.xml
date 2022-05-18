@@ -28,7 +28,19 @@
     <loc>/reference/buildQuery.html</loc>
   </url>
   <url>
+    <loc>/reference/CohortDefinition.html</loc>
+  </url>
+  <url>
     <loc>/reference/CohortIncidence-package.html</loc>
+  </url>
+  <url>
+    <loc>/reference/CohortReference.html</loc>
+  </url>
+  <url>
+    <loc>/reference/CohortRefrence.html</loc>
+  </url>
+  <url>
+    <loc>/reference/CohortSubgroup.html</loc>
   </url>
   <url>
     <loc>/reference/createCohortRef.html</loc>
@@ -61,6 +73,21 @@
     <loc>/reference/getResultsDdl.html</loc>
   </url>
   <url>
+    <loc>/reference/IncidenceAnalysis.html</loc>
+  </url>
+  <url>
+    <loc>/reference/IncidenceDesign.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/Outcome.html</loc>
+  </url>
+  <url>
+    <loc>/reference/StrataSettings.html</loc>
+  </url>
+  <url>
+    <loc>/reference/TimeAtRisk.html</loc>
   </url>
 </urlset>

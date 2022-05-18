@@ -2,16 +2,16 @@
 % Please edit documentation in R/Builders.R
 \name{createStrataSettings}
 \alias{createStrataSettings}
-\title{Helper function for creating strata settings}
+\title{Creates R6 object for StrataSettings}
 \usage{
-createStrataSettings(byAge = F, byGender = F, byYear = F, ageBreaks = NULL)
+createStrataSettings(byAge = F, byGender = F, byYear = F, ageBreaks)
 }
 \arguments{
-\item{byAge}{a boolean indicating to stratify by age}
+\item{byAge}{a boolean indicating to stratify by age, defaults to F}
 
-\item{byGender}{a boolean indicating to stratify by gender}
+\item{byGender}{a boolean indicating to stratify by gender, defaults to F}
 
-\item{byYear}{a boolean indicating to stratify by year}
+\item{byYear}{a boolean indicating to stratify by year, defaults to F}
 
 \item{ageBreaks}{a vector of integers indicating the age group bounds.}
 }
@@ -19,5 +19,5 @@ createStrataSettings(byAge = F, byGender = F, byYear = F, ageBreaks = NULL)
 an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.StratifySettings JSON format.
 }
 \description{
-Helper function for creating strata settings
+Creates R6 object for StrataSettings
 }

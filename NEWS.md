@@ -1,3 +1,9 @@
+Cohort Incidence 3.0.0
+===========
+
+This release introduces R6 classes to encapsulate the elements of an Incidence Design.  See documentation and vignettes for information on use of these new classes.  Note:  the createXXX() methods which formerly returned a jsonlite-compliant list now return R6 classes. Therefore, the release was incremented by a major version.
+
+
 Cohort Incidence 2.0.0
 ===========
 
