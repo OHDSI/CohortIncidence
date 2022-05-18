@@ -1,11 +1,10 @@
 test_that("executeAnalysis() works", {
   
-  skip('No suitable test DB implementaton for this test.')
+  #skip('No suitable test DB implementaton for this test.')
 
-  cdmDbFile<- withr::local_tempfile(fileext=".duckdb");
-  initDb(cdmDbFile, "resources/dbtest");
-  
-  connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = "duckdb", server = cdmDbFile);
+  connectionDetails <- Eunomia::getEunomiaConnectionDetails()
+  Eunomia::createCohorts(connectionDetails)
+
   designJSON <-readr::read_file(testthat::test_path("resources/strataAllTest.json"));
   buildOptions <- CohortIncidence::buildOptions(cohortTable = "main.cohort",
                                                 cdmDatabaseSchema = "main",
@@ -14,5 +13,5 @@ test_that("executeAnalysis() works", {
   executeResults <- CohortIncidence::executeAnalysis(connectionDetails = connectionDetails,
                                                      incidenceDesign = designJSON,
                                                      buildOptions = buildOptions);
-  
+  expect_true(nrow(executeResults) > 0)
 })

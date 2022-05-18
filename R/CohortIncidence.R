@@ -81,7 +81,7 @@ executeAnalysis <- function(connectionDetails = NULL,
                             buildOptions,
                             sourceName = "default") {
   irDesign <- incidenceDesign;
-  if (checkmate::testClass(incidenceDesign)) {
+  if (checkmate::testClass(incidenceDesign,"IncidenceDesign")) {
     irDesign <- as.character(irDesign$asJSON()); 
   } else if (checkmate::testCharacter(irDesign)) {
     invisible(IncidenceDesign$new(irDesign))
@@ -111,7 +111,7 @@ executeAnalysis <- function(connectionDetails = NULL,
   # Force useTempTables for analysis
   buildOptions$useTempTables = T
   if (rJava::is.jnull(buildOptions$sourceName)) {
-    builderOptions$sourceName = sourceName;
+    buildOptions$sourceName = sourceName;
   }
   
   targetDialect <- attr(conn, "dbms");

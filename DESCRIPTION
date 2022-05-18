@@ -28,6 +28,9 @@ Suggests:
     rmarkdown,
     withr,
     readr,
+    Eunomia,
     duckdb,
     R6
+Remotes:
+  ohdsi/Eunomia
 Config/testthat/edition: 3

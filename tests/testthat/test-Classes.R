@@ -224,8 +224,6 @@ test_that("StrataSettings R6 Class Works", {
 
 test_that("createIncidenceDesign works", {
   
-  #skip("Design not ready yet")
-  
   target1 <- CohortIncidence::CohortReference$new()
   target1$id <- 1
   target1$name <- "Target cohort 1"

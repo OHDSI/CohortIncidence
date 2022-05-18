@@ -143,13 +143,13 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
       dataList <- .convertJSON(data)
       
       if ("cohortDefs" %in% names (dataList)) self$cohortDefs <- dataList$cohortDefs
-      if ("targetDefs" %in% names (dataList)) self$targetDefs <- lapply(dataList$targetdefs, CohortIncidence::CohortReference$new)
-      if ("outcomeDefs" %in% names (dataList)) self$outcomeDefs <- lapply(dataList$targetdefs, CohortIncidence::CohortReference$new)
+      if ("targetDefs" %in% names (dataList)) self$targetDefs <- lapply(dataList$targetDefs, CohortIncidence::CohortReference$new)
+      if ("outcomeDefs" %in% names (dataList)) self$outcomeDefs <- lapply(dataList$outcomeDefs, CohortIncidence::Outcome$new)
       if ("timeAtRiskDefs" %in% names (dataList)) self$timeAtRiskDefs <- lapply(dataList$timeAtRiskDefs, CohortIncidence::TimeAtRisk$new)
       if ("analysisList" %in% names (dataList)) self$analysisList <- lapply(dataList$analysisList, CohortIncidence::IncidenceAnalysis$new)
       if ("conceptSets" %in% names (dataList)) self$conceptSets <- dataList$conceptSets
       if ("subgroups" %in% names (dataList)) self$analysisList <- lapply(dataList$subgroups, .resolveSubgroup)
-      
+      if ("strataSettings" %in% names (dataList)) self$strataSettings <- CohortIncidence::StrataSettings$new(dataList$strataSettings)
     },
     #' @description
     #' returns the R6 class elements as a list for use in jsonlite::toJSON()
