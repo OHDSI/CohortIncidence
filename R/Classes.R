@@ -836,7 +836,7 @@ StrataSettings <- R6::R6Class("StrataSettings",
 }
 
 .toJsonArray <- function(x) {
-  if (is.na(x) || is.null(x)) {
+  if (checkmate::testScalarNA(x) || checkmate::testNull(x)) {
     return(jsonlite::unbox(NA))
   } else if (length(x) > 0) {
     return(unlist(x))
