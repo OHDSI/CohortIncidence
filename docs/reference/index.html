@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CohortIncidence</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.0</span>
       </span>
     </div>
 
@@ -69,34 +69,45 @@
         </td>
         <td><p>Builds SQL code to run analyses according given Cohort Characterization design</p></td>
       </tr><tr><td>
+          <p><code><a href="CohortDefinition.html">CohortDefinition</a></code> </p>
+        </td>
+        <td><p>R6 Class Representing a CohortDefinition</p></td>
+      </tr><tr><td>
+          <p><code><a href="CohortReference.html">CohortReference</a></code> </p>
+        </td>
+        <td><p>R6 Class Representing a CohortReference</p></td>
+      </tr><tr><td>
+          <p><code><a href="CohortSubgroup.html">CohortSubgroup</a></code> </p>
+        </td>
+        <td><p>R6 Class Representing a Cohort Subgroup definition</p></td>
+      </tr><tr><td>
           <p><code><a href="createCohortRef.html">createCohortRef()</a></code> </p>
         </td>
-        <td><p>Helper function for creating Cohort References, which are used in different parts of a design to reference a cohort definition
-and, optionally, to provide a name.</p></td>
+        <td><p>Creates R6 object for CohortReference</p></td>
       </tr><tr><td>
           <p><code><a href="createCohortSubgroup.html">createCohortSubgroup()</a></code> </p>
         </td>
-        <td><p>Helper function for creating TAR Definitions</p></td>
+        <td><p>Creates R6 object for CohortSubgroup</p></td>
       </tr><tr><td>
           <p><code><a href="createIncidenceAnalysis.html">createIncidenceAnalysis()</a></code> </p>
         </td>
-        <td><p>Helper function for creatingIncidenceAnalysis, which encapsulates the target-outcome-timeAtRisk pairs for a given analysis.</p></td>
+        <td><p>Creates R6 object for IncidenceAnalysis</p></td>
       </tr><tr><td>
           <p><code><a href="createIncidenceDesign.html">createIncidenceDesign()</a></code> </p>
         </td>
-        <td><p>Creates R object for Incidence Design</p></td>
+        <td><p>Creates R6 object for IncidenceDesign</p></td>
       </tr><tr><td>
           <p><code><a href="createOutcomeDef.html">createOutcomeDef()</a></code> </p>
         </td>
-        <td><p>Helper function for creating Outcome Definitions</p></td>
+        <td><p>Creates R6 object for Outcome</p></td>
       </tr><tr><td>
           <p><code><a href="createStrataSettings.html">createStrataSettings()</a></code> </p>
         </td>
-        <td><p>Helper function for creating strata settings</p></td>
+        <td><p>Creates R6 object for StrataSettings</p></td>
       </tr><tr><td>
           <p><code><a href="createTimeAtRiskDef.html">createTimeAtRiskDef()</a></code> </p>
         </td>
-        <td><p>Helper function for creating TAR Definitions</p></td>
+        <td><p>Creates R6 object for TimeAtRisk</p></td>
       </tr><tr><td>
           <p><code><a href="executeAnalysis.html">executeAnalysis()</a></code> </p>
         </td>
@@ -109,6 +120,26 @@ and, optionally, to provide a name.</p></td>
           <p><code><a href="getResultsDdl.html">getResultsDdl()</a></code> </p>
         </td>
         <td><p>Gets the results schema DDL for Incidence Analysis</p></td>
+      </tr><tr><td>
+          <p><code><a href="IncidenceAnalysis.html">IncidenceAnalysis</a></code> </p>
+        </td>
+        <td><p>R6 Class Representing a IncidenceAnalysis</p></td>
+      </tr><tr><td>
+          <p><code><a href="IncidenceDesign.html">IncidenceDesign</a></code> </p>
+        </td>
+        <td><p>R6 Class Representing a IncidenceDesign</p></td>
+      </tr><tr><td>
+          <p><code><a href="Outcome.html">Outcome</a></code> </p>
+        </td>
+        <td><p>R6 Class Representing an Outcome definition</p></td>
+      </tr><tr><td>
+          <p><code><a href="StrataSettings.html">StrataSettings</a></code> </p>
+        </td>
+        <td><p>R6 Class Representing the Stratification Settings of a IncidenceDesign</p></td>
+      </tr><tr><td>
+          <p><code><a href="TimeAtRisk.html">TimeAtRisk</a></code> </p>
+        </td>
+        <td><p>R6 Class Representing an Time-at-Risk (TAR) definition</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

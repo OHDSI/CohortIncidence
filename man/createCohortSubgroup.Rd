@@ -2,7 +2,7 @@
 % Please edit documentation in R/Builders.R
 \name{createCohortSubgroup}
 \alias{createCohortSubgroup}
-\title{Helper function for creating TAR Definitions}
+\title{Creates R6 object for CohortSubgroup}
 \usage{
 createCohortSubgroup(id, name, description, cohortRef)
 }
@@ -13,11 +13,11 @@ createCohortSubgroup(id, name, description, cohortRef)
 
 \item{description}{The subgroup description}
 
-\item{cohortRef}{A cohort reference created by calling createCohortRef()}
+\item{cohortRef}{A cohort reference, as an R6 Class CohortReference}
 }
 \value{
-an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.CohortSubgroup JSON format.
+a R6 class: CohortSubgroup
 }
 \description{
-Helper function for creating TAR Definitions
+Creates R6 object for CohortSubgroup
 }

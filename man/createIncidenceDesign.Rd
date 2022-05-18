@@ -2,40 +2,39 @@
 % Please edit documentation in R/Builders.R
 \name{createIncidenceDesign}
 \alias{createIncidenceDesign}
-\title{Creates R object for Incidence Design}
+\title{Creates R6 object for IncidenceDesign}
 \usage{
 createIncidenceDesign(
-  cohortDefs = list(),
-  targetDefs = list(),
-  outcomeDefs = list(),
-  tars = list(),
-  analysisList = list(),
-  conceptSets = list(),
-  subgroups = list(),
-  strataSettings = NULL
+  cohortDefs,
+  targetDefs,
+  outcomeDefs,
+  tars,
+  analysisList,
+  conceptSets,
+  subgroups,
+  strataSettings
 )
 }
 \arguments{
 \item{cohortDefs}{The set of cohort definitions.  Optional.}
 
-\item{targetDefs}{A list of target definitions, each created with createCohortRef.}
+\item{targetDefs}{A list of target definitions, each element must be class CohortReference.}
 
-\item{outcomeDefs}{A list of outcome definitions, each created with createOutcomeDef.}
+\item{outcomeDefs}{A list of outcome definitions, each element must be class Outcome}
 
-\item{tars}{A list of TAR definitions, each created with createTimeAtRiskDef.}
+\item{tars}{A list of TAR definitions, each element must be class TimeAtRisk}
 
-\item{analysisList}{A list of analysis definitions, each created with createIncidenceAnalysis.}
+\item{analysisList}{A list of analysis definitions, each element must be class IncidenceAnalysis}
 
 \item{conceptSets}{A list of concept sets, currently unused.}
 
-\item{subgroups}{A list of cohort subgroups, created with createCohortSubgroup.}
+\item{subgroups}{A list of cohort subgroups, each element must be class Subgroup.}
 
-\item{strataSettings}{The strata settings used in the anlaysis, created with createStrataSettings..}
+\item{strataSettings}{The strata settings used in the anlaysis, must be class StrataSettings.}
 }
 \value{
-SQL code in MS Sql Server dialect, if it's required to run analysis on another DBMS
-        you have to use \code{\link[SqlRender]{translateSql}} function in the SqlRender package.
+a R6 class: IncidenceDesign.
 }
 \description{
-Creates R object for Incidence Design
+Creates R6 object for IncidenceDesign
 }

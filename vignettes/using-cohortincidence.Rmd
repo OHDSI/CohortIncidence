@@ -109,7 +109,7 @@ irDesign <- CohortIncidence::createIncidenceDesign(targetDefs = list(t1),
                                                    analysisList = list(analysis1),
                                                    subgroups = list(subgroup1))
 # Render the design as JSON
-jsonlite::toJSON(irDesign,pretty = T)
+irDesign$asJSON(pretty = T)
 
 ```
 
@@ -199,7 +199,7 @@ buildOptions <- CohortIncidence::buildOptions(cohortTable = "demoCohortSchema.co
                                               sourceName = "mysource",
                                               refId = 1)
 
-analysisSql <- CohortIncidence::buildQuery(incidenceDesign =  as.character(jsonlite::toJSON(irDesign)),
+analysisSql <- CohortIncidence::buildQuery(incidenceDesign =  as.character(irDesign$asJSON()),
                                            buildOptions = buildOptions)
 cat(analysisSql)
 

@@ -4,7 +4,7 @@
 \name{CohortIncidence-package}
 \alias{CohortIncidence}
 \alias{CohortIncidence-package}
-\title{CohortIncidence: Assembles SQL to running Cohort Incidence analysis}
+\title{CohortIncidence: CohortIncidence}
 \description{
 An R package that produces SQL queries for executing Cohort Incidence analyses.
 }
