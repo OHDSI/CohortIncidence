@@ -2,20 +2,20 @@
 % Please edit documentation in R/Builders.R
 \name{createIncidenceAnalysis}
 \alias{createIncidenceAnalysis}
-\title{Helper function for creatingIncidenceAnalysis, which encapsulates the target-outcome-timeAtRisk pairs for a given analysis.}
+\title{Creates R6 object for IncidenceAnalysis}
 \usage{
 createIncidenceAnalysis(targets, outcomes, tars)
 }
 \arguments{
-\item{targets}{A vector of target IDs from target definitions.}
+\item{targets}{A list or vector of target IDs from target definitions.}
 
-\item{outcomes}{A vector of outcome IDs from outcome definitions.}
+\item{outcomes}{A list or vector of outcome IDs from outcome definitions.}
 
-\item{tars}{A vector of TAR IDs from time-at-risk definitions.}
+\item{tars}{A list or vector of TAR IDs from time-at-risk definitions.}
 }
 \value{
-an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.IncidenceAnalysis JSON format.
+a R6 class: IncidenceAnalysis
 }
 \description{
-Helper function for creatingIncidenceAnalysis, which encapsulates the target-outcome-timeAtRisk pairs for a given analysis.
+Creates R6 object for IncidenceAnalysis
 }

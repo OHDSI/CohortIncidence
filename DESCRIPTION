@@ -1,7 +1,7 @@
 Package: CohortIncidence
 Type: Package
 Title: CohortIncidence
-Version: 2.0.0
+Version: 3.0.0
 Date: 2021-09-12
 Author: Christopher Knoll
 Maintainer: Christopher Knoll <cknoll@ohdsi.org>
@@ -15,6 +15,7 @@ Depends: R (>= 3.2.2),
 Imports:
     rlang,
     rJava(>= 0.9-10),
+    checkmate,
     jsonlite,
     SqlRender (>= 1.6.0)
 NeedsCompilation: yes
@@ -27,5 +28,9 @@ Suggests:
     rmarkdown,
     withr,
     readr,
-    duckdb
+    Eunomia,
+    duckdb,
+    R6
+Remotes:
+  ohdsi/Eunomia
 Config/testthat/edition: 3

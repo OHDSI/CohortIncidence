@@ -2,7 +2,7 @@
 % Please edit documentation in R/Builders.R
 \name{createTimeAtRiskDef}
 \alias{createTimeAtRiskDef}
-\title{Helper function for creating TAR Definitions}
+\title{Creates R6 object for TimeAtRisk}
 \usage{
 createTimeAtRiskDef(
   id,
@@ -24,8 +24,8 @@ createTimeAtRiskDef(
 \item{endOffset}{The number of days to offset for the TAR start, defaults to 0.}
 }
 \value{
-an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.TimeAtRisk JSON format.
+a R6 class: TimeAtRisk
 }
 \description{
-Helper function for creating TAR Definitions
+Creates R6 object for TimeAtRisk
 }

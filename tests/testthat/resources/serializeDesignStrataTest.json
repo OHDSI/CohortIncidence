@@ -1,0 +1,45 @@
+{
+  "cohortDefs": [],
+  "targetDefs": [
+    {
+      "id": 1,
+      "name": "Target cohort 1"
+    }
+  ],
+  "outcomeDefs": [
+    {
+      "id": 1,
+      "name": "Outcome 1, 30d Clean",
+      "cohortId": 2,
+      "cleanWindow": 30
+    }
+  ],
+  "timeAtRiskDefs": [
+    {
+      "id": 1,
+      "start": {
+        "dateField": "start",
+        "offset": 0
+      },
+      "end": {
+        "dateField": "start",
+        "offset": 30
+      }
+    }
+  ],
+  "analysisList": [
+    {
+      "targets": [1],
+      "outcomes": [1],
+      "tars": [1]
+    }
+  ],
+  "conceptSets": [],
+  "subgroups": [],
+  "strataSettings": {
+    "byAge": true,
+    "byGender": true,
+    "byYear": true,
+    "ageBreaks": [17, 35, 65]
+  }
+}

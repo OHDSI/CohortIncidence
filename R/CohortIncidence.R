@@ -81,10 +81,14 @@ executeAnalysis <- function(connectionDetails = NULL,
                             buildOptions,
                             sourceName = "default") {
   irDesign <- incidenceDesign;
-  if (is.list(incidenceDesign)) {
-    irDesign <- as.character(jsonlite::toJSON(irDesign)); 
+  if (checkmate::testClass(incidenceDesign,"IncidenceDesign")) {
+    irDesign <- as.character(irDesign$asJSON()); 
+  } else if (checkmate::testCharacter(irDesign)) {
+    invisible(IncidenceDesign$new(irDesign))
+  } else {
+    stop("Error in executAnalysis(): incidenceDesign must be either R6 IncidenceDesign or JSON character string.")
   }
-  
+
   if (is.null(connectionDetails) && is.null(connection)) {
     stop("Need to provide either connectionDetails or connection");
   }
@@ -107,7 +111,7 @@ executeAnalysis <- function(connectionDetails = NULL,
   # Force useTempTables for analysis
   buildOptions$useTempTables = T
   if (rJava::is.jnull(buildOptions$sourceName)) {
-    builderOptions$sourceName = sourceName;
+    buildOptions$sourceName = sourceName;
   }
   
   targetDialect <- attr(conn, "dbms");

@@ -2,8 +2,7 @@
 % Please edit documentation in R/Builders.R
 \name{createCohortRef}
 \alias{createCohortRef}
-\title{Helper function for creating Cohort References, which are used in different parts of a design to reference a cohort definition
-and, optionally, to provide a name.}
+\title{Creates R6 object for CohortReference}
 \usage{
 createCohortRef(id, name, description)
 }
@@ -15,9 +14,8 @@ createCohortRef(id, name, description)
 \item{description}{an optional description to use for this reference.}
 }
 \value{
-an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.CohortRef JSON format.
+a R6 class: CohortReference
 }
 \description{
-Helper function for creating Cohort References, which are used in different parts of a design to reference a cohort definition
-and, optionally, to provide a name.
+Creates R6 object for CohortReference
 }
