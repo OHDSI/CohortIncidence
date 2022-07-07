@@ -1,3 +1,9 @@
+Cohort Incidence 3.0.1
+===========
+
+1. Fixed issue when age stratify is false.
+
+
 Cohort Incidence 3.0.0
 ===========
 
