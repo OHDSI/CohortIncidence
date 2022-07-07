@@ -1,0 +1,89 @@
+{
+  "targetDefs": [
+    {
+      "id": 8274,
+      "name": "Calendar 2011-2020"
+    },
+    {
+      "id": 8271,
+      "name": "FGFR Exposed"
+    }
+  ],
+  "outcomeDefs": [
+    {
+      "id": 1,
+      "name": "FGFR Exposed, first",
+      "cohortId": 8271,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 2,
+      "name": "SCFE, first",
+      "cohortId": 8258,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 3,
+      "name": "U/L Limb Fracture, first",
+      "cohortId": 8270,
+      "cleanWindow": 9999
+    }
+  ],
+  "timeAtRiskDefs": [
+    {
+      "id": 1,
+      "start": {
+        "dateField": "start",
+        "offset": 0
+      },
+      "end": {
+        "dateField": "end",
+        "offset": 0
+      }
+    },
+    {
+      "id": 2,
+      "start": {
+        "dateField": "start",
+        "offset": 0
+      },
+      "end": {
+        "dateField": "start",
+        "offset": 365
+      }
+    }
+  ],
+  "analysisList": [
+    {
+      "targets": [
+        8274
+      ],
+      "outcomes": [
+        1,
+        2,
+        3
+      ],
+      "tars": [
+        1
+      ]
+    },
+    {
+      "targets": [
+        8271
+      ],
+      "outcomes": [
+        2,
+        3
+      ],
+      "tars": [
+        1,
+        2
+      ]
+    }
+  ],
+  "strataSettings": {
+    "byAge": false,
+    "byGender": true,
+    "byYear": true
+  }
+}

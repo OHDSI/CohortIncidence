@@ -340,7 +340,7 @@ public class CohortIncidenceQueryBuilder {
 	 * @return 
 	 */
 	private String getAgeGroupInsert() {
-		if (this.design.strataSettings == null)
+		if (this.design.strataSettings == null || this.design.strataSettings.byAge == false)
 			return "";
 		
 		if (this.design.strataSettings.ageBreaks.isEmpty())
