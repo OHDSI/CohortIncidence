@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.ohdsi.analysis.cohortincidence.design.IncidenceAnalysis;
 import org.ohdsi.analysis.cohortincidence.design.CohortIncidence;
 import org.ohdsi.cohortincidence.BaseTest;
+import org.ohdsi.cohortincidence.BuilderOptions;
 import org.ohdsi.cohortincidence.CohortIncidenceQueryBuilder;
 
 public class DesignSerializeTest extends BaseTest {
@@ -28,6 +29,23 @@ public class DesignSerializeTest extends BaseTest {
 			assertThat("Analysis 1 outcomes", a1.outcomes.size(), equalTo(2));
 			assertThat("Analysis 1 tars", a1.tars.size(), equalTo(2));
     }
+		
+    @Test
+    public void emptyAgeStrataTest() throws Exception {
+			String designJson = this.readResource("/cohortincidence/emptyAgeStrataDesign.json");
+			CohortIncidence design = CohortIncidence.fromJson(designJson);
+			
+			BuilderOptions options = new BuilderOptions();
+			options.refId = 1;
+			options.targetCohortTable = "dummy";
+			options.cdmSchema = "dummy";
+			options.vocabularySchema = "dummy";
+			options.useTempTables = true;
+			options.resultsSchema = "dummy";		
 
-
+			CohortIncidenceQueryBuilder builder = new CohortIncidenceQueryBuilder();
+			builder.setDesign(design);
+			builder.setOptions(options);
+			String analysisSql = builder.build();
+    }		
 }
