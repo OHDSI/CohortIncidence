@@ -124,7 +124,7 @@ public class CohortIncidenceQueryBuilder {
 									whereClauses.add(String.format("start_date >= %s", SqlUtils.dateStringToSql(this.design.studyWindow.startDate)));
 								}
 								if (this.design.studyWindow.endDate != null) {
-									whereClauses.add(String.format("start_date <= %s", SqlUtils.dateStringToSql(this.design.studyWindow.startDate)));
+									whereClauses.add(String.format("start_date <= %s", SqlUtils.dateStringToSql(this.design.studyWindow.endDate)));
 									String endDateSql = SqlUtils.dateStringToSql(this.design.studyWindow.endDate);
 									tarEndDateExpression = String.format("case when end_date > %s then %s else end_date end as end_date",endDateSql, endDateSql);
 								}

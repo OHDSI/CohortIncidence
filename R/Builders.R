@@ -29,7 +29,7 @@
 #' @return a R6 class: IncidenceDesign.
 #' 
 #' @export
-createIncidenceDesign <- function(cohortDefs, targetDefs, outcomeDefs, tars, analysisList, conceptSets, subgroups, strataSettings) {
+createIncidenceDesign <- function(cohortDefs, targetDefs, outcomeDefs, tars, analysisList, conceptSets, subgroups, strataSettings, studyWindow) {
 
   design <- IncidenceDesign$new();
   if (!missing(cohortDefs)) design$cohortDefs <- cohortDefs;
@@ -40,7 +40,8 @@ createIncidenceDesign <- function(cohortDefs, targetDefs, outcomeDefs, tars, ana
   if (!missing(conceptSets)) design$conceptSets <- conceptSets;
   if (!missing(subgroups)) design$subgroups <- subgroups;
   if (!missing(strataSettings)) design$strataSettings <- strataSettings;
-
+  if (!missing(strataSettings)) design$studyWindow <- studyWindow;
+  
   return (design);
 }
 
@@ -159,5 +160,21 @@ createStrataSettings <- function (byAge = F, byGender = F, byYear = F, ageBreaks
 
   return(strataSettings);
 }
+
+#' Creates R6 object for DateRange
+#'
+#' @param startDate a character vector representing a date in YYYY-MM-DD format
+#' @param endDate a character vector representing a date in YYYY-MM-DD format
+#' @return a new instance of CohortIncidence::DateRange
+#' @export
+createDateRange <- function (startDate, endDate) {
+  dateRange <- DateRange$new()
+  
+  if (!missing(startDate)) dateRange$startDate <- startDate
+  if (!missing(endDate)) dateRange$endDate <- endDate
+
+  return(dateRange);
+}
+
 
 
