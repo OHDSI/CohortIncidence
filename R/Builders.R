@@ -26,6 +26,7 @@
 #' @param conceptSets A list of concept sets, currently unused.
 #' @param subgroups A list of cohort subgroups, each element must be class Subgroup. 
 #' @param strataSettings The strata settings used in the anlaysis, must be class StrataSettings.
+#' @param studyWindow Limits time at risk to the specified study window. Must be class DateRange.
 #' @return a R6 class: IncidenceDesign.
 #' 
 #' @export
@@ -40,7 +41,7 @@ createIncidenceDesign <- function(cohortDefs, targetDefs, outcomeDefs, tars, ana
   if (!missing(conceptSets)) design$conceptSets <- conceptSets;
   if (!missing(subgroups)) design$subgroups <- subgroups;
   if (!missing(strataSettings)) design$strataSettings <- strataSettings;
-  if (!missing(strataSettings)) design$studyWindow <- studyWindow;
+  if (!missing(studyWindow)) design$studyWindow <- studyWindow;
   
   return (design);
 }

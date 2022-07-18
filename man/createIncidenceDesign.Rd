@@ -32,6 +32,8 @@ createIncidenceDesign(
 \item{subgroups}{A list of cohort subgroups, each element must be class Subgroup.}
 
 \item{strataSettings}{The strata settings used in the anlaysis, must be class StrataSettings.}
+
+\item{studyWindow}{Limits time at risk to the specified study window. Must be class DateRange.}
 }
 \value{
 a R6 class: IncidenceDesign.
