@@ -221,7 +221,36 @@ test_that("StrataSettings R6 Class Works", {
   
 })
 
+test_that("DateRange works", {
+  dateRange <- CohortIncidence::DateRange$new()
+  expect_equal(as.character(dateRange$asJSON()), '{}')
+  
+  dateRange$startDate <- "2000-01-01"
+  expect_equal(as.character(dateRange$asJSON()), '{"startDate":"2000-01-01"}')
+  
+  dateRange$endDate <- "2001-01-01"
+  expect_equal(as.character(dateRange$asJSON()), '{"startDate":"2000-01-01","endDate":"2001-01-01"}')
+  
+  expect_error(dateRange$startDate <- c(1,2,3), "Assertion on 'startDate' failed: Must be of type 'character'")
+  expect_error(dateRange$startDate <- "2000-02-31", "Assertion on 'as.Date\\(startDate")  
+  expect_error(dateRange$endDate <- c(1,2,3), "Assertion on 'endDate' failed: Must be of type 'character'")
+  expect_error(dateRange$endDate <- "2000-02-31", "Assertion on 'as.Date\\(endDate")  
+  
+  # initalize from string
+  deserializeStrataSettings <- CohortIncidence::DateRange$new('{}')
+  expect_equal(as.character(deserializeStrataSettings$asJSON()), '{}')
+  
+  deserializeStrataSettings <- CohortIncidence::DateRange$new('{"startDate":"2000-01-01"}')
+  expect_equal(as.character(deserializeStrataSettings$asJSON()), '{"startDate":"2000-01-01"}')
 
+  deserializeStrataSettings <- CohortIncidence::DateRange$new('{"startDate":"2000-01-01","endDate":"2001-01-01"}')
+  expect_equal(as.character(deserializeStrataSettings$asJSON()), '{"startDate":"2000-01-01","endDate":"2001-01-01"}')
+  
+  expect_error(CohortIncidence::DateRange$new('{"startDate":"2000-02-31","endDate":"2001-01-01"}'), "Assertion on 'as.Date\\(startDate")
+
+})
+  
+  
 test_that("createIncidenceDesign works", {
   
   target1 <- CohortIncidence::CohortReference$new()
@@ -264,6 +293,9 @@ test_that("createIncidenceDesign works", {
   strataSettings$ageBreaks <- list(17, 35, 65)
   
   irDesign$strataSettings <- strataSettings
+  
+  studyWindow <- CohortIncidence::createDateRange(startDate = "2000-01-01")
+  irDesign$studyWindow <- studyWindow
   
   expectedStrataJson <- paste(readLines("resources/serializeDesignStrataTest.json"),collapse="\n")
   expect_equal(as.character(irDesign$asJSON(pretty=T)), expectedStrataJson)

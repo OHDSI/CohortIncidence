@@ -12,7 +12,8 @@ createIncidenceDesign(
   analysisList,
   conceptSets,
   subgroups,
-  strataSettings
+  strataSettings,
+  studyWindow
 )
 }
 \arguments{

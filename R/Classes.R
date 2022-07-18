@@ -43,7 +43,8 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
     .analysisList = NA,
     .conceptSets = NA,
     .subgroups = NA,
-    .strataSettings=NA
+    .strataSettings=NA,
+    .studyWindow=NA
   ),
   active = list(
     #' @field cohortDefs A list of cohort definitions.  Must be a list of class "CohortDefinition"
@@ -123,7 +124,7 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
         self
       }
     },
-    #' @field strataSettings A list of cohort references to be used as target cohorts.  Must be a list of class "CohortReference"
+    #' @field strataSettings The strata settings for this design.  Must be a class "StrataSettings"
     strataSettings = function(strataSettings) {
       if (missing(strataSettings)) {
         private$.strataSettings
@@ -133,6 +134,17 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
         private$.strataSettings <-strataSettings
         self
       }
+    },
+    #' @field studyWindow a study window for this design.  Must be a list of class "DateRange"
+    studyWindow = function(studyWindow) {
+      if (missing(studyWindow)) {
+        private$.studyWindow
+      } else {
+        # check type
+        checkmate::assertClass(studyWindow, classes="DateRange")
+        private$.studyWindow <-studyWindow
+        self
+      }   
     }
   ),
   public = list(
@@ -150,6 +162,8 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
       if ("conceptSets" %in% names (dataList)) self$conceptSets <- dataList$conceptSets
       if ("subgroups" %in% names (dataList)) self$analysisList <- lapply(dataList$subgroups, .resolveSubgroup)
       if ("strataSettings" %in% names (dataList)) self$strataSettings <- CohortIncidence::StrataSettings$new(dataList$strataSettings)
+      if ("studyWindow" %in% names (dataList)) self$studyWindow <- CohortIncidence::DateRange$new(dataList$studyWindow)
+      
     },
     #' @description
     #' returns the R6 class elements as a list for use in jsonlite::toJSON()
@@ -162,7 +176,8 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
         analysisList = .r6ToListOrNA(private$.analysisList),
         conceptSets = private$.conceptSets,
         subgroups = .r6ToListOrNA(private$.subgroups),
-        strataSettings = .r6ToListOrNA(private$.strataSettings)
+        strataSettings = .r6ToListOrNA(private$.strataSettings),
+        studyWindow = .r6ToListOrNA(private$.studyWindow)
       ))
     },
     #' @description
@@ -822,6 +837,75 @@ StrataSettings <- R6::R6Class("StrataSettings",
 )
 
 
+#' R6 Class Representing a DataRange
+#' 
+#' @description 
+#' The DateRange class, encapsulating the startDate and endDate of a date range.
+#' 
+#' @details 
+#' This class is used to specify a DateRange, with start and end dates specified as 
+#' strings formatted as YYYY-MM-DD.
+
+#' @export
+DateRange <- R6::R6Class("DateRange",
+  private = list (
+    .startDate = NA,
+    .endDate = NA
+  ),
+  active = list (
+    #' @field startDate a character with format YYYY-MM-DD to be used as the date range's start date.
+    startDate = function(startDate) {
+      if (missing(startDate)) {
+        private$.startDate
+      } else {
+        # check type
+        checkmate::assertCharacter(startDate)
+        checkmate::assertDate(as.Date(startDate, format = '%Y-%m-%d'), len=1, any.missing=F)
+        private$.startDate <- startDate
+        self
+      }
+    },
+    #' @field endDate a character with format YYYY-MM-DD to be used as the date range's end date.
+    endDate = function(endDate) {
+      if (missing(endDate)) {
+        private$.endDate
+      } else {
+        # check type
+        checkmate::assertCharacter(endDate)
+        checkmate::assertDate(as.Date(endDate, format = '%Y-%m-%d'), len=1, any.missing=F)
+        private$.endDate <- endDate
+        self
+      }
+    }
+  ),
+  public = list(
+    #' @description
+    #' creates a new instance, using the provided data param if provided.
+    #' @param data the data (as a json string or list) to initialize with
+    initialize = function(data = list()) {
+      dataList <- .convertJSON(data)
+      
+      if ("startDate" %in% names (dataList)) self$startDate <- dataList$startDate
+      if ("endDate" %in% names (dataList)) self$endDate <- dataList$endDate
+
+    },
+    #' @description
+    #' returns the R6 class elements as a list for use in jsonlite::toJSON()
+    toList = function() {
+      .removeEmpty(list(
+        startDate = jsonlite::unbox(private$.startDate),
+        endDate = jsonlite::unbox(private$.endDate)
+      ))
+    },
+    #' @description
+    #' returns the JSON string for this R6 class
+    asJSON = function() {
+      jsonlite::toJSON(self$toList(), null="null")
+    }
+  )
+)
+
+
 # helper functions
 .r6ToListOrNA <- function(x) {
   if (length(x) == 0) {
@@ -855,7 +939,7 @@ StrataSettings <- R6::R6Class("StrataSettings",
   } else if (checkmate::testList(data)) {
     return(.removeEmpty(data))
   } else {
-    stop("Error: Attempting to initalize StrataSettings witn non-list or non-string")
+    stop("Error: Attempting to initalize R6 class witn non-list or non-string")
   }
 }
 
