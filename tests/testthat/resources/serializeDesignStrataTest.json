@@ -41,5 +41,8 @@
     "byGender": true,
     "byYear": true,
     "ageBreaks": [17, 35, 65]
+  },
+  "studyWindow": {
+    "startDate": "2000-01-01"
   }
 }

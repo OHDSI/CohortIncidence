@@ -36,7 +36,9 @@ before calling jsonlite::toJSON(), or call toJSON directy on this class.
 
 \item{\code{subgroups}}{A list of cohort references to be used as target cohorts.  Must be a list of class "CohortReference"}
 
-\item{\code{strataSettings}}{A list of cohort references to be used as target cohorts.  Must be a list of class "CohortReference"}
+\item{\code{strataSettings}}{The strata settings for this design.  Must be a class "StrataSettings"}
+
+\item{\code{studyWindow}}{a study window for this design.  Must be a list of class "DateRange"}
 }
 \if{html}{\out{</div>}}
 }
