@@ -1,3 +1,14 @@
+Cohort Incidence 3.1.1
+===========
+
+1. Fixed SQL error when all strata settings were set to F.
+
+
+Cohort Incidence 3.1.0
+===========
+
+1. Implemented StudyWindow setting:   TAR will be censored at the study window end, and excluded if TAR did not start during the study window.
+
 Cohort Incidence 3.0.1
 ===========
 

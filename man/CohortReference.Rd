@@ -27,15 +27,15 @@ before calling jsonlite::toJSON().
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{CohortReference$new()}}
-\item \href{#method-toList}{\code{CohortReference$toList()}}
-\item \href{#method-asJSON}{\code{CohortReference$asJSON()}}
-\item \href{#method-clone}{\code{CohortReference$clone()}}
+\item \href{#method-CohortReference-new}{\code{CohortReference$new()}}
+\item \href{#method-CohortReference-toList}{\code{CohortReference$toList()}}
+\item \href{#method-CohortReference-asJSON}{\code{CohortReference$asJSON()}}
+\item \href{#method-CohortReference-clone}{\code{CohortReference$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-CohortReference-new"></a>}}
+\if{latex}{\out{\hypertarget{method-CohortReference-new}{}}}
 \subsection{Method \code{new()}}{
 creates a new instance, using the provided data param if provided.
 \subsection{Usage}{
@@ -51,8 +51,8 @@ creates a new instance, using the provided data param if provided.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-toList"></a>}}
-\if{latex}{\out{\hypertarget{method-toList}{}}}
+\if{html}{\out{<a id="method-CohortReference-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-CohortReference-toList}{}}}
 \subsection{Method \code{toList()}}{
 returns the R6 class elements as a list for use in jsonlite::toJSON()
 \subsection{Usage}{
@@ -61,8 +61,8 @@ returns the R6 class elements as a list for use in jsonlite::toJSON()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-asJSON"></a>}}
-\if{latex}{\out{\hypertarget{method-asJSON}{}}}
+\if{html}{\out{<a id="method-CohortReference-asJSON"></a>}}
+\if{latex}{\out{\hypertarget{method-CohortReference-asJSON}{}}}
 \subsection{Method \code{asJSON()}}{
 returns the JSON string for this R6 class
 \subsection{Usage}{
@@ -71,8 +71,8 @@ returns the JSON string for this R6 class
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-CohortReference-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-CohortReference-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
