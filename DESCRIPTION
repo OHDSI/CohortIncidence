@@ -1,7 +1,7 @@
 Package: CohortIncidence
 Type: Package
 Title: CohortIncidence
-Version: 3.1.0
+Version: 3.1.1
 Date: 2021-09-12
 Author: Christopher Knoll
 Maintainer: Christopher Knoll <cknoll@ohdsi.org>
@@ -20,7 +20,7 @@ Imports:
     SqlRender (>= 1.6.0)
 NeedsCompilation: yes
 LazyData: TRUE
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Encoding: UTF-8
 Suggests: 
     testthat (>= 3.0.0),

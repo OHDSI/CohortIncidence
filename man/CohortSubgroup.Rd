@@ -29,15 +29,15 @@ before calling jsonlite::toJSON().
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{CohortSubgroup$new()}}
-\item \href{#method-toList}{\code{CohortSubgroup$toList()}}
-\item \href{#method-asJSON}{\code{CohortSubgroup$asJSON()}}
-\item \href{#method-clone}{\code{CohortSubgroup$clone()}}
+\item \href{#method-CohortSubgroup-new}{\code{CohortSubgroup$new()}}
+\item \href{#method-CohortSubgroup-toList}{\code{CohortSubgroup$toList()}}
+\item \href{#method-CohortSubgroup-asJSON}{\code{CohortSubgroup$asJSON()}}
+\item \href{#method-CohortSubgroup-clone}{\code{CohortSubgroup$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-CohortSubgroup-new"></a>}}
+\if{latex}{\out{\hypertarget{method-CohortSubgroup-new}{}}}
 \subsection{Method \code{new()}}{
 creates a new instance, using the provided data param if provided.
 The JSON takes the form: {"id":1,"name":"some name","description":"some description","cohort":{"id":99, "name":"cohort"}}
@@ -54,8 +54,8 @@ The JSON takes the form: {"id":1,"name":"some name","description":"some descript
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-toList"></a>}}
-\if{latex}{\out{\hypertarget{method-toList}{}}}
+\if{html}{\out{<a id="method-CohortSubgroup-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-CohortSubgroup-toList}{}}}
 \subsection{Method \code{toList()}}{
 returns the R6 class elements as a list for use in jsonlite::toJSON()
 \subsection{Usage}{
@@ -64,8 +64,8 @@ returns the R6 class elements as a list for use in jsonlite::toJSON()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-asJSON"></a>}}
-\if{latex}{\out{\hypertarget{method-asJSON}{}}}
+\if{html}{\out{<a id="method-CohortSubgroup-asJSON"></a>}}
+\if{latex}{\out{\hypertarget{method-CohortSubgroup-asJSON}{}}}
 \subsection{Method \code{asJSON()}}{
 returns the JSON string for this R6 class
 \subsection{Usage}{
@@ -74,8 +74,8 @@ returns the JSON string for this R6 class
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-CohortSubgroup-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-CohortSubgroup-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

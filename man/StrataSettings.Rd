@@ -32,15 +32,15 @@ before calling jsonlite::toJSON().
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{StrataSettings$new()}}
-\item \href{#method-toList}{\code{StrataSettings$toList()}}
-\item \href{#method-asJSON}{\code{StrataSettings$asJSON()}}
-\item \href{#method-clone}{\code{StrataSettings$clone()}}
+\item \href{#method-StrataSettings-new}{\code{StrataSettings$new()}}
+\item \href{#method-StrataSettings-toList}{\code{StrataSettings$toList()}}
+\item \href{#method-StrataSettings-asJSON}{\code{StrataSettings$asJSON()}}
+\item \href{#method-StrataSettings-clone}{\code{StrataSettings$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-StrataSettings-new"></a>}}
+\if{latex}{\out{\hypertarget{method-StrataSettings-new}{}}}
 \subsection{Method \code{new()}}{
 creates a new instance, using the provided data param if provided.
 \subsection{Usage}{
@@ -56,8 +56,8 @@ creates a new instance, using the provided data param if provided.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-toList"></a>}}
-\if{latex}{\out{\hypertarget{method-toList}{}}}
+\if{html}{\out{<a id="method-StrataSettings-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-StrataSettings-toList}{}}}
 \subsection{Method \code{toList()}}{
 returns the R6 class elements as a list for use in jsonlite::toJSON()
 \subsection{Usage}{
@@ -66,8 +66,8 @@ returns the R6 class elements as a list for use in jsonlite::toJSON()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-asJSON"></a>}}
-\if{latex}{\out{\hypertarget{method-asJSON}{}}}
+\if{html}{\out{<a id="method-StrataSettings-asJSON"></a>}}
+\if{latex}{\out{\hypertarget{method-StrataSettings-asJSON}{}}}
 \subsection{Method \code{asJSON()}}{
 returns the JSON string for this R6 class
 \subsection{Usage}{
@@ -76,8 +76,8 @@ returns the JSON string for this R6 class
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-StrataSettings-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-StrataSettings-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
