@@ -269,7 +269,8 @@ public class CohortIncidenceQueryBuilder {
 	}
 	
 	private String getStrataQueries() {
-		if (this.design.strataSettings == null)
+		if (this.design.strataSettings == null || 
+						(!this.design.strataSettings.byAge && !this.design.strataSettings.byGender && !this.design.strataSettings.byYear))
 			return "";
 		
 		ArrayList<String> queries = new ArrayList<>();

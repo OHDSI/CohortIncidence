@@ -22,15 +22,15 @@ strings formatted as YYYY-MM-DD.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{DateRange$new()}}
-\item \href{#method-toList}{\code{DateRange$toList()}}
-\item \href{#method-asJSON}{\code{DateRange$asJSON()}}
-\item \href{#method-clone}{\code{DateRange$clone()}}
+\item \href{#method-DateRange-new}{\code{DateRange$new()}}
+\item \href{#method-DateRange-toList}{\code{DateRange$toList()}}
+\item \href{#method-DateRange-asJSON}{\code{DateRange$asJSON()}}
+\item \href{#method-DateRange-clone}{\code{DateRange$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-DateRange-new"></a>}}
+\if{latex}{\out{\hypertarget{method-DateRange-new}{}}}
 \subsection{Method \code{new()}}{
 creates a new instance, using the provided data param if provided.
 \subsection{Usage}{
@@ -46,8 +46,8 @@ creates a new instance, using the provided data param if provided.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-toList"></a>}}
-\if{latex}{\out{\hypertarget{method-toList}{}}}
+\if{html}{\out{<a id="method-DateRange-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-DateRange-toList}{}}}
 \subsection{Method \code{toList()}}{
 returns the R6 class elements as a list for use in jsonlite::toJSON()
 \subsection{Usage}{
@@ -56,8 +56,8 @@ returns the R6 class elements as a list for use in jsonlite::toJSON()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-asJSON"></a>}}
-\if{latex}{\out{\hypertarget{method-asJSON}{}}}
+\if{html}{\out{<a id="method-DateRange-asJSON"></a>}}
+\if{latex}{\out{\hypertarget{method-DateRange-asJSON}{}}}
 \subsection{Method \code{asJSON()}}{
 returns the JSON string for this R6 class
 \subsection{Usage}{
@@ -66,8 +66,8 @@ returns the JSON string for this R6 class
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-DateRange-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-DateRange-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -27,14 +27,14 @@ before calling jsonlite::toJSON().
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-toList}{\code{CohortDefinition$toList()}}
-\item \href{#method-asJSON}{\code{CohortDefinition$asJSON()}}
-\item \href{#method-clone}{\code{CohortDefinition$clone()}}
+\item \href{#method-CohortDefinition-toList}{\code{CohortDefinition$toList()}}
+\item \href{#method-CohortDefinition-asJSON}{\code{CohortDefinition$asJSON()}}
+\item \href{#method-CohortDefinition-clone}{\code{CohortDefinition$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-toList"></a>}}
-\if{latex}{\out{\hypertarget{method-toList}{}}}
+\if{html}{\out{<a id="method-CohortDefinition-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-CohortDefinition-toList}{}}}
 \subsection{Method \code{toList()}}{
 returns the R6 class elements as a list for use in jsonlite::toJSON()
 \subsection{Usage}{
@@ -43,8 +43,8 @@ returns the R6 class elements as a list for use in jsonlite::toJSON()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-asJSON"></a>}}
-\if{latex}{\out{\hypertarget{method-asJSON}{}}}
+\if{html}{\out{<a id="method-CohortDefinition-asJSON"></a>}}
+\if{latex}{\out{\hypertarget{method-CohortDefinition-asJSON}{}}}
 \subsection{Method \code{asJSON()}}{
 returns the JSON string for this R6 class
 \subsection{Usage}{
@@ -53,8 +53,8 @@ returns the JSON string for this R6 class
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-CohortDefinition-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-CohortDefinition-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
