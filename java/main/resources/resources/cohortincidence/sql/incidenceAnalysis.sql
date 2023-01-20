@@ -198,7 +198,7 @@ inner join (
 	from #outcome_ref 
 	where outcome_id in (@outcomeIds)
 ) or1 on oc1.cohort_definition_id = or1.outcome_cohort_definition_id
-where dateadd(dd,or1.clean_window, oc1.cohort_end_date) >= dateadd(dd,1,oc1.cohort_end_date)
+where dateadd(dd,or1.clean_window, oc1.cohort_end_date) >= dateadd(dd,1,oc1.cohort_start_date)
 
 union all
 

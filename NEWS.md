@@ -1,3 +1,9 @@
+Cohort Incidence 3.1.2
+===========
+
+1. Fixed bug:  Exlusion time was not being calculated when clean window = 0.
+
+
 Cohort Incidence 3.1.1
 ===========
 
