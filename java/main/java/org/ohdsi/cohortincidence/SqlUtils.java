@@ -37,4 +37,11 @@ public final class SqlUtils {
 		String[] dateParts = StringUtils.split(date, '-');
 		return String.format("DATEFROMPARTS(%s, %s, %s)", Integer.valueOf(dateParts[0]), Integer.valueOf(dateParts[1]), Integer.valueOf(dateParts[2]));
 	}
+	
+	public static String escapeSqlParam(String value) {
+		if (StringUtils.isEmpty(value)) {
+			return value;
+		}
+		return value.replaceAll("\\\\*\\'", "''");
+	}
 }
