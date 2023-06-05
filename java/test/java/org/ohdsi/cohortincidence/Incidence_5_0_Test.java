@@ -36,9 +36,11 @@ public class Incidence_5_0_Test extends AbstractDatabaseTest {
 
 	private static final String COL_REF_ID = "ref_id";
 	private static final String COL_TARGET_COHORT_ID = "target_cohort_definition_id";
+	private static final String COL_TARGET_NAME = "target_name";
 	private static final String COL_TAR_ID = "tar_id";
 	private static final String COL_SUBGROUP_ID = "subgroup_id";
 	private static final String COL_OUTCOME_ID = "outcome_id";
+	private static final String COL_OUTCOME_NAME = "outcome_name";
 	private static final String COL_AGE_ID = "age_id";
 	private static final String COL_GENDER_ID = "gender_id";
 	private static final String COL_YEAR_ID = "start_year";
@@ -190,6 +192,25 @@ public class Incidence_5_0_Test extends AbstractDatabaseTest {
 		this.executeTest(params);
 	}
 
+	/**
+	 * Tests that sqlInjection values in name fields are properly escaped
+	 * @throws Exception 
+	 */
+	@Test
+	public void sqlInjectionTest() throws Exception {
+		TestParams params = new TestParams();
+		
+		params.resultSchema = "sql_injection"; // this must be all lower case for DBUnit to work
+		params.prepDataSets = new String[]{
+			"/datasets/vocabulary.json",
+			"/cohortincidence/sqlInjection_PREP.json"
+		};
+		params.designJson = ResourceHelper.GetResourceAsString("/cohortincidence/sqlInjectionTest.json");
+		params.verifyDataSets =  new String[]{"/cohortincidence/sqlInjection_VERIFY.json"};
+		params.verifyCols = Arrays.asList(new String[]{COL_REF_ID, COL_TAR_ID, COL_TARGET_COHORT_ID, COL_TARGET_NAME, COL_OUTCOME_ID, COL_OUTCOME_NAME});
+
+		this.executeTest(params);
+	}
 	/**
 	 * Similar to single outcome test, this test creates different outcome definitions with different clean window settings.
 	 * This test contains a single TAR definition, but with different outcome definitions with various clean windows.

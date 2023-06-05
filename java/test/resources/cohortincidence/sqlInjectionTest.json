@@ -1,0 +1,56 @@
+{
+	"targetDefs": [
+		{
+			"id": 100,
+			"name": "'; DROP TABLE students; SELECT"
+		}
+	],
+	"outcomeDefs": [
+		{
+			"id": 1,
+			"name": "'; DROP TABLE students; SELECT",
+			"cohortId": 200,
+			"cleanWindow": 30
+		}
+	],
+	"timeAtRiskDefs": [
+		{
+			"id": 1,
+			"start": {
+				"dateField": "start",
+				"offset": 0
+			},
+			"end": {
+				"dateField": "start",
+				"offset": 60
+			}
+		},{
+			"id": 2,
+			"start": {
+				"dateField": "start",
+				"offset": 0
+			},
+			"end": {
+				"dateField": "end",
+				"offset": 0
+			}
+		},{
+			"id": 3,
+			"start": {
+				"dateField": "start",
+				"offset": 0
+			},
+			"end": {
+				"dateField": "end",
+				"offset": 999
+			}
+		}
+	],
+	"analysisList": [
+		{
+			"targets": [100],
+			"outcomes": [1],
+			"tars": [1,2,3]
+		}
+	]
+}
