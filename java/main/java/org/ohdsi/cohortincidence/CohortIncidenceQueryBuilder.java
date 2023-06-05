@@ -61,7 +61,7 @@ public class CohortIncidenceQueryBuilder {
 		}
 
 		if (this.options.sourceName != null) {
-			finalSql = StringUtils.replace(finalSql, "@sourceName", SqlUtils.escapeSqlParam(!StringUtils.isEmpty(this.options.sourceName) ? this.options.sourceName : ""));
+			finalSql = StringUtils.replace(finalSql, "@sourceName", SqlUtils.normalizeTextInput(!StringUtils.isEmpty(this.options.sourceName) ? this.options.sourceName : "", 255));
 		}
 		
 		if (options.cdmSchema != null) {
@@ -160,7 +160,7 @@ public class CohortIncidenceQueryBuilder {
 						.map(t -> {
 							return String.format(TARGET_REF_TEMPLATE,
 											t.getId(), 
-											SqlUtils.escapeSqlParam(t.getName())
+											SqlUtils.normalizeTextInput(t.getName(), 255)
 							);
 						})
 						.collect(Collectors.toList());
@@ -209,7 +209,7 @@ public class CohortIncidenceQueryBuilder {
 							return String.format(OUTCOME_REF_TEMPLATE,
 											outcome.id,
 											outcome.cohortId,
-											SqlUtils.escapeSqlParam(name),
+											SqlUtils.normalizeTextInput(name, 255),
 											outcome.cleanWindow,
 											outcome.excludeCohortId != null ? outcome.excludeCohortId : 0
 							);

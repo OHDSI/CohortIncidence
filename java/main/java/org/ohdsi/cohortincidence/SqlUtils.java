@@ -44,4 +44,8 @@ public final class SqlUtils {
 		}
 		return value.replaceAll("\\\\*\\'", "''");
 	}
+	
+	public static String normalizeTextInput(String value, int maxLength) {
+		return StringUtils.left(escapeSqlParam(value), 255);
+	}
 }
