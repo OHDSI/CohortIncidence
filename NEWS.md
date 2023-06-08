@@ -1,3 +1,10 @@
+Cohort Incidence 3.1.3
+===========
+
+1.  Fixed Bug: Encode input strings to prevent sql injection (#29)
+2.  Fixed Bug: Truncate target and outcome names to 255 characters.
+
+
 Cohort Incidence 3.1.2
 ===========
 
