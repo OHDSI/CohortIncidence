@@ -209,28 +209,6 @@ public class Incidence_5_0_Test extends AbstractDatabaseTest {
 		params.verifyDataSets =  new String[]{"/cohortincidence/sqlInjection_VERIFY.json"};
 		params.verifyCols = Arrays.asList(new String[]{COL_REF_ID, COL_TAR_ID, COL_TARGET_COHORT_ID, COL_TARGET_NAME, COL_OUTCOME_ID, COL_OUTCOME_NAME});
 
-		
-		this.executeTest(params);
-	}
-	
-		/**
-	 * Tests that long names are truncated to 255 characters
-	 * @throws Exception 
-	 */
-	@Test
-	public void normalizeTextTest() throws Exception {
-		TestParams params = new TestParams();
-		
-		params.resultSchema = "normalize_text"; // this must be all lower case for DBUnit to work
-		params.prepDataSets = new String[]{
-			"/datasets/vocabulary.json",
-			"/cohortincidence/normalizeText_PREP.json"
-		};
-		params.designJson = ResourceHelper.GetResourceAsString("/cohortincidence/normalizeTextTest.json");
-		params.verifyDataSets =  new String[]{"/cohortincidence/normalizeText_VERIFY.json"};
-		params.verifyCols = Arrays.asList(new String[]{COL_REF_ID, COL_TAR_ID, COL_TARGET_COHORT_ID, COL_TARGET_NAME, COL_OUTCOME_ID, COL_OUTCOME_NAME});
-
-		
 		this.executeTest(params);
 	}
 	/**
