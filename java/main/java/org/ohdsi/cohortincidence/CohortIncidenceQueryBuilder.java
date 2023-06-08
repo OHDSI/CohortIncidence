@@ -61,7 +61,7 @@ public class CohortIncidenceQueryBuilder {
 		}
 
 		if (this.options.sourceName != null) {
-			finalSql = StringUtils.replace(finalSql, "@sourceName", SqlUtils.escapeSqlParam(!StringUtils.isEmpty(this.options.sourceName) ? this.options.sourceName : ""));
+			finalSql = StringUtils.replace(finalSql, "@sourceName", !StringUtils.isEmpty(this.options.sourceName) ? this.options.sourceName : "");			
 		}
 		
 		if (options.cdmSchema != null) {
@@ -131,7 +131,7 @@ public class CohortIncidenceQueryBuilder {
 							}
 							analysisQuery = StringUtils.replace(analysisQuery, "@tarEndDateExpression", tarEndDateExpression);
 							String studyWindowWhereClause = "";
-							if (!whereClauses.isEmpty()) {
+							if (whereClauses.size() > 0) {
 								studyWindowWhereClause = String.format("where %s", StringUtils.join(whereClauses, " AND "));
 							}
 							analysisQuery = StringUtils.replace(analysisQuery, "@studyWindowWhereClause", studyWindowWhereClause);
@@ -160,7 +160,7 @@ public class CohortIncidenceQueryBuilder {
 						.map(t -> {
 							return String.format(TARGET_REF_TEMPLATE,
 											t.getId(), 
-											SqlUtils.escapeSqlParam(t.getName())
+											t.getName()
 							);
 						})
 						.collect(Collectors.toList());
@@ -209,7 +209,7 @@ public class CohortIncidenceQueryBuilder {
 							return String.format(OUTCOME_REF_TEMPLATE,
 											outcome.id,
 											outcome.cohortId,
-											SqlUtils.escapeSqlParam(name),
+											name,
 											outcome.cleanWindow,
 											outcome.excludeCohortId != null ? outcome.excludeCohortId : 0
 							);
@@ -230,7 +230,7 @@ public class CohortIncidenceQueryBuilder {
 		
 		unions.addAll(this.design.subgroups.stream()
 						.map(subgroup -> {
-							return String.format(SUBGROUP_REF_TEMPLATE, subgroup.id, SqlUtils.escapeSqlParam(subgroup.name));
+							return String.format(SUBGROUP_REF_TEMPLATE, subgroup.id, subgroup.name);
 						})
 						.collect(Collectors.toList())
 		);
