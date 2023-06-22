@@ -100,7 +100,7 @@ with cteEndDates (cohort_definition_id, tar_id, subject_id, end_date) AS
 			tar_id,
 			subject_id,
 			event_date,
-			SUM(event_type) OVER (PARTITION BY cohort_definition_id, tar_id, subject_id ORDER BY event_date ROWS UNBOUNDED PRECEDING) AS interval_status
+			SUM(event_type) OVER (PARTITION BY cohort_definition_id, tar_id, subject_id ORDER BY event_date, event_type ROWS UNBOUNDED PRECEDING) AS interval_status
 		FROM
 		(
 			SELECT
@@ -260,7 +260,7 @@ with cteEndDates (target_cohort_definition_id, tar_id, outcome_id, subject_id, e
 			outcome_id,
 			subject_id,
 			event_date,
-			SUM(event_type) OVER (PARTITION BY target_cohort_definition_id, tar_id, outcome_id, subject_id ORDER BY event_date ROWS UNBOUNDED PRECEDING) AS interval_status
+			SUM(event_type) OVER (PARTITION BY target_cohort_definition_id, tar_id, outcome_id, subject_id ORDER BY event_date, event_type ROWS UNBOUNDED PRECEDING) AS interval_status
 		FROM
 		(
 			SELECT
