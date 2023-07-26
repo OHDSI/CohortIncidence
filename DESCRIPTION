@@ -1,7 +1,7 @@
 Package: CohortIncidence
 Type: Package
 Title: CohortIncidence
-Version: 3.1.4
+Version: 3.1.5
 Date: 2021-09-12
 Author: Christopher Knoll
 Maintainer: Christopher Knoll <cknoll@ohdsi.org>

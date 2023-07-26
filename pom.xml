@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ohdsi</groupId>
 	<artifactId>CohortIncidence</artifactId>
-	<version>3.1.4-SNAPSHOT</version>
+	<version>3.1.5-SNAPSHOT</version>
 	<build>
 		<sourceDirectory>${basedir}/java/main/java</sourceDirectory>
 		<outputDirectory>${basedir}/target/classes</outputDirectory>
