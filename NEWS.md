@@ -1,3 +1,15 @@
+Cohort Incidence 3.1.5
+===========
+
+Fixed strata settings when index-year strata was applied when gender was applied.
+
+
+Cohort Incidence 3.1.4
+===========
+
+Fixed non-deterministic query when finding end dates of eras.
+
+
 Cohort Incidence 3.1.3
 ===========
 

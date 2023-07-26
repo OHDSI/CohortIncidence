@@ -291,7 +291,7 @@ public class CohortIncidenceQueryBuilder {
 			}
 
 			// by age, by year
-			if (this.design.strataSettings.byGender) {
+			if (this.design.strataSettings.byYear) {
 				queries.add(buildStrataQuery(
 								new String[] {"irs.age_id", NULL_STRATA + " as gender_id", "irs.start_year"},
 								new String[] {"irs.age_id", "irs.start_year"}
