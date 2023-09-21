@@ -1,3 +1,9 @@
+Cohort Incidence 3.2.0
+===========
+
+Performance release: improved era-building SQL to improve performance.
+
+
 Cohort Incidence 3.1.5
 ===========
 
