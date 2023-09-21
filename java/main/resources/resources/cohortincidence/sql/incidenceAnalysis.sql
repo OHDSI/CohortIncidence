@@ -6,167 +6,75 @@
 code to implement calculation using the inputs above, no need to modify beyond this point
 
 1) create T + TAR periods
-2) create table to store era-fied at-risk periods
-  UNION all periods that don't require erafying 
-  with era-fy records that require it
-3) create table to store era-fied excluded at-risk periods
-  UNION all periods that don't require erafying
-  with era-fy records that require it
-4) calculate pre-exclude outcomes and outcomes 
-5) calculate exclsion time per T/O/TAR/Subject/start_date
-6) generate raw result table with T/O/TAR/subject_id, start_date, pe_at_risk (datediff(d,start,end), at_risk (pe_at_risk - exclusion time), pe_outcomes, outcomes
+2) create table to store era-fied excluded at-risk periods
+3) calculate pre-exclude outcomes and outcomes 
+4) calculate exclsion time per T/O/TAR/Subject/start_date
+5) generate raw result table with T/O/TAR/subject_id, start_date, pe_at_risk (datediff(d,start,end), at_risk (pe_at_risk - exclusion time), pe_outcomes, outcomes
    attach age/gender/year columns
-7) Create analysis_ref to produce each T/O/TAR combo
-8) perform rollup to calculate IR at the T/O/TAR/S/[age|gender|year] inclusing distinct people and distinct cases for 'all' and each subgroup
+6) Create analysis_ref to produce each T/O/TAR combo
+7) perform rollup to calculate IR at the T/O/TAR/S/[age|gender|year] inclusing distinct people and distinct cases for 'all' and each subgroup
 
 **************************************/
 
---three ways for entry into excluded
---1:  duration of outcome periods  (ex:  immortal time due to clean period)
---2:  other periods excluded  (ex: persons post-appendectomy for appendicitis)
-
-
 -- 1) create T + TAR periods
---HINT DISTRIBUTE_ON_KEY(subject_id)
-select cohort_definition_id, tar_id, subject_id, start_date, end_date
-into #TTAR
-FROM (
-	select tc1.cohort_definition_id,
-		tar1.tar_id,
-		subject_id,
-		case 
-			when tar1.tar_start_with = 'start' then
-				case when dateadd(dd,tar1.tar_start_offset,tc1.cohort_start_date) < op1.observation_period_end_date then dateadd(dd,tar1.tar_start_offset,tc1.cohort_start_date)
-					when dateadd(dd,tar1.tar_start_offset,tc1.cohort_start_date) >= op1.observation_period_end_date then op1.observation_period_end_date
-				end
-			when tar1.tar_start_with = 'end' then
-				case when dateadd(dd,tar1.tar_start_offset,tc1.cohort_end_date) < op1.observation_period_end_date then dateadd(dd,tar1.tar_start_offset,tc1.cohort_end_date)
-					when dateadd(dd,tar1.tar_start_offset,tc1.cohort_end_date) >= op1.observation_period_end_date then op1.observation_period_end_date
-				end
-			else null --shouldnt get here if tar set properly
-		end as start_date,
-		case 
-			when tar1.tar_end_with = 'start' then
-				case when dateadd(dd,tar1.tar_end_offset,tc1.cohort_start_date) < op1.observation_period_end_date then dateadd(dd,tar1.tar_end_offset,tc1.cohort_start_date)
-					when dateadd(dd,tar1.tar_end_offset,tc1.cohort_start_date) >= op1.observation_period_end_date then op1.observation_period_end_date
-				end
-			when tar1.tar_end_with = 'end' then
-				case when dateadd(dd,tar1.tar_end_offset,tc1.cohort_end_date) < op1.observation_period_end_date then dateadd(dd,tar1.tar_end_offset,tc1.cohort_end_date)
-					when dateadd(dd,tar1.tar_end_offset,tc1.cohort_end_date) >= op1.observation_period_end_date then op1.observation_period_end_date
-				end
-			else null --shouldnt get here if tar set properly
-		end as end_date
-	from (select tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset  from #tar_ref where tar_id in (@timeAtRiskIds)) tar1,
-	(select cohort_definition_id, subject_id, cohort_start_date, cohort_end_date from @targetCohortTable where cohort_definition_id in (@targetIds)) tc1
-	inner join @cdm_database_schema.observation_period op1 on tc1.subject_id = op1.person_id
-		and tc1.cohort_start_date >= op1.observation_period_start_date
-		and tc1.cohort_start_date <= op1.observation_period_end_date
-) TAR
-WHERE TAR.start_date <= TAR.end_date
-;
-
-/*
-2) create table to store era-fied at-risk periods
-  UNION all periods that don't require erafying 
-  with era-fy records that require it
-*/
-
---find the records that need to be era-fied
---era-building script for the 'TTAR_to_erafy' records
---insert records from era-building script into #TTAR_erafied
---HINT DISTRIBUTE_ON_KEY(subject_id)
-select t1.cohort_definition_id, t1.tar_id, t1.subject_id, t1.start_date, t1.end_date
-INTO #TTAR_to_erafy
-from #TTAR t1
-inner join #TTAR t2 on t1.cohort_definition_id = t2.cohort_definition_id
-	and t1.tar_id = t2.tar_id
-	and t1.subject_id = t2.subject_id
-	and t1.start_date <= t2.end_date
-	and t1.end_date >= t2.start_date
-	and t1.start_date <> t2.start_date
-;
 
 --HINT DISTRIBUTE_ON_KEY(subject_id)
-with cteEndDates (cohort_definition_id, tar_id, subject_id, end_date) AS
-(
-	SELECT
-		cohort_definition_id,
-		tar_id,
-		subject_id,
-		event_date as end_date
-	FROM
-	(
-		SELECT cohort_definition_id,
-			tar_id,
-			subject_id,
-			event_date,
-			SUM(event_type) OVER (PARTITION BY cohort_definition_id, tar_id, subject_id ORDER BY event_date, event_type ROWS UNBOUNDED PRECEDING) AS interval_status
-		FROM
-		(
-			SELECT
-				cohort_definition_id,
-				tar_id,
-				subject_id,
-				start_date AS event_date,
-				-1 AS event_type
-			FROM #TTAR_to_erafy
-
-			UNION ALL
-
-			SELECT
-				cohort_definition_id,
-				tar_id,
-				subject_id,
-				end_date AS event_date,
-				1 AS event_type
-			FROM #TTAR_to_erafy
-		) RAWDATA
-	) e
-	WHERE interval_status = 0
-),
-cteEnds (cohort_definition_id, tar_id, subject_id, start_date, end_date) AS
-(
-	SELECT c.cohort_definition_id,
-		c.tar_id,
-		c.subject_id,
-		c.start_date,
-		MIN(e.end_date) AS end_date
-	FROM #TTAR_to_erafy c
-	INNER JOIN cteEndDates e ON c.subject_id = e.subject_id
-		AND c.cohort_definition_id = e.cohort_definition_id
-		AND c.tar_id = e.tar_id
-		AND e.end_date >= c.start_date
-	GROUP BY  c.cohort_definition_id,
-		c.tar_id,
-		c.subject_id,
-		c.start_date
-)
-select cohort_definition_id, tar_id, subject_id, min(start_date) as start_date, end_date
-into #TTAR_era_overlaps
-from cteEnds
-group by cohort_definition_id, tar_id, subject_id, end_date
-;
-
-
---HINT DISTRIBUTE_ON_KEY(subject_id)
-select cohort_definition_id, tar_id, subject_id, start_date, @tarEndDateExpression 
+select subject_id, cohort_definition_id, tar_id, start_date, @tarEndDateExpression 
 into #TTAR_erafied
 FROM (
-	select cohort_definition_id, tar_id, subject_id, start_date, end_date
-	from #TTAR_era_overlaps
-
-	UNION ALL
-
-	--records that were already erafied and just need to be brought over directly
-	select distinct t1.cohort_definition_id, t1.tar_id, t1.subject_id, t1.start_date, t1.end_date
-	from #TTAR t1
-	left join #TTAR t2 on t1.cohort_definition_id = t2.cohort_definition_id
-		and t1.tar_id = t2.tar_id
-		and t1.subject_id = t2.subject_id
-		and t1.start_date <= t2.end_date
-		and t1.end_date >= t2.start_date
-		and t1.start_date <> t2.start_date
-	where t2.subject_id IS NULL
+  select subject_id, cohort_definition_id, tar_id, min(start_date) as start_date, max(end_date) as end_date
+  from (
+    select subject_id, cohort_definition_id, tar_id, start_date, end_date, sum(is_start) over (partition by subject_id, cohort_definition_id, tar_id order by start_date, is_start desc rows unbounded preceding) group_idx
+    from (
+      select subject_id, cohort_definition_id, tar_id, start_date, end_date, 
+        case when max(end_date) over (partition by subject_id, cohort_definition_id, tar_id order by start_date rows between unbounded preceding and 1 preceding) >= start_date then 0 else 1 end is_start
+      from (
+        SELECT subject_id, cohort_definition_id, tar_id, start_date, end_date
+        FROM
+        (
+          select tc1.cohort_definition_id,
+            tar1.tar_id,
+            subject_id,
+            case 
+              when tar1.tar_start_with = 'start' then
+                case when DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_start_date) < op1.observation_period_end_date then DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_start_date)
+                  when DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_start_date) >= op1.observation_period_end_date then op1.observation_period_end_date
+                end
+              when tar1.tar_start_with = 'end' then
+                case when DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_end_date) < op1.observation_period_end_date then DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_end_date)
+                  when DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_end_date) >= op1.observation_period_end_date then op1.observation_period_end_date
+                end
+              else null --shouldnt get here if tar set properly
+            end as start_date,
+            case 
+              when tar1.tar_end_with = 'start' then
+                case when DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_start_date) < op1.observation_period_end_date then DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_start_date)
+                  when DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_start_date) >= op1.observation_period_end_date then op1.observation_period_end_date
+                end
+              when tar1.tar_end_with = 'end' then
+                case when DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_end_date) < op1.observation_period_end_date then DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_end_date)
+                  when DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_end_date) >= op1.observation_period_end_date then op1.observation_period_end_date
+                end
+              else null --shouldnt get here if tar set properly
+            end as end_date
+          from (
+            select tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset  
+            from #tar_ref where tar_id in (@timeAtRiskIds)
+          ) tar1,
+          (
+            select cohort_definition_id, subject_id, cohort_start_date, cohort_end_date 
+            from @targetCohortTable 
+            where cohort_definition_id in (@targetIds)
+          ) tc1
+          inner join @cdm_database_schema.observation_period op1 on tc1.subject_id = op1.person_id
+            and tc1.cohort_start_date >= op1.observation_period_start_date
+            and tc1.cohort_start_date <= op1.observation_period_end_date
+        ) COHORT_TAR
+        WHERE COHORT_TAR.start_date <= COHORT_TAR.end_date
+      ) TAR
+    ) STARTS
+  ) GROUPS
+  GROUP BY subject_id, cohort_definition_id, tar_id, group_idx
 ) T
 @studyWindowWhereClause
 ;
@@ -174,166 +82,70 @@ FROM (
 
 create table #subgroup_person
 (
-	subgroup_id bigint NOT NULL,
-	subject_id bigint NOT NULL,
-	start_date date NOT NULL
+  subgroup_id bigint NOT NULL,
+  subject_id bigint NOT NULL,
+  start_date date NOT NULL
 );
 
 @subgroupQueries
 
 /*
-3) create table to store era-fied excluded at-risk periods
-  UNION all periods that don't require erafying
-  with era-fy records that require it
+2) create table to store era-fied excluded at-risk periods
 */
 
--- find excluded time from outcome cohorts and exclusion cohorts
--- note, clean window added to event end date
---HINT DISTRIBUTE_ON_KEY(subject_id)
-select or1.outcome_id, oc1.subject_id, dateadd(dd,1,oc1.cohort_start_date) as cohort_start_date, dateadd(dd,or1.clean_window, oc1.cohort_end_date) as cohort_end_date
-into #excluded_tar_cohort
-from @outcomeCohortTable oc1
-inner join (
-	select outcome_id, outcome_cohort_definition_id, clean_window
-	from #outcome_ref 
-	where outcome_id in (@outcomeIds)
-) or1 on oc1.cohort_definition_id = or1.outcome_cohort_definition_id
-where dateadd(dd,or1.clean_window, oc1.cohort_end_date) >= dateadd(dd,1,oc1.cohort_start_date)
-
-union all
-
-SELECT or1.outcome_id, c1.subject_id, c1.cohort_start_date, c1.cohort_end_date
-FROM @outcomeCohortTable c1
-inner join (
-	select outcome_id, excluded_cohort_definition_id 
-	from #outcome_ref 
-	where outcome_id in (@outcomeIds)
-) or1 on c1.cohort_definition_id = or1.excluded_cohort_definition_id
-;
+--three ways for entry into excluded
+--1:  duration of outcome periods  (ex:  immortal time due to clean period)
+--2:  other periods excluded  (ex: persons post-appendectomy for appendicitis)
 
 --HINT DISTRIBUTE_ON_KEY(subject_id)
-select te1.cohort_definition_id as target_cohort_definition_id,
-	te1.tar_id,
-	ec1.outcome_id,
-	ec1.subject_id,
-	case when ec1.cohort_start_date > te1.start_date then ec1.cohort_start_date else te1.start_date end as start_date,
-	case when ec1.cohort_end_date < te1.end_date then ec1.cohort_end_date else te1.end_date end as end_date
-into #exc_TTAR_o
+select subject_id, outcome_id, min(start_date) as start_date, max(end_date) as end_date 
+into  #excluded_tar_cohort
+from (
+  select subject_id, outcome_id, start_date, end_date, sum(is_start) over (partition by subject_id, outcome_id order by start_date, is_start desc rows unbounded preceding) group_idx
+  from (
+    select subject_id, outcome_id, start_date, end_date, 
+      case when max(end_date) over (partition by subject_id, outcome_id order by start_date rows between unbounded preceding and 1 preceding) >= start_date then 0 else 1 end is_start
+    from (
+      -- find excluded time from outcome cohorts and exclusion cohorts
+      -- note, clean window added to event end date
+      select oc1.subject_id, or1.outcome_id, dateadd(dd,1,oc1.cohort_start_date) as start_date, dateadd(dd,or1.clean_window, oc1.cohort_end_date) as end_date
+      from @outcomeCohortTable oc1
+      inner join (
+        select outcome_id, outcome_cohort_definition_id, clean_window
+        from #outcome_ref 
+        where outcome_id in (@outcomeIds)
+      ) or1 on oc1.cohort_definition_id = or1.outcome_cohort_definition_id
+      where dateadd(dd,or1.clean_window, oc1.cohort_end_date) >= dateadd(dd,1,oc1.cohort_start_date)
+
+      union all
+
+      SELECT c1.subject_id, or1.outcome_id, c1.cohort_start_date as start_date, c1.cohort_end_date as end_date
+      FROM @outcomeCohortTable c1
+      inner join (
+        select outcome_id, excluded_cohort_definition_id 
+        from #outcome_ref 
+        where outcome_id in (@outcomeIds)
+      ) or1 on c1.cohort_definition_id = or1.excluded_cohort_definition_id
+    ) EXCLUDED
+  ) STARTS
+) GROUPS
+GROUP BY subject_id, outcome_id, group_idx;
+
+--HINT DISTRIBUTE_ON_KEY(subject_id)
+select  ec1.subject_id,
+  te1.cohort_definition_id as target_cohort_definition_id,
+  te1.tar_id,
+  ec1.outcome_id,
+  case when ec1.start_date > te1.start_date then ec1.start_date else te1.start_date end as start_date,
+  case when ec1.end_date < te1.end_date then ec1.end_date else te1.end_date end as end_date
+into #exc_TTAR_o_erafied
 from #TTAR_erafied te1
 inner join #excluded_tar_cohort ec1 on te1.subject_id = ec1.subject_id
-	and ec1.cohort_start_date <= te1.end_date
-	and ec1.cohort_end_date >= te1.start_date
+  and ec1.start_date <= te1.end_date
+  and ec1.end_date >= te1.start_date
 ;
 
---find the records that need to be era-fied
-
---HINT DISTRIBUTE_ON_KEY(subject_id)
-select t1.target_cohort_definition_id, t1.tar_id, t1.outcome_id, t1.subject_id, t1.start_date, t1.end_date
-into #exc_TTAR_o_to_erafy 
-from #exc_TTAR_o t1
-inner join #exc_TTAR_o t2 on t1.target_cohort_definition_id = t2.target_cohort_definition_id
-	and t1.tar_id = t2.tar_id
-	and t1.outcome_id = t2.outcome_id
-	and t1.subject_id = t2.subject_id
-	and t1.start_date < t2.end_date
-	and t1.end_date > t2.start_date
-	and (t1.start_date <> t2.start_date or t1.end_date <> t2.end_date)
-;
-
---era-building script for the 'exc_TTAR_o_to_erafy ' records
---insert records from era-building script into #TTAR_erafied
-
---HINT DISTRIBUTE_ON_KEY(subject_id)
-with cteEndDates (target_cohort_definition_id, tar_id, outcome_id, subject_id, end_date) AS
-(
-	SELECT
-		target_cohort_definition_id,
-		tar_id,
-		outcome_id,
-		subject_id,
-		event_date as end_date
-	FROM
-	(
-		SELECT
-			target_cohort_definition_id,
-			tar_id,
-			outcome_id,
-			subject_id,
-			event_date,
-			SUM(event_type) OVER (PARTITION BY target_cohort_definition_id, tar_id, outcome_id, subject_id ORDER BY event_date, event_type ROWS UNBOUNDED PRECEDING) AS interval_status
-		FROM
-		(
-			SELECT
-				target_cohort_definition_id,
-				tar_id,
-				outcome_id,
-				subject_id,
-				start_date AS event_date,
-				-1 AS event_type
-			FROM #exc_TTAR_o_to_erafy
-
-			UNION ALL
-
-			SELECT
-				target_cohort_definition_id,
-				tar_id,
-				outcome_id,
-				subject_id,
-				end_date AS event_date,
-				1 AS event_type
-			FROM #exc_TTAR_o_to_erafy
-		) RAWDATA
-	) e
-	WHERE interval_status = 0
-),
-cteEnds (target_cohort_definition_id, tar_id, outcome_id, subject_id, start_date, end_date) AS
-(
-	SELECT c.target_cohort_definition_id,
-	 c.tar_id,
-	 c.outcome_id,
-		 c.subject_id,
-		c.start_date,
-		MIN(e.end_date) AS end_date
-	FROM #exc_TTAR_o_to_erafy c
-	INNER JOIN cteEndDates e ON c.subject_id = e.subject_id
-		AND c.target_cohort_definition_id = e.target_cohort_definition_id
-		AND c.tar_id = e.tar_id
-		AND c.outcome_id = e.outcome_id
-		AND e.end_date >= c.start_date
-	GROUP BY  c.target_cohort_definition_id,
-	 c.tar_id,
-	 c.outcome_id,
-		 c.subject_id,
-		c.start_date
-)
-select target_cohort_definition_id, tar_id, outcome_id, subject_id, min(start_date) as start_date, end_date
-into #ex_TTAR_o_overlaps
-from cteEnds
-group by target_cohort_definition_id, tar_id, outcome_id, subject_id, end_date
-;
-
---HINT DISTRIBUTE_ON_KEY(subject_id)
-select target_cohort_definition_id, tar_id, outcome_id, subject_id, start_date, end_date 
-into #exc_TTAR_o_erafied
-from #ex_TTAR_o_overlaps
-
-UNION ALL
-
---records that were already erafied and just need to be brought over directly
-select distinct t1.target_cohort_definition_id, t1.tar_id, t1.outcome_id, t1.subject_id, t1.start_date, t1.end_date
-from #exc_TTAR_o t1
-left join #exc_TTAR_o t2 on t1.target_cohort_definition_id = t2.target_cohort_definition_id
-	and t1.tar_id = t2.tar_id
-	and t1.outcome_id = t2.outcome_id
-	and t1.subject_id = t2.subject_id
-	and t1.start_date < t2.end_date
-	and t1.end_date > t2.start_date
-	and (t1.start_date <> t2.start_date or t1.end_date <> t2.end_date)
-where t2.subject_id IS NULL
-;
-
-
--- 4) calculate pre-exclude outcomes and outcomes 
+-- 3) calculate pre-exclude outcomes and outcomes 
 -- calculate pe_outcomes and outcomes by T, TAR, O, Subject, TAR start
 
 --HINT DISTRIBUTE_ON_KEY(subject_id)
@@ -363,7 +175,7 @@ left join #exc_TTAR_o_erafied eo on t1.cohort_definition_id = eo.target_cohort_d
 group by t1.cohort_definition_id, t1.tar_id, t1.subject_id, t1.start_date, o1.outcome_id
 ;
 
--- 5) calculate exclsion time per T/O/TAR/Subject/start_date
+-- 4) calculate exclsion time per T/O/TAR/Subject/start_date
 
 --HINT DISTRIBUTE_ON_KEY(subject_id)
 select t1.cohort_definition_id as target_cohort_definition_id,
@@ -387,7 +199,7 @@ group by t1.cohort_definition_id,
 ;
 
 /*
-6) generate raw result table with T/O/TAR/subject_id,start_date, pe_at_risk (datediff(d,start,end), at_risk (pe_at_risk - exclusion time), pe_outcomes, outcomes
+5) generate raw result table with T/O/TAR/subject_id,start_date, pe_at_risk (datediff(d,start,end), at_risk (pe_at_risk - exclusion time), pe_outcomes, outcomes
    and attach age/gender/year columns
 */
 
@@ -431,7 +243,7 @@ left join #outcome_smry os1 on t1.target_cohort_definition_id = os1.target_cohor
 left join #age_group ag on t1.age >= coalesce(ag.min_age, -999) and t1.age < coalesce(ag.max_age, 999)
 ;
 
--- 7) Create analysis_ref to produce each T/O/TAR/S combo
+-- 6) Create analysis_ref to produce each T/O/TAR/S combo
 
 select t1.target_cohort_definition_id,
   t1.target_name,
@@ -453,7 +265,7 @@ from (select target_cohort_definition_id, target_name from #target_ref where tar
 	(select outcome_id, outcome_cohort_definition_id, outcome_name, clean_window from #outcome_ref where outcome_id in (@outcomeIds)) o1
 ;
 
--- 8) perform rollup to calculate IR / IP at the T/O/TAR/S/[age|gender|year] level for 'all' and each subgroup
+-- 7) perform rollup to calculate IR / IP at the T/O/TAR/S/[age|gender|year] level for 'all' and each subgroup
 -- and aggregate to the selected levels
 with incidence_w_subgroup (subgroup_id, target_cohort_definition_id, outcome_id, tar_id, subject_id, age_id, gender_id, start_year, pe_person_days, person_days, pe_outcomes, outcomes) as
 (
@@ -534,15 +346,9 @@ left join @cdm_database_schema.concept c on c.concept_id = irs.gender_id
 
 
 -- CLEANUP TEMP TABLES
-DROP TABLE #TTAR;
-DROP TABLE #TTAR_to_erafy;
-DROP TABLE #TTAR_era_overlaps;
 DROP TABLE #TTAR_erafied;
 DROP TABLE #subgroup_person;
 DROP TABLE #excluded_tar_cohort;
-DROP TABLE #exc_TTAR_o;
-DROP TABLE #ex_TTAR_o_overlaps;
-DROP TABLE #exc_TTAR_o_to_erafy;
 DROP TABLE #exc_TTAR_o_erafied;
 DROP TABLE #outcome_smry;
 DROP TABLE #excluded_person_days;
