@@ -73,7 +73,7 @@ FROM (
         WHERE COHORT_TAR.start_date <= COHORT_TAR.end_date
       ) TAR
     ) STARTS
-  ) GROUPS
+  ) GROUPS_1
   GROUP BY subject_id, cohort_definition_id, tar_id, group_idx
 ) T
 @studyWindowWhereClause
@@ -128,7 +128,7 @@ from (
       ) or1 on c1.cohort_definition_id = or1.excluded_cohort_definition_id
     ) EXCLUDED
   ) STARTS
-) GROUPS
+) GROUPS_1
 GROUP BY subject_id, outcome_id, group_idx;
 
 --HINT DISTRIBUTE_ON_KEY(subject_id)
