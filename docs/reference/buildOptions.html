@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CohortIncidence</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.3.0</span>
       </span>
     </div>
 
@@ -63,43 +63,62 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">buildOptions</span><span class="op">(</span>
-  <span class="va">cohortTable</span>,
-  outcomeCohortTable <span class="op">=</span> <span class="va">cohortTable</span>,
-  subgroupCohortTable <span class="op">=</span> <span class="va">cohortTable</span>,
-  <span class="va">sourceName</span>,
-  <span class="va">cdmDatabaseSchema</span>,
-  <span class="va">resultsDatabaseSchema</span>,
-  vocabularySchema <span class="op">=</span> <span class="va">cdmDatabaseSchema</span>,
-  useTempTables <span class="op">=</span> <span class="cn">F</span>,
-  <span class="va">refId</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">buildOptions</span><span class="op">(</span></span>
+<span>  <span class="va">cohortTable</span>,</span>
+<span>  outcomeCohortTable <span class="op">=</span> <span class="va">cohortTable</span>,</span>
+<span>  subgroupCohortTable <span class="op">=</span> <span class="va">cohortTable</span>,</span>
+<span>  <span class="va">sourceName</span>,</span>
+<span>  <span class="va">cdmDatabaseSchema</span>,</span>
+<span>  <span class="va">resultsDatabaseSchema</span>,</span>
+<span>  vocabularySchema <span class="op">=</span> <span class="va">cdmDatabaseSchema</span>,</span>
+<span>  useTempTables <span class="op">=</span> <span class="cn">F</span>,</span>
+<span>  <span class="va">refId</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>cohortTable</dt>
 <dd><p>The name of table with cohorts</p></dd>
+
+
 <dt>outcomeCohortTable</dt>
 <dd><p>The name of table with outcome cohorts, defaults to cohortTable param.</p></dd>
+
+
 <dt>subgroupCohortTable</dt>
 <dd><p>The name of table with subgroup cohorts, defaults to cohortTable param.</p></dd>
+
+
 <dt>sourceName</dt>
 <dd><p>A value to inject to the results table for the source name.</p></dd>
+
+
 <dt>cdmDatabaseSchema</dt>
 <dd><p>the name of schema containing data in CDM format</p></dd>
+
+
 <dt>resultsDatabaseSchema</dt>
 <dd><p>the name of schema where results would be placed</p></dd>
+
+
 <dt>vocabularySchema</dt>
 <dd><p>the name of schema with vocabulary tables, defaults to cdmDatabaseSchema param</p></dd>
+
+
 <dt>useTempTables</dt>
 <dd><p>use temp tables instead of a results schema.</p></dd>
+
+
 <dt>refId</dt>
 <dd><p>A number tagged to the results for retrieval purposes.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a BuilderOptions object used in buildQuery.</p>
+    
+
+<p>a BuilderOptions object used in buildQuery.</p>
     </div>
 
   </div>
@@ -114,8 +133,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

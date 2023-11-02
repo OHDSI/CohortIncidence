@@ -1,3 +1,9 @@
+Cohort Incidence 3.3.0
+===========
+
+Performance release: improved IR Calculation SQL.
+
+
 Cohort Incidence 3.2.0
 ===========
 
