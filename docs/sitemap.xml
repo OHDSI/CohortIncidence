@@ -49,6 +49,9 @@
     <loc>/reference/createCohortSubgroup.html</loc>
   </url>
   <url>
+    <loc>/reference/createDateRange.html</loc>
+  </url>
+  <url>
     <loc>/reference/createIncidenceAnalysis.html</loc>
   </url>
   <url>
@@ -62,6 +65,9 @@
   </url>
   <url>
     <loc>/reference/createTimeAtRiskDef.html</loc>
+  </url>
+  <url>
+    <loc>/reference/DateRange.html</loc>
   </url>
   <url>
     <loc>/reference/executeAnalysis.html</loc>

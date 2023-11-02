@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CohortIncidence</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.3.0</span>
       </span>
     </div>
 
@@ -63,23 +63,32 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">createStrataSettings</span><span class="op">(</span>byAge <span class="op">=</span> <span class="cn">F</span>, byGender <span class="op">=</span> <span class="cn">F</span>, byYear <span class="op">=</span> <span class="cn">F</span>, <span class="va">ageBreaks</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">createStrataSettings</span><span class="op">(</span>byAge <span class="op">=</span> <span class="cn">F</span>, byGender <span class="op">=</span> <span class="cn">F</span>, byYear <span class="op">=</span> <span class="cn">F</span>, <span class="va">ageBreaks</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>byAge</dt>
 <dd><p>a boolean indicating to stratify by age, defaults to F</p></dd>
+
+
 <dt>byGender</dt>
 <dd><p>a boolean indicating to stratify by gender, defaults to F</p></dd>
+
+
 <dt>byYear</dt>
 <dd><p>a boolean indicating to stratify by year, defaults to F</p></dd>
+
+
 <dt>ageBreaks</dt>
 <dd><p>a vector of integers indicating the age group bounds.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.StratifySettings JSON format.</p>
+    
+
+<p>an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.StratifySettings JSON format.</p>
     </div>
 
   </div>
@@ -94,8 +103,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

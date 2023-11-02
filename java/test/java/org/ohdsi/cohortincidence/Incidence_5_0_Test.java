@@ -450,4 +450,25 @@ public class Incidence_5_0_Test extends AbstractDatabaseTest {
 		
 	}
 	
+	@Test
+	public void partialExcludeTest() throws Exception {
+		TestParams params = new TestParams();
+		
+		params.resultSchema = "partial_exclude"; // this must be all lower case for DBUnit to work
+		params.prepDataSets = new String[]{
+			"/datasets/vocabulary.json",
+			"/cohortincidence/timeAtRisk/partialExclude_PREP.json"
+		};
+		params.designJson = ResourceHelper.GetResourceAsString("/cohortincidence/timeAtRisk/partialExcludeTest.json");
+		params.verifyDataSets = new String[]{"/cohortincidence/timeAtRisk/partialExclude_VERIFY.json"};
+		params.verifyCols = Arrays.asList(new String[]{COL_REF_ID, COL_TARGET_COHORT_ID, COL_TAR_ID, COL_SUBGROUP_ID, COL_OUTCOME_ID,
+			COL_AGE_ID, COL_GENDER_ID, COL_YEAR_ID,
+			COL_PERSONS_PRE_EXCLUDE, COL_PERSONS_AT_RISK, COL_PERSONS_DAYS_PRE_EXCLUDE, COL_PERSON_DAYS,
+			COL_PERSON_OUTCOMES_PRE_EXCLUDE, COL_PERSON_OUTCOMES, COL_OUTCOMES_PRE_EXCLUDE, COL_OUTCOMES,
+			COL_INCIDENCE_PROPORTION_P100P, COL_INCIDENCE_RATE_P100PY});
+
+		this.executeTest(params);
+	}
+
+	
 }

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CohortIncidence</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.3.0</span>
       </span>
     </div>
 
@@ -63,40 +63,62 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">createIncidenceDesign</span><span class="op">(</span>
-  <span class="va">cohortDefs</span>,
-  <span class="va">targetDefs</span>,
-  <span class="va">outcomeDefs</span>,
-  <span class="va">tars</span>,
-  <span class="va">analysisList</span>,
-  <span class="va">conceptSets</span>,
-  <span class="va">subgroups</span>,
-  <span class="va">strataSettings</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">createIncidenceDesign</span><span class="op">(</span></span>
+<span>  <span class="va">cohortDefs</span>,</span>
+<span>  <span class="va">targetDefs</span>,</span>
+<span>  <span class="va">outcomeDefs</span>,</span>
+<span>  <span class="va">tars</span>,</span>
+<span>  <span class="va">analysisList</span>,</span>
+<span>  <span class="va">conceptSets</span>,</span>
+<span>  <span class="va">subgroups</span>,</span>
+<span>  <span class="va">strataSettings</span>,</span>
+<span>  <span class="va">studyWindow</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>cohortDefs</dt>
 <dd><p>The set of cohort definitions.  Optional.</p></dd>
+
+
 <dt>targetDefs</dt>
 <dd><p>A list of target definitions, each element must be class CohortReference.</p></dd>
+
+
 <dt>outcomeDefs</dt>
 <dd><p>A list of outcome definitions, each element must be class Outcome</p></dd>
+
+
 <dt>tars</dt>
 <dd><p>A list of TAR definitions, each element must be class TimeAtRisk</p></dd>
+
+
 <dt>analysisList</dt>
 <dd><p>A list of analysis definitions, each element must be class IncidenceAnalysis</p></dd>
+
+
 <dt>conceptSets</dt>
 <dd><p>A list of concept sets, currently unused.</p></dd>
+
+
 <dt>subgroups</dt>
 <dd><p>A list of cohort subgroups, each element must be class Subgroup.</p></dd>
+
+
 <dt>strataSettings</dt>
 <dd><p>The strata settings used in the anlaysis, must be class StrataSettings.</p></dd>
+
+
+<dt>studyWindow</dt>
+<dd><p>Limits time at risk to the specified study window. Must be class DateRange.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a R6 class: IncidenceDesign.</p>
+    
+
+<p>a R6 class: IncidenceDesign.</p>
     </div>
 
   </div>
@@ -111,8 +133,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
