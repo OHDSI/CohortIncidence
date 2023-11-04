@@ -116,7 +116,8 @@ executeAnalysis <- function(connectionDetails = NULL,
   
   targetDialect <- attr(conn, "dbms");
 
-  tempDDL <- SqlRender::translate(CohortIncidence::getResultsDdl(useTempTables=T), targetDialect = targetDialect); 
+  tempDDL <- SqlRender::translate(CohortIncidence::getResultsDdl(useTempTables=T), targetDialect = targetDialect);
+  rlang::inform("Building temporary DDL in database for Incidence Analysis")
   DatabaseConnector::executeSql(conn, tempDDL);
   
   #execute analysis
@@ -126,7 +127,7 @@ executeAnalysis <- function(connectionDetails = NULL,
   analysisSql <- SqlRender::translate(analysisSql, targetDialect = targetDialect);
 
   analysisSqlQuries <- SqlRender::splitSql(analysisSql);
-  
+  rlang::inform("Executing Incidence Analysis on database")
   DatabaseConnector::executeSql(conn, analysisSql);
   
   #download results into dataframe
@@ -134,6 +135,7 @@ executeAnalysis <- function(connectionDetails = NULL,
   
   # use the getCleanupSql to fetch the DROP TABLE expressions for the tables that were created in tempDDL.
   cleanupSql <- SqlRender::translate(CohortIncidence::getCleanupSql(useTempTables=T), targetDialect);  
+  rlang::inform("Drop tables created from temporary DDL")
   DatabaseConnector::executeSql(conn, cleanupSql);
   
   return(invisible(results))

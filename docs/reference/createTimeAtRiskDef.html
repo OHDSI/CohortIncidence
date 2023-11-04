@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CohortIncidence</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.3.0</span>
       </span>
     </div>
 
@@ -63,31 +63,42 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">createTimeAtRiskDef</span><span class="op">(</span>
-  <span class="va">id</span>,
-  startWith <span class="op">=</span> <span class="st">"start"</span>,
-  startOffset <span class="op">=</span> <span class="fl">0</span>,
-  endWith <span class="op">=</span> <span class="st">"end"</span>,
-  endOffset <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">createTimeAtRiskDef</span><span class="op">(</span></span>
+<span>  <span class="va">id</span>,</span>
+<span>  startWith <span class="op">=</span> <span class="st">"start"</span>,</span>
+<span>  startOffset <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  endWith <span class="op">=</span> <span class="st">"end"</span>,</span>
+<span>  endOffset <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>id</dt>
 <dd><p>the unique identifier for this outcome definition</p></dd>
+
+
 <dt>startWith</dt>
 <dd><p>Specifies the field (start or end) to offset from for the TAR start.  Allowed values: 'start', 'end'</p></dd>
+
+
 <dt>startOffset</dt>
 <dd><p>The number of days to offset for the TAR start, defaults to 0.</p></dd>
+
+
 <dt>endWith</dt>
 <dd><p>Specifies the field (start or end) to offset from for the TAR end.  Allowed values: 'start', 'end'</p></dd>
+
+
 <dt>endOffset</dt>
 <dd><p>The number of days to offset for the TAR start, defaults to 0.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a R6 class: TimeAtRisk</p>
+    
+
+<p>a R6 class: TimeAtRisk</p>
     </div>
 
   </div>
@@ -102,8 +113,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

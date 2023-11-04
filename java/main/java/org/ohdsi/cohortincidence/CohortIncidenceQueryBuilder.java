@@ -24,7 +24,8 @@ public class CohortIncidenceQueryBuilder {
 	private static final String OUTCOME_REF_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/outcomeRefTemplate.sql");
 	private static final String SUBGROUP_REF_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/subgroupRefTemplate.sql");
 	private static final String COHORT_SUBGROUP_TEMPTABLE_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/cohortSubgroupTempTable.sql");
-	private static final String STRATA_QUERY_TEMPTABLE_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/strataQueryTemplate.sql");
+	private static final String TAR_STRATA_QUERY_TEMPTABLE_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/tarStrataQueryTemplate.sql");
+	private static final String OUTCOME_STRATA_QUERY_TEMPTABLE_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/outcomeStrataQueryTemplate.sql");
 	private static final String AGE_GROUP_SELECT_TEMPLATE = "select %d as age_id, '%s' as group_name, cast(%s as int) as min_age, cast(%s as int) as max_age";
 
 	private static final String NULL_STRATA = "cast(null as int)";
@@ -140,7 +141,8 @@ public class CohortIncidenceQueryBuilder {
 							analysisQuery = StringUtils.replace(analysisQuery, "@subgroupQueries", buildSubgroupQueries());
 
 							// handle strata options
-							analysisQuery = StringUtils.replace(analysisQuery, "@strataQueries", getStrataQueries());
+							analysisQuery = StringUtils.replace(analysisQuery, "@tarStrataQueries", getStrataQueries(TAR_STRATA_QUERY_TEMPTABLE_TEMPLATE));
+							analysisQuery = StringUtils.replace(analysisQuery, "@outcomeStrataQueries", getStrataQueries(OUTCOME_STRATA_QUERY_TEMPTABLE_TEMPLATE));
 
 							return analysisQuery;
 						})
@@ -262,76 +264,86 @@ public class CohortIncidenceQueryBuilder {
 		return query;
 	}
 	
-	private String buildStrataQuery(String[] selectCols, String[] groupCols) {
-		String query = StringUtils.replace(STRATA_QUERY_TEMPTABLE_TEMPLATE, "@selectCols", StringUtils.join(selectCols, ",\n"));
-		query = StringUtils.replace(query, "@groupCols", StringUtils.join(groupCols, ","));
+	private String buildStrataQuery(String strataTemplate, String[] selectCols, String[] groupCols) {
+		String query = StringUtils.replace(strataTemplate, "@selectCols", StringUtils.join(selectCols, ",\n"));
+		query = StringUtils.replace(query, "@groupCols", (groupCols.length > 0 ? "," : "") + StringUtils.join(groupCols, ","));
 		return query;
 	}
 	
-	private String getStrataQueries() {
-		if (this.design.strataSettings == null || 
-						(!this.design.strataSettings.byAge && !this.design.strataSettings.byGender && !this.design.strataSettings.byYear))
-			return "";
-		
+	private String getStrataQueries(String strataTemplate) {
 		ArrayList<String> queries = new ArrayList<>();
 
+		// overall strata
+		queries.add(buildStrataQuery(
+				strataTemplate,
+				new String[] {NULL_STRATA + " as age_id", NULL_STRATA + " as gender_id", NULL_STRATA + " as start_year"},
+				new String[] {}
+		));
+
 		// by age
-		if (this.design.strataSettings.byAge) {
+		if (this.design.strataSettings != null && this.design.strataSettings.byAge) {
 			queries.add(buildStrataQuery(
-							new String[] {"irs.age_id", NULL_STRATA + " as gender_id", NULL_STRATA + " as start_year"},
-							new String[] {"irs.age_id"}
+							strataTemplate,
+							new String[] {"t1.age_id", NULL_STRATA + " as gender_id", NULL_STRATA + " as start_year"},
+							new String[] {"t1.age_id"}
 			));
 
 			// by age, by gender
 			if (this.design.strataSettings.byGender) {
 				queries.add(buildStrataQuery(
-								new String[] {"irs.age_id", "irs.gender_id", NULL_STRATA + " as start_year"},
-								new String[] {"irs.age_id", "irs.gender_id"}
+								strataTemplate,
+								new String[] {"t1.age_id", "t1.gender_id", NULL_STRATA + " as start_year"},
+								new String[] {"t1.age_id", "t1.gender_id"}
 				));
 			}
 
 			// by age, by year
 			if (this.design.strataSettings.byYear) {
 				queries.add(buildStrataQuery(
-								new String[] {"irs.age_id", NULL_STRATA + " as gender_id", "irs.start_year"},
-								new String[] {"irs.age_id", "irs.start_year"}
+								strataTemplate,
+								new String[] {"t1.age_id", NULL_STRATA + " as gender_id", "t1.start_year"},
+								new String[] {"t1.age_id", "t1.start_year"}
 				));
 			}
 
 			// by age, by gender, by year
 			if (this.design.strataSettings.byGender && this.design.strataSettings.byYear) {
 				queries.add(buildStrataQuery(
-								new String[] {"irs.age_id", "irs.gender_id", "irs.start_year"},
-								new String[] {"irs.age_id", "irs.gender_id", "irs.start_year"}
+								strataTemplate,
+								new String[] {"t1.age_id", "t1.gender_id", "t1.start_year"},
+								new String[] {"t1.age_id", "t1.gender_id", "t1.start_year"}
 				));
 			}
 		}
 		
 		// by gender
-		if (this.design.strataSettings.byGender) {
+		if (this.design.strataSettings != null && this.design.strataSettings.byGender) {
 			queries.add(buildStrataQuery(
-							new String[] {NULL_STRATA + " as age_id", "irs.gender_id", NULL_STRATA + " as start_year"},
-							new String[] {"irs.gender_id"}
+							strataTemplate,
+							new String[]{NULL_STRATA + " as age_id", "t1.gender_id", NULL_STRATA + " as start_year"},
+							new String[]{"t1.gender_id"}
 			));
 			
 			// by gender, by year
 			if (this.design.strataSettings.byYear) {
 				queries.add(buildStrataQuery(
-								new String[] {NULL_STRATA + " as age_id", "irs.gender_id", "irs.start_year"},
-								new String[] {"irs.gender_id", "irs.start_year"}
+								strataTemplate,
+								new String[] {NULL_STRATA + " as age_id", "t1.gender_id", "t1.start_year"},
+								new String[] {"t1.gender_id", "t1.start_year"}
 				));
 			}
 		}
 		
 		// by year
-		if (this.design.strataSettings.byYear) {
+		if (this.design.strataSettings != null && this.design.strataSettings.byYear) {
 			queries.add(buildStrataQuery(
-							new String[] {NULL_STRATA + " as age_id", NULL_STRATA + "as gender_id", "irs.start_year"},
-							new String[] {"irs.start_year"}
+							strataTemplate,
+							new String[]{NULL_STRATA + " as age_id", NULL_STRATA + "as gender_id", "t1.start_year"},
+							new String[]{"t1.start_year"}
 			));
 		}
 		
-		return "UNION ALL\n" + StringUtils.join(queries, "\nUNION ALL\n");
+		return StringUtils.join(queries, "\nUNION ALL\n");
 	}
 	
 	/**
