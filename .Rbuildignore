@@ -7,3 +7,6 @@ compare_versions
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^extras$
+^pom.xml$
+
