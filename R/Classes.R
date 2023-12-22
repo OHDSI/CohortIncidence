@@ -945,7 +945,7 @@ DateRange <- R6::R6Class("DateRange",
 
 .nullToNa <- function(obj) {
   if (is.list(obj)) {
-    obj <- jsonlite:::null_to_na(obj)
+    obj <- lapply(obj, function(x) if (is.null(x)) NA else x)
     obj <- lapply(obj, .nullToNa)
   }
   return(obj)

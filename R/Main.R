@@ -19,7 +19,8 @@
 
 #' @importFrom utils install.packages menu
 #' @importFrom rlang abort warn inform
-NULL
+#' @import DatabaseConnector
+#' NULL
 
 .onLoad <- function(libname, pkgname) {
   rJava::.jpackage(pkgname, lib.loc = libname)
