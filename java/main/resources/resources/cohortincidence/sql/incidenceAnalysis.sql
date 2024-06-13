@@ -211,7 +211,7 @@ FROM (
     t1.subject_id,
     t1.start_date,
     et1.outcome_id,
-    sum(DATEDIFF(day,et1.start_date,et1.end_date) + 1) as person_days
+    sum(cast((DATEDIFF(day,et1.start_date,et1.end_date) + 1) as bigint)) as person_days
   FROM #TTAR_erafied t1
   inner join #exc_TTAR_o_erafied et1 on t1.cohort_definition_id = et1.target_cohort_definition_id
     and t1.subgroup_id = et1.subgroup_id
