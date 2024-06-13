@@ -1,4 +1,4 @@
-Cohort Incidence 3.3.0
+Cohort Incidence 3.3.1
 ===========
 
 Fixed summing large number (bigint) of days by casting to bigint.
