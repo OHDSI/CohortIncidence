@@ -59,7 +59,7 @@ FROM (
             end as end_date
           from (
             select tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset  
-            from #tar_ref where tar_id in (@timeAtRiskIds)
+            from @results_database_schema.tar_def where tar_id in (@timeAtRiskIds) and ref_id = @ref_id
           ) tar1,
           (
             select cohort_definition_id, subject_id, cohort_start_date, cohort_end_date 
@@ -133,8 +133,8 @@ from (
       from @outcomeCohortTable oc1
       inner join (
         select outcome_id, outcome_cohort_definition_id, clean_window
-        from #outcome_ref 
-        where outcome_id in (@outcomeIds)
+        from @results_database_schema.outcome_def 
+        where outcome_id in (@outcomeIds) and ref_id = @ref_id
       ) or1 on oc1.cohort_definition_id = or1.outcome_cohort_definition_id
       where dateadd(dd,or1.clean_window, oc1.cohort_end_date) >= dateadd(dd,1,oc1.cohort_start_date)
 
@@ -144,8 +144,8 @@ from (
       FROM @outcomeCohortTable c1
       inner join (
         select outcome_id, excluded_cohort_definition_id 
-        from #outcome_ref 
-        where outcome_id in (@outcomeIds)
+        from @results_database_schema.outcome_def 
+        where outcome_id in (@outcomeIds) and ref_id = @ref_id
       ) or1 on c1.cohort_definition_id = or1.excluded_cohort_definition_id
     ) EXCLUDED
   ) ST
@@ -184,7 +184,8 @@ from #TTAR_erafied t1
 inner join (
   select oref.outcome_id, oc.subject_id, oc.cohort_start_date
   from @outcomeCohortTable oc 
-  JOIN #outcome_ref oref on oc.cohort_definition_id = oref.outcome_cohort_definition_id
+  JOIN @results_database_schema.outcome_def oref on oc.cohort_definition_id = oref.outcome_cohort_definition_id
+    and oref.ref_id = @ref_id
   where oref.outcome_id in (@outcomeIds)
 ) o1 on t1.subject_id = o1.subject_id
   and t1.start_date <= o1.cohort_start_date
@@ -230,7 +231,7 @@ FROM (
 /*
 5) aggregate tar and excluded+outcome
 */
-WITH tar_overall (target_cohort_definition_id, tar_id, subgroup_id, subject_id, start_date, end_date, age_id, gender_id, start_year)
+WITH tar_overall (target_cohort_definition_id, tar_id, subgroup_id, subject_id, start_date, end_date, age_group_id, gender_id, start_year)
 AS (
   SELECT te.cohort_definition_id as target_cohort_definition_id,
     te.tar_id,
@@ -238,22 +239,23 @@ AS (
     te.subject_id,
     te.start_date,
     te.end_date,
-    ag.age_id,
+    ag.age_group_id,
     p.gender_concept_id as gender_id,
     YEAR(te.start_date) as start_year
   FROM #TTAR_erafied te
   JOIN @cdm_database_schema.person p on te.subject_id = p.person_id
-  LEFT JOIN #age_group ag ON YEAR(te.start_date) - p.year_of_birth  >= coalesce(ag.min_age, -999) 
+  LEFT JOIN @results_database_schema.age_group_def ag ON YEAR(te.start_date) - p.year_of_birth  >= coalesce(ag.min_age, -999) 
    and YEAR(te.start_date) - p.year_of_birth  < coalesce(ag.max_age, 999)
+   and ag.ref_id = @ref_id
 )
-select target_cohort_definition_id, tar_id, subgroup_id, age_id, gender_id, start_year, person_days_pe, persons_at_risk_pe
+select target_cohort_definition_id, tar_id, subgroup_id, age_group_id, gender_id, start_year, person_days_pe, persons_at_risk_pe
 INTO #tar_agg
 FROM (
   @tarStrataQueries
 ) T_OVERALL
 ;
 
-WITH outcomes_overall (target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id, age_id, gender_id, start_year, excluded_days, tar_days, outcomes_pe, outcomes)
+WITH outcomes_overall (target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id, age_group_id, gender_id, start_year, excluded_days, tar_days, outcomes_pe, outcomes)
  AS (
   SELECT 
     t1.cohort_definition_id as target_cohort_definition_id,
@@ -261,7 +263,7 @@ WITH outcomes_overall (target_cohort_definition_id, tar_id, subgroup_id, outcome
     t1.subgroup_id,
     op.outcome_id,
     t1.subject_id,
-    ag.age_id,
+    ag.age_group_id,
     p.gender_concept_id as gender_id,
     YEAR(t1.start_date) as start_year,
     coalesce(e1.person_days, 0) as excluded_days,
@@ -270,8 +272,9 @@ WITH outcomes_overall (target_cohort_definition_id, tar_id, subgroup_id, outcome
     coalesce(o1.outcomes, 0) as outcomes
   FROM #TTAR_erafied t1
   JOIN @cdm_database_schema.person p ON t1.subject_id = p.person_id
-  LEFT JOIN #age_group ag ON YEAR(t1.start_date) - p.year_of_birth  >= coalesce(ag.min_age, -999) 
+  LEFT JOIN @results_database_schema.age_group_def ag ON YEAR(t1.start_date) - p.year_of_birth  >= coalesce(ag.min_age, -999) 
     AND YEAR(t1.start_date) - p.year_of_birth  < coalesce(ag.max_age, 999)
+    AND ag.ref_id = @ref_id
   JOIN ( -- get the list of TTSO of anyone with excluded time or outcomes to limit result
     select target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id, start_date FROM #excluded_person_days
     UNION -- will remove dupes
@@ -294,7 +297,7 @@ WITH outcomes_overall (target_cohort_definition_id, tar_id, subgroup_id, outcome
    AND o1.subject_id = op.subject_id
    AND o1.start_date = op.start_date
 )
-SELECT target_cohort_definition_id, tar_id, subgroup_id, outcome_id, age_id, gender_id, start_year, excluded_days, excluded_persons, person_outcomes_pe, person_outcomes, outcomes_pe, outcomes
+SELECT target_cohort_definition_id, tar_id, subgroup_id, outcome_id, age_group_id, gender_id, start_year, excluded_days, excluded_persons, person_outcomes_pe, person_outcomes, outcomes_pe, outcomes
 INTO #outcome_agg
 FROM
 (
@@ -305,40 +308,25 @@ FROM
 -- 6) Create analysis_ref to produce each T/O/TAR/S combo
 
 SELECT t1.target_cohort_definition_id,
-  t1.target_name,
   tar1.tar_id,
-  tar1.tar_start_offset,
-  tar1.tar_start_with,
-  tar1.tar_end_offset,
-  tar1.tar_end_with,
   s1.subgroup_id,
-  s1.subgroup_name,
-  o1.outcome_id,
-  o1.outcome_cohort_definition_id,
-  o1.outcome_name,
-  o1.clean_window
+  o1.outcome_id
 INTO #tscotar_ref
-FROM (SELECT target_cohort_definition_id, target_name FROM #target_ref WHERE target_cohort_definition_id in (@targetIds)) t1,
-  (SELECT tar_id, tar_start_offset, tar_start_with, tar_end_offset, tar_end_with FROM #tar_ref WHERE tar_id in (@timeAtRiskIds)) tar1,
-  (SELECT subgroup_id, subgroup_name FROM #subgroup_ref) s1,
-  (SELECT outcome_id, outcome_cohort_definition_id, outcome_name, clean_window FROM #outcome_ref WHERE outcome_id in (@outcomeIds)) o1
+FROM (SELECT target_cohort_definition_id FROM @results_database_schema.target_def WHERE target_cohort_definition_id in (@targetIds) and ref_id = @ref_id) t1,
+  (SELECT tar_id FROM @results_database_schema.tar_def WHERE tar_id in (@timeAtRiskIds) and ref_id = @ref_id) tar1,
+  (SELECT subgroup_id FROM @results_database_schema.subgroup_def where ref_id = @ref_id) s1,
+  (SELECT outcome_id FROM @results_database_schema.outcome_def WHERE outcome_id in (@outcomeIds) and ref_id = @ref_id) o1
 ;
 
 -- 7) Insert into final table: calculate results via #tar_agg and #outcome_agg for all TSCOTAR combinations
 
-INSERT INTO @results_database_schema.incidence_summary (ref_id, source_name, target_cohort_definition_id, target_name,
-  tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset, 
-  subgroup_id, subgroup_name,
-  outcome_id, outcome_cohort_definition_id, outcome_name, clean_window,
-  age_id, age_group_name, gender_id, gender_name, start_year,
+INSERT INTO @results_database_schema.incidence_summary (ref_id, source_name, target_cohort_definition_id,
+  tar_id, subgroup_id, outcome_id, age_group_id, gender_id, gender_name, start_year,
   persons_at_risk_pe, persons_at_risk, person_days_pe, person_days, 
   person_outcomes_pe, person_outcomes, outcomes_pe, outcomes,
   incidence_proportion_p100p, incidence_rate_p100py)
-SELECT CAST(@ref_id as int) as ref_id, '@sourceName' as source_name, tref.target_cohort_definition_id, tref.target_name,
-  tref.tar_id, tref.tar_start_with, tref.tar_start_offset, tref.tar_end_with, tref.tar_end_offset,
-  tref.subgroup_id, tref.subgroup_name,
-  tref.outcome_id, tref.outcome_cohort_definition_id, tref.outcome_name, tref.clean_window,
-  ta.age_id, ag.group_name, ta.gender_id, c.concept_name as gender_name, ta.start_year,
+SELECT CAST(@ref_id as int) as ref_id, '@sourceName' as source_name, tref.target_cohort_definition_id,
+  tref.tar_id, tref.subgroup_id, tref.outcome_id, ta.age_group_id, ta.gender_id, c.concept_name as gender_name, ta.start_year,
   coalesce(ta.persons_at_risk_pe, 0) as persons_at_risk_pe, 
   coalesce(ta.persons_at_risk_pe, 0) - coalesce(oa.excluded_persons, 0) as persons_at_risk, 
   coalesce(ta.person_days_pe, 0) as  person_days_pe,
@@ -361,10 +349,9 @@ LEFT JOIN #outcome_agg oa ON ta.target_cohort_definition_id = oa.target_cohort_d
   AND ta.tar_id = oa.tar_id
   AND ta.subgroup_id = oa.subgroup_id 
   AND tref.outcome_id = oa.outcome_id
-  AND coalesce(ta.age_id,-1) = coalesce(oa.age_id,-1)
+  AND coalesce(ta.age_group_id,-1) = coalesce(oa.age_group_id,-1)
   AND coalesce(ta.gender_id,-1) = coalesce(oa.gender_id,-1)
   AND coalesce(ta.start_year, -1) = coalesce(oa.start_year,-1)
-LEFT JOIN #age_group ag on ag.age_id = ta.age_id
 LEFT JOIN @cdm_database_schema.concept c on c.concept_id = ta.gender_id
 ;
 

@@ -26,7 +26,7 @@ public class CohortIncidenceQueryBuilder {
 	private static final String COHORT_SUBGROUP_TEMPTABLE_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/cohortSubgroupTempTable.sql");
 	private static final String TAR_STRATA_QUERY_TEMPTABLE_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/tarStrataQueryTemplate.sql");
 	private static final String OUTCOME_STRATA_QUERY_TEMPTABLE_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/outcomeStrataQueryTemplate.sql");
-	private static final String AGE_GROUP_SELECT_TEMPLATE = "select %d as age_id, '%s' as group_name, cast(%s as int) as min_age, cast(%s as int) as max_age";
+	private static final String AGE_GROUP_SELECT_TEMPLATE = "select CAST(%d as int) as age_group_id, '%s' as age_group_name, cast(%s as int) as min_age, cast(%s as int) as max_age";
 
 	private static final String NULL_STRATA = "cast(null as int)";
 	
@@ -276,7 +276,7 @@ public class CohortIncidenceQueryBuilder {
 		// overall strata
 		queries.add(buildStrataQuery(
 				strataTemplate,
-				new String[] {NULL_STRATA + " as age_id", NULL_STRATA + " as gender_id", NULL_STRATA + " as start_year"},
+				new String[] {NULL_STRATA + " as age_group_id", NULL_STRATA + " as gender_id", NULL_STRATA + " as start_year"},
 				new String[] {}
 		));
 
@@ -284,16 +284,16 @@ public class CohortIncidenceQueryBuilder {
 		if (this.design.strataSettings != null && this.design.strataSettings.byAge) {
 			queries.add(buildStrataQuery(
 							strataTemplate,
-							new String[] {"t1.age_id", NULL_STRATA + " as gender_id", NULL_STRATA + " as start_year"},
-							new String[] {"t1.age_id"}
+							new String[] {"t1.age_group_id", NULL_STRATA + " as gender_id", NULL_STRATA + " as start_year"},
+							new String[] {"t1.age_group_id"}
 			));
 
 			// by age, by gender
 			if (this.design.strataSettings.byGender) {
 				queries.add(buildStrataQuery(
 								strataTemplate,
-								new String[] {"t1.age_id", "t1.gender_id", NULL_STRATA + " as start_year"},
-								new String[] {"t1.age_id", "t1.gender_id"}
+								new String[] {"t1.age_group_id", "t1.gender_id", NULL_STRATA + " as start_year"},
+								new String[] {"t1.age_group_id", "t1.gender_id"}
 				));
 			}
 
@@ -301,8 +301,8 @@ public class CohortIncidenceQueryBuilder {
 			if (this.design.strataSettings.byYear) {
 				queries.add(buildStrataQuery(
 								strataTemplate,
-								new String[] {"t1.age_id", NULL_STRATA + " as gender_id", "t1.start_year"},
-								new String[] {"t1.age_id", "t1.start_year"}
+								new String[] {"t1.age_group_id", NULL_STRATA + " as gender_id", "t1.start_year"},
+								new String[] {"t1.age_group_id", "t1.start_year"}
 				));
 			}
 
@@ -310,8 +310,8 @@ public class CohortIncidenceQueryBuilder {
 			if (this.design.strataSettings.byGender && this.design.strataSettings.byYear) {
 				queries.add(buildStrataQuery(
 								strataTemplate,
-								new String[] {"t1.age_id", "t1.gender_id", "t1.start_year"},
-								new String[] {"t1.age_id", "t1.gender_id", "t1.start_year"}
+								new String[] {"t1.age_group_id", "t1.gender_id", "t1.start_year"},
+								new String[] {"t1.age_group_id", "t1.gender_id", "t1.start_year"}
 				));
 			}
 		}
@@ -320,7 +320,7 @@ public class CohortIncidenceQueryBuilder {
 		if (this.design.strataSettings != null && this.design.strataSettings.byGender) {
 			queries.add(buildStrataQuery(
 							strataTemplate,
-							new String[]{NULL_STRATA + " as age_id", "t1.gender_id", NULL_STRATA + " as start_year"},
+							new String[]{NULL_STRATA + " as age_group_id", "t1.gender_id", NULL_STRATA + " as start_year"},
 							new String[]{"t1.gender_id"}
 			));
 			
@@ -328,7 +328,7 @@ public class CohortIncidenceQueryBuilder {
 			if (this.design.strataSettings.byYear) {
 				queries.add(buildStrataQuery(
 								strataTemplate,
-								new String[] {NULL_STRATA + " as age_id", "t1.gender_id", "t1.start_year"},
+								new String[] {NULL_STRATA + " as age_group_id", "t1.gender_id", "t1.start_year"},
 								new String[] {"t1.gender_id", "t1.start_year"}
 				));
 			}
@@ -338,7 +338,7 @@ public class CohortIncidenceQueryBuilder {
 		if (this.design.strataSettings != null && this.design.strataSettings.byYear) {
 			queries.add(buildStrataQuery(
 							strataTemplate,
-							new String[]{NULL_STRATA + " as age_id", NULL_STRATA + "as gender_id", "t1.start_year"},
+							new String[]{NULL_STRATA + " as age_group_id", NULL_STRATA + "as gender_id", "t1.start_year"},
 							new String[]{"t1.start_year"}
 			));
 		}
@@ -360,7 +360,6 @@ public class CohortIncidenceQueryBuilder {
 			throw new IllegalArgumentException("Invalid strataSettings:  ageBreaks can not be empty.");
 		
 		ArrayList<String> selects = new ArrayList<>();
-		// "select %d as age_id, '%s' as group_name, cast(%s as int) as min_age, cast(%s as int) as max_age"
 		List<Integer> ageBreaks = this.design.strataSettings.ageBreaks;
 		selects.add(String.format(AGE_GROUP_SELECT_TEMPLATE, 1, "<" + ageBreaks.get(0),"null", ageBreaks.get(0)));
 		
@@ -370,7 +369,7 @@ public class CohortIncidenceQueryBuilder {
 		}
 		selects.add(String.format(AGE_GROUP_SELECT_TEMPLATE, ageBreaks.size()+1, ">=" + ageBreaks.get(ageBreaks.size()-1),ageBreaks.get(ageBreaks.size()-1), "null"));
 		
-		return String.format("insert into #age_group (age_id, group_name, min_age, max_age)\nselect age_id, group_name, min_age, max_age from (\n%s\n) ag;", 
+		return String.format("insert into @results_database_schema.age_group_def (ref_id, age_group_id, age_group_name, min_age, max_age)\nselect CAST(@ref_id as int) as ref_id, age_group_id, age_group_name, min_age, max_age from (\n%s\n) ag;", 
 						StringUtils.join(selects, "\nUNION ALL\n"));
 	}
 }

@@ -45,26 +45,19 @@ The process for calculating the cohort incidence is as follows:
 - 2. Exclusion cohort that was specified in the outcome definition excludeCohortId.
 - Count the distinct persons, distinct persons with cases, total time at risk and total cases, and calcuate the proportion and rates.
 
-The resuting dataframe is described with the following table:
+The resut contains the following dataframes:
+
+incidenceSummary:
+
 |Name |Description|
 |-----|--------|
 |REF_ID|The reference id specified in buildOptions() to track results to the analysis execution.|
 |SOURCE_NAME|The name of the source for these results|
 |TARGET_COHORT_DEFIITION_ID|The cohort ID of the target population|
-|TARGET_NAME|The name of the target cohort|
 |TAR_ID|The TAR identifier|
-|TAR_START_WITH|Indicates if the TAR starts with the 'start' or 'end' of the target cohort episode|
-|TAR_START_OFFSET|The days added to the date field specified in TAR_START_WITH|
-|TAR_END_WITH|Indicates if the TAR ends with the 'start' or 'end' of the target cohort episode|
-|TAR_END_OFFSET|The days added to the date field specified in TAR_END_WITH|
 |SUBGROUP_ID|The subgroup identifier|
-|SUBGROUP_NAME|The name of the subgroup|
 |OUTCOME_ID|The outcome identifier|
-|OUTCOME_COHORT_DEFINITION_ID|The cohort ID of the outcome population|
-|OUTCOME_NAME|The outcome name|
-|CLEAN_WINDOW|The clean window for this outcome definition|
-|AGE_ID|The age ID for this strata representing the age band specified in the strata settings|
-|AGE_GROUP_NAME|The name for this age group|
+|AGE_GROUP_ID|The age ID for this strata representing the age band specified in the strata settings|
 |GENDER_ID| The gender concept ID for this gender strata|
 |GENDER_NAME| The name of the gender|
 |START_YEAR|The year strata, defined by using the year the TAR started|
@@ -78,4 +71,50 @@ The resuting dataframe is described with the following table:
 |OUTCOMES|Number of cases after excluding TAR.|
 |INCIDENCE_PROPORTION_P100P|The Incidence Proportion (per 100 people), calculated by person_outcomes / persons_at_risk * 100|
 |INCIDENCE_RATE_P100PY|The Incidence Rate (per 100 person years), calculated by outcomes / person_days / 365.25 * 100|
+targetDef:
+|Name |Description|
+|-----|--------|
+|REF_ID|The reference id specified in buildOptions() to track results to the analysis execution.|
+|TARGET_COHORT_DEFIITION_ID|The cohort ID of the target population|
+|TARGET_NAME|The name of the target cohort|
+
+outcomeDef:
+
+|Name |Description|
+|-----|--------|
+|REF_ID|The reference id specified in buildOptions() to track results to the analysis execution.|
+|OUTCOME_ID|The outcome identifier|
+|OUTCOME_COHORT_DEFINITION_ID|The cohort ID of the outcome population|
+|OUTCOME_NAME|The outcome name|
+|CLEAN_WINDOW|The clean window for this outcome definition|
+|EXCLUDED_COHORT_DEFINITION_ID|The cohort used to exclude TAR
+
+tarDef:
+
+|Name |Description|
+|-----|--------|
+|REF_ID|The reference id specified in buildOptions() to track results to the analysis execution.|
+|TAR_ID|The TAR identifier|
+|TAR_START_WITH|Indicates if the TAR starts with the 'start' or 'end' of the target cohort episode|
+|TAR_START_OFFSET|The days added to the date field specified in TAR_START_WITH|
+|TAR_END_WITH|Indicates if the TAR ends with the 'start' or 'end' of the target cohort episode|
+|TAR_END_OFFSET|The days added to the date field specified in TAR_END_WITH|
+
+ageGroupDef:
+
+|Name |Description|
+|-----|--------|
+|REF_ID|The reference id specified in buildOptions() to track results to the analysis execution.|
+|AGE_GROUP_ID|The age ID for this strata representing the age band specified in the strata settings|
+|AGE_GROUP_NAME|The name for this age group|
+|MIN_AGE|The minimum age for this group|
+|MAX_AGE|the max age for this group|
+
+
+subGroupDef:
+
+|Name |Description|
+|-----|--------|
+|REF_ID|The reference id specified in buildOptions() to track results to the analysis execution.|
+|SUBGROUP_NAME|The name of the subgroup|
 }

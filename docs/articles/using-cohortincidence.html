@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Using CohortIncidence • CohortIncidence</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CohortIncidence</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.0.0</span>
       </span>
     </div>
 
@@ -60,7 +60,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://ohdsi.github.io/Hades" class="external-link"><img src='https://ohdsi.github.io/Hades/images/hadesMini.png' width=80 height=17 style='vertical-align: top;'></a>
+  <a href="https://ohdsi.github.io/Hades" class="external-link">hadesLogo</a>
 </li>
 <li>
   <a href="https://github.com/OHDSI/CohortIncidence/" class="external-link">
@@ -85,7 +85,7 @@
                         <h4 data-toc-skip class="author">Christopher
 Knoll</h4>
             
-            <h4 data-toc-skip class="date">2023-12-17</h4>
+            <h4 data-toc-skip class="date">2024-06-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/OHDSI/CohortIncidence/blob/HEAD/vignettes/using-cohortincidence.Rmd" class="external-link"><code>vignettes/using-cohortincidence.Rmd</code></a></small>
       <div class="hidden name"><code>using-cohortincidence.Rmd</code></div>
@@ -124,42 +124,77 @@ load the package.</p>
 <p>The results of the anlaysis SQL will assume a final table:
 <code>@results_database_schema.incidence_summary</code>. The DDL for
 this table can be fetched from the package via the following:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fetch DDL from package</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ddl <span class="ot">&lt;-</span> CohortIncidence<span class="sc">::</span><span class="fu">getResultsDdl</span>()</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(ddl)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>CREATE TABLE <span class="sc">@</span>schemaName.incidence_summary</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>(  </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    ref_id int,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    source_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    target_cohort_definition_id bigint,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    target_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    tar_id bigint,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    tar_start_with <span class="fu">varchar</span>(<span class="dv">10</span>),</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    tar_start_offset bigint,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    tar_end_with <span class="fu">varchar</span>(<span class="dv">10</span>),</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    tar_end_offset bigint,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    subgroup_id bigint,</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    subgroup_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    outcome_id bigint,</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    outcome_cohort_definition_id bigint,</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    outcome_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    clean_window bigint,</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    age_id int,</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    age_group_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    gender_id int,</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    gender_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    start_year int,</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    persons_at_risk_pe bigint,</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    persons_at_risk bigint,</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    person_days_pe bigint,</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    person_days bigint,</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    person_outcomes_pe bigint,</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    person_outcomes bigint,</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    outcomes_pe bigint,</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    outcomes bigint,</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    incidence_proportion_p100p float,</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    incidence_rate_p100py float</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a> );</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Fetch DDL from package</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>ddl <span class="ot">&lt;-</span> CohortIncidence<span class="sc">::</span><span class="fu">getResultsDdl</span>()</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">cat</span>(ddl)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>CREATE TABLE <span class="sc">@</span>schemaName.incidence_summary</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>(  </span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    ref_id int,</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    source_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    target_cohort_definition_id bigint,</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    tar_id bigint,</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>    subgroup_id bigint,</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>    outcome_id bigint,</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>    age_group_id int,</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>    gender_id int,</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>    gender_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>    start_year int,</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>    persons_at_risk_pe bigint,</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>    persons_at_risk bigint,</span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>    person_days_pe bigint,</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>    person_days bigint,</span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>    person_outcomes_pe bigint,</span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>    person_outcomes bigint,</span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>    outcomes_pe bigint,</span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>    outcomes bigint,</span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>    incidence_proportion_p100p float,</span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>    incidence_rate_p100py float</span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a> );</span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>CREATE TABLE <span class="sc">@</span>schemaName.target_def</span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>(  </span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a>    ref_id int,</span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a>    target_cohort_definition_id bigint,</span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a>    target_name <span class="fu">varchar</span>(<span class="dv">255</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a>);</span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a>CREATE TABLE <span class="sc">@</span>schemaName.outcome_def</span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a>(  </span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a>    ref_id int,</span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a>    outcome_id bigint,</span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a>    outcome_cohort_definition_id bigint,</span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>    outcome_name <span class="fu">varchar</span>(<span class="dv">255</span>),</span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a>    clean_window bigint,</span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a>    excluded_cohort_definition_id bigint</span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a>);</span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a></span>
+<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a>CREATE TABLE <span class="sc">@</span>schemaName.tar_def</span>
+<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a>(</span>
+<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a>    ref_id int,</span>
+<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a>    tar_id bigint,</span>
+<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a>    tar_start_with <span class="fu">varchar</span>(<span class="dv">10</span>),</span>
+<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a>    tar_start_offset bigint,</span>
+<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a>    tar_end_with <span class="fu">varchar</span>(<span class="dv">10</span>),</span>
+<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a>    tar_end_offset bigint</span>
+<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a></span>
+<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a>);</span>
+<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a></span>
+<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a>create table <span class="sc">@</span>schemaName.age_group_def</span>
+<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a>(</span>
+<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a>    ref_id int,</span>
+<span id="cb3-59"><a href="#cb3-59" tabindex="-1"></a>    age_group_id int NOT <span class="cn">NULL</span>,</span>
+<span id="cb3-60"><a href="#cb3-60" tabindex="-1"></a>    age_group_name <span class="fu">varchar</span>(<span class="dv">50</span>) NOT <span class="cn">NULL</span>,</span>
+<span id="cb3-61"><a href="#cb3-61" tabindex="-1"></a>    min_age int <span class="cn">NULL</span>,</span>
+<span id="cb3-62"><a href="#cb3-62" tabindex="-1"></a>    max_age int <span class="cn">NULL</span></span>
+<span id="cb3-63"><a href="#cb3-63" tabindex="-1"></a></span>
+<span id="cb3-64"><a href="#cb3-64" tabindex="-1"></a>);</span>
+<span id="cb3-65"><a href="#cb3-65" tabindex="-1"></a></span>
+<span id="cb3-66"><a href="#cb3-66" tabindex="-1"></a>CREATE TABLE <span class="sc">@</span>schemaName.subgroup_def</span>
+<span id="cb3-67"><a href="#cb3-67" tabindex="-1"></a>(</span>
+<span id="cb3-68"><a href="#cb3-68" tabindex="-1"></a>    ref_id int,</span>
+<span id="cb3-69"><a href="#cb3-69" tabindex="-1"></a>    subgroup_id bigint,</span>
+<span id="cb3-70"><a href="#cb3-70" tabindex="-1"></a>    subgroup_name <span class="fu">varchar</span>(<span class="dv">255</span>)</span>
+<span id="cb3-71"><a href="#cb3-71" tabindex="-1"></a>);</span></code></pre></div>
 <p>Using <code>SqlRender</code> and <code>DatabaseConnector</code>, you
 can execute the above on your target database platform in order to
 deploy the table. Remember to replace <code>@schemaName</code> with the
@@ -475,16 +510,16 @@ the analysis SQL:</p>
 <span><span class="va">analysisSql</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/buildQuery.html">buildQuery</a></span><span class="op">(</span>incidenceDesign <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">irDesign</span><span class="op">$</span><span class="fu">asJSON</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                                           buildOptions <span class="op">=</span> <span class="va">buildOptions</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">analysisSql</span><span class="op">)</span></span>
-<span><span class="co">#&gt; select target_cohort_definition_id, target_name</span></span>
-<span><span class="co">#&gt; into #target_ref</span></span>
+<span><span class="co">#&gt; INSERT INTO myresults.target_def (ref_id, target_cohort_definition_id, target_name)</span></span>
+<span><span class="co">#&gt; select CAST(1 as int) as ref_id, target_cohort_definition_id, target_name</span></span>
 <span><span class="co">#&gt; from (</span></span>
 <span><span class="co">#&gt; select cast(1 as int) as target_cohort_definition_id, </span></span>
 <span><span class="co">#&gt;  cast ('Target cohort 1' as varchar(255)) as target_name</span></span>
-<span><span class="co">#&gt; ) O</span></span>
+<span><span class="co">#&gt; ) T</span></span>
 <span><span class="co">#&gt; ;</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; select tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset</span></span>
-<span><span class="co">#&gt; into #tar_ref </span></span>
+<span><span class="co">#&gt; INSERT INTO myresults.tar_def (ref_id, tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset)</span></span>
+<span><span class="co">#&gt; select CAST(1 as int) as ref_id, tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset</span></span>
 <span><span class="co">#&gt; FROM (</span></span>
 <span><span class="co">#&gt; select cast(1 as int) as tar_id, </span></span>
 <span><span class="co">#&gt;  cast ('start' as varchar(10)) as tar_start_with, cast (0 as int) as tar_start_offset,</span></span>
@@ -492,8 +527,8 @@ the analysis SQL:</p>
 <span><span class="co">#&gt; ) T</span></span>
 <span><span class="co">#&gt; ;</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; select outcome_id, outcome_cohort_definition_id, outcome_name, clean_window, excluded_cohort_definition_id</span></span>
-<span><span class="co">#&gt; into #outcome_ref</span></span>
+<span><span class="co">#&gt; INSERT INTO myresults.outcome_def (ref_id, outcome_id, outcome_cohort_definition_id, outcome_name, clean_window, excluded_cohort_definition_id)</span></span>
+<span><span class="co">#&gt; select CAST(1 as int) as ref_id, outcome_id, outcome_cohort_definition_id, outcome_name, clean_window, excluded_cohort_definition_id</span></span>
 <span><span class="co">#&gt; from (</span></span>
 <span><span class="co">#&gt; select cast(1 as int) as outcome_id, cast(2 as int) as outcome_cohort_definition_id,</span></span>
 <span><span class="co">#&gt;  cast ('Outcome 1, 30d Clean' as varchar(255)) as outcome_name,</span></span>
@@ -502,8 +537,8 @@ the analysis SQL:</p>
 <span><span class="co">#&gt; ) O</span></span>
 <span><span class="co">#&gt; ;</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; select subgroup_id, subgroup_name</span></span>
-<span><span class="co">#&gt; INTO #subgroup_ref</span></span>
+<span><span class="co">#&gt; INSERT INTO myresults.subgroup_def (ref_id, subgroup_id, subgroup_name)</span></span>
+<span><span class="co">#&gt; select CAST(1 as int) as ref_id, subgroup_id, subgroup_name</span></span>
 <span><span class="co">#&gt; FROM (</span></span>
 <span><span class="co">#&gt; select cast(0 as int) as subgroup_id, </span></span>
 <span><span class="co">#&gt;  cast ('All' as varchar(250)) as subgroup_name</span></span>
@@ -512,15 +547,6 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;  cast ('Subgroup 1' as varchar(250)) as subgroup_name</span></span>
 <span><span class="co">#&gt; ) S</span></span>
 <span><span class="co">#&gt; ;</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; create table #age_group</span></span>
-<span><span class="co">#&gt; (</span></span>
-<span><span class="co">#&gt;  age_id int NOT NULL,</span></span>
-<span><span class="co">#&gt;  group_name varchar(50) NOT NULL,</span></span>
-<span><span class="co">#&gt;  min_age int NULL,</span></span>
-<span><span class="co">#&gt;  max_age int NULL</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; );</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -585,7 +611,7 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;             end as end_date</span></span>
 <span><span class="co">#&gt;           from (</span></span>
 <span><span class="co">#&gt;             select tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset  </span></span>
-<span><span class="co">#&gt;             from #tar_ref where tar_id in (1)</span></span>
+<span><span class="co">#&gt;             from myresults.tar_def where tar_id in (1) and ref_id = 1</span></span>
 <span><span class="co">#&gt;           ) tar1,</span></span>
 <span><span class="co">#&gt;           (</span></span>
 <span><span class="co">#&gt;             select cohort_definition_id, subject_id, cohort_start_date, cohort_end_date </span></span>
@@ -667,8 +693,8 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;       from demoCohortSchema.cohort oc1</span></span>
 <span><span class="co">#&gt;       inner join (</span></span>
 <span><span class="co">#&gt;         select outcome_id, outcome_cohort_definition_id, clean_window</span></span>
-<span><span class="co">#&gt;         from #outcome_ref </span></span>
-<span><span class="co">#&gt;         where outcome_id in (1)</span></span>
+<span><span class="co">#&gt;         from myresults.outcome_def </span></span>
+<span><span class="co">#&gt;         where outcome_id in (1) and ref_id = 1</span></span>
 <span><span class="co">#&gt;       ) or1 on oc1.cohort_definition_id = or1.outcome_cohort_definition_id</span></span>
 <span><span class="co">#&gt;       where dateadd(dd,or1.clean_window, oc1.cohort_end_date) &gt;= dateadd(dd,1,oc1.cohort_start_date)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -678,8 +704,8 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;       FROM demoCohortSchema.cohort c1</span></span>
 <span><span class="co">#&gt;       inner join (</span></span>
 <span><span class="co">#&gt;         select outcome_id, excluded_cohort_definition_id </span></span>
-<span><span class="co">#&gt;         from #outcome_ref </span></span>
-<span><span class="co">#&gt;         where outcome_id in (1)</span></span>
+<span><span class="co">#&gt;         from myresults.outcome_def </span></span>
+<span><span class="co">#&gt;         where outcome_id in (1) and ref_id = 1</span></span>
 <span><span class="co">#&gt;       ) or1 on c1.cohort_definition_id = or1.excluded_cohort_definition_id</span></span>
 <span><span class="co">#&gt;     ) EXCLUDED</span></span>
 <span><span class="co">#&gt;   ) ST</span></span>
@@ -718,7 +744,8 @@ the analysis SQL:</p>
 <span><span class="co">#&gt; inner join (</span></span>
 <span><span class="co">#&gt;   select oref.outcome_id, oc.subject_id, oc.cohort_start_date</span></span>
 <span><span class="co">#&gt;   from demoCohortSchema.cohort oc </span></span>
-<span><span class="co">#&gt;   JOIN #outcome_ref oref on oc.cohort_definition_id = oref.outcome_cohort_definition_id</span></span>
+<span><span class="co">#&gt;   JOIN myresults.outcome_def oref on oc.cohort_definition_id = oref.outcome_cohort_definition_id</span></span>
+<span><span class="co">#&gt;     and oref.ref_id = 1</span></span>
 <span><span class="co">#&gt;   where oref.outcome_id in (1)</span></span>
 <span><span class="co">#&gt; ) o1 on t1.subject_id = o1.subject_id</span></span>
 <span><span class="co">#&gt;   and t1.start_date &lt;= o1.cohort_start_date</span></span>
@@ -745,7 +772,7 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;     t1.subject_id,</span></span>
 <span><span class="co">#&gt;     t1.start_date,</span></span>
 <span><span class="co">#&gt;     et1.outcome_id,</span></span>
-<span><span class="co">#&gt;     sum(DATEDIFF(day,et1.start_date,et1.end_date) + 1) as person_days</span></span>
+<span><span class="co">#&gt;     sum(cast((DATEDIFF(day,et1.start_date,et1.end_date) + 1) as bigint)) as person_days</span></span>
 <span><span class="co">#&gt;   FROM #TTAR_erafied t1</span></span>
 <span><span class="co">#&gt;   inner join #exc_TTAR_o_erafied et1 on t1.cohort_definition_id = et1.target_cohort_definition_id</span></span>
 <span><span class="co">#&gt;     and t1.subgroup_id = et1.subgroup_id</span></span>
@@ -764,7 +791,7 @@ the analysis SQL:</p>
 <span><span class="co">#&gt; /*</span></span>
 <span><span class="co">#&gt; 5) aggregate tar and excluded+outcome</span></span>
 <span><span class="co">#&gt; */</span></span>
-<span><span class="co">#&gt; WITH tar_overall (target_cohort_definition_id, tar_id, subgroup_id, subject_id, start_date, end_date, age_id, gender_id, start_year)</span></span>
+<span><span class="co">#&gt; WITH tar_overall (target_cohort_definition_id, tar_id, subgroup_id, subject_id, start_date, end_date, age_group_id, gender_id, start_year)</span></span>
 <span><span class="co">#&gt; AS (</span></span>
 <span><span class="co">#&gt;   SELECT te.cohort_definition_id as target_cohort_definition_id,</span></span>
 <span><span class="co">#&gt;     te.tar_id,</span></span>
@@ -772,31 +799,32 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;     te.subject_id,</span></span>
 <span><span class="co">#&gt;     te.start_date,</span></span>
 <span><span class="co">#&gt;     te.end_date,</span></span>
-<span><span class="co">#&gt;     ag.age_id,</span></span>
+<span><span class="co">#&gt;     ag.age_group_id,</span></span>
 <span><span class="co">#&gt;     p.gender_concept_id as gender_id,</span></span>
 <span><span class="co">#&gt;     YEAR(te.start_date) as start_year</span></span>
 <span><span class="co">#&gt;   FROM #TTAR_erafied te</span></span>
 <span><span class="co">#&gt;   JOIN mycdm.person p on te.subject_id = p.person_id</span></span>
-<span><span class="co">#&gt;   LEFT JOIN #age_group ag ON YEAR(te.start_date) - p.year_of_birth  &gt;= coalesce(ag.min_age, -999) </span></span>
+<span><span class="co">#&gt;   LEFT JOIN myresults.age_group_def ag ON YEAR(te.start_date) - p.year_of_birth  &gt;= coalesce(ag.min_age, -999) </span></span>
 <span><span class="co">#&gt;    and YEAR(te.start_date) - p.year_of_birth  &lt; coalesce(ag.max_age, 999)</span></span>
+<span><span class="co">#&gt;    and ag.ref_id = 1</span></span>
 <span><span class="co">#&gt; )</span></span>
-<span><span class="co">#&gt; select target_cohort_definition_id, tar_id, subgroup_id, age_id, gender_id, start_year, person_days_pe, persons_at_risk_pe</span></span>
+<span><span class="co">#&gt; select target_cohort_definition_id, tar_id, subgroup_id, age_group_id, gender_id, start_year, person_days_pe, persons_at_risk_pe</span></span>
 <span><span class="co">#&gt; INTO #tar_agg</span></span>
 <span><span class="co">#&gt; FROM (</span></span>
 <span><span class="co">#&gt;     SELECT t1.target_cohort_definition_id,</span></span>
 <span><span class="co">#&gt;     t1.tar_id,</span></span>
 <span><span class="co">#&gt;     t1.subgroup_id,</span></span>
-<span><span class="co">#&gt;     cast(null as int) as age_id,</span></span>
+<span><span class="co">#&gt;     cast(null as int) as age_group_id,</span></span>
 <span><span class="co">#&gt; cast(null as int) as gender_id,</span></span>
 <span><span class="co">#&gt; cast(null as int) as start_year,</span></span>
-<span><span class="co">#&gt;     SUM(DATEDIFF(day,t1.start_date,t1.end_date) + 1) as person_days_pe,</span></span>
+<span><span class="co">#&gt;     SUM(CAST((DATEDIFF(day,t1.start_date,t1.end_date) + 1) as bigint)) as person_days_pe,</span></span>
 <span><span class="co">#&gt;     COUNT(distinct t1.subject_id) as persons_at_risk_pe</span></span>
 <span><span class="co">#&gt;   FROM tar_overall t1</span></span>
 <span><span class="co">#&gt;   GROUP BY t1.target_cohort_definition_id, t1.tar_id, t1.subgroup_id</span></span>
 <span><span class="co">#&gt; ) T_OVERALL</span></span>
 <span><span class="co">#&gt; ;</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; WITH outcomes_overall (target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id, age_id, gender_id, start_year, excluded_days, tar_days, outcomes_pe, outcomes)</span></span>
+<span><span class="co">#&gt; WITH outcomes_overall (target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id, age_group_id, gender_id, start_year, excluded_days, tar_days, outcomes_pe, outcomes)</span></span>
 <span><span class="co">#&gt;  AS (</span></span>
 <span><span class="co">#&gt;   SELECT </span></span>
 <span><span class="co">#&gt;     t1.cohort_definition_id as target_cohort_definition_id,</span></span>
@@ -804,7 +832,7 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;     t1.subgroup_id,</span></span>
 <span><span class="co">#&gt;     op.outcome_id,</span></span>
 <span><span class="co">#&gt;     t1.subject_id,</span></span>
-<span><span class="co">#&gt;     ag.age_id,</span></span>
+<span><span class="co">#&gt;     ag.age_group_id,</span></span>
 <span><span class="co">#&gt;     p.gender_concept_id as gender_id,</span></span>
 <span><span class="co">#&gt;     YEAR(t1.start_date) as start_year,</span></span>
 <span><span class="co">#&gt;     coalesce(e1.person_days, 0) as excluded_days,</span></span>
@@ -813,8 +841,9 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;     coalesce(o1.outcomes, 0) as outcomes</span></span>
 <span><span class="co">#&gt;   FROM #TTAR_erafied t1</span></span>
 <span><span class="co">#&gt;   JOIN mycdm.person p ON t1.subject_id = p.person_id</span></span>
-<span><span class="co">#&gt;   LEFT JOIN #age_group ag ON YEAR(t1.start_date) - p.year_of_birth  &gt;= coalesce(ag.min_age, -999) </span></span>
+<span><span class="co">#&gt;   LEFT JOIN myresults.age_group_def ag ON YEAR(t1.start_date) - p.year_of_birth  &gt;= coalesce(ag.min_age, -999) </span></span>
 <span><span class="co">#&gt;     AND YEAR(t1.start_date) - p.year_of_birth  &lt; coalesce(ag.max_age, 999)</span></span>
+<span><span class="co">#&gt;     AND ag.ref_id = 1</span></span>
 <span><span class="co">#&gt;   JOIN ( -- get the list of TTSO of anyone with excluded time or outcomes to limit result</span></span>
 <span><span class="co">#&gt;     select target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id, start_date FROM #excluded_person_days</span></span>
 <span><span class="co">#&gt;     UNION -- will remove dupes</span></span>
@@ -837,7 +866,7 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;    AND o1.subject_id = op.subject_id</span></span>
 <span><span class="co">#&gt;    AND o1.start_date = op.start_date</span></span>
 <span><span class="co">#&gt; )</span></span>
-<span><span class="co">#&gt; SELECT target_cohort_definition_id, tar_id, subgroup_id, outcome_id, age_id, gender_id, start_year, excluded_days, excluded_persons, person_outcomes_pe, person_outcomes, outcomes_pe, outcomes</span></span>
+<span><span class="co">#&gt; SELECT target_cohort_definition_id, tar_id, subgroup_id, outcome_id, age_group_id, gender_id, start_year, excluded_days, excluded_persons, person_outcomes_pe, person_outcomes, outcomes_pe, outcomes</span></span>
 <span><span class="co">#&gt; INTO #outcome_agg</span></span>
 <span><span class="co">#&gt; FROM</span></span>
 <span><span class="co">#&gt; (</span></span>
@@ -846,7 +875,7 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;     t1.tar_id,</span></span>
 <span><span class="co">#&gt;     t1.subgroup_id,</span></span>
 <span><span class="co">#&gt;     t1.outcome_id,    </span></span>
-<span><span class="co">#&gt;     cast(null as int) as age_id,</span></span>
+<span><span class="co">#&gt;     cast(null as int) as age_group_id,</span></span>
 <span><span class="co">#&gt; cast(null as int) as gender_id,</span></span>
 <span><span class="co">#&gt; cast(null as int) as start_year,</span></span>
 <span><span class="co">#&gt;     SUM(t1.excluded_days) as excluded_days,</span></span>
@@ -864,40 +893,25 @@ the analysis SQL:</p>
 <span><span class="co">#&gt; -- 6) Create analysis_ref to produce each T/O/TAR/S combo</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SELECT t1.target_cohort_definition_id,</span></span>
-<span><span class="co">#&gt;   t1.target_name,</span></span>
 <span><span class="co">#&gt;   tar1.tar_id,</span></span>
-<span><span class="co">#&gt;   tar1.tar_start_offset,</span></span>
-<span><span class="co">#&gt;   tar1.tar_start_with,</span></span>
-<span><span class="co">#&gt;   tar1.tar_end_offset,</span></span>
-<span><span class="co">#&gt;   tar1.tar_end_with,</span></span>
 <span><span class="co">#&gt;   s1.subgroup_id,</span></span>
-<span><span class="co">#&gt;   s1.subgroup_name,</span></span>
-<span><span class="co">#&gt;   o1.outcome_id,</span></span>
-<span><span class="co">#&gt;   o1.outcome_cohort_definition_id,</span></span>
-<span><span class="co">#&gt;   o1.outcome_name,</span></span>
-<span><span class="co">#&gt;   o1.clean_window</span></span>
+<span><span class="co">#&gt;   o1.outcome_id</span></span>
 <span><span class="co">#&gt; INTO #tscotar_ref</span></span>
-<span><span class="co">#&gt; FROM (SELECT target_cohort_definition_id, target_name FROM #target_ref WHERE target_cohort_definition_id in (1)) t1,</span></span>
-<span><span class="co">#&gt;   (SELECT tar_id, tar_start_offset, tar_start_with, tar_end_offset, tar_end_with FROM #tar_ref WHERE tar_id in (1)) tar1,</span></span>
-<span><span class="co">#&gt;   (SELECT subgroup_id, subgroup_name FROM #subgroup_ref) s1,</span></span>
-<span><span class="co">#&gt;   (SELECT outcome_id, outcome_cohort_definition_id, outcome_name, clean_window FROM #outcome_ref WHERE outcome_id in (1)) o1</span></span>
+<span><span class="co">#&gt; FROM (SELECT target_cohort_definition_id FROM myresults.target_def WHERE target_cohort_definition_id in (1) and ref_id = 1) t1,</span></span>
+<span><span class="co">#&gt;   (SELECT tar_id FROM myresults.tar_def WHERE tar_id in (1) and ref_id = 1) tar1,</span></span>
+<span><span class="co">#&gt;   (SELECT subgroup_id FROM myresults.subgroup_def where ref_id = 1) s1,</span></span>
+<span><span class="co">#&gt;   (SELECT outcome_id FROM myresults.outcome_def WHERE outcome_id in (1) and ref_id = 1) o1</span></span>
 <span><span class="co">#&gt; ;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; -- 7) Insert into final table: calculate results via #tar_agg and #outcome_agg for all TSCOTAR combinations</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; INSERT INTO myresults.incidence_summary (ref_id, source_name, target_cohort_definition_id, target_name,</span></span>
-<span><span class="co">#&gt;   tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset, </span></span>
-<span><span class="co">#&gt;   subgroup_id, subgroup_name,</span></span>
-<span><span class="co">#&gt;   outcome_id, outcome_cohort_definition_id, outcome_name, clean_window,</span></span>
-<span><span class="co">#&gt;   age_id, age_group_name, gender_id, gender_name, start_year,</span></span>
+<span><span class="co">#&gt; INSERT INTO myresults.incidence_summary (ref_id, source_name, target_cohort_definition_id,</span></span>
+<span><span class="co">#&gt;   tar_id, subgroup_id, outcome_id, age_group_id, gender_id, gender_name, start_year,</span></span>
 <span><span class="co">#&gt;   persons_at_risk_pe, persons_at_risk, person_days_pe, person_days, </span></span>
 <span><span class="co">#&gt;   person_outcomes_pe, person_outcomes, outcomes_pe, outcomes,</span></span>
 <span><span class="co">#&gt;   incidence_proportion_p100p, incidence_rate_p100py)</span></span>
-<span><span class="co">#&gt; SELECT CAST(1 as int) as ref_id, 'mysource' as source_name, tref.target_cohort_definition_id, tref.target_name,</span></span>
-<span><span class="co">#&gt;   tref.tar_id, tref.tar_start_with, tref.tar_start_offset, tref.tar_end_with, tref.tar_end_offset,</span></span>
-<span><span class="co">#&gt;   tref.subgroup_id, tref.subgroup_name,</span></span>
-<span><span class="co">#&gt;   tref.outcome_id, tref.outcome_cohort_definition_id, tref.outcome_name, tref.clean_window,</span></span>
-<span><span class="co">#&gt;   ta.age_id, ag.group_name, ta.gender_id, c.concept_name as gender_name, ta.start_year,</span></span>
+<span><span class="co">#&gt; SELECT CAST(1 as int) as ref_id, 'mysource' as source_name, tref.target_cohort_definition_id,</span></span>
+<span><span class="co">#&gt;   tref.tar_id, tref.subgroup_id, tref.outcome_id, ta.age_group_id, ta.gender_id, c.concept_name as gender_name, ta.start_year,</span></span>
 <span><span class="co">#&gt;   coalesce(ta.persons_at_risk_pe, 0) as persons_at_risk_pe, </span></span>
 <span><span class="co">#&gt;   coalesce(ta.persons_at_risk_pe, 0) - coalesce(oa.excluded_persons, 0) as persons_at_risk, </span></span>
 <span><span class="co">#&gt;   coalesce(ta.person_days_pe, 0) as  person_days_pe,</span></span>
@@ -920,10 +934,10 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;   AND ta.tar_id = oa.tar_id</span></span>
 <span><span class="co">#&gt;   AND ta.subgroup_id = oa.subgroup_id </span></span>
 <span><span class="co">#&gt;   AND tref.outcome_id = oa.outcome_id</span></span>
-<span><span class="co">#&gt;   AND coalesce(ta.age_id,-1) = coalesce(oa.age_id,-1)</span></span>
+<span><span class="co">#&gt;   AND coalesce(ta.age_group_id,-1) = coalesce(oa.age_group_id,-1)</span></span>
 <span><span class="co">#&gt;   AND coalesce(ta.gender_id,-1) = coalesce(oa.gender_id,-1)</span></span>
 <span><span class="co">#&gt;   AND coalesce(ta.start_year, -1) = coalesce(oa.start_year,-1)</span></span>
-<span><span class="co">#&gt; LEFT JOIN #age_group ag on ag.age_id = ta.age_id</span></span>
+<span><span class="co">#&gt; LEFT JOIN myresults.age_group_def ag on ag.age_group_id = ta.age_group_id</span></span>
 <span><span class="co">#&gt; LEFT JOIN mycdm.concept c on c.concept_id = ta.gender_id</span></span>
 <span><span class="co">#&gt; ;</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -941,13 +955,7 @@ the analysis SQL:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --</span></span>
 <span><span class="co">#&gt; -- End analysis 0</span></span>
-<span><span class="co">#&gt; --</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; DROP TABLE #target_ref;</span></span>
-<span><span class="co">#&gt; DROP TABLE #tar_ref;</span></span>
-<span><span class="co">#&gt; DROP TABLE #outcome_ref;</span></span>
-<span><span class="co">#&gt; DROP TABLE #subgroup_ref;</span></span>
-<span><span class="co">#&gt; DROP TABLE #age_group;</span></span></code></pre></div>
+<span><span class="co">#&gt; --</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="render-sql-with-paramaters-and-execute">Render SQL with paramaters and execute<a class="anchor" aria-label="anchor" href="#render-sql-with-paramaters-and-execute"></a>
@@ -978,41 +986,41 @@ used to place the incidence results into a temp table
 exported to a CSV.</p>
 <p>The following example demonstrates the additional steps that are
 necessary if you want to use temp tables:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># given the prior irDesign constructed from the previous example</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>buildOptions <span class="ot">&lt;-</span> CohortIncidence<span class="sc">::</span><span class="fu">buildOptions</span>(<span class="at">cohortTable =</span> <span class="st">"demoCohortSchema.cohort"</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">cdmDatabaseSchema =</span> <span class="st">"mycdm"</span>,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">sourceName =</span> <span class="st">"mysource"</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">useTempTables =</span> T,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">refId =</span> <span class="dv">2</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>analysisSql <span class="ot">&lt;-</span> CohortIncidence<span class="sc">::</span><span class="fu">buildQuery</span>(<span class="at">incidenceDesign =</span> <span class="fu">as.character</span>(jsonlite<span class="sc">::</span><span class="fu">toJSON</span>(irDesign)),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">buildOptions =</span> buildOptions)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>analysisSql <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">translate</span>(analysisSql, <span class="st">"postgresql"</span>)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># if we are using temp tables, the steps to execute the analysis are </span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   1) create result temp tables</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   2) execute the analysis query, placing the results into the temp table incidence_summary</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   3) Extract/copy the results from the temp tables</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#   4) clean up temp tables</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>conn <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">connect</span>(connectionDetails)</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>tempDDL <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">translate</span>(CohortIncidence<span class="sc">::</span><span class="fu">getResultsDdl</span>(<span class="at">useTempTables=</span>T), <span class="st">"postgresql"</span>)</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">executeSql</span>(conn, tempDDL)</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">executeSql</span>(conn, analysisSql)</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co"># In this example, copy to a permanent table from the temp table, but the results could be downloaded to CSV</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>exportSql <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">translate</span>(<span class="st">"insert into mySchema.prefix_incidence_summary select * from #incidence_summary"</span>, <span class="st">"postgresql"</span>);</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">executeSql</span>(conn, exportSql)</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co"># or download the results to a dataframe</span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">querySql</span>(conn, SqlRender<span class="sc">::</span><span class="fu">translate</span>(<span class="st">"select * from #incidence_summary"</span>, <span class="st">"postgresql"</span>))</span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co"># use the getCleanupSql to fetch the DROP TABLE expressions for the tables that were created in tempDDL.</span></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>cleanupSql <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">translate</span>(CohortIncidence<span class="sc">::</span><span class="fu">getCleanupSql</span>(<span class="at">useTempTables=</span>T), <span class="st">"postgresql"</span>)  </span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">executeSql</span>(conn, cleanupSql)</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">dbDisconnect</span>(conn)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co"># given the prior irDesign constructed from the previous example</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>buildOptions <span class="ot">&lt;-</span> CohortIncidence<span class="sc">::</span><span class="fu">buildOptions</span>(<span class="at">cohortTable =</span> <span class="st">"demoCohortSchema.cohort"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>                                              <span class="at">cdmDatabaseSchema =</span> <span class="st">"mycdm"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>                                              <span class="at">sourceName =</span> <span class="st">"mysource"</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>                                              <span class="at">useTempTables =</span> T,</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>                                              <span class="at">refId =</span> <span class="dv">2</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>analysisSql <span class="ot">&lt;-</span> CohortIncidence<span class="sc">::</span><span class="fu">buildQuery</span>(<span class="at">incidenceDesign =</span> <span class="fu">as.character</span>(jsonlite<span class="sc">::</span><span class="fu">toJSON</span>(irDesign)),</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>                                           <span class="at">buildOptions =</span> buildOptions)</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>analysisSql <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">translate</span>(analysisSql, <span class="st">"postgresql"</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co"># if we are using temp tables, the steps to execute the analysis are </span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#   1) create result temp tables</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#   2) execute the analysis query, placing the results into the temp table incidence_summary</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#   3) Extract/copy the results from the temp tables</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#   4) clean up temp tables</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>conn <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">connect</span>(connectionDetails)</span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>tempDDL <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">translate</span>(CohortIncidence<span class="sc">::</span><span class="fu">getResultsDdl</span>(<span class="at">useTempTables=</span>T), <span class="st">"postgresql"</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">executeSql</span>(conn, tempDDL)</span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">executeSql</span>(conn, analysisSql)</span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a><span class="co"># In this example, copy to a permanent table from the temp table, but the results could be downloaded to CSV</span></span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a>exportSql <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">translate</span>(<span class="st">"insert into mySchema.prefix_incidence_summary select * from #incidence_summary"</span>, <span class="st">"postgresql"</span>);</span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">executeSql</span>(conn, exportSql)</span>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a><span class="co"># or download the results to a dataframe</span></span>
+<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a>results <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">querySql</span>(conn, SqlRender<span class="sc">::</span><span class="fu">translate</span>(<span class="st">"select * from #incidence_summary"</span>, <span class="st">"postgresql"</span>))</span>
+<span id="cb10-30"><a href="#cb10-30" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" tabindex="-1"></a><span class="co"># use the getCleanupSql to fetch the DROP TABLE expressions for the tables that were created in tempDDL.</span></span>
+<span id="cb10-32"><a href="#cb10-32" tabindex="-1"></a>cleanupSql <span class="ot">&lt;-</span> SqlRender<span class="sc">::</span><span class="fu">translate</span>(CohortIncidence<span class="sc">::</span><span class="fu">getCleanupSql</span>(<span class="at">useTempTables=</span>T), <span class="st">"postgresql"</span>)  </span>
+<span id="cb10-33"><a href="#cb10-33" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">executeSql</span>(conn, cleanupSql)</span>
+<span id="cb10-34"><a href="#cb10-34" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" tabindex="-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">dbDisconnect</span>(conn)</span></code></pre></div>
 </div>
 </div>
   </div>
@@ -1034,7 +1042,7 @@ necessary if you want to use temp tables:</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>
