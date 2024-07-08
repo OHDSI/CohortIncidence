@@ -61,6 +61,15 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="4.0.0" id="id_-cohortincidence-400"># CohortIncidence 4.0.0<a class="anchor" aria-label="anchor" href="#id_-cohortincidence-400"></a></h2>
+<div class="section level3">
+<h3 id="major-changes-4-0-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-4-0-0"></a></h3>
+<p>The results DDL has been split into 5 tables: - incidence_summary - target_def - outcome_def - tar_def - age_group_def - subgroup_def</p>
+<p><code><a href="../reference/executeAnalysis.html">executeAnalysis()</a></code> will return a list of dataframes with the following fields: - incidenceSummary - targetDef - outcomeDef - tarDef - ageGroupDef - subgroupDef</p>
+<p>These dataframes follow the same structure as the corresponding table.</p>
+</div>
+</div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="3.3.1" id="id_-cohortincidence-331"># CohortIncidence 3.3.1<a class="anchor" aria-label="anchor" href="#id_-cohortincidence-331"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-3-3-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-3-1"></a></h3>

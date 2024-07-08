@@ -119,14 +119,26 @@ The IR design can also include settings to specify if an analysis should be done
 To use this function, you create the strata settings with the `CohortIncidence::createStrataSettings)` function:
 
 ```{r}
-irDesignWithStrata <- CohortIncidence::createIncidenceDesign(targetDefs = list(t1),
-                                                   outcomeDefs = list(o1),
-                                                   tars=list(tar1),
-                                                   analysisList = list(analysis1),
-                                                   subgroups = list(subgroup1),
-                                                   #add by age and by gender strata, but don't do by start year.
-                                                   strataSettings = CohortIncidence::createStrataSettings(byGender=T, byAge=T, ageBreaks = c(17,34,65)))
+irDesignWithStrata <-
+  CohortIncidence::createIncidenceDesign(
+    targetDefs = list(t1),
+    outcomeDefs = list(o1),
+    tars = list(tar1),
+    analysisList = list(analysis1),
+    subgroups = list(subgroup1),
+    #add by age and by gender strata, but don't do by start year.
+    strataSettings = CohortIncidence::createStrataSettings(
+      byGender = T,
+      byAge = T,
+      ageBreaks = list(17, 34, 65),
+      ageBreakList = list(list(25), list(65))
+    )
+  )
 ```
+
+In the above example, thare are 2 ways of specifying the age breaks:  ageBreaks and ageBreakList.  ageBreaks creates a single age 
+break specification, while ageBreakList allows you to specify a list of breaks.  All breaks defined in ageBreaks and ageBreakList will be 
+used if specified.   If byAge is TRUE, you must specify at least one age break specification either in ageBreaks or ageBreakList.
 
 ## Using executeAnalysis()
 

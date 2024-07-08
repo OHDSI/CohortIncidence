@@ -757,7 +757,8 @@ StrataSettings <- R6::R6Class("StrataSettings",
     .byAge = F,
     .byGender = F,
     .byYear = F,
-    .ageBreaks = NA
+    .ageBreaks = NA,
+    .ageBreakList = NA
   ),
   active = list (
     #' @field byAge enables stratification by age
@@ -803,6 +804,21 @@ StrataSettings <- R6::R6Class("StrataSettings",
         private$.ageBreaks <- ageBreaks
         self
       }
+    },
+    #' @field ageBreakList a list of age breaks
+    ageBreakList = function(ageBreakList) {
+      if (missing(ageBreakList)) {
+        private$.ageBreakList
+      } else {
+        # check type
+        checkmate::assertList(as.list(ageBreakList), types="list")
+        checkmate::assertTRUE(all(sapply(ageBreakList, 
+                                         function(x) {
+                                           checkmate::testList(x) && all(sapply(x, checkmate::testNumeric))
+                                         })))
+        private$.ageBreakList <- ageBreakList
+        self
+      }
     }
   ),
   public = list(
@@ -816,6 +832,7 @@ StrataSettings <- R6::R6Class("StrataSettings",
       if ("byGender" %in% names (dataList)) self$byGender <- dataList$byGender
       if ("byYear" %in% names (dataList)) self$byYear <- dataList$byYear
       if ("ageBreaks" %in% names (dataList)) self$ageBreaks <- dataList$ageBreaks
+      if ("ageBreakList" %in% names (dataList)) self$ageBreakList <- dataList$ageBreakList
       
     },
     #' @description
@@ -825,7 +842,8 @@ StrataSettings <- R6::R6Class("StrataSettings",
         byAge = jsonlite::unbox(private$.byAge),
         byGender = jsonlite::unbox(private$.byGender),
         byYear = jsonlite::unbox(private$.byYear),
-        ageBreaks = .toJsonArray(private$.ageBreaks)
+        ageBreaks = .toJsonArray(private$.ageBreaks),
+        ageBreakList = lapply(private$.ageBreakList, .toJsonArray)
       ))
     },
     #' @description
