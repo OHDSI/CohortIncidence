@@ -4,7 +4,13 @@
 \alias{createStrataSettings}
 \title{Creates R6 object for StrataSettings}
 \usage{
-createStrataSettings(byAge = F, byGender = F, byYear = F, ageBreaks)
+createStrataSettings(
+  byAge = F,
+  byGender = F,
+  byYear = F,
+  ageBreaks,
+  ageBreakList
+)
 }
 \arguments{
 \item{byAge}{a boolean indicating to stratify by age, defaults to F}

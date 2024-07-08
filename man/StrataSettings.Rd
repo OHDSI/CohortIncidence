@@ -26,6 +26,8 @@ before calling jsonlite::toJSON().
 \item{\code{byYear}}{enables stratification by start year of TAR}
 
 \item{\code{ageBreaks}}{a list of age breaks with at least 1 member}
+
+\item{\code{ageBreakList}}{a list of age breaks}
 }
 \if{html}{\out{</div>}}
 }

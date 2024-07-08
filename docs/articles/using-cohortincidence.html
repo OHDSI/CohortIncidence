@@ -85,7 +85,7 @@
                         <h4 data-toc-skip class="author">Christopher
 Knoll</h4>
             
-            <h4 data-toc-skip class="date">2024-06-27</h4>
+            <h4 data-toc-skip class="date">2024-07-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/OHDSI/CohortIncidence/blob/HEAD/vignettes/using-cohortincidence.Rmd" class="external-link"><code>vignettes/using-cohortincidence.Rmd</code></a></small>
       <div class="hidden name"><code>using-cohortincidence.Rmd</code></div>
@@ -315,13 +315,27 @@ combination of those choices). To use this function, you create the
 strata settings with the
 <code>CohortIncidence::createStrataSettings)</code> function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">irDesignWithStrata</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createIncidenceDesign.html">createIncidenceDesign</a></span><span class="op">(</span>targetDefs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">t1</span><span class="op">)</span>,</span>
-<span>                                                   outcomeDefs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">o1</span><span class="op">)</span>,</span>
-<span>                                                   tars<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">tar1</span><span class="op">)</span>,</span>
-<span>                                                   analysisList <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">analysis1</span><span class="op">)</span>,</span>
-<span>                                                   subgroups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">subgroup1</span><span class="op">)</span>,</span>
-<span>                                                   <span class="co">#add by age and by gender strata, but don't do by start year.</span></span>
-<span>                                                   strataSettings <span class="op">=</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createStrataSettings.html">createStrataSettings</a></span><span class="op">(</span>byGender<span class="op">=</span><span class="cn">T</span>, byAge<span class="op">=</span><span class="cn">T</span>, ageBreaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">17</span>,<span class="fl">34</span>,<span class="fl">65</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">irDesignWithStrata</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createIncidenceDesign.html">createIncidenceDesign</a></span><span class="op">(</span></span>
+<span>    targetDefs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">t1</span><span class="op">)</span>,</span>
+<span>    outcomeDefs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">o1</span><span class="op">)</span>,</span>
+<span>    tars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">tar1</span><span class="op">)</span>,</span>
+<span>    analysisList <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">analysis1</span><span class="op">)</span>,</span>
+<span>    subgroups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">subgroup1</span><span class="op">)</span>,</span>
+<span>    <span class="co">#add by age and by gender strata, but don't do by start year.</span></span>
+<span>    strataSettings <span class="op">=</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/createStrataSettings.html">createStrataSettings</a></span><span class="op">(</span></span>
+<span>      byGender <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>      byAge <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>      ageBreaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">17</span>, <span class="fl">34</span>, <span class="fl">65</span><span class="op">)</span>,</span>
+<span>      ageBreakList <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">25</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">65</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>In the above example, thare are 2 ways of specifying the age breaks:
+ageBreaks and ageBreakList. ageBreaks creates a single age break
+specification, while ageBreakList allows you to specify a list of
+breaks. All breaks defined in ageBreaks and ageBreakList will be used if
+specified. If byAge is TRUE, you must specify at least one age break
+specification either in ageBreaks or ageBreakList.</p>
 </div>
 <div class="section level3">
 <h3 id="using-executeanalysis">Using executeAnalysis()<a class="anchor" aria-label="anchor" href="#using-executeanalysis"></a>
@@ -341,149 +355,11 @@ API:</p>
 <span><span class="va">executeResults</span> <span class="op">&lt;-</span> <span class="fu">CohortIncidence</span><span class="fu">::</span><span class="fu"><a href="../reference/executeAnalysis.html">executeAnalysis</a></span><span class="op">(</span>connectionDetails <span class="op">=</span> <span class="va">connectionDetails</span>,</span>
 <span>                                                   incidenceDesign <span class="op">=</span> <span class="va">irDesign</span>,</span>
 <span>                                                   buildOptions <span class="op">=</span> <span class="va">buildOptions</span><span class="op">)</span></span></code></pre></div>
-<p>The results will contain the same table structure as the results
-schema <code>incidence_summary</code>:</p>
-<table class="table">
-<colgroup>
-<col width="38%">
-<col width="61%">
-</colgroup>
-<thead><tr class="header">
-<th>Name</th>
-<th>Description</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>REF_ID</td>
-<td>The reference id specified in buildOptions() to track results to the
-analysis execution.</td>
-</tr>
-<tr class="even">
-<td>SOURCE_NAME</td>
-<td>The name of the source for these results</td>
-</tr>
-<tr class="odd">
-<td>TARGET_COHORT_DEFIITION_ID</td>
-<td>The cohort ID of the target population</td>
-</tr>
-<tr class="even">
-<td>TARGET_NAME</td>
-<td>The name of the target cohort</td>
-</tr>
-<tr class="odd">
-<td>TAR_ID</td>
-<td>The TAR identifier</td>
-</tr>
-<tr class="even">
-<td>TAR_START_WITH</td>
-<td>Indicates if the TAR starts with the ‘start’ or ‘end’ of the target
-cohort episode</td>
-</tr>
-<tr class="odd">
-<td>TAR_START_OFFSET</td>
-<td>The days added to the date field specified in TAR_START_WITH</td>
-</tr>
-<tr class="even">
-<td>TAR_END_WITH</td>
-<td>Indicates if the TAR ends with the ‘start’ or ‘end’ of the target
-cohort episode</td>
-</tr>
-<tr class="odd">
-<td>TAR_END_OFFSET</td>
-<td>The days added to the date field specified in TAR_END_WITH</td>
-</tr>
-<tr class="even">
-<td>SUBGROUP_ID</td>
-<td>The subgroup identifier</td>
-</tr>
-<tr class="odd">
-<td>SUBGROUP_NAME</td>
-<td>The name of the subgroup</td>
-</tr>
-<tr class="even">
-<td>OUTCOME_ID</td>
-<td>The outcome identifier</td>
-</tr>
-<tr class="odd">
-<td>OUTCOME_COHORT_DEFINITION_ID</td>
-<td>The cohort ID of the outcome population</td>
-</tr>
-<tr class="even">
-<td>OUTCOME_NAME</td>
-<td>The outcome name</td>
-</tr>
-<tr class="odd">
-<td>CLEAN_WINDOW</td>
-<td>The clean window for this outcome definition</td>
-</tr>
-<tr class="even">
-<td>AGE_ID</td>
-<td>The age ID for this strata representing the age band specified in
-the strata settings</td>
-</tr>
-<tr class="odd">
-<td>AGE_GROUP_NAME</td>
-<td>The name for this age group</td>
-</tr>
-<tr class="even">
-<td>GENDER_ID</td>
-<td>The gender concept ID for this gender strata</td>
-</tr>
-<tr class="odd">
-<td>GENDER_NAME</td>
-<td>The name of the gender</td>
-</tr>
-<tr class="even">
-<td>START_YEAR</td>
-<td>The year strata, defined by using the year the TAR started</td>
-</tr>
-<tr class="odd">
-<td>PERSONS_AT_RISK_PE</td>
-<td>Distinct persons at risk before removing excluded time from TAR</td>
-</tr>
-<tr class="even">
-<td>PERSONS_AT_RISK</td>
-<td>Distinct persons at risk after removing excluded time from TAR. A
-person must have at least 1 day TAR to be included.</td>
-</tr>
-<tr class="odd">
-<td>PERSON_DAYS_PE</td>
-<td>Total TAR (in days) before excluded time was removed from TAR.</td>
-</tr>
-<tr class="even">
-<td>PERSON_DAYS</td>
-<td>Total TAR (in days) after excluded time was removed from TAR.</td>
-</tr>
-<tr class="odd">
-<td>PERSON_OUTCOMES_PE</td>
-<td>Distinct persons with outcome before removing excluded time from
-TAR</td>
-</tr>
-<tr class="even">
-<td>PERSON_OUTCOMES</td>
-<td>Distinct persons with outcome after removing excluded time from TAR.
-A person must have at least 1 day TAR to be included.</td>
-</tr>
-<tr class="odd">
-<td>OUTCOMES_PE</td>
-<td>Number of cases before excluding TAR.</td>
-</tr>
-<tr class="even">
-<td>OUTCOMES</td>
-<td>Number of cases after excluding TAR.</td>
-</tr>
-<tr class="odd">
-<td>INCIDENCE_PROPORTION_P100P</td>
-<td>The Incidence Proportion (per 100 people), calculated by
-person_outcomes / persons_at_risk * 100</td>
-</tr>
-<tr class="even">
-<td>INCIDENCE_RATE_P100PY</td>
-<td>The Incidence Rate (per 100 person years), calculated by outcomes /
-person_days / 365.25 * 100</td>
-</tr>
-</tbody>
-</table>
+<p><code><a href="../reference/executeAnalysis.html">executeAnalysis()</a></code> will return a list of dataframes with
+the following fields: - incidenceSummary - targetDef - outcomeDef -
+tarDef - ageGroupDef - subgroupDef</p>
+<p>These dataframes follow the same structure as the corresponding
+tables described in the Database Preparation section.</p>
 </div>
 </div>
 <div class="section level2">
@@ -791,7 +667,7 @@ the analysis SQL:</p>
 <span><span class="co">#&gt; /*</span></span>
 <span><span class="co">#&gt; 5) aggregate tar and excluded+outcome</span></span>
 <span><span class="co">#&gt; */</span></span>
-<span><span class="co">#&gt; WITH tar_overall (target_cohort_definition_id, tar_id, subgroup_id, subject_id, start_date, end_date, age_group_id, gender_id, start_year)</span></span>
+<span><span class="co">#&gt; WITH tar_overall (target_cohort_definition_id, tar_id, subgroup_id, subject_id, start_date, end_date, age, gender_id, start_year)</span></span>
 <span><span class="co">#&gt; AS (</span></span>
 <span><span class="co">#&gt;   SELECT te.cohort_definition_id as target_cohort_definition_id,</span></span>
 <span><span class="co">#&gt;     te.tar_id,</span></span>
@@ -799,14 +675,11 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;     te.subject_id,</span></span>
 <span><span class="co">#&gt;     te.start_date,</span></span>
 <span><span class="co">#&gt;     te.end_date,</span></span>
-<span><span class="co">#&gt;     ag.age_group_id,</span></span>
+<span><span class="co">#&gt;     YEAR(te.start_date) - p.year_of_birth as age,</span></span>
 <span><span class="co">#&gt;     p.gender_concept_id as gender_id,</span></span>
 <span><span class="co">#&gt;     YEAR(te.start_date) as start_year</span></span>
 <span><span class="co">#&gt;   FROM #TTAR_erafied te</span></span>
 <span><span class="co">#&gt;   JOIN mycdm.person p on te.subject_id = p.person_id</span></span>
-<span><span class="co">#&gt;   LEFT JOIN myresults.age_group_def ag ON YEAR(te.start_date) - p.year_of_birth  &gt;= coalesce(ag.min_age, -999) </span></span>
-<span><span class="co">#&gt;    and YEAR(te.start_date) - p.year_of_birth  &lt; coalesce(ag.max_age, 999)</span></span>
-<span><span class="co">#&gt;    and ag.ref_id = 1</span></span>
 <span><span class="co">#&gt; )</span></span>
 <span><span class="co">#&gt; select target_cohort_definition_id, tar_id, subgroup_id, age_group_id, gender_id, start_year, person_days_pe, persons_at_risk_pe</span></span>
 <span><span class="co">#&gt; INTO #tar_agg</span></span>
@@ -820,11 +693,12 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;     SUM(CAST((DATEDIFF(day,t1.start_date,t1.end_date) + 1) as bigint)) as person_days_pe,</span></span>
 <span><span class="co">#&gt;     COUNT(distinct t1.subject_id) as persons_at_risk_pe</span></span>
 <span><span class="co">#&gt;   FROM tar_overall t1</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   GROUP BY t1.target_cohort_definition_id, t1.tar_id, t1.subgroup_id</span></span>
 <span><span class="co">#&gt; ) T_OVERALL</span></span>
 <span><span class="co">#&gt; ;</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; WITH outcomes_overall (target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id, age_group_id, gender_id, start_year, excluded_days, tar_days, outcomes_pe, outcomes)</span></span>
+<span><span class="co">#&gt; WITH outcomes_overall (target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id, age, gender_id, start_year, excluded_days, tar_days, outcomes_pe, outcomes)</span></span>
 <span><span class="co">#&gt;  AS (</span></span>
 <span><span class="co">#&gt;   SELECT </span></span>
 <span><span class="co">#&gt;     t1.cohort_definition_id as target_cohort_definition_id,</span></span>
@@ -832,7 +706,7 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;     t1.subgroup_id,</span></span>
 <span><span class="co">#&gt;     op.outcome_id,</span></span>
 <span><span class="co">#&gt;     t1.subject_id,</span></span>
-<span><span class="co">#&gt;     ag.age_group_id,</span></span>
+<span><span class="co">#&gt;     YEAR(t1.start_date) - p.year_of_birth as age,</span></span>
 <span><span class="co">#&gt;     p.gender_concept_id as gender_id,</span></span>
 <span><span class="co">#&gt;     YEAR(t1.start_date) as start_year,</span></span>
 <span><span class="co">#&gt;     coalesce(e1.person_days, 0) as excluded_days,</span></span>
@@ -841,9 +715,6 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;     coalesce(o1.outcomes, 0) as outcomes</span></span>
 <span><span class="co">#&gt;   FROM #TTAR_erafied t1</span></span>
 <span><span class="co">#&gt;   JOIN mycdm.person p ON t1.subject_id = p.person_id</span></span>
-<span><span class="co">#&gt;   LEFT JOIN myresults.age_group_def ag ON YEAR(t1.start_date) - p.year_of_birth  &gt;= coalesce(ag.min_age, -999) </span></span>
-<span><span class="co">#&gt;     AND YEAR(t1.start_date) - p.year_of_birth  &lt; coalesce(ag.max_age, 999)</span></span>
-<span><span class="co">#&gt;     AND ag.ref_id = 1</span></span>
 <span><span class="co">#&gt;   JOIN ( -- get the list of TTSO of anyone with excluded time or outcomes to limit result</span></span>
 <span><span class="co">#&gt;     select target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id, start_date FROM #excluded_person_days</span></span>
 <span><span class="co">#&gt;     UNION -- will remove dupes</span></span>
@@ -886,6 +757,7 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;     SUM(t1.outcomes_pe) as outcomes_pe,</span></span>
 <span><span class="co">#&gt;     SUM(t1.outcomes) as outcomes</span></span>
 <span><span class="co">#&gt;   FROM outcomes_overall t1</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   GROUP BY target_cohort_definition_id, tar_id, subgroup_id, outcome_id</span></span>
 <span><span class="co">#&gt; ) O_OVERALL</span></span>
 <span><span class="co">#&gt; ;</span></span>
@@ -937,7 +809,6 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;   AND coalesce(ta.age_group_id,-1) = coalesce(oa.age_group_id,-1)</span></span>
 <span><span class="co">#&gt;   AND coalesce(ta.gender_id,-1) = coalesce(oa.gender_id,-1)</span></span>
 <span><span class="co">#&gt;   AND coalesce(ta.start_year, -1) = coalesce(oa.start_year,-1)</span></span>
-<span><span class="co">#&gt; LEFT JOIN myresults.age_group_def ag on ag.age_group_id = ta.age_group_id</span></span>
 <span><span class="co">#&gt; LEFT JOIN mycdm.concept c on c.concept_id = ta.gender_id</span></span>
 <span><span class="co">#&gt; ;</span></span>
 <span><span class="co">#&gt; </span></span>

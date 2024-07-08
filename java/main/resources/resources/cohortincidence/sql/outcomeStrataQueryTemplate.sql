@@ -12,4 +12,5 @@
     SUM(t1.outcomes_pe) as outcomes_pe,
     SUM(t1.outcomes) as outcomes
   FROM outcomes_overall t1
+@ageGroupJoin
   GROUP BY target_cohort_definition_id, tar_id, subgroup_id, outcome_id@groupCols

@@ -150,13 +150,13 @@ createCohortSubgroup <- function (id, name, description, cohortRef) {
 #' @param ageBreaks a vector of integers indicating the age group bounds.
 #' @return an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.StratifySettings JSON format.
 #' @export
-createStrataSettings <- function (byAge = F, byGender = F, byYear = F, ageBreaks) {
+createStrataSettings <- function (byAge = F, byGender = F, byYear = F, ageBreaks, ageBreakList) {
   strataSettings <- StrataSettings$new()
   
   strataSettings$byAge <- byAge;
   strataSettings$byGender <- byGender;
   strataSettings$byYear <- byYear;
-  if(byAge == T && missing(ageBreaks)) stop ("Error: ageBreaks must be a list of integers with at least 1 element")
+  if(byAge == T && (missing(ageBreaks) || missing(ageBreakList))) stop ("Error: when byAge = TRUE, ageBreaks or ageBreakList must be provided.")
   if (!missing(ageBreaks)) strataSettings$ageBreaks <- ageBreaks;
 
   return(strataSettings);
