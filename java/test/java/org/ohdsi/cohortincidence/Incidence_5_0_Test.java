@@ -16,6 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.ohdsi.analysis.cohortincidence.design.CohortIncidence;
 import org.ohdsi.circe.helper.ResourceHelper;
+import org.ohdsi.sql.SqlRender;
 import org.ohdsi.sql.SqlSplit;
 import org.ohdsi.sql.SqlTranslate;
 import org.slf4j.Logger;
@@ -32,17 +33,18 @@ public class Incidence_5_0_Test extends AbstractDatabaseTest {
 	private static final String CDM_DDL_PATH = "/ddl/cdm_v5.0.sql";
 	private static final String COHORT_DDL_PATH = "/ddl/cohort.sql";
 	private static final String CDM_SCHEMA = "cdm";
-	private static final String VERIFY_TEMPLATE = "select %s from %s order by target_cohort_definition_id, tar_id, subgroup_id, outcome_id, age_id, gender_id, start_year";
+	private static final String VERIFY_TEMPLATE_PATH = "/cohortIncidence/verifyTemplate.sql";
+	private static final String COPY_RESULTS_TEMPLATE_PATH = "/cohortIncidence/copyResultsTemplate.sql";
 
-	private static final String COL_REF_ID = "ref_id";
-	private static final String COL_TARGET_COHORT_ID = "target_cohort_definition_id";
-	private static final String COL_TARGET_NAME = "target_name";
-	private static final String COL_TAR_ID = "tar_id";
-	private static final String COL_SUBGROUP_ID = "subgroup_id";
-	private static final String COL_OUTCOME_ID = "outcome_id";
-	private static final String COL_OUTCOME_NAME = "outcome_name";
-	private static final String COL_AGE_ID = "age_id";
-	private static final String COL_GENDER_ID = "gender_id";
+	private static final String COL_REF_ID = "i.ref_id";
+	private static final String COL_TARGET_COHORT_ID = "i.target_cohort_definition_id";
+	private static final String COL_TARGET_NAME = "td.target_name";
+	private static final String COL_TAR_ID = "i.tar_id";
+	private static final String COL_SUBGROUP_ID = "i.subgroup_id";
+	private static final String COL_OUTCOME_ID = "i.outcome_id";
+	private static final String COL_OUTCOME_NAME = "od.outcome_name";
+	private static final String COL_AGE_GROUP_ID = "i.age_group_id";
+	private static final String COL_GENDER_ID = "i.gender_id";
 	private static final String COL_YEAR_ID = "start_year";
 	private static final String COL_PERSONS_PRE_EXCLUDE = "persons_at_risk_pe";
 	private static final String COL_PERSONS_AT_RISK = "persons_at_risk";
@@ -81,8 +83,11 @@ public class Incidence_5_0_Test extends AbstractDatabaseTest {
 		return options;
 	}
 
-	private String buildVerifyQuery(String tableName, List<String> columns) {
-		String query = String.format(VERIFY_TEMPLATE, StringUtils.join(columns, ","), tableName);
+	private String buildVerifyQuery(String schema, List<String> columns) {
+		String verifyTemplate = ResourceHelper.GetResourceAsString(VERIFY_TEMPLATE_PATH);
+		String query = StringUtils.replace(verifyTemplate, "@results_schema", schema);
+		query = StringUtils.replace(query, "@verify_cols", StringUtils.join(columns, ","));
+		
 		return query;
 	}
 	
@@ -116,7 +121,8 @@ public class Incidence_5_0_Test extends AbstractDatabaseTest {
 				String tempDDL = SqlTranslate.translateSql(Utils.getResultsSchemaDDL(true), "postgresql"); 
 				template.batchUpdate(SqlSplit.splitSql(tempDDL));
 				template.batchUpdate(SqlSplit.splitSql(analysisSql));
-				String exportSql = SqlTranslate.translateSql(String.format("insert into %s.incidence_summary select * from #incidence_summary", RESULTS_SCHEMA), "postgresql");
+				String exportSql = SqlRender.renderSql(ResourceHelper.GetResourceAsString(COPY_RESULTS_TEMPLATE_PATH), new String[]{"results_schema"}, new String[] {RESULTS_SCHEMA});
+				exportSql = SqlTranslate.translateSql(exportSql, "postgresql");
 				template.batchUpdate(SqlSplit.splitSql(exportSql));
 				template.batchUpdate(SqlSplit.splitSql(SqlTranslate.translateSql(Utils.getCleanupSql(true), "postgresql")));
 			}
@@ -129,7 +135,7 @@ public class Incidence_5_0_Test extends AbstractDatabaseTest {
 		// Validate results
 		// Load actual records from cohort table
 		final ITable resultsTable = dbUnitCon.createQueryTable(RESULTS_SCHEMA + ".incidence_summary",
-						buildVerifyQuery(RESULTS_SCHEMA + ".incidence_summary", params.verifyCols)
+						buildVerifyQuery(RESULTS_SCHEMA, params.verifyCols)
 		);
 
 		TableFormatter f = new TableFormatter();
@@ -355,7 +361,7 @@ public class Incidence_5_0_Test extends AbstractDatabaseTest {
 		params.designJson = ResourceHelper.GetResourceAsString("/cohortincidence/timeAtRisk/strataAllTest.json");
 		params.verifyDataSets = new String[]{"/cohortincidence/timeAtRisk/strataAll_VERIFY.json"};
 		params.verifyCols = Arrays.asList(new String[]{COL_REF_ID, COL_TARGET_COHORT_ID, COL_TAR_ID, COL_SUBGROUP_ID, COL_OUTCOME_ID,
-			COL_AGE_ID, COL_GENDER_ID, COL_YEAR_ID,
+			COL_AGE_GROUP_ID, COL_GENDER_ID, COL_YEAR_ID,
 			COL_PERSONS_PRE_EXCLUDE, COL_PERSONS_AT_RISK, COL_PERSONS_DAYS_PRE_EXCLUDE, COL_PERSON_DAYS,
 			COL_PERSON_OUTCOMES_PRE_EXCLUDE, COL_PERSON_OUTCOMES, COL_OUTCOMES_PRE_EXCLUDE, COL_OUTCOMES,
 			COL_INCIDENCE_PROPORTION_P100P, COL_INCIDENCE_RATE_P100PY});
@@ -384,7 +390,36 @@ public class Incidence_5_0_Test extends AbstractDatabaseTest {
 		params.designJson = ResourceHelper.GetResourceAsString("/cohortincidence/timeAtRisk/strataByAgeTest.json");
 		params.verifyDataSets = new String[]{"/cohortincidence/timeAtRisk/strataByAge_VERIFY.json"};
 		params.verifyCols = Arrays.asList(new String[]{COL_REF_ID, COL_TARGET_COHORT_ID, COL_TAR_ID, COL_SUBGROUP_ID, COL_OUTCOME_ID,
-			COL_AGE_ID, COL_GENDER_ID, COL_YEAR_ID,
+			COL_AGE_GROUP_ID, COL_GENDER_ID, COL_YEAR_ID,
+			COL_PERSONS_PRE_EXCLUDE, COL_PERSONS_AT_RISK, COL_PERSONS_DAYS_PRE_EXCLUDE, COL_PERSON_DAYS,
+			COL_PERSON_OUTCOMES_PRE_EXCLUDE, COL_PERSON_OUTCOMES, COL_OUTCOMES_PRE_EXCLUDE, COL_OUTCOMES,
+			COL_INCIDENCE_PROPORTION_P100P, COL_INCIDENCE_RATE_P100PY});
+
+		this.executeTest(params);
+	}
+
+		/**
+	 * Tests multiple people with different age/gender/year strata, but only requests by-age strata
+	 * Person 1: Male, 2 outcomes, 1 excluded, 2 TARs (age 32 and 37).
+	 * Person 2: Female, 2 outcomes, 0 excluded, 2 TARs (age 35 and 37)
+	 * Special notes: Person 1 will start in 1 year but have the TAR exclusion make followup start in next year 
+	 *	to test that start_year is correct (it should use the erafied-start date)
+	 * 
+	 * @throws Exception 
+	 */
+	@Test
+	public void strataByAgeBreakListTest() throws Exception {
+		TestParams params = new TestParams();
+		
+		params.resultSchema = "strata_age_list"; // this must be all lower case for DBUnit to work
+		params.prepDataSets = new String[]{
+			"/datasets/vocabulary.json",
+			"/cohortincidence/timeAtRisk/strataByAgeBreakList_PREP.json"
+		};
+		params.designJson = ResourceHelper.GetResourceAsString("/cohortincidence/timeAtRisk/strataByAgeBreakListTest.json");
+		params.verifyDataSets = new String[]{"/cohortincidence/timeAtRisk/strataByAgeBreakList_VERIFY.json"};
+		params.verifyCols = Arrays.asList(new String[]{COL_REF_ID, COL_TARGET_COHORT_ID, COL_TAR_ID, COL_SUBGROUP_ID, COL_OUTCOME_ID,
+			COL_AGE_GROUP_ID, COL_GENDER_ID, COL_YEAR_ID,
 			COL_PERSONS_PRE_EXCLUDE, COL_PERSONS_AT_RISK, COL_PERSONS_DAYS_PRE_EXCLUDE, COL_PERSON_DAYS,
 			COL_PERSON_OUTCOMES_PRE_EXCLUDE, COL_PERSON_OUTCOMES, COL_OUTCOMES_PRE_EXCLUDE, COL_OUTCOMES,
 			COL_INCIDENCE_PROPORTION_P100P, COL_INCIDENCE_RATE_P100PY});
@@ -413,7 +448,7 @@ public class Incidence_5_0_Test extends AbstractDatabaseTest {
 		params.designJson = ResourceHelper.GetResourceAsString("/cohortincidence/timeAtRisk/strataByGenderTest.json");
 		params.verifyDataSets = new String[]{"/cohortincidence/timeAtRisk/strataByGender_VERIFY.json"};
 		params.verifyCols = Arrays.asList(new String[]{COL_REF_ID, COL_TARGET_COHORT_ID, COL_TAR_ID, COL_SUBGROUP_ID, COL_OUTCOME_ID,
-			COL_AGE_ID, COL_GENDER_ID, COL_YEAR_ID,
+			COL_AGE_GROUP_ID, COL_GENDER_ID, COL_YEAR_ID,
 			COL_PERSONS_PRE_EXCLUDE, COL_PERSONS_AT_RISK, COL_PERSONS_DAYS_PRE_EXCLUDE, COL_PERSON_DAYS,
 			COL_PERSON_OUTCOMES_PRE_EXCLUDE, COL_PERSON_OUTCOMES, COL_OUTCOMES_PRE_EXCLUDE, COL_OUTCOMES,
 			COL_INCIDENCE_PROPORTION_P100P, COL_INCIDENCE_RATE_P100PY});
@@ -462,7 +497,7 @@ public class Incidence_5_0_Test extends AbstractDatabaseTest {
 		params.designJson = ResourceHelper.GetResourceAsString("/cohortincidence/timeAtRisk/partialExcludeTest.json");
 		params.verifyDataSets = new String[]{"/cohortincidence/timeAtRisk/partialExclude_VERIFY.json"};
 		params.verifyCols = Arrays.asList(new String[]{COL_REF_ID, COL_TARGET_COHORT_ID, COL_TAR_ID, COL_SUBGROUP_ID, COL_OUTCOME_ID,
-			COL_AGE_ID, COL_GENDER_ID, COL_YEAR_ID,
+			COL_AGE_GROUP_ID, COL_GENDER_ID, COL_YEAR_ID,
 			COL_PERSONS_PRE_EXCLUDE, COL_PERSONS_AT_RISK, COL_PERSONS_DAYS_PRE_EXCLUDE, COL_PERSON_DAYS,
 			COL_PERSON_OUTCOMES_PRE_EXCLUDE, COL_PERSON_OUTCOMES, COL_OUTCOMES_PRE_EXCLUDE, COL_OUTCOMES,
 			COL_INCIDENCE_PROPORTION_P100P, COL_INCIDENCE_RATE_P100PY});

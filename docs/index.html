@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CohortIncidence Package • CohortIncidence</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">CohortIncidence</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.0.0</span>
       </span>
     </div>
 
@@ -60,7 +60,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://ohdsi.github.io/Hades" class="external-link"><img src='https://ohdsi.github.io/Hades/images/hadesMini.png' width=80 height=17 style='vertical-align: top;'></a>
+  <a href="https://ohdsi.github.io/Hades" class="external-link">hadesLogo</a>
 </li>
 <li>
   <a href="https://github.com/OHDSI/CohortIncidence/" class="external-link">
@@ -84,7 +84,7 @@
 <div class="section level1">
 <div class="page-header"><h1 id="cohortincidence">CohortIncidence<a class="anchor" aria-label="anchor" href="#cohortincidence"></a>
 </h1></div>
-
+<p><a href="https://github.com/OHDSI/CohortIncidence/actions?query=workflow%3AR-CMD-check" class="external-link"><img src="https://github.com/OHDSI/CohortIncidence/workflows/R-CMD-check/badge.svg" alt="Build Status"></a> <a href="https://codecov.io/github/OHDSI/CohortIncidence?branch=master" class="external-link"><img src="https://codecov.io/github/OHDSI/CohortIncidence/coverage.svg?branch=master" alt="codecov.io"></a></p>
 <p>CohortIncidence is part of <a href="https://ohdsi.github.io/Hades" class="external-link">HADES</a>.</p>
 </div>
 <div class="section level1">
@@ -133,19 +133,19 @@
 <ol style="list-style-type: decimal">
 <li>First add the OHDSI Nexus repository so that maven can find and download the artifact automatically:</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">repositories</span>&gt;</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">repository</span>&gt;</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">id</span>&gt;ohdsi&lt;/<span class="kw">id</span>&gt;</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">name</span>&gt;repo.ohdsi.org&lt;/<span class="kw">name</span>&gt;</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">url</span>&gt;https://repo.ohdsi.org/nexus/content/groups/public&lt;/<span class="kw">url</span>&gt;</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">repository</span>&gt;</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  &lt;/<span class="kw">repositories</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>  &lt;<span class="kw">repositories</span>&gt;</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    &lt;<span class="kw">repository</span>&gt;</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>      &lt;<span class="kw">id</span>&gt;ohdsi&lt;/<span class="kw">id</span>&gt;</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>      &lt;<span class="kw">name</span>&gt;repo.ohdsi.org&lt;/<span class="kw">name</span>&gt;</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>      &lt;<span class="kw">url</span>&gt;https://repo.ohdsi.org/nexus/content/groups/public&lt;/<span class="kw">url</span>&gt;</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    &lt;/<span class="kw">repository</span>&gt;</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  &lt;/<span class="kw">repositories</span>&gt;</span></code></pre></div>
 <p>2: Include the CohortIncidence dependency in your pom.xml</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">dependency</span>&gt;</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">groupId</span>&gt;org.ohdsi.sql&lt;/<span class="kw">groupId</span>&gt;</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">artifactId</span>&gt;CohortIncidence&lt;/<span class="kw">artifactId</span>&gt;</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">version</span>&gt;{latest version}&lt;/<span class="kw">version</span>&gt;</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">dependency</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>&lt;<span class="kw">dependency</span>&gt;</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>    &lt;<span class="kw">groupId</span>&gt;org.ohdsi.sql&lt;/<span class="kw">groupId</span>&gt;</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    &lt;<span class="kw">artifactId</span>&gt;CohortIncidence&lt;/<span class="kw">artifactId</span>&gt;</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    &lt;<span class="kw">version</span>&gt;{latest version}&lt;/<span class="kw">version</span>&gt;</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>&lt;/<span class="kw">dependency</span>&gt;</span></code></pre></div>
 </div>
 </div>
 <div class="section level1">
@@ -218,13 +218,7 @@
 </ul>
 </div>
 
-<div class="dev-status">
-<h2 data-toc-skip>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://github.com/OHDSI/CohortIncidence/actions?query=workflow%3AR-CMD-check" class="external-link"><img src="https://github.com/OHDSI/CohortIncidence/workflows/R-CMD-check/badge.svg" alt="Build Status"></a></li>
-<li><a href="https://codecov.io/github/OHDSI/CohortIncidence?branch=master" class="external-link"><img src="https://codecov.io/github/OHDSI/CohortIncidence/coverage.svg?branch=master" alt="codecov.io"></a></li>
-</ul>
-</div>
+
 
   </div>
 </div>
@@ -237,7 +231,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>

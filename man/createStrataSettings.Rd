@@ -4,7 +4,13 @@
 \alias{createStrataSettings}
 \title{Creates R6 object for StrataSettings}
 \usage{
-createStrataSettings(byAge = F, byGender = F, byYear = F, ageBreaks)
+createStrataSettings(
+  byAge = F,
+  byGender = F,
+  byYear = F,
+  ageBreaks,
+  ageBreakList
+)
 }
 \arguments{
 \item{byAge}{a boolean indicating to stratify by age, defaults to F}
@@ -14,6 +20,8 @@ createStrataSettings(byAge = F, byGender = F, byYear = F, ageBreaks)
 \item{byYear}{a boolean indicating to stratify by year, defaults to F}
 
 \item{ageBreaks}{a vector of integers indicating the age group bounds.}
+
+\item{ageBreakList}{a list of ageBreaks, used to specify multiple age break strata.}
 }
 \value{
 an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.StratifySettings JSON format.

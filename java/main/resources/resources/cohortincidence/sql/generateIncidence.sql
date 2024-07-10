@@ -1,46 +1,31 @@
-select target_cohort_definition_id, target_name
-into #target_ref
+INSERT INTO @results_database_schema.target_def (ref_id, target_cohort_definition_id, target_name)
+select CAST(@ref_id as int) as ref_id, target_cohort_definition_id, target_name
 from (
 @targetRefUnion
-) O
+) T
 ;
 
-select tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset
-into #tar_ref 
+INSERT INTO @results_database_schema.tar_def (ref_id, tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset)
+select CAST(@ref_id as int) as ref_id, tar_id, tar_start_with, tar_start_offset, tar_end_with, tar_end_offset
 FROM (
 @tarRefUnion
 ) T
 ;
 
-select outcome_id, outcome_cohort_definition_id, outcome_name, clean_window, excluded_cohort_definition_id
-into #outcome_ref
+INSERT INTO @results_database_schema.outcome_def (ref_id, outcome_id, outcome_cohort_definition_id, outcome_name, clean_window, excluded_cohort_definition_id)
+select CAST(@ref_id as int) as ref_id, outcome_id, outcome_cohort_definition_id, outcome_name, clean_window, excluded_cohort_definition_id
 from (
 @outcomeRefUnion
 ) O
 ;
 
-select subgroup_id, subgroup_name
-INTO #subgroup_ref
+INSERT INTO @results_database_schema.subgroup_def (ref_id, subgroup_id, subgroup_name)
+select CAST(@ref_id as int) as ref_id, subgroup_id, subgroup_name
 FROM (
 @subgroupRefUnion
 ) S
 ;
 
-create table #age_group
-(
-	age_id int NOT NULL,
-	group_name varchar(50) NOT NULL,
-	min_age int NULL,
-	max_age int NULL
-
-);
-
 @ageGroupInsert
 
 @analysisSql
-
-DROP TABLE #target_ref;
-DROP TABLE #tar_ref;
-DROP TABLE #outcome_ref;
-DROP TABLE #subgroup_ref;
-DROP TABLE #age_group;

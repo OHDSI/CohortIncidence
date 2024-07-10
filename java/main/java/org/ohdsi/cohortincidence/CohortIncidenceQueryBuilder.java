@@ -26,7 +26,8 @@ public class CohortIncidenceQueryBuilder {
 	private static final String COHORT_SUBGROUP_TEMPTABLE_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/cohortSubgroupTempTable.sql");
 	private static final String TAR_STRATA_QUERY_TEMPTABLE_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/tarStrataQueryTemplate.sql");
 	private static final String OUTCOME_STRATA_QUERY_TEMPTABLE_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/outcomeStrataQueryTemplate.sql");
-	private static final String AGE_GROUP_SELECT_TEMPLATE = "select %d as age_id, '%s' as group_name, cast(%s as int) as min_age, cast(%s as int) as max_age";
+	private static final String AGE_GROUP_JOIN = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/ageGroupJoin.sql");
+	private static final String AGE_GROUP_SELECT_TEMPLATE = "select CAST(%d as int) as age_group_id, '%s' as age_group_name, cast(%s as int) as min_age, cast(%s as int) as max_age";
 
 	private static final String NULL_STRATA = "cast(null as int)";
 	
@@ -273,45 +274,47 @@ public class CohortIncidenceQueryBuilder {
 	private String getStrataQueries(String strataTemplate) {
 		ArrayList<String> queries = new ArrayList<>();
 
+		// Note: because age strata can contain overlapping (ie: non-stratified) age breaks, we need to 
+		// apply the ageGroupJoin only on the subqueries that involve age group stratification.
 		// overall strata
 		queries.add(buildStrataQuery(
-				strataTemplate,
-				new String[] {NULL_STRATA + " as age_id", NULL_STRATA + " as gender_id", NULL_STRATA + " as start_year"},
+				StringUtils.replace(strataTemplate, "@ageGroupJoin", ""),
+				new String[] {NULL_STRATA + " as age_group_id", NULL_STRATA + " as gender_id", NULL_STRATA + " as start_year"},
 				new String[] {}
 		));
 
 		// by age
 		if (this.design.strataSettings != null && this.design.strataSettings.byAge) {
 			queries.add(buildStrataQuery(
-							strataTemplate,
-							new String[] {"t1.age_id", NULL_STRATA + " as gender_id", NULL_STRATA + " as start_year"},
-							new String[] {"t1.age_id"}
+							StringUtils.replace(strataTemplate, "@ageGroupJoin", AGE_GROUP_JOIN),
+							new String[]{"ag.age_group_id", NULL_STRATA + " as gender_id", NULL_STRATA + " as start_year"},
+							new String[]{"ag.age_group_id"}
 			));
 
 			// by age, by gender
 			if (this.design.strataSettings.byGender) {
 				queries.add(buildStrataQuery(
-								strataTemplate,
-								new String[] {"t1.age_id", "t1.gender_id", NULL_STRATA + " as start_year"},
-								new String[] {"t1.age_id", "t1.gender_id"}
+								StringUtils.replace(strataTemplate, "@ageGroupJoin", AGE_GROUP_JOIN),
+								new String[]{"ag.age_group_id", "t1.gender_id", NULL_STRATA + " as start_year"},
+								new String[]{"ag.age_group_id", "t1.gender_id"}
 				));
 			}
 
 			// by age, by year
 			if (this.design.strataSettings.byYear) {
 				queries.add(buildStrataQuery(
-								strataTemplate,
-								new String[] {"t1.age_id", NULL_STRATA + " as gender_id", "t1.start_year"},
-								new String[] {"t1.age_id", "t1.start_year"}
+								StringUtils.replace(strataTemplate, "@ageGroupJoin", AGE_GROUP_JOIN),
+								new String[] {"ag.age_group_id", NULL_STRATA + " as gender_id", "t1.start_year"},
+								new String[] {"ag.age_group_id", "t1.start_year"}
 				));
 			}
 
 			// by age, by gender, by year
 			if (this.design.strataSettings.byGender && this.design.strataSettings.byYear) {
 				queries.add(buildStrataQuery(
-								strataTemplate,
-								new String[] {"t1.age_id", "t1.gender_id", "t1.start_year"},
-								new String[] {"t1.age_id", "t1.gender_id", "t1.start_year"}
+								StringUtils.replace(strataTemplate, "@ageGroupJoin", AGE_GROUP_JOIN),
+								new String[] {"ag.age_group_id", "t1.gender_id", "t1.start_year"},
+								new String[] {"ag.age_group_id", "t1.gender_id", "t1.start_year"}
 				));
 			}
 		}
@@ -319,16 +322,16 @@ public class CohortIncidenceQueryBuilder {
 		// by gender
 		if (this.design.strataSettings != null && this.design.strataSettings.byGender) {
 			queries.add(buildStrataQuery(
-							strataTemplate,
-							new String[]{NULL_STRATA + " as age_id", "t1.gender_id", NULL_STRATA + " as start_year"},
+							StringUtils.replace(strataTemplate, "@ageGroupJoin", ""),
+							new String[]{NULL_STRATA + " as age_group_id", "t1.gender_id", NULL_STRATA + " as start_year"},
 							new String[]{"t1.gender_id"}
 			));
 			
 			// by gender, by year
 			if (this.design.strataSettings.byYear) {
 				queries.add(buildStrataQuery(
-								strataTemplate,
-								new String[] {NULL_STRATA + " as age_id", "t1.gender_id", "t1.start_year"},
+								StringUtils.replace(strataTemplate, "@ageGroupJoin", ""),
+								new String[] {NULL_STRATA + " as age_group_id", "t1.gender_id", "t1.start_year"},
 								new String[] {"t1.gender_id", "t1.start_year"}
 				));
 			}
@@ -337,8 +340,8 @@ public class CohortIncidenceQueryBuilder {
 		// by year
 		if (this.design.strataSettings != null && this.design.strataSettings.byYear) {
 			queries.add(buildStrataQuery(
-							strataTemplate,
-							new String[]{NULL_STRATA + " as age_id", NULL_STRATA + "as gender_id", "t1.start_year"},
+							StringUtils.replace(strataTemplate, "@ageGroupJoin", ""),
+							new String[]{NULL_STRATA + " as age_group_id", NULL_STRATA + "as gender_id", "t1.start_year"},
 							new String[]{"t1.start_year"}
 			));
 		}
@@ -356,21 +359,29 @@ public class CohortIncidenceQueryBuilder {
 		if (this.design.strataSettings == null || this.design.strataSettings.byAge == false)
 			return "";
 		
-		if (this.design.strataSettings.ageBreaks.isEmpty())
-			throw new IllegalArgumentException("Invalid strataSettings:  ageBreaks can not be empty.");
+		if (this.design.strataSettings.ageBreaks.isEmpty() && 
+						(this.design.strataSettings.ageBreakList.isEmpty() || this.design.strataSettings.ageBreakList.stream().anyMatch(List::isEmpty)))
+			throw new IllegalArgumentException("Invalid strataSettings:  ageBreaks and ageBreaksList can not both be empty.");
 		
 		ArrayList<String> selects = new ArrayList<>();
-		// "select %d as age_id, '%s' as group_name, cast(%s as int) as min_age, cast(%s as int) as max_age"
-		List<Integer> ageBreaks = this.design.strataSettings.ageBreaks;
-		selects.add(String.format(AGE_GROUP_SELECT_TEMPLATE, 1, "<" + ageBreaks.get(0),"null", ageBreaks.get(0)));
-		
-		for (int i = 0; i < ageBreaks.size() - 1; i++)
-		{
-			selects.add(String.format(AGE_GROUP_SELECT_TEMPLATE, i+2, "" + ageBreaks.get(i) + " - " + (ageBreaks.get(i+1)-1),ageBreaks.get(i), ageBreaks.get(i+1)));
+		List<List<Integer>> ageBreakList = new ArrayList<>(this.design.strataSettings.ageBreakList);
+		if (!this.design.strataSettings.ageBreaks.isEmpty()) {
+			// put the breaks from ageBreaks in the front of the list (for backwards compatability)
+			ageBreakList.add(0,this.design.strataSettings.ageBreaks);
 		}
-		selects.add(String.format(AGE_GROUP_SELECT_TEMPLATE, ageBreaks.size()+1, ">=" + ageBreaks.get(ageBreaks.size()-1),ageBreaks.get(ageBreaks.size()-1), "null"));
 		
-		return String.format("insert into #age_group (age_id, group_name, min_age, max_age)\nselect age_id, group_name, min_age, max_age from (\n%s\n) ag;", 
+		int ageGroupId = 1;
+		for (List<Integer> ageBreaks : ageBreakList) {
+			selects.add(String.format(AGE_GROUP_SELECT_TEMPLATE, ageGroupId++, "<" + ageBreaks.get(0),"null", ageBreaks.get(0)));
+
+			for (int i = 0; i < ageBreaks.size() - 1; i++)
+			{
+				selects.add(String.format(AGE_GROUP_SELECT_TEMPLATE, ageGroupId++, "" + ageBreaks.get(i) + " - " + (ageBreaks.get(i+1)-1),ageBreaks.get(i), ageBreaks.get(i+1)));
+			}
+			selects.add(String.format(AGE_GROUP_SELECT_TEMPLATE, ageGroupId++, ">=" + ageBreaks.get(ageBreaks.size()-1),ageBreaks.get(ageBreaks.size()-1), "null"));
+		}
+		
+		return String.format("insert into @results_database_schema.age_group_def (ref_id, age_group_id, age_group_name, min_age, max_age)\nselect CAST(@ref_id as int) as ref_id, age_group_id, age_group_name, min_age, max_age from (\n%s\n) ag;", 
 						StringUtils.join(selects, "\nUNION ALL\n"));
 	}
 }
