@@ -13,6 +13,6 @@ test_that("executeAnalysis() works", {
   executeResults <- CohortIncidence::executeAnalysis(connectionDetails = connectionDetails,
                                                      incidenceDesign = designJSON,
                                                      buildOptions = buildOptions);
-  requiredNames <- c("incidenceSummary", "targetDef", "outcomeDef", "tarDef", "ageGroupDef", "subgroupDef")
+  requiredNames <- c("incidence_summary", "target_def", "outcome_def", "tar_def", "age_group_def", "subgroup_def")
   expect_true(all(requiredNames %in% names(executeResults)))
 })
