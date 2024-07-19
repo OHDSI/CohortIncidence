@@ -39,7 +39,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://ohdsi.github.io/Hades" class="external-link">hadesLogo</a>
+  <a href="https://ohdsi.github.io/Hades" class="external-link"><img src='https://ohdsi.github.io/Hades/images/hadesMini.png' width=80 height=17 style='vertical-align: top;'></a>
 </li>
 <li>
   <a href="https://github.com/OHDSI/CohortIncidence/" class="external-link">
@@ -60,18 +60,10 @@
     </div>
 
     <table class="ref-index"><colgroup><col class="alias"><col class="title"></colgroup><tbody><tr><th colspan="2">
-          <h2 id="all-functions">All functions <a href="#all-functions" class="anchor" aria-hidden="true"></a></h2>
+          <h2 id="r-classes">R6 Classes <a href="#r-classes" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="buildOptions.html">buildOptions()</a></code> </p>
-        </td>
-        <td><p>Builds the BuilderOptions jObject with the specified paramaters</p></td>
-      </tr><tr><td>
-          <p><code><a href="buildQuery.html">buildQuery()</a></code> </p>
-        </td>
-        <td><p>Builds SQL code to run analyses according given Cohort Characterization design</p></td>
-      </tr><tr><td>
           <p><code><a href="CohortDefinition.html">CohortDefinition</a></code> </p>
         </td>
         <td><p>R6 Class Representing a CohortDefinition</p></td>
@@ -84,6 +76,34 @@
         </td>
         <td><p>R6 Class Representing a Cohort Subgroup definition</p></td>
       </tr><tr><td>
+          <p><code><a href="DateRange.html">DateRange</a></code> </p>
+        </td>
+        <td><p>R6 Class Representing a DataRange</p></td>
+      </tr><tr><td>
+          <p><code><a href="IncidenceAnalysis.html">IncidenceAnalysis</a></code> </p>
+        </td>
+        <td><p>R6 Class Representing a IncidenceAnalysis</p></td>
+      </tr><tr><td>
+          <p><code><a href="IncidenceDesign.html">IncidenceDesign</a></code> </p>
+        </td>
+        <td><p>R6 Class Representing a IncidenceDesign</p></td>
+      </tr><tr><td>
+          <p><code><a href="Outcome.html">Outcome</a></code> </p>
+        </td>
+        <td><p>R6 Class Representing an Outcome definition</p></td>
+      </tr><tr><td>
+          <p><code><a href="StrataSettings.html">StrataSettings</a></code> </p>
+        </td>
+        <td><p>R6 Class Representing the Stratification Settings of a IncidenceDesign</p></td>
+      </tr><tr><td>
+          <p><code><a href="TimeAtRisk.html">TimeAtRisk</a></code> </p>
+        </td>
+        <td><p>R6 Class Representing an Time-at-Risk (TAR) definition</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="r-class-factory-functions">R6 Class Factory Functions <a href="#r-class-factory-functions" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
           <p><code><a href="createCohortRef.html">createCohortRef()</a></code> </p>
         </td>
         <td><p>Creates R6 object for CohortReference</p></td>
@@ -115,10 +135,18 @@
           <p><code><a href="createTimeAtRiskDef.html">createTimeAtRiskDef()</a></code> </p>
         </td>
         <td><p>Creates R6 object for TimeAtRisk</p></td>
-      </tr><tr><td>
-          <p><code><a href="DateRange.html">DateRange</a></code> </p>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="other-functions">Other Functions <a href="#other-functions" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="buildOptions.html">buildOptions()</a></code> </p>
         </td>
-        <td><p>R6 Class Representing a DataRange</p></td>
+        <td><p>Builds the BuilderOptions jObject with the specified paramaters</p></td>
+      </tr><tr><td>
+          <p><code><a href="buildQuery.html">buildQuery()</a></code> </p>
+        </td>
+        <td><p>Builds SQL code to run analyses according given Cohort Characterization design</p></td>
       </tr><tr><td>
           <p><code><a href="executeAnalysis.html">executeAnalysis()</a></code> </p>
         </td>
@@ -131,26 +159,6 @@
           <p><code><a href="getResultsDdl.html">getResultsDdl()</a></code> </p>
         </td>
         <td><p>Gets the results schema DDL for Incidence Analysis</p></td>
-      </tr><tr><td>
-          <p><code><a href="IncidenceAnalysis.html">IncidenceAnalysis</a></code> </p>
-        </td>
-        <td><p>R6 Class Representing a IncidenceAnalysis</p></td>
-      </tr><tr><td>
-          <p><code><a href="IncidenceDesign.html">IncidenceDesign</a></code> </p>
-        </td>
-        <td><p>R6 Class Representing a IncidenceDesign</p></td>
-      </tr><tr><td>
-          <p><code><a href="Outcome.html">Outcome</a></code> </p>
-        </td>
-        <td><p>R6 Class Representing an Outcome definition</p></td>
-      </tr><tr><td>
-          <p><code><a href="StrataSettings.html">StrataSettings</a></code> </p>
-        </td>
-        <td><p>R6 Class Representing the Stratification Settings of a IncidenceDesign</p></td>
-      </tr><tr><td>
-          <p><code><a href="TimeAtRisk.html">TimeAtRisk</a></code> </p>
-        </td>
-        <td><p>R6 Class Representing an Time-at-Risk (TAR) definition</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -14,3 +14,24 @@ navbar:
     hades:
       text: hadesLogo
       href: https://ohdsi.github.io/Hades
+
+reference:
+  - title: "R6 Classes"
+  - contents:
+    - CohortDefinition
+    - CohortReference
+    - CohortSubgroup
+    - DateRange
+    - IncidenceAnalysis
+    - IncidenceDesign
+    - Outcome
+    - StrataSettings
+    - TimeAtRisk
+  - title: "R6 Class Factory Functions"
+  - contents: 
+    - starts_with("create")
+  - title: "Other Functions"
+  - contents: 
+    - starts_with("build")
+    - starts_with("execute")
+    - starts_with("get")

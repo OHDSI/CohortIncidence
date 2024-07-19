@@ -39,7 +39,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://ohdsi.github.io/Hades" class="external-link">hadesLogo</a>
+  <a href="https://ohdsi.github.io/Hades" class="external-link"><img src='https://ohdsi.github.io/Hades/images/hadesMini.png' width=80 height=17 style='vertical-align: top;'></a>
 </li>
 <li>
   <a href="https://github.com/OHDSI/CohortIncidence/" class="external-link">
@@ -119,7 +119,7 @@ should be specified.</p></dd>
 - 2. Exclusion cohort that was specified in the outcome definition excludeCohortId.
 - Count the distinct persons, distinct persons with cases, total time at risk and total cases, and calcuate the proportion and rates.</p>
 <p>The resut contains the following dataframes:</p>
-<p>incidenceSummary:</p>
+<p>incidence_summary:</p>
 <p>|Name |Description|
 |-----|--------|
 |REF_ID|The reference id specified in buildOptions() to track results to the analysis execution.|
@@ -142,13 +142,13 @@ should be specified.</p></dd>
 |OUTCOMES|Number of cases after excluding TAR.|
 |INCIDENCE_PROPORTION_P100P|The Incidence Proportion (per 100 people), calculated by person_outcomes / persons_at_risk * 100|
 |INCIDENCE_RATE_P100PY|The Incidence Rate (per 100 person years), calculated by outcomes / person_days / 365.25 * 100|
-targetDef:
+target_def:
 |Name |Description|
 |-----|--------|
 |REF_ID|The reference id specified in buildOptions() to track results to the analysis execution.|
 |TARGET_COHORT_DEFIITION_ID|The cohort ID of the target population|
 |TARGET_NAME|The name of the target cohort|</p>
-<p>outcomeDef:</p>
+<p>outcome_def:</p>
 <p>|Name |Description|
 |-----|--------|
 |REF_ID|The reference id specified in buildOptions() to track results to the analysis execution.|
@@ -157,7 +157,7 @@ targetDef:
 |OUTCOME_NAME|The outcome name|
 |CLEAN_WINDOW|The clean window for this outcome definition|
 |EXCLUDED_COHORT_DEFINITION_ID|The cohort used to exclude TAR</p>
-<p>tarDef:</p>
+<p>tar_def:</p>
 <p>|Name |Description|
 |-----|--------|
 |REF_ID|The reference id specified in buildOptions() to track results to the analysis execution.|
@@ -166,7 +166,7 @@ targetDef:
 |TAR_START_OFFSET|The days added to the date field specified in TAR_START_WITH|
 |TAR_END_WITH|Indicates if the TAR ends with the 'start' or 'end' of the target cohort episode|
 |TAR_END_OFFSET|The days added to the date field specified in TAR_END_WITH|</p>
-<p>ageGroupDef:</p>
+<p>age_group_def:</p>
 <p>|Name |Description|
 |-----|--------|
 |REF_ID|The reference id specified in buildOptions() to track results to the analysis execution.|
@@ -175,7 +175,7 @@ targetDef:
 |MIN_AGE|The minimum age for this group|
 |MAX_AGE|the max age for this group|</p>
 
-<p>subGroupDef:</p>
+<p>subgroup_def:</p>
 <p>|Name |Description|
 |-----|--------|
 |REF_ID|The reference id specified in buildOptions() to track results to the analysis execution.|
