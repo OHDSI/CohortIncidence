@@ -197,6 +197,6 @@ jobs:
       - name: Synchronize main
         if: ${{ env.new_version != '' }}
         run: |
-          git update-ref refs/heads/main ${{ env.new_version }}
+          git update-ref refs/heads/main master
           git push origin +main
 
