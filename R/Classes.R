@@ -47,7 +47,7 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
     .studyWindow=NA
   ),
   active = list(
-    #' @field cohortDefs A list of cohort definitions.  Must be a list of class "CohortDefinition"
+    #' @field cohortDefs A list of cohort definitions.  Must be a list of \link[=CohortDefinition]{CohortDefinition}
     cohortDefs = function(cohortDefs) {
       if (missing(cohortDefs)) {
         private$.cohortDefs
@@ -69,7 +69,7 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
         self
       }
     },
-    #' @field targetDefs A list of cohort references to be used as target cohorts.  Must be a list of class "CohortReference"
+    #' @field targetDefs A list of cohort references to be used as target cohorts.  Must be a list of \link[=CohortReference]{CohortReference}
     targetDefs = function(targetDefs) {
       if (missing(targetDefs)) {
         private$.targetDefs
@@ -80,7 +80,7 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
         self
       }
     },
-    #' @field outcomeDefs A list of cohort references to be used as target cohorts.  Must be a list of class "CohortReference"
+    #' @field outcomeDefs A list of outcome definitions.  Must be a list of \link[=Outcome]{Outcome}
     outcomeDefs = function(outcomeDefs) {
       if (missing(outcomeDefs)) {
         private$.outcomeDefs
@@ -91,7 +91,7 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
         self
       }
     },
-    #' @field timeAtRiskDefs A list of cohort references to be used as target cohorts.  Must be a list of class "CohortReference"
+    #' @field timeAtRiskDefs A list of time-at-risk definitions.  Must be a list of \link[=TimeAtRisk]{TimeAtRisk}
     timeAtRiskDefs = function(timeAtRiskDefs) {
       if (missing(timeAtRiskDefs)) {
         private$.timeAtRiskDefs
@@ -102,7 +102,7 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
         self
       }
     },
-    #' @field analysisList A list of cohort references to be used as target cohorts.  Must be a list of class "CohortReference"
+    #' @field analysisList A list of analyses, containing the T-O-TAR combinations to perform.  Must be a list of \link[=IncidenceAnalysis]{IncidenceAnalysis}
     analysisList = function(analysisList) {
       if (missing(analysisList)) {
         private$.analysisList
@@ -113,7 +113,7 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
         self
       }
     },
-    #' @field subgroups A list of cohort references to be used as target cohorts.  Must be a list of class "CohortReference"
+    #' @field subgroups A list of subgroups.  Must be a list of \link[=CohortSubgroup]{CohortSubgroup}
     subgroups = function(subgroups) {
       if (missing(subgroups)) {
         private$.subgroups
@@ -124,7 +124,7 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
         self
       }
     },
-    #' @field strataSettings The strata settings for this design.  Must be a class "StrataSettings"
+    #' @field strataSettings The strata settings for this design.  Must be a class \link[=StrataSettings]{StrataSettings}
     strataSettings = function(strataSettings) {
       if (missing(strataSettings)) {
         private$.strataSettings
@@ -135,7 +135,7 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
         self
       }
     },
-    #' @field studyWindow a study window for this design.  Must be a list of class "DateRange"
+    #' @field studyWindow a study window for this design.  Must be a list of class \link[=DateRange]{DateRange}
     studyWindow = function(studyWindow) {
       if (missing(studyWindow)) {
         private$.studyWindow
