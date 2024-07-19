@@ -47,7 +47,7 @@ The process for calculating the cohort incidence is as follows:
 
 The resut contains the following dataframes:
 
-incidenceSummary:
+incidence_summary:
 
 |Name |Description|
 |-----|--------|
@@ -71,14 +71,14 @@ incidenceSummary:
 |OUTCOMES|Number of cases after excluding TAR.|
 |INCIDENCE_PROPORTION_P100P|The Incidence Proportion (per 100 people), calculated by person_outcomes / persons_at_risk * 100|
 |INCIDENCE_RATE_P100PY|The Incidence Rate (per 100 person years), calculated by outcomes / person_days / 365.25 * 100|
-targetDef:
+target_def:
 |Name |Description|
 |-----|--------|
 |REF_ID|The reference id specified in buildOptions() to track results to the analysis execution.|
 |TARGET_COHORT_DEFIITION_ID|The cohort ID of the target population|
 |TARGET_NAME|The name of the target cohort|
 
-outcomeDef:
+outcome_def:
 
 |Name |Description|
 |-----|--------|
@@ -89,7 +89,7 @@ outcomeDef:
 |CLEAN_WINDOW|The clean window for this outcome definition|
 |EXCLUDED_COHORT_DEFINITION_ID|The cohort used to exclude TAR
 
-tarDef:
+tar_def:
 
 |Name |Description|
 |-----|--------|
@@ -100,7 +100,7 @@ tarDef:
 |TAR_END_WITH|Indicates if the TAR ends with the 'start' or 'end' of the target cohort episode|
 |TAR_END_OFFSET|The days added to the date field specified in TAR_END_WITH|
 
-ageGroupDef:
+age_group_def:
 
 |Name |Description|
 |-----|--------|
@@ -111,7 +111,7 @@ ageGroupDef:
 |MAX_AGE|the max age for this group|
 
 
-subGroupDef:
+subgroup_def:
 
 |Name |Description|
 |-----|--------|
