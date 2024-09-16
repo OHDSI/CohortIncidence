@@ -17,6 +17,7 @@ code to implement calculation using the inputs above, no need to modify beyond t
 **************************************/
 
 -- 1) create T + TAR periods
+DROP TABLE IF EXISTS #TTAR_erafied_all;
 
 --HINT DISTRIBUTE_ON_KEY(subject_id)
 select subject_id, cohort_definition_id, tar_id, cast(0 as int) as subgroup_id, start_date, @tarEndDateExpression 
@@ -79,6 +80,7 @@ FROM (
 @studyWindowWhereClause
 ;
 
+DROP TABLE IF EXISTS #subgroup_person;
 
 create table #subgroup_person
 (
@@ -89,12 +91,16 @@ create table #subgroup_person
 
 @subgroupQueries
 
+DROP TABLE IF EXISTS #TTAR_erafied_sg;
+
 --HINT DISTRIBUTE_ON_KEY(subject_id)
 select tea.subject_id, tea.cohort_definition_id, tea.tar_id, s.subgroup_id, tea.start_date, tea.end_date 
 into #TTAR_erafied_sg
 FROM #TTAR_erafied_all tea
 JOIN #subgroup_person s on tea.subject_id = s.subject_id and tea.start_date = s.start_date
 ;
+
+DROP TABLE IF EXISTS #TTAR_erafied;
 
 --HINT DISTRIBUTE_ON_KEY(subject_id)
 SELECT subject_id, cohort_definition_id, tar_id, subgroup_id, start_date, end_date
@@ -117,6 +123,8 @@ DROP TABLE #TTAR_erafied_sg;
 --three ways for entry into excluded
 --1:  duration of outcome periods  (ex:  immortal time due to clean period)
 --2:  other periods excluded  (ex: persons post-appendectomy for appendicitis)
+
+DROP TABLE IF EXISTS #excluded_tar_cohort;
 
 --HINT DISTRIBUTE_ON_KEY(subject_id)
 select subject_id, outcome_id, min(start_date) as start_date, max(end_date) as end_date 
@@ -152,6 +160,8 @@ from (
 ) GR
 GROUP BY subject_id, outcome_id, group_idx;
 
+DROP TABLE IF EXISTS #exc_TTAR_o_erafied;
+
 --HINT DISTRIBUTE_ON_KEY(subject_id)
 select  ec1.subject_id,
   te1.cohort_definition_id as target_cohort_definition_id,
@@ -169,6 +179,7 @@ inner join #excluded_tar_cohort ec1 on te1.subject_id = ec1.subject_id
 
 -- 3) calculate pre-exclude outcomes and outcomes 
 -- calculate pe_outcomes and outcomes by T, TAR, O, Subject, TAR start
+DROP TABLE IF EXISTS #outcome_smry;
 
 --HINT DISTRIBUTE_ON_KEY(subject_id)
 select t1.cohort_definition_id as target_cohort_definition_id,
@@ -202,6 +213,8 @@ group by t1.cohort_definition_id, t1.tar_id, t1.subgroup_id, t1.subject_id, t1.s
 
 -- 4) calculate exclsion time per T/O/TAR/Subject/start_date
 
+DROP TABLE IF EXISTS #excluded_person_days;
+
 --HINT DISTRIBUTE_ON_KEY(subject_id)
 SELECT EX.target_cohort_definition_id, EX.tar_id, EX.subgroup_id, EX.subject_id, EX.start_date, EX.outcome_id, EX.person_days
 INTO #excluded_person_days
@@ -231,6 +244,8 @@ FROM (
 /*
 5) aggregate tar and excluded+outcome
 */
+DROP TABLE IF EXISTS #tar_agg;
+
 WITH tar_overall (target_cohort_definition_id, tar_id, subgroup_id, subject_id, start_date, end_date, age, gender_id, start_year)
 AS (
   SELECT te.cohort_definition_id as target_cohort_definition_id,
@@ -251,6 +266,8 @@ FROM (
   @tarStrataQueries
 ) T_OVERALL
 ;
+
+DROP TABLE IF EXISTS #outcome_agg;
 
 WITH outcomes_overall (target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id, age, gender_id, start_year, excluded_days, tar_days, outcomes_pe, outcomes)
  AS (
@@ -300,6 +317,7 @@ FROM
 ;
 
 -- 6) Create analysis_ref to produce each T/O/TAR/S combo
+DROP TABLE IF EXISTS #tscotar_ref;
 
 SELECT t1.target_cohort_definition_id,
   tar1.tar_id,
@@ -313,6 +331,7 @@ FROM (SELECT target_cohort_definition_id FROM @results_database_schema.target_de
 ;
 
 -- 7) Insert into final table: calculate results via #tar_agg and #outcome_agg for all TSCOTAR combinations
+DROP TABLE IF EXISTS #incidence_summary;
 
 INSERT INTO @results_database_schema.incidence_summary (ref_id, source_name, target_cohort_definition_id,
   tar_id, subgroup_id, outcome_id, age_group_id, gender_id, gender_name, start_year,

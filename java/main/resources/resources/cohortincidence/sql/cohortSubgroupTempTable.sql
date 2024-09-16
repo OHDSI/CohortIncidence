@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS #subgroup_person;
+
 INSERT INTO #subgroup_person (subgroup_id, subject_id, start_date)
 select distinct cast(@subgroupId as int) as subgroup_id, t1.subject_id, t1.start_date
 FROM #TTAR_erafied_all t1
