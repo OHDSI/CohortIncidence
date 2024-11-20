@@ -346,7 +346,7 @@ CohortReference <- R6::R6Class("CohortReference",
        private$.name
      } else {
        # check type
-       checkmate::assertCharacter(name)
+       checkmate::assertCharacter(name, len = 1)
        private$.name <- name
        self
      }
@@ -432,7 +432,7 @@ Outcome <- R6::R6Class("Outcome",
         private$.name
       } else {
         # check type
-        checkmate::assertCharacter(name)
+        checkmate::assertCharacter(name, len = 1)
         private$.name <- name
         self
       }
@@ -673,7 +673,7 @@ CohortSubgroup <- R6::R6Class("CohortSubgroup",
         private$.name
       } else {
         # check type
-        checkmate::assertCharacter(name)
+        checkmate::assertCharacter(name, len = 1)
         private$.name <- name
         self
       }
