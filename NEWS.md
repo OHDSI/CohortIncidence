@@ -1,3 +1,10 @@
+# CohortIncidence 4.0.1
+===========
+
+Fixed issue where excluded persons was not calculated correctly.
+
+
+
 # CohortIncidence 4.0.0
 ===========
 
