@@ -1,3 +1,13 @@
+# CohortIncidence 4.1.0
+===========
+
+## New Features
+
+You can now specify age breaks as a list via the ageBreakList paramater in StrataSettings.
+
+
+
+
 # CohortIncidence 4.0.0
 ===========
 

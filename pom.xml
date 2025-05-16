@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ohdsi</groupId>
 	<artifactId>CohortIncidence</artifactId>
-	<version>4.0.0</version>
+	<version>4.1.0</version>
 	<build>
 		<sourceDirectory>${basedir}/java/main/java</sourceDirectory>
 		<outputDirectory>${basedir}/target/classes</outputDirectory>
@@ -149,7 +149,7 @@
 		<dependency>
 			<groupId>org.ohdsi</groupId>
 			<artifactId>standardized-analysis-specs</artifactId>
-			<version>1.6.0-SNAPSHOT</version>
+			<version>1.6.0</version>
 		</dependency>  
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
