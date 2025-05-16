@@ -22,23 +22,23 @@ before calling jsonlite::toJSON(), or call toJSON directy on this class.
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{cohortDefs}}{A list of cohort definitions.  Must be a list of class "CohortDefinition"}
+\item{\code{cohortDefs}}{A list of cohort definitions.  Must be a list of \link[=CohortDefinition]{CohortDefinition}}
 
 \item{\code{conceptSets}}{A list of concept set expressions.  Currently unused.}
 
-\item{\code{targetDefs}}{A list of cohort references to be used as target cohorts.  Must be a list of class "CohortReference"}
+\item{\code{targetDefs}}{A list of cohort references to be used as target cohorts.  Must be a list of \link[=CohortReference]{CohortReference}}
 
-\item{\code{outcomeDefs}}{A list of cohort references to be used as target cohorts.  Must be a list of class "CohortReference"}
+\item{\code{outcomeDefs}}{A list of outcome definitions.  Must be a list of \link[=Outcome]{Outcome}}
 
-\item{\code{timeAtRiskDefs}}{A list of cohort references to be used as target cohorts.  Must be a list of class "CohortReference"}
+\item{\code{timeAtRiskDefs}}{A list of time-at-risk definitions.  Must be a list of \link[=TimeAtRisk]{TimeAtRisk}}
 
-\item{\code{analysisList}}{A list of cohort references to be used as target cohorts.  Must be a list of class "CohortReference"}
+\item{\code{analysisList}}{A list of analyses, containing the T-O-TAR combinations to perform.  Must be a list of \link[=IncidenceAnalysis]{IncidenceAnalysis}}
 
-\item{\code{subgroups}}{A list of cohort references to be used as target cohorts.  Must be a list of class "CohortReference"}
+\item{\code{subgroups}}{A list of subgroups.  Must be a list of \link[=CohortSubgroup]{CohortSubgroup}}
 
-\item{\code{strataSettings}}{The strata settings for this design.  Must be a class "StrataSettings"}
+\item{\code{strataSettings}}{The strata settings for this design.  Must be a class \link[=StrataSettings]{StrataSettings}}
 
-\item{\code{studyWindow}}{a study window for this design.  Must be a list of class "DateRange"}
+\item{\code{studyWindow}}{a study window for this design.  Must be a list of class \link[=DateRange]{DateRange}}
 }
 \if{html}{\out{</div>}}
 }

@@ -40,7 +40,7 @@
 #' 
 #' The resut contains the following dataframes:
 #' 
-#' incidenceSummary:
+#' incidence_summary:
 #' 
 #' |Name |Description|
 #' |-----|--------|
@@ -65,7 +65,7 @@
 #' |INCIDENCE_PROPORTION_P100P|The Incidence Proportion (per 100 people), calculated by person_outcomes / persons_at_risk * 100|
 #' |INCIDENCE_RATE_P100PY|The Incidence Rate (per 100 person years), calculated by outcomes / person_days / 365.25 * 100|
 #`
-#' targetDef:
+#' target_def:
 
 #' |Name |Description|
 #' |-----|--------|
@@ -73,7 +73,7 @@
 #' |TARGET_COHORT_DEFIITION_ID|The cohort ID of the target population|
 #' |TARGET_NAME|The name of the target cohort|
 #' 
-#' outcomeDef:
+#' outcome_def:
 #'
 #' |Name |Description|
 #' |-----|--------|
@@ -84,7 +84,7 @@
 #' |CLEAN_WINDOW|The clean window for this outcome definition|
 #' |EXCLUDED_COHORT_DEFINITION_ID|The cohort used to exclude TAR
 #' 
-#' tarDef:
+#' tar_def:
 #'
 #' |Name |Description|
 #' |-----|--------|
@@ -95,7 +95,7 @@
 #' |TAR_END_WITH|Indicates if the TAR ends with the 'start' or 'end' of the target cohort episode|
 #' |TAR_END_OFFSET|The days added to the date field specified in TAR_END_WITH|
 #' 
-#' ageGroupDef:
+#' age_group_def:
 #'
 #' |Name |Description|
 #' |-----|--------|
@@ -106,7 +106,7 @@
 #' |MAX_AGE|the max age for this group|
 #' 
 #' 
-#' subGroupDef:
+#' subgroup_def:
 #'
 #' |Name |Description|
 #' |-----|--------|
@@ -174,12 +174,12 @@ executeAnalysis <- function(connectionDetails = NULL,
   
   results = list()
   #download results into dataframe.  We don't specify ref_id because the temp table will only contain this session results
-  results$incidenceSummary <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #incidence_summary", targetDialect = targetDialect));
-  results$targetDef <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #target_def", targetDialect = targetDialect));
-  results$outcomeDef <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #outcome_def", targetDialect = targetDialect));
-  results$tarDef <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #tar_def", targetDialect = targetDialect));
-  results$ageGroupDef <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #age_group_def", targetDialect = targetDialect));
-  results$subgroupDef <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #subgroup_def", targetDialect = targetDialect));
+  results$incidence_summary <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #incidence_summary", targetDialect = targetDialect));
+  results$target_def <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #target_def", targetDialect = targetDialect));
+  results$outcome_def <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #outcome_def", targetDialect = targetDialect));
+  results$tar_def <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #tar_def", targetDialect = targetDialect));
+  results$age_group_def <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #age_group_def", targetDialect = targetDialect));
+  results$subgroup_def <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #subgroup_def", targetDialect = targetDialect));
   
   # use the getCleanupSql to fetch the DROP TABLE expressions for the tables that were created in tempDDL.
   cleanupSql <- SqlRender::translate(CohortIncidence::getCleanupSql(useTempTables=T), targetDialect);  

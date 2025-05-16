@@ -1,99 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/using-cohortincidence.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/buildOptions.html</loc>
-  </url>
-  <url>
-    <loc>/reference/buildQuery.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CohortDefinition.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CohortIncidence-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CohortReference.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CohortRefrence.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CohortSubgroup.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createCohortRef.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createCohortSubgroup.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createDateRange.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createIncidenceAnalysis.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createIncidenceDesign.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createOutcomeDef.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createStrataSettings.html</loc>
-  </url>
-  <url>
-    <loc>/reference/createTimeAtRiskDef.html</loc>
-  </url>
-  <url>
-    <loc>/reference/DateRange.html</loc>
-  </url>
-  <url>
-    <loc>/reference/executeAnalysis.html</loc>
-  </url>
-  <url>
-    <loc>/reference/getCleanupSql.html</loc>
-  </url>
-  <url>
-    <loc>/reference/getResultsDdl.html</loc>
-  </url>
-  <url>
-    <loc>/reference/IncidenceAnalysis.html</loc>
-  </url>
-  <url>
-    <loc>/reference/IncidenceDesign.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Outcome.html</loc>
-  </url>
-  <url>
-    <loc>/reference/StrataSettings.html</loc>
-  </url>
-  <url>
-    <loc>/reference/TimeAtRisk.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/articles/cohortincidence-method-documentation.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/using-cohortincidence.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/buildOptions.html</loc></url>
+<url><loc>/reference/buildQuery.html</loc></url>
+<url><loc>/reference/CohortDefinition.html</loc></url>
+<url><loc>/reference/CohortIncidence-package.html</loc></url>
+<url><loc>/reference/CohortReference.html</loc></url>
+<url><loc>/reference/CohortRefrence.html</loc></url>
+<url><loc>/reference/CohortSubgroup.html</loc></url>
+<url><loc>/reference/createCohortRef.html</loc></url>
+<url><loc>/reference/createCohortSubgroup.html</loc></url>
+<url><loc>/reference/createDateRange.html</loc></url>
+<url><loc>/reference/createIncidenceAnalysis.html</loc></url>
+<url><loc>/reference/createIncidenceDesign.html</loc></url>
+<url><loc>/reference/createOutcomeDef.html</loc></url>
+<url><loc>/reference/createStrataSettings.html</loc></url>
+<url><loc>/reference/createTimeAtRiskDef.html</loc></url>
+<url><loc>/reference/DateRange.html</loc></url>
+<url><loc>/reference/executeAnalysis.html</loc></url>
+<url><loc>/reference/getCleanupSql.html</loc></url>
+<url><loc>/reference/getResultsDdl.html</loc></url>
+<url><loc>/reference/IncidenceAnalysis.html</loc></url>
+<url><loc>/reference/IncidenceDesign.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/Outcome.html</loc></url>
+<url><loc>/reference/StrataSettings.html</loc></url>
+<url><loc>/reference/TimeAtRisk.html</loc></url>
 </urlset>
+
