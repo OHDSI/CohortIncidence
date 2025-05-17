@@ -1,0 +1,40 @@
+{
+	"cdm.person": [
+		{
+			"person_id": 1,
+			"gender_concept_id": 8507,
+			"year_of_birth": 1970,
+			"race_concept_id": 0,
+			"ethnicity_concept_id": 0
+		}
+	],
+	"cdm.observation_period": [
+		{
+			"observation_period_id": 1,
+			"person_id": 1,
+			"observation_period_start_date": "2000-01-01",
+			"observation_period_end_date": "2010-01-01",
+			"period_type_concept_id": 0
+		}
+	],
+	"person_exclude.cohort": [
+		{
+			"cohort_definition_id": 100,
+			"subject_id": 1,
+			"cohort_start_date": "2005-01-01",
+			"cohort_end_date": "2005-01-31"
+		},
+		{
+			"cohort_definition_id": 100,
+			"subject_id": 1,
+			"cohort_start_date": "2005-10-01",
+			"cohort_end_date": "2005-10-31"
+		},
+		{
+			"cohort_definition_id": 200,
+			"subject_id": 1,
+			"cohort_start_date": "2005-06-01",
+			"cohort_end_date": "2010-06-01"
+		}
+	]
+}

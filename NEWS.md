@@ -1,3 +1,16 @@
+# CohortIncidence 4.1.0
+===========
+
+## New Features
+
+You can now specify age breaks as a list via the ageBreakList paramater in StrataSettings.
+
+## Bug Fixes
+
+Fixed issue where excluded persons was not calculated correctly.
+Adjusted validation of name properties to be 'string'.
+
+
 # CohortIncidence 4.0.0
 ===========
 

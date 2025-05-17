@@ -270,26 +270,25 @@ WITH outcomes_overall (target_cohort_definition_id, tar_id, subgroup_id, outcome
   FROM #TTAR_erafied t1
   JOIN @cdm_database_schema.person p ON t1.subject_id = p.person_id
   JOIN ( -- get the list of TTSO of anyone with excluded time or outcomes to limit result
-    select target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id, start_date FROM #excluded_person_days
+    select target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id FROM #excluded_person_days
     UNION -- will remove dupes
-    select target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id, start_date FROM #outcome_smry
+    select target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id FROM #outcome_smry
   ) op ON t1.cohort_definition_id = op.target_cohort_definition_id
     AND t1.tar_id = op.tar_id
     AND t1.subgroup_id = op.subgroup_id
     AND t1.subject_id = op.subject_id
-    AND t1.start_date = op.start_date
   LEFT JOIN #excluded_person_days e1 ON e1.target_cohort_definition_id = op.target_cohort_definition_id
     AND e1.tar_id = op.tar_id
     AND e1.subgroup_id = op.subgroup_id
     AND e1.outcome_id = op.outcome_id
     AND e1.subject_id = op.subject_id 
-    AND e1.start_date = op.start_date
+    AND e1.start_date = t1.start_date
   LEFT JOIN #outcome_smry o1 on o1.target_cohort_definition_id = op.target_cohort_definition_id
    AND o1.tar_id = op.tar_id
    AND o1.subgroup_id = op.subgroup_id
    AND o1.outcome_id = op.outcome_id
    AND o1.subject_id = op.subject_id
-   AND o1.start_date = op.start_date
+   AND o1.start_date = t1.start_date
 )
 SELECT target_cohort_definition_id, tar_id, subgroup_id, outcome_id, age_group_id, gender_id, start_year, excluded_days, excluded_persons, person_outcomes_pe, person_outcomes, outcomes_pe, outcomes
 INTO #outcome_agg
