@@ -346,7 +346,7 @@ CohortReference <- R6::R6Class("CohortReference",
        private$.name
      } else {
        # check type
-       checkmate::assertCharacter(name)
+       checkmate::assert_string(name)
        private$.name <- name
        self
      }
@@ -357,7 +357,7 @@ CohortReference <- R6::R6Class("CohortReference",
        private$.description
      } else {
        # check type
-       checkmate::assertCharacter(description)
+       checkmate::assert_string(description)
        private$.description <-description
        self
      }
@@ -432,7 +432,7 @@ Outcome <- R6::R6Class("Outcome",
         private$.name
       } else {
         # check type
-        checkmate::assertCharacter(name)
+        checkmate::assert_string(name)
         private$.name <- name
         self
       }
@@ -673,7 +673,7 @@ CohortSubgroup <- R6::R6Class("CohortSubgroup",
         private$.name
       } else {
         # check type
-        checkmate::assertCharacter(name)
+        checkmate::assert_string(name)
         private$.name <- name
         self
       }
@@ -684,7 +684,7 @@ CohortSubgroup <- R6::R6Class("CohortSubgroup",
         private$.description
       } else {
         # check type
-        checkmate::assertCharacter(description)
+        checkmate::assert_string(description)
         private$.description <- description
         self
       }
