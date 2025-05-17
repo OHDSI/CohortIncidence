@@ -5,6 +5,9 @@
 
 You can now specify age breaks as a list via the ageBreakList paramater in StrataSettings.
 
+## Bug Fixes
+
+Fixed issue where excluded persons was not calculated correctly.
 
 
 
