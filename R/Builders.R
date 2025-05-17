@@ -159,7 +159,8 @@ createStrataSettings <- function (byAge = F, byGender = F, byYear = F, ageBreaks
   strataSettings$byYear <- byYear;
   if(byAge == T && missing(ageBreaks) && missing(ageBreakList)) stop ("Error: when byAge = TRUE, ageBreaks or ageBreakList must be provided.")
   if (!missing(ageBreaks)) strataSettings$ageBreaks <- ageBreaks;
-
+  if (!missing(ageBreakList)) strataSettings$ageBreakList <- ageBreakList;
+  
   return(strataSettings);
 }
 
