@@ -21,7 +21,7 @@ test_that("CohortReference R6 Class Works", {
 
   expect_error(CohortIncidence::CohortReference$new('{"id":"x","name":"Cohort 1"}'), "Assertion on 'id' failed: Must be of type 'single integerish value'")
   expect_error(CohortIncidence::CohortReference$new('{"id":[1,2],"name":"Cohort 1"}'), "Assertion on 'id' failed: Must have length 1")
-  expect_error(CohortIncidence::CohortReference$new('{"id":1,"name":[1,2,3]}'), "Assertion on 'name' failed: Must be of type 'character'")
+  expect_error(CohortIncidence::CohortReference$new('{"id":1,"name":[1,2,3]}'), "Assertion on 'name' failed: Must be of type 'string'")
 
 })
 
@@ -52,7 +52,7 @@ test_that("Outcome R6 Class Works", {
   
   expect_error(CohortIncidence::Outcome$new('{"id":"x","name":"Cohort 1"}'), "Assertion on 'id' failed: Must be of type 'single integerish value'")
   expect_error(CohortIncidence::Outcome$new('{"id":[1,2],"name":"Cohort 1"}'), "Assertion on 'id' failed: Must have length 1")
-  expect_error(CohortIncidence::Outcome$new('{"id":1,"name":[1,2,3]}'), "Assertion on 'name' failed: Must be of type 'character'")
+  expect_error(CohortIncidence::Outcome$new('{"id":1,"name":[1,2,3]}'), "Assertion on 'name' failed: Must be of type 'string'")
   
 })
 
@@ -158,8 +158,8 @@ test_that("CohortSubgroup R6 Class Works", {
   expect_equal(as.character(cohortSubgroup$asJSON()), '{"CohortSubgroup":{"id":1,"name":"Subgroup 1","description":"Subgroup Description.","cohort":{"id":60,"name":"Subgroup cohort 1"}}}')
   
   expect_error(cohortSubgroup$id <- "1", "Assertion on 'id' failed: Must be of type 'single integerish value'")
-  expect_error(cohortSubgroup$name <- c(1,2), "Assertion on 'name' failed: Must be of type 'character'")
-  expect_error(cohortSubgroup$description <- c(1,2), "Assertion on 'description' failed: Must be of type 'character'")
+  expect_error(cohortSubgroup$name <- c(1,2), "Assertion on 'name' failed: Must be of type 'string'")
+  expect_error(cohortSubgroup$description <- c(1,2), "Assertion on 'description' failed: Must be of type 'string'")
   expect_error(cohortSubgroup$cohort <- CohortIncidence::TimeAtRisk$new(), "Assertion on 'cohort' failed: Must inherit from class 'CohortReference'")
   
   # initalize from json
@@ -179,7 +179,7 @@ test_that("CohortSubgroup R6 Class Works", {
   
   expect_error(CohortIncidence::CohortSubgroup$new('{"CohortSubgroupx":{}}'),"Initialization of CohortSubgrup must contain element 'CohortSubgroup'")
   expect_error(CohortIncidence::CohortSubgroup$new('{"CohortSubgroup":{"id":[1,2,3]}}'),"Assertion on 'id' failed: Must have length 1.")
-  expect_error(CohortIncidence::CohortSubgroup$new('{"CohortSubgroup":{"id":1,"name":123}}'),"Assertion on 'name' failed: Must be of type 'character'")
+  expect_error(CohortIncidence::CohortSubgroup$new('{"CohortSubgroup":{"id":1,"name":123}}'),"Assertion on 'name' failed: Must be of type 'string'")
 })
 
 test_that("StrataSettings R6 Class Works", {
