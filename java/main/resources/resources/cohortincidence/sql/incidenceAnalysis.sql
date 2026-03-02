@@ -29,32 +29,21 @@ FROM (
       select subject_id, cohort_definition_id, tar_id, start_date, end_date, 
         case when max(end_date) over (partition by subject_id, cohort_definition_id, tar_id order by start_date rows between unbounded preceding and 1 preceding) >= start_date then 0 else 1 end is_start
       from (
-        SELECT subject_id, cohort_definition_id, tar_id, start_date, end_date
-        FROM
-        (
+        SELECT COHORT_TAR.subject_id, COHORT_TAR.cohort_definition_id, COHORT_TAR.tar_id, COHORT_TAR.start_date, 
+          case when COHORT_TAR.end_date > op1.observation_period_end_date then op1.observation_period_end_date else COHORT_TAR.end_date end as end_date
+        from (
           select tc1.cohort_definition_id,
+            tc1.cohort_start_date,
             tar1.tar_id,
             subject_id,
             case 
-              when tar1.tar_start_with = 'start' then
-                case when DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_start_date) < op1.observation_period_end_date then DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_start_date)
-                  when DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_start_date) >= op1.observation_period_end_date then op1.observation_period_end_date
-                end
-              when tar1.tar_start_with = 'end' then
-                case when DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_end_date) < op1.observation_period_end_date then DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_end_date)
-                  when DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_end_date) >= op1.observation_period_end_date then op1.observation_period_end_date
-                end
+              when tar1.tar_start_with = 'start' then DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_start_date)
+              when tar1.tar_start_with = 'end' then DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_end_date)
               else null --shouldnt get here if tar set properly
             end as start_date,
             case 
-              when tar1.tar_end_with = 'start' then
-                case when DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_start_date) < op1.observation_period_end_date then DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_start_date)
-                  when DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_start_date) >= op1.observation_period_end_date then op1.observation_period_end_date
-                end
-              when tar1.tar_end_with = 'end' then
-                case when DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_end_date) < op1.observation_period_end_date then DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_end_date)
-                  when DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_end_date) >= op1.observation_period_end_date then op1.observation_period_end_date
-                end
+              when tar1.tar_end_with = 'start' then DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_start_date)
+              when tar1.tar_end_with = 'end' then DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_end_date)
               else null --shouldnt get here if tar set properly
             end as end_date
           from (
@@ -66,11 +55,14 @@ FROM (
             from @targetCohortTable 
             where cohort_definition_id in (@targetIds)
           ) tc1
-          inner join @cdm_database_schema.observation_period op1 on tc1.subject_id = op1.person_id
-            and tc1.cohort_start_date >= op1.observation_period_start_date
-            and tc1.cohort_start_date <= op1.observation_period_end_date
         ) COHORT_TAR
-        WHERE COHORT_TAR.start_date <= COHORT_TAR.end_date
+        inner join @cdm_database_schema.observation_period op1 on COHORT_TAR.subject_id = op1.person_id
+          and COHORT_TAR.cohort_start_date >= op1.observation_period_start_date
+          and COHORT_TAR.cohort_start_date <= op1.observation_period_end_date
+        WHERE COHORT_TAR.start_date <= COHORT_TAR.end_date -- flipped dates are invalid
+          -- tar must start between same observation period as the cohort_start_date.
+          and COHORT_TAR.start_date >= op1.observation_period_start_date
+          and COHORT_TAR.start_date <= op1.observation_period_end_date
       ) TAR
     ) ST
   ) GR
