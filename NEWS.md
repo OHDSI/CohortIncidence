@@ -1,3 +1,9 @@
+# CohortIncidence 4.1.1
+
+## Bug Fixes
+
+Fixed issue to exclude persons who TARs push them out of cohort observation period.
+
 # CohortIncidence 4.1.0
 ===========
 
