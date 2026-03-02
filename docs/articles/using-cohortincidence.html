@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CohortIncidence</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1.1</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
                         <h4 data-toc-skip class="author">Christopher
 Knoll</h4>
             
-            <h4 data-toc-skip class="date">2025-05-16</h4>
+            <h4 data-toc-skip class="date">2026-03-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/OHDSI/CohortIncidence/blob/HEAD/vignettes/using-cohortincidence.Rmd" class="external-link"><code>vignettes/using-cohortincidence.Rmd</code></a></small>
       <div class="hidden name"><code>using-cohortincidence.Rmd</code></div>
@@ -459,32 +459,21 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;       select subject_id, cohort_definition_id, tar_id, start_date, end_date, </span></span>
 <span><span class="co">#&gt;         case when max(end_date) over (partition by subject_id, cohort_definition_id, tar_id order by start_date rows between unbounded preceding and 1 preceding) &gt;= start_date then 0 else 1 end is_start</span></span>
 <span><span class="co">#&gt;       from (</span></span>
-<span><span class="co">#&gt;         SELECT subject_id, cohort_definition_id, tar_id, start_date, end_date</span></span>
-<span><span class="co">#&gt;         FROM</span></span>
-<span><span class="co">#&gt;         (</span></span>
+<span><span class="co">#&gt;         SELECT COHORT_TAR.subject_id, COHORT_TAR.cohort_definition_id, COHORT_TAR.tar_id, COHORT_TAR.start_date, </span></span>
+<span><span class="co">#&gt;           case when COHORT_TAR.end_date &gt; op1.observation_period_end_date then op1.observation_period_end_date else COHORT_TAR.end_date end as end_date</span></span>
+<span><span class="co">#&gt;         from (</span></span>
 <span><span class="co">#&gt;           select tc1.cohort_definition_id,</span></span>
+<span><span class="co">#&gt;             tc1.cohort_start_date,</span></span>
 <span><span class="co">#&gt;             tar1.tar_id,</span></span>
 <span><span class="co">#&gt;             subject_id,</span></span>
 <span><span class="co">#&gt;             case </span></span>
-<span><span class="co">#&gt;               when tar1.tar_start_with = 'start' then</span></span>
-<span><span class="co">#&gt;                 case when DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_start_date) &lt; op1.observation_period_end_date then DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_start_date)</span></span>
-<span><span class="co">#&gt;                   when DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_start_date) &gt;= op1.observation_period_end_date then op1.observation_period_end_date</span></span>
-<span><span class="co">#&gt;                 end</span></span>
-<span><span class="co">#&gt;               when tar1.tar_start_with = 'end' then</span></span>
-<span><span class="co">#&gt;                 case when DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_end_date) &lt; op1.observation_period_end_date then DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_end_date)</span></span>
-<span><span class="co">#&gt;                   when DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_end_date) &gt;= op1.observation_period_end_date then op1.observation_period_end_date</span></span>
-<span><span class="co">#&gt;                 end</span></span>
+<span><span class="co">#&gt;               when tar1.tar_start_with = 'start' then DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_start_date)</span></span>
+<span><span class="co">#&gt;               when tar1.tar_start_with = 'end' then DATEADD(day,CAST(tar1.tar_start_offset as int),tc1.cohort_end_date)</span></span>
 <span><span class="co">#&gt;               else null --shouldnt get here if tar set properly</span></span>
 <span><span class="co">#&gt;             end as start_date,</span></span>
 <span><span class="co">#&gt;             case </span></span>
-<span><span class="co">#&gt;               when tar1.tar_end_with = 'start' then</span></span>
-<span><span class="co">#&gt;                 case when DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_start_date) &lt; op1.observation_period_end_date then DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_start_date)</span></span>
-<span><span class="co">#&gt;                   when DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_start_date) &gt;= op1.observation_period_end_date then op1.observation_period_end_date</span></span>
-<span><span class="co">#&gt;                 end</span></span>
-<span><span class="co">#&gt;               when tar1.tar_end_with = 'end' then</span></span>
-<span><span class="co">#&gt;                 case when DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_end_date) &lt; op1.observation_period_end_date then DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_end_date)</span></span>
-<span><span class="co">#&gt;                   when DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_end_date) &gt;= op1.observation_period_end_date then op1.observation_period_end_date</span></span>
-<span><span class="co">#&gt;                 end</span></span>
+<span><span class="co">#&gt;               when tar1.tar_end_with = 'start' then DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_start_date)</span></span>
+<span><span class="co">#&gt;               when tar1.tar_end_with = 'end' then DATEADD(day,CAST(tar1.tar_end_offset as int),tc1.cohort_end_date)</span></span>
 <span><span class="co">#&gt;               else null --shouldnt get here if tar set properly</span></span>
 <span><span class="co">#&gt;             end as end_date</span></span>
 <span><span class="co">#&gt;           from (</span></span>
@@ -496,11 +485,14 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;             from demoCohortSchema.cohort </span></span>
 <span><span class="co">#&gt;             where cohort_definition_id in (1)</span></span>
 <span><span class="co">#&gt;           ) tc1</span></span>
-<span><span class="co">#&gt;           inner join mycdm.observation_period op1 on tc1.subject_id = op1.person_id</span></span>
-<span><span class="co">#&gt;             and tc1.cohort_start_date &gt;= op1.observation_period_start_date</span></span>
-<span><span class="co">#&gt;             and tc1.cohort_start_date &lt;= op1.observation_period_end_date</span></span>
 <span><span class="co">#&gt;         ) COHORT_TAR</span></span>
-<span><span class="co">#&gt;         WHERE COHORT_TAR.start_date &lt;= COHORT_TAR.end_date</span></span>
+<span><span class="co">#&gt;         inner join mycdm.observation_period op1 on COHORT_TAR.subject_id = op1.person_id</span></span>
+<span><span class="co">#&gt;           and COHORT_TAR.cohort_start_date &gt;= op1.observation_period_start_date</span></span>
+<span><span class="co">#&gt;           and COHORT_TAR.cohort_start_date &lt;= op1.observation_period_end_date</span></span>
+<span><span class="co">#&gt;         WHERE COHORT_TAR.start_date &lt;= COHORT_TAR.end_date -- flipped dates are invalid</span></span>
+<span><span class="co">#&gt;           -- tar must start between same observation period as the cohort_start_date.</span></span>
+<span><span class="co">#&gt;           and COHORT_TAR.start_date &gt;= op1.observation_period_start_date</span></span>
+<span><span class="co">#&gt;           and COHORT_TAR.start_date &lt;= op1.observation_period_end_date</span></span>
 <span><span class="co">#&gt;       ) TAR</span></span>
 <span><span class="co">#&gt;     ) ST</span></span>
 <span><span class="co">#&gt;   ) GR</span></span>
@@ -718,26 +710,25 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;   FROM #TTAR_erafied t1</span></span>
 <span><span class="co">#&gt;   JOIN mycdm.person p ON t1.subject_id = p.person_id</span></span>
 <span><span class="co">#&gt;   JOIN ( -- get the list of TTSO of anyone with excluded time or outcomes to limit result</span></span>
-<span><span class="co">#&gt;     select target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id, start_date FROM #excluded_person_days</span></span>
+<span><span class="co">#&gt;     select target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id FROM #excluded_person_days</span></span>
 <span><span class="co">#&gt;     UNION -- will remove dupes</span></span>
-<span><span class="co">#&gt;     select target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id, start_date FROM #outcome_smry</span></span>
+<span><span class="co">#&gt;     select target_cohort_definition_id, tar_id, subgroup_id, outcome_id, subject_id FROM #outcome_smry</span></span>
 <span><span class="co">#&gt;   ) op ON t1.cohort_definition_id = op.target_cohort_definition_id</span></span>
 <span><span class="co">#&gt;     AND t1.tar_id = op.tar_id</span></span>
 <span><span class="co">#&gt;     AND t1.subgroup_id = op.subgroup_id</span></span>
 <span><span class="co">#&gt;     AND t1.subject_id = op.subject_id</span></span>
-<span><span class="co">#&gt;     AND t1.start_date = op.start_date</span></span>
 <span><span class="co">#&gt;   LEFT JOIN #excluded_person_days e1 ON e1.target_cohort_definition_id = op.target_cohort_definition_id</span></span>
 <span><span class="co">#&gt;     AND e1.tar_id = op.tar_id</span></span>
 <span><span class="co">#&gt;     AND e1.subgroup_id = op.subgroup_id</span></span>
 <span><span class="co">#&gt;     AND e1.outcome_id = op.outcome_id</span></span>
 <span><span class="co">#&gt;     AND e1.subject_id = op.subject_id </span></span>
-<span><span class="co">#&gt;     AND e1.start_date = op.start_date</span></span>
+<span><span class="co">#&gt;     AND e1.start_date = t1.start_date</span></span>
 <span><span class="co">#&gt;   LEFT JOIN #outcome_smry o1 on o1.target_cohort_definition_id = op.target_cohort_definition_id</span></span>
 <span><span class="co">#&gt;    AND o1.tar_id = op.tar_id</span></span>
 <span><span class="co">#&gt;    AND o1.subgroup_id = op.subgroup_id</span></span>
 <span><span class="co">#&gt;    AND o1.outcome_id = op.outcome_id</span></span>
 <span><span class="co">#&gt;    AND o1.subject_id = op.subject_id</span></span>
-<span><span class="co">#&gt;    AND o1.start_date = op.start_date</span></span>
+<span><span class="co">#&gt;    AND o1.start_date = t1.start_date</span></span>
 <span><span class="co">#&gt; )</span></span>
 <span><span class="co">#&gt; SELECT target_cohort_definition_id, tar_id, subgroup_id, outcome_id, age_group_id, gender_id, start_year, excluded_days, excluded_persons, person_outcomes_pe, person_outcomes, outcomes_pe, outcomes</span></span>
 <span><span class="co">#&gt; INTO #outcome_agg</span></span>
