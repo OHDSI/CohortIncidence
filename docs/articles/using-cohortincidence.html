@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CohortIncidence</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.2.0</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
                         <h4 data-toc-skip class="author">Christopher
 Knoll</h4>
             
-            <h4 data-toc-skip class="date">2026-03-02</h4>
+            <h4 data-toc-skip class="date">2026-03-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/OHDSI/CohortIncidence/blob/HEAD/vignettes/using-cohortincidence.Rmd" class="external-link"><code>vignettes/using-cohortincidence.Rmd</code></a></small>
       <div class="hidden name"><code>using-cohortincidence.Rmd</code></div>
@@ -452,7 +452,8 @@ the analysis SQL:</p>
 <span><span class="co">#&gt; select subject_id, cohort_definition_id, tar_id, cast(0 as int) as subgroup_id, start_date, end_date </span></span>
 <span><span class="co">#&gt; into #TTAR_erafied_all</span></span>
 <span><span class="co">#&gt; FROM (</span></span>
-<span><span class="co">#&gt;   select subject_id, cohort_definition_id, tar_id, min(start_date) as start_date, max(end_date) as end_date</span></span>
+<span><span class="co">#&gt;   select subject_id, cohort_definition_id, tar_id, min(start_date) as start_date, max(end_date) as end_date </span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   from (</span></span>
 <span><span class="co">#&gt;     select subject_id, cohort_definition_id, tar_id, start_date, end_date, sum(is_start) over (partition by subject_id, cohort_definition_id, tar_id order by start_date, is_start desc rows unbounded preceding) group_idx</span></span>
 <span><span class="co">#&gt;     from (</span></span>
@@ -544,10 +545,12 @@ the analysis SQL:</p>
 <span><span class="co">#&gt; 2) create table to store era-fied excluded at-risk periods</span></span>
 <span><span class="co">#&gt; */</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; --three ways for entry into excluded</span></span>
+<span><span class="co">#&gt; --Standard tar exclusion</span></span>
+<span><span class="co">#&gt; --ways for entry into excluded</span></span>
 <span><span class="co">#&gt; --1:  duration of outcome periods  (ex:  immortal time due to clean period)</span></span>
 <span><span class="co">#&gt; --2:  other periods excluded  (ex: persons post-appendectomy for appendicitis)</span></span>
 <span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; -- create exclusion eras from cohort clean windows and exclusion cohorts</span></span>
 <span><span class="co">#&gt; --HINT DISTRIBUTE_ON_KEY(subject_id)</span></span>
 <span><span class="co">#&gt; select subject_id, outcome_id, min(start_date) as start_date, max(end_date) as end_date </span></span>
 <span><span class="co">#&gt; into  #excluded_tar_cohort</span></span>
@@ -582,6 +585,7 @@ the analysis SQL:</p>
 <span><span class="co">#&gt; ) GR</span></span>
 <span><span class="co">#&gt; GROUP BY subject_id, outcome_id, group_idx;</span></span>
 <span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; -- intersect the exclusion eras with the time at risk to create the t-tar-outcome exclusion periods</span></span>
 <span><span class="co">#&gt; --HINT DISTRIBUTE_ON_KEY(subject_id)</span></span>
 <span><span class="co">#&gt; select  ec1.subject_id,</span></span>
 <span><span class="co">#&gt;   te1.cohort_definition_id as target_cohort_definition_id,</span></span>
@@ -596,6 +600,9 @@ the analysis SQL:</p>
 <span><span class="co">#&gt;   and ec1.start_date &lt;= te1.end_date</span></span>
 <span><span class="co">#&gt;   and ec1.end_date &gt;= te1.start_date</span></span>
 <span><span class="co">#&gt; ;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; DROP TABLE #excluded_tar_cohort;</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; -- 3) calculate pre-exclude outcomes and outcomes </span></span>
 <span><span class="co">#&gt; -- calculate pe_outcomes and outcomes by T, TAR, O, Subject, TAR start</span></span>
@@ -809,7 +816,6 @@ the analysis SQL:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; DROP TABLE #TTAR_erafied;</span></span>
 <span><span class="co">#&gt; DROP TABLE #subgroup_person;</span></span>
-<span><span class="co">#&gt; DROP TABLE #excluded_tar_cohort;</span></span>
 <span><span class="co">#&gt; DROP TABLE #exc_TTAR_o_erafied;</span></span>
 <span><span class="co">#&gt; DROP TABLE #outcome_smry;</span></span>
 <span><span class="co">#&gt; DROP TABLE #excluded_person_days;</span></span>

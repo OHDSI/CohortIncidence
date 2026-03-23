@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">CohortIncidence</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.2.0</span>
       </span>
     </div>
 
@@ -78,7 +78,9 @@
 <span>  <span class="va">conceptSets</span>,</span>
 <span>  <span class="va">subgroups</span>,</span>
 <span>  <span class="va">strataSettings</span>,</span>
-<span>  <span class="va">studyWindow</span></span>
+<span>  <span class="va">studyWindow</span>,</span>
+<span>  <span class="va">firstAtRisk</span>,</span>
+<span>  <span class="va">firstPostOutcome</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -120,6 +122,14 @@
 
 <dt id="arg-studywindow">studyWindow<a class="anchor" aria-label="anchor" href="#arg-studywindow"></a></dt>
 <dd><p>Limits time at risk to the specified study window. Must be class DateRange.</p></dd>
+
+
+<dt id="arg-firstatrisk">firstAtRisk<a class="anchor" aria-label="anchor" href="#arg-firstatrisk"></a></dt>
+<dd><p>Limits time at risk to the first per person.  Must be boolean.</p></dd>
+
+
+<dt id="arg-firstpostoutcome">firstPostOutcome<a class="anchor" aria-label="anchor" href="#arg-firstpostoutcome"></a></dt>
+<dd><p>Limits outcomes to first outcome within clean window of the first TAR or after. Must be boolean.</p></dd>
 
 </dl></div>
     <div id="value">

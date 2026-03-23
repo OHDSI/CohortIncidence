@@ -44,7 +44,9 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
     .conceptSets = NA,
     .subgroups = NA,
     .strataSettings=NA,
-    .studyWindow=NA
+    .studyWindow=NA,
+    .firstAtRisk=NA,
+    .firstPostOutcome=NA
   ),
   active = list(
     #' @field cohortDefs A list of cohort definitions.  Must be a list of \link[=CohortDefinition]{CohortDefinition}
@@ -145,6 +147,28 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
         private$.studyWindow <-studyWindow
         self
       }   
+    }, 
+    #' @field firstAtRisk a boolean indicating to limit TAR to first per person.
+    firstAtRisk = function(firstAtRisk) {
+      if (missing(firstAtRisk)) {
+        private$.firstAtRisk
+      } else {
+        # check type
+        checkmate::assert_flag(firstAtRisk)
+        private$.firstAtRisk <-firstAtRisk
+        self
+      }   
+    }, 
+    #' @field firstPostOutcome a boolean indicating to limit TAR to first per person.
+    firstPostOutcome = function(firstPostOutcome) {
+      if (missing(firstPostOutcome)) {
+        private$.firstPostOutcome
+      } else {
+        # check type
+        checkmate::assert_flag(firstPostOutcome)
+        private$.firstPostOutcome <-firstPostOutcome
+        self
+      }
     }
   ),
   public = list(
@@ -163,6 +187,8 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
       if ("subgroups" %in% names (dataList)) self$analysisList <- lapply(dataList$subgroups, .resolveSubgroup)
       if ("strataSettings" %in% names (dataList)) self$strataSettings <- CohortIncidence::StrataSettings$new(dataList$strataSettings)
       if ("studyWindow" %in% names (dataList)) self$studyWindow <- CohortIncidence::DateRange$new(dataList$studyWindow)
+      if ("firstAtRisk" %in% names (dataList)) self$firstAtRisk <- dataList$firstAtRisk
+      if ("firstPostOutcome" %in% names (dataList)) self$studyWindow <-dataList$firstPostOutcome
       
     },
     #' @description
@@ -177,7 +203,9 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
         conceptSets = private$.conceptSets,
         subgroups = .r6ToListOrNA(private$.subgroups),
         strataSettings = .r6ToListOrNA(private$.strataSettings),
-        studyWindow = .r6ToListOrNA(private$.studyWindow)
+        studyWindow = .r6ToListOrNA(private$.studyWindow),
+        firstAtRisk = jsonlite::unbox(private$.firstAtRisk),
+        firstPostOutcome = jsonlite::unbox(private$.firstPostOutcome)
       ))
     },
     #' @description

@@ -19,6 +19,8 @@ public class CohortIncidenceQueryBuilder {
 	
 	private static final String GENERATE_ANALYSIS_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/generateIncidence.sql");
 	private static final String ANALYSIS_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/incidenceAnalysis.sql");
+	private static final String ALL_OUTCOME_EXCLUDE_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/allOutcomeExclude.sql");
+	private static final String FIRST_POST_OUTCOME_EXCLUDE_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/firstPostOutcomeExclude.sql");
 	private static final String TARGET_REF_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/targetRefTemplate.sql");
 	private static final String TAR_REF_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/tarRefTemplate.sql");
 	private static final String OUTCOME_REF_TEMPLATE = ResourceHelper.GetResourceAsString("/resources/cohortincidence/sql/outcomeRefTemplate.sql");
@@ -111,6 +113,11 @@ public class CohortIncidenceQueryBuilder {
 							String analysisQuery = ANALYSIS_TEMPLATE;
 							IncidenceAnalysis ia = design.analysisList.get(i);
 							analysisQuery = StringUtils.replace(analysisQuery, "@analysisIndex", Integer.toString(i));
+							if (this.design.firstPostOutcome) {
+								analysisQuery = StringUtils.replace(analysisQuery, "@tarExcludeQuery",FIRST_POST_OUTCOME_EXCLUDE_TEMPLATE);
+							} else{
+								analysisQuery = StringUtils.replace(analysisQuery, "@tarExcludeQuery",ALL_OUTCOME_EXCLUDE_TEMPLATE);
+							}
 							List<String> targetIds = ia.targets.stream().map(t -> Integer.toString(t)).collect(Collectors.toList());
 							analysisQuery = StringUtils.replace(analysisQuery, "@targetIds", StringUtils.join(targetIds,","));
 							List<String> outcomeIds = ia.outcomes.stream().map(o -> Integer.toString(o)).collect(Collectors.toList());
@@ -131,12 +138,20 @@ public class CohortIncidenceQueryBuilder {
 									tarEndDateExpression = String.format("case when end_date > %s then %s else end_date end as end_date",endDateSql, endDateSql);
 								}
 							}
-							analysisQuery = StringUtils.replace(analysisQuery, "@tarEndDateExpression", tarEndDateExpression);
-							String studyWindowWhereClause = "";
-							if (!whereClauses.isEmpty()) {
-								studyWindowWhereClause = String.format("where %s", StringUtils.join(whereClauses, " AND "));
+							if (this.design.firstAtRisk) {
+								analysisQuery = StringUtils.replace(analysisQuery, 
+									"@firstTarExpresion",
+									", row_number() over (partiton by subject_id, cohort_definition_id, tar_id, order by min(start_date)) as ordinal");
+								whereClauses.add("ordinal = 1");
+							} else {
+								analysisQuery = StringUtils.replace(analysisQuery, "@firstTarExpresion", "");
 							}
-							analysisQuery = StringUtils.replace(analysisQuery, "@studyWindowWhereClause", studyWindowWhereClause);
+							analysisQuery = StringUtils.replace(analysisQuery, "@tarEndDateExpression", tarEndDateExpression);
+							String tarWhereClause = "";
+							if (!whereClauses.isEmpty()) {
+								tarWhereClause = String.format("where %s", StringUtils.join(whereClauses, " AND "));
+							}
+							analysisQuery = StringUtils.replace(analysisQuery, "@tarWhereClause", tarWhereClause);
 							
 							// handle subgroups
 							analysisQuery = StringUtils.replace(analysisQuery, "@subgroupQueries", buildSubgroupQueries());

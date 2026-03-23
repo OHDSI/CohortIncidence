@@ -124,6 +124,42 @@ test_that("createIncidenceDesign works", {
   expect_equal(irDesign$analysisList, list(analysis1))
   expect_equal(irDesign$subgroups, list(subgroup1))
   
+  # adding firstAtRisk
+  irDesign <- CohortIncidence::createIncidenceDesign(
+    cohortDefs = list(),
+    conceptSets = list(),
+    targetDefs = list(target1),
+    outcomeDefs = list(outcomeDef1),
+    tars=list(tarDef1),
+    analysisList = list(analysis1),
+    firstAtRisk = TRUE
+  );
+  
+  expectedFirstTarJson <- paste(readLines("resources/serializeDesignFirstTarTest.json"),collapse="\n");
+  
+  expect_equal(as.character(irDesign$asJSON(pretty = TRUE)), expectedFirstTarJson);
+  
+  # check accessors
+  expect_equal(irDesign$firstAtRisk, TRUE)
+  
+  # adding firstAtRisk
+  irDesign <- CohortIncidence::createIncidenceDesign(
+    cohortDefs = list(),
+    conceptSets = list(),
+    targetDefs = list(target1),
+    outcomeDefs = list(outcomeDef1),
+    tars=list(tarDef1),
+    analysisList = list(analysis1),
+    firstPostOutcome = TRUE
+  );
+  
+  expectedFirstPostOutcomeJson <- paste(readLines("resources/serializeDesignFirstPostOutcomeTest.json"),collapse="\n");
+  
+  expect_equal(as.character(irDesign$asJSON(pretty = TRUE)), expectedFirstPostOutcomeJson);
+  
+  # check accessors
+  expect_equal(irDesign$firstPostOutcome, TRUE)
+
 })
 
 test_that("createCohortSubgroup works", {

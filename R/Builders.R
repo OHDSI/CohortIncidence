@@ -27,10 +27,12 @@
 #' @param subgroups A list of cohort subgroups, each element must be class Subgroup. 
 #' @param strataSettings The strata settings used in the anlaysis, must be class StrataSettings.
 #' @param studyWindow Limits time at risk to the specified study window. Must be class DateRange.
+#' @param firstAtRisk Limits time at risk to the first per person.  Must be boolean.
+#' @param firstPostOutcome Limits outcomes to first outcome within clean window of the first TAR or after. Must be boolean.
 #' @return a R6 class: IncidenceDesign.
 #' 
 #' @export
-createIncidenceDesign <- function(cohortDefs, targetDefs, outcomeDefs, tars, analysisList, conceptSets, subgroups, strataSettings, studyWindow) {
+createIncidenceDesign <- function(cohortDefs, targetDefs, outcomeDefs, tars, analysisList, conceptSets, subgroups, strataSettings, studyWindow, firstAtRisk, firstPostOutcome) {
 
   design <- IncidenceDesign$new();
   if (!missing(cohortDefs)) design$cohortDefs <- cohortDefs;
@@ -42,6 +44,8 @@ createIncidenceDesign <- function(cohortDefs, targetDefs, outcomeDefs, tars, ana
   if (!missing(subgroups)) design$subgroups <- subgroups;
   if (!missing(strataSettings)) design$strataSettings <- strataSettings;
   if (!missing(studyWindow)) design$studyWindow <- studyWindow;
+  if (!missing(firstAtRisk)) design$firstAtRisk <- firstAtRisk;
+  if (!missing(firstPostOutcome)) design$firstPostOutcome <- firstPostOutcome;
   
   return (design);
 }

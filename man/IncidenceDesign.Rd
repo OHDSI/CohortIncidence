@@ -39,6 +39,10 @@ before calling jsonlite::toJSON(), or call toJSON directy on this class.
 \item{\code{strataSettings}}{The strata settings for this design.  Must be a class \link[=StrataSettings]{StrataSettings}}
 
 \item{\code{studyWindow}}{a study window for this design.  Must be a list of class \link[=DateRange]{DateRange}}
+
+\item{\code{firstAtRisk}}{a boolean indicating to limit TAR to first per person.}
+
+\item{\code{firstPostOutcome}}{a boolean indicating to limit TAR to first per person.}
 }
 \if{html}{\out{</div>}}
 }
