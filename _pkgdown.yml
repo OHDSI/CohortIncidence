@@ -1,7 +1,6 @@
 template:
   bootstrap: 5
-  params:
-    bootswatch: cosmo
+  bootswatch: cosmo
 
 home:
   links:
