@@ -6,12 +6,11 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.apache.commons.lang3.StringUtils;
-import org.ohdsi.analysis.common.FieldOffset;
-import org.ohdsi.analysis.cohortincidence.design.CohortIncidence;
-import org.ohdsi.analysis.cohortincidence.design.CohortSubgroup;
-import org.ohdsi.analysis.cohortincidence.design.IncidenceAnalysis;
-import org.ohdsi.analysis.cohortincidence.design.Subgroup;
-import org.ohdsi.circe.helper.ResourceHelper;
+import org.ohdsi.cohortincidence.common.FieldOffset;
+import org.ohdsi.cohortincidence.design.CohortIncidence;
+import org.ohdsi.cohortincidence.design.CohortSubgroup;
+import org.ohdsi.cohortincidence.design.IncidenceAnalysis;
+import org.ohdsi.cohortincidence.design.Subgroup;
 
 public class CohortIncidenceQueryBuilder {
 	private CohortIncidence design;

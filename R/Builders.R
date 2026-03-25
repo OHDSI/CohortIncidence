@@ -153,7 +153,7 @@ createCohortSubgroup <- function (id, name, description, cohortRef) {
 #' @param byYear a boolean indicating to stratify by year, defaults to F
 #' @param ageBreaks a vector of integers indicating the age group bounds.
 #' @param ageBreakList a list of ageBreaks, used to specify multiple age break strata.
-#' @return an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.StratifySettings JSON format.
+#' @return an R list containing name-value pairs that will serialize into a org.ohdsi.cohortincidence.design.StratifySettings JSON format.
 #' @export
 createStrataSettings <- function (byAge = F, byGender = F, byYear = F, ageBreaks, ageBreakList) {
   strataSettings <- StrataSettings$new()

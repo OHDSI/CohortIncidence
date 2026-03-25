@@ -24,7 +24,7 @@ createStrataSettings(
 \item{ageBreakList}{a list of ageBreaks, used to specify multiple age break strata.}
 }
 \value{
-an R list containing name-value pairs that will serialize into a org.ohdsi.analysis.cohortincidence.design.StratifySettings JSON format.
+an R list containing name-value pairs that will serialize into a org.ohdsi.cohortincidence.design.StratifySettings JSON format.
 }
 \description{
 Creates R6 object for StrataSettings

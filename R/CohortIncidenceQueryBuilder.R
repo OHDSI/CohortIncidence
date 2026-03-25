@@ -32,7 +32,7 @@ buildQuery <- function(incidenceDesign,
   if (!missing(buildOptions)) {
     queryBuilder$setOptions(buildOptions);  
   }
-  queryBuilder$setDesign(rJava::J("org.ohdsi.analysis.cohortincidence.design.CohortIncidence")$fromJson(incidenceDesign));
+  queryBuilder$setDesign(rJava::J("org.ohdsi.cohortincidence.design.CohortIncidence")$fromJson(incidenceDesign));
   sql <- queryBuilder$build()
   return(sql)
 }

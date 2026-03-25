@@ -157,11 +157,25 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
+		<!-- Jackson for JSON deserialization of design objects -->
 		<dependency>
-			<groupId>org.ohdsi</groupId>
-			<artifactId>standardized-analysis-specs</artifactId>
-			<version>1.7.0</version>
-		</dependency>  
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+		<!-- Commons Lang3 for StringUtils -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.18.0</version>
+		</dependency>
+		<!-- Commons IO for BaseTest file reading -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.16.1</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>

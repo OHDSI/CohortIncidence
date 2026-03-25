@@ -36,7 +36,6 @@ import org.dbunit.database.DatabaseDataSourceConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.ext.postgresql.PostgresqlDataTypeFactory;
 import org.junit.ClassRule;
-import org.ohdsi.circe.helper.ResourceHelper;
 import org.ohdsi.sql.SqlSplit;
 import org.springframework.jdbc.core.JdbcTemplate;
 

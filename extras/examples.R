@@ -122,5 +122,5 @@ class(as.character(jsonlite::toJSON(irDesign)))
 as.character(jsonlite::toJSON(irDesign))
 
 
-rJava::J("org.ohdsi.analysis.cohortincidence.design.CohortIncidence")$fromJson(as.character(jsonlite::toJSON(irDesign)))
+rJava::J("org.ohdsi.cohortincidence.design.CohortIncidence")$fromJson(as.character(jsonlite::toJSON(irDesign)))
   
