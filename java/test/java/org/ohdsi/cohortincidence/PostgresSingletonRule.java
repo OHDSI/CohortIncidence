@@ -33,8 +33,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import org.junit.rules.ExternalResource;
 
-import com.opentable.db.postgres.embedded.EmbeddedPostgres;
-import com.opentable.db.postgres.embedded.EmbeddedPostgres.Builder;
+import io.zonky.test.db.postgres.embedded.EmbeddedPostgres;
+import io.zonky.test.db.postgres.embedded.EmbeddedPostgres.Builder;
+import java.time.Duration;
+
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,6 +77,7 @@ public class PostgresSingletonRule extends ExternalResource {
 		if (this.port.isPresent()) {
 			b.setPort(port.get());
 		}
+		b.setPGStartupWait(Duration.ofSeconds(30));
 		return b.start();
 	}
 

@@ -6,7 +6,6 @@
 package org.ohdsi.cohortincidence;
 
 import org.apache.commons.lang3.StringUtils;
-import org.ohdsi.circe.helper.ResourceHelper;
 
 /**
  *
