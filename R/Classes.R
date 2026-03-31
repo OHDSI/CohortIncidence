@@ -188,7 +188,7 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
       if ("strataSettings" %in% names (dataList)) self$strataSettings <- CohortIncidence::StrataSettings$new(dataList$strataSettings)
       if ("studyWindow" %in% names (dataList)) self$studyWindow <- CohortIncidence::DateRange$new(dataList$studyWindow)
       if ("firstAtRisk" %in% names (dataList)) self$firstAtRisk <- dataList$firstAtRisk
-      if ("firstPostOutcome" %in% names (dataList)) self$studyWindow <-dataList$firstPostOutcome
+      if ("firstPostOutcome" %in% names (dataList)) self$firstPostOutcome <-dataList$firstPostOutcome
       
     },
     #' @description
