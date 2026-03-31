@@ -47,5 +47,21 @@ public class DesignSerializeTest extends BaseTest {
 			builder.setDesign(design);
 			builder.setOptions(options);
 			String analysisSql = builder.build();
-    }		
+    }
+    @Test
+    public void debugTest() throws Exception {
+			String designJson = this.readResource("/cohortincidence/joel_analysisSpecifications.json");
+			CohortIncidence design = CohortIncidence.fromJson(designJson);
+			BuilderOptions options = new BuilderOptions();
+			options.refId = 1;
+			options.targetCohortTable = "dummy";
+			options.cdmSchema = "dummy";
+			options.vocabularySchema = "dummy";
+			options.useTempTables = true;
+			options.resultsSchema = "dummy";
+			CohortIncidenceQueryBuilder builder = new CohortIncidenceQueryBuilder();
+			builder.setDesign(design);
+			builder.setOptions(options);
+			String analysisSql = builder.build();
+		}
 }

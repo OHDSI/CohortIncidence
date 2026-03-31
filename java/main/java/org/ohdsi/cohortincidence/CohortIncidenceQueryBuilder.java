@@ -140,7 +140,7 @@ public class CohortIncidenceQueryBuilder {
 							if (this.design.firstAtRisk) {
 								analysisQuery = StringUtils.replace(analysisQuery, 
 									"@firstTarExpresion",
-									", row_number() over (partiton by subject_id, cohort_definition_id, tar_id, order by min(start_date)) as ordinal");
+									", row_number() over (partition by subject_id, cohort_definition_id, tar_id order by min(start_date)) as ordinal");
 								whereClauses.add("ordinal = 1");
 							} else {
 								analysisQuery = StringUtils.replace(analysisQuery, "@firstTarExpresion", "");
