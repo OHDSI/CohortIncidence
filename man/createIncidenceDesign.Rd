@@ -13,7 +13,9 @@ createIncidenceDesign(
   conceptSets,
   subgroups,
   strataSettings,
-  studyWindow
+  studyWindow,
+  firstAtRisk,
+  firstPostOutcome
 )
 }
 \arguments{
@@ -34,6 +36,10 @@ createIncidenceDesign(
 \item{strataSettings}{The strata settings used in the anlaysis, must be class StrataSettings.}
 
 \item{studyWindow}{Limits time at risk to the specified study window. Must be class DateRange.}
+
+\item{firstAtRisk}{Limits time at risk to the first per person.  Must be boolean.}
+
+\item{firstPostOutcome}{Limits outcomes to first outcome within clean window of the first TAR or after. Must be boolean.}
 }
 \value{
 a R6 class: IncidenceDesign.

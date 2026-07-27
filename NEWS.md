@@ -1,3 +1,12 @@
+# CohortIncidence 4.2.0
+
+## New Features
+
+Two new options are available on the IncidenceDesign:
+- firstAtRisk: limits TARs to the first continuous TAR period
+- firstPostOutcome: Only uses outcomes that occur within clean window of TAR or later.
+
+
 # CohortIncidence 4.1.1
 
 ## Bug Fixes

@@ -70,3 +70,87 @@ test_that("build query works", {
   expect_true(nchar(analysisSql) > 0)
 
 })
+
+test_that("build query works with firstAtRisk", {
+  
+  t1 <- CohortIncidence::createCohortRef(id=1, name="Target cohort 1");
+  
+  o1 <- CohortIncidence::createOutcomeDef(id=1,name="Outcome 1, 30d Clean", 
+                                          cohortId =2,
+                                          cleanWindow =30);
+  
+  tar1 <- CohortIncidence::createTimeAtRiskDef(id=1, 
+                                               startWith="start", 
+                                               endWith="end", 
+                                               endOffset=30);
+  
+  # Note: c() is used when dealing with an array of numbers, 
+  # later we use list() when dealing with an array of objects
+  analysis1 <- CohortIncidence::createIncidenceAnalysis(targets = c(t1$id),
+                                                        outcomes = c(o1$id),
+                                                        tars = c(tar1$id));
+  
+  subgroup1 <- CohortIncidence::createCohortSubgroup(id=1, name="Subgroup 1", cohortRef = createCohortRef(id=300));
+  
+  
+  # Create Design (note use of list() here):
+  irDesign <- CohortIncidence::createIncidenceDesign(targetDefs = list(t1),
+                                                     outcomeDefs = list(o1),
+                                                     tars=list(tar1),
+                                                     analysisList = list(analysis1),
+                                                     subgroups = list(subgroup1),
+                                                     firstAtRisk = TRUE);
+  
+  buildOptions <- CohortIncidence::buildOptions(cohortTable = "demoCohortSchema.cohort",
+                                                cdmDatabaseSchema = "mycdm",
+                                                resultsDatabaseSchema = "myresults",
+                                                refId = 1)
+  
+  analysisSql <- CohortIncidence::buildQuery(incidenceDesign =  as.character(irDesign$asJSON()),
+                                             buildOptions = buildOptions);    
+  
+  expect_true(nchar(analysisSql) > 0)
+  
+})
+
+test_that("build query works with firstPostOutcome", {
+  
+  t1 <- CohortIncidence::createCohortRef(id=1, name="Target cohort 1");
+  
+  o1 <- CohortIncidence::createOutcomeDef(id=1,name="Outcome 1, 30d Clean", 
+                                          cohortId =2,
+                                          cleanWindow =30);
+  
+  tar1 <- CohortIncidence::createTimeAtRiskDef(id=1, 
+                                               startWith="start", 
+                                               endWith="end", 
+                                               endOffset=30);
+  
+  # Note: c() is used when dealing with an array of numbers, 
+  # later we use list() when dealing with an array of objects
+  analysis1 <- CohortIncidence::createIncidenceAnalysis(targets = c(t1$id),
+                                                        outcomes = c(o1$id),
+                                                        tars = c(tar1$id));
+  
+  subgroup1 <- CohortIncidence::createCohortSubgroup(id=1, name="Subgroup 1", cohortRef = createCohortRef(id=300));
+  
+  
+  # Create Design (note use of list() here):
+  irDesign <- CohortIncidence::createIncidenceDesign(targetDefs = list(t1),
+                                                     outcomeDefs = list(o1),
+                                                     tars=list(tar1),
+                                                     analysisList = list(analysis1),
+                                                     subgroups = list(subgroup1),
+                                                     firstPostOutcome = TRUE);
+  
+  buildOptions <- CohortIncidence::buildOptions(cohortTable = "demoCohortSchema.cohort",
+                                                cdmDatabaseSchema = "mycdm",
+                                                resultsDatabaseSchema = "myresults",
+                                                refId = 1)
+  
+  analysisSql <- CohortIncidence::buildQuery(incidenceDesign =  as.character(irDesign$asJSON()),
+                                             buildOptions = buildOptions);    
+  
+  expect_true(nchar(analysisSql) > 0)
+  
+})
