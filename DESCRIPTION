@@ -2,13 +2,13 @@ Package: CohortIncidence
 Type: Package
 Title: CohortIncidence Package
 Version: 4.2.0
-Date: 2026-03-02
+Date: 2026-07-27
 Author: Christopher Knoll
 Maintainer: Christopher Knoll <cknoll@ohdsi.org>
 Description: An R package that produces SQL queries for executing Cohort Incidence analyses.
 License: Apache License 2.0
 VignetteBuilder: knitr
-URL: https://github.com/OHDSI/CohortIncidence
+URL: https://ohdsi.github.io/CohortIncidence/
 BugReports: https://github.com/OHDSI/CohortIncidence/issues
 Depends: R (>= 3.2.2),
     DatabaseConnector (>= 3.0.0)
@@ -21,7 +21,6 @@ Imports:
 SystemRequirements: Java (>= 8)    
 NeedsCompilation: yes
 LazyData: TRUE
-RoxygenNote: 7.3.2
 Encoding: UTF-8
 Suggests: 
     testthat (>= 3.0.0),
@@ -32,6 +31,5 @@ Suggests:
     Eunomia,
     duckdb,
     R6
-Remotes:
-  ohdsi/Eunomia
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0

@@ -14,77 +14,85 @@ Note, when serializing with a library such as jsonlite, first call toList() on t
 before calling jsonlite::toJSON().
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{id}}{the cohort id being referenced}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{id}}{the cohort id being referenced}
 
-\item{\code{name}}{the name for the cohort to be used in this reference.}
+    \item{\code{name}}{the name for the cohort to be used in this reference.}
 
-\item{\code{description}}{A description for this Cohort Reference.}
-}
-\if{html}{\out{</div>}}
+    \item{\code{description}}{A description for this Cohort Reference.}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-CohortReference-new}{\code{CohortReference$new()}}
-\item \href{#method-CohortReference-toList}{\code{CohortReference$toList()}}
-\item \href{#method-CohortReference-asJSON}{\code{CohortReference$asJSON()}}
-\item \href{#method-CohortReference-clone}{\code{CohortReference$clone()}}
-}
+  \itemize{
+    \item \href{#method-CohortReference-initialize}{\code{CohortReference$new()}}
+    \item \href{#method-CohortReference-toList}{\code{CohortReference$toList()}}
+    \item \href{#method-CohortReference-asJSON}{\code{CohortReference$asJSON()}}
+    \item \href{#method-CohortReference-clone}{\code{CohortReference$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CohortReference-new"></a>}}
-\if{latex}{\out{\hypertarget{method-CohortReference-new}{}}}
-\subsection{Method \code{new()}}{
-creates a new instance, using the provided data param if provided.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CohortReference$new(data = list())}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-CohortReference-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-CohortReference-initialize}{}}}
+\subsection{\code{CohortReference$new()}}{
+  creates a new instance, using the provided data param if provided.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{CohortReference$new(data = list())}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data}}{the data (as a json string or list) to initialize with}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{the data (as a json string or list) to initialize with}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CohortReference-toList"></a>}}
 \if{latex}{\out{\hypertarget{method-CohortReference-toList}{}}}
-\subsection{Method \code{toList()}}{
-returns the R6 class elements as a list for use in jsonlite::toJSON()
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CohortReference$toList()}\if{html}{\out{</div>}}
+\subsection{\code{CohortReference$toList()}}{
+  returns the R6 class elements as a list for use in jsonlite::toJSON()
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{CohortReference$toList()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CohortReference-asJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-CohortReference-asJSON}{}}}
-\subsection{Method \code{asJSON()}}{
-returns the JSON string for this R6 class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CohortReference$asJSON()}\if{html}{\out{</div>}}
+\subsection{\code{CohortReference$asJSON()}}{
+  returns the JSON string for this R6 class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{CohortReference$asJSON()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CohortReference-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-CohortReference-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CohortReference$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{CohortReference$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{CohortReference$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

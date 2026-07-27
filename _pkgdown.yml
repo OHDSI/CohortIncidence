@@ -1,3 +1,5 @@
+url: https://ohdsi.github.io/CohortIncidence/
+
 template:
   bootstrap: 5
   bootswatch: cosmo

@@ -1,0 +1,176 @@
+# CohortIncidence
+
+[![Build
+Status](https://github.com/OHDSI/CohortIncidence/workflows/R-CMD-check/badge.svg)](https://github.com/OHDSI/CohortIncidence/actions?query=workflow%3AR-CMD-check)
+[![codecov.io](https://app.codecov.io/github/OHDSI/CohortIncidence?branch=master)](https://app.codecov.io/github/OHDSI/CohortIncidence?branch=master)
+
+CohortIncidence is part of [HADES](https://ohdsi.github.io/Hades).
+
+# Introduction
+
+An R package and Java library for calculating incidence rates on the
+OMOP CDM.
+
+# Features
+
+- Handles specifications of T-O-TAR-Subgroup pairs, and performs the
+  calculation on the cross-product of the elements.
+- Specify clean windows to account for immortal time after outcome.
+- Allows multiple exposure and multiple outcomes per person accounting
+  for time at risk and clean window paramaters.
+
+# Technology
+
+CohortIncidence is an R package which wraps a Java library that
+implements most of the functions of the package.
+
+# System Requirements
+
+Requires R and Java.
+
+# Getting Started
+
+## R package
+
+1.  See the instructions
+    [here](https://ohdsi.github.io/Hades/rSetup.html) for configuring
+    your R environment, including Java.
+
+2.  In R, use the following commands to download and install
+    CohortIncidence:
+
+``` r
+install.packages("remotes")
+library(remotes)
+install_github("ohdsi/CohortIncidence") 
+```
+
+## Java library
+
+The Java library is hosted in an OHDSI Nexus repo, so you only need to
+add the repository and dependnecy to your maven.xml file in order to use
+it in your own Java project.
+
+1.  First add the OHDSI Nexus repository so that maven can find and
+    download the artifact automatically:
+
+``` xml
+  <repositories>
+    <repository>
+      <id>ohdsi</id>
+      <name>repo.ohdsi.org</name>
+      <url>https://repo.ohdsi.org/nexus/content/groups/public</url>
+    </repository>
+  </repositories>
+```
+
+2: Include the CohortIncidence dependency in your pom.xml
+
+``` xml
+<dependency>
+    <groupId>org.ohdsi.sql</groupId>
+    <artifactId>CohortIncidence</artifactId>
+    <version>{latest version}</version>
+</dependency>
+```
+
+# User Documentation
+
+Documentation can be found on the [package
+website](https://ohdsi.github.io/CohortIncidence).
+
+PDF versions of the documentation are also available: \* Vignette:
+[Using
+CohortIncidence](https://raw.githubusercontent.com/OHDSI/CohortIncidence/master/vignettes/using-cohortincidence.pdf)
+
+# Support
+
+- Developer questions/comments/feedback: [OHDSI
+  Forum](http://forums.ohdsi.org/c/developers)
+- We use the [GitHub issue
+  tracker](https://github.com/OHDSI/CohortIncidence/issues) for all
+  bugs/issues/enhancements
+
+# Contributing
+
+Read [here](https://ohdsi.github.io/Hades/contribute.html) how you can
+contribute to this package.
+
+# License
+
+CohortIncidence is licensed under Apache License 2.0
+
+# Development
+
+CohortIncidence is being developed in R Studio.
+
+### Development status
+
+Released, Under Active Development
+
+# Package index
+
+## R6 Classes
+
+- [`CohortDefinition`](https://ohdsi.github.io/CohortIncidence/reference/CohortDefinition.md)
+  : R6 Class Representing a CohortDefinition
+- [`CohortReference`](https://ohdsi.github.io/CohortIncidence/reference/CohortReference.md)
+  : R6 Class Representing a CohortReference
+- [`CohortSubgroup`](https://ohdsi.github.io/CohortIncidence/reference/CohortSubgroup.md)
+  : R6 Class Representing a Cohort Subgroup definition
+- [`DateRange`](https://ohdsi.github.io/CohortIncidence/reference/DateRange.md)
+  : R6 Class Representing a DataRange
+- [`IncidenceAnalysis`](https://ohdsi.github.io/CohortIncidence/reference/IncidenceAnalysis.md)
+  : R6 Class Representing a IncidenceAnalysis
+- [`IncidenceDesign`](https://ohdsi.github.io/CohortIncidence/reference/IncidenceDesign.md)
+  : R6 Class Representing a IncidenceDesign
+- [`Outcome`](https://ohdsi.github.io/CohortIncidence/reference/Outcome.md)
+  : R6 Class Representing an Outcome definition
+- [`StrataSettings`](https://ohdsi.github.io/CohortIncidence/reference/StrataSettings.md)
+  : R6 Class Representing the Stratification Settings of a
+  IncidenceDesign
+- [`TimeAtRisk`](https://ohdsi.github.io/CohortIncidence/reference/TimeAtRisk.md)
+  : R6 Class Representing an Time-at-Risk (TAR) definition
+
+## R6 Class Factory Functions
+
+- [`createCohortRef()`](https://ohdsi.github.io/CohortIncidence/reference/createCohortRef.md)
+  : Creates R6 object for CohortReference
+- [`createCohortSubgroup()`](https://ohdsi.github.io/CohortIncidence/reference/createCohortSubgroup.md)
+  : Creates R6 object for CohortSubgroup
+- [`createDateRange()`](https://ohdsi.github.io/CohortIncidence/reference/createDateRange.md)
+  : Creates R6 object for DateRange
+- [`createIncidenceAnalysis()`](https://ohdsi.github.io/CohortIncidence/reference/createIncidenceAnalysis.md)
+  : Creates R6 object for IncidenceAnalysis
+- [`createIncidenceDesign()`](https://ohdsi.github.io/CohortIncidence/reference/createIncidenceDesign.md)
+  : Creates R6 object for IncidenceDesign
+- [`createOutcomeDef()`](https://ohdsi.github.io/CohortIncidence/reference/createOutcomeDef.md)
+  : Creates R6 object for Outcome
+- [`createStrataSettings()`](https://ohdsi.github.io/CohortIncidence/reference/createStrataSettings.md)
+  : Creates R6 object for StrataSettings
+- [`createTimeAtRiskDef()`](https://ohdsi.github.io/CohortIncidence/reference/createTimeAtRiskDef.md)
+  : Creates R6 object for TimeAtRisk
+
+## Other Functions
+
+- [`buildOptions()`](https://ohdsi.github.io/CohortIncidence/reference/buildOptions.md)
+  : Builds the BuilderOptions jObject with the specified paramaters
+- [`buildQuery()`](https://ohdsi.github.io/CohortIncidence/reference/buildQuery.md)
+  : Builds SQL code to run analyses according given Cohort
+  Characterization design
+- [`executeAnalysis()`](https://ohdsi.github.io/CohortIncidence/reference/executeAnalysis.md)
+  : Executes IR analysis given a design, options, and connection
+  settings.
+- [`getCleanupSql()`](https://ohdsi.github.io/CohortIncidence/reference/getCleanupSql.md)
+  : Gets the sql that drops the results tables
+- [`getResultsDdl()`](https://ohdsi.github.io/CohortIncidence/reference/getResultsDdl.md)
+  : Gets the results schema DDL for Incidence Analysis
+
+# Articles
+
+### All vignettes
+
+- [CohortIncidence Method
+  Documentation](https://ohdsi.github.io/CohortIncidence/articles/cohortincidence-method-documentation.md):
+- [Using
+  CohortIncidence](https://ohdsi.github.io/CohortIncidence/articles/using-cohortincidence.md):

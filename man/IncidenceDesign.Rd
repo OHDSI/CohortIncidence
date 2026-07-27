@@ -20,100 +20,108 @@ Note, when serializing with a library such as jsonlite, first call toList() on t
 before calling jsonlite::toJSON(), or call toJSON directy on this class.
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{cohortDefs}}{A list of cohort definitions.  Must be a list of \link[=CohortDefinition]{CohortDefinition}}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{cohortDefs}}{A list of cohort definitions.  Must be a list of \link[=CohortDefinition]{CohortDefinition}}
 
-\item{\code{conceptSets}}{A list of concept set expressions.  Currently unused.}
+    \item{\code{conceptSets}}{A list of concept set expressions.  Currently unused.}
 
-\item{\code{targetDefs}}{A list of cohort references to be used as target cohorts.  Must be a list of \link[=CohortReference]{CohortReference}}
+    \item{\code{targetDefs}}{A list of cohort references to be used as target cohorts.  Must be a list of \link[=CohortReference]{CohortReference}}
 
-\item{\code{outcomeDefs}}{A list of outcome definitions.  Must be a list of \link[=Outcome]{Outcome}}
+    \item{\code{outcomeDefs}}{A list of outcome definitions.  Must be a list of \link[=Outcome]{Outcome}}
 
-\item{\code{timeAtRiskDefs}}{A list of time-at-risk definitions.  Must be a list of \link[=TimeAtRisk]{TimeAtRisk}}
+    \item{\code{timeAtRiskDefs}}{A list of time-at-risk definitions.  Must be a list of \link[=TimeAtRisk]{TimeAtRisk}}
 
-\item{\code{analysisList}}{A list of analyses, containing the T-O-TAR combinations to perform.  Must be a list of \link[=IncidenceAnalysis]{IncidenceAnalysis}}
+    \item{\code{analysisList}}{A list of analyses, containing the T-O-TAR combinations to perform.  Must be a list of \link[=IncidenceAnalysis]{IncidenceAnalysis}}
 
-\item{\code{subgroups}}{A list of subgroups.  Must be a list of \link[=CohortSubgroup]{CohortSubgroup}}
+    \item{\code{subgroups}}{A list of subgroups.  Must be a list of \link[=CohortSubgroup]{CohortSubgroup}}
 
-\item{\code{strataSettings}}{The strata settings for this design.  Must be a class \link[=StrataSettings]{StrataSettings}}
+    \item{\code{strataSettings}}{The strata settings for this design.  Must be a class \link[=StrataSettings]{StrataSettings}}
 
-\item{\code{studyWindow}}{a study window for this design.  Must be a list of class \link[=DateRange]{DateRange}}
+    \item{\code{studyWindow}}{a study window for this design.  Must be a list of class \link[=DateRange]{DateRange}}
 
-\item{\code{firstAtRisk}}{a boolean indicating to limit TAR to first per person.}
+    \item{\code{firstAtRisk}}{a boolean indicating to limit TAR to first per person.}
 
-\item{\code{firstPostOutcome}}{a boolean indicating to limit TAR to first per person.}
-}
-\if{html}{\out{</div>}}
+    \item{\code{firstPostOutcome}}{a boolean indicating to limit TAR to first per person.}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-IncidenceDesign-new}{\code{IncidenceDesign$new()}}
-\item \href{#method-IncidenceDesign-toList}{\code{IncidenceDesign$toList()}}
-\item \href{#method-IncidenceDesign-asJSON}{\code{IncidenceDesign$asJSON()}}
-\item \href{#method-IncidenceDesign-clone}{\code{IncidenceDesign$clone()}}
-}
+  \itemize{
+    \item \href{#method-IncidenceDesign-initialize}{\code{IncidenceDesign$new()}}
+    \item \href{#method-IncidenceDesign-toList}{\code{IncidenceDesign$toList()}}
+    \item \href{#method-IncidenceDesign-asJSON}{\code{IncidenceDesign$asJSON()}}
+    \item \href{#method-IncidenceDesign-clone}{\code{IncidenceDesign$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-IncidenceDesign-new"></a>}}
-\if{latex}{\out{\hypertarget{method-IncidenceDesign-new}{}}}
-\subsection{Method \code{new()}}{
-creates a new instance, using the provided data param if provided.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{IncidenceDesign$new(data = list())}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-IncidenceDesign-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-IncidenceDesign-initialize}{}}}
+\subsection{\code{IncidenceDesign$new()}}{
+  creates a new instance, using the provided data param if provided.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{IncidenceDesign$new(data = list())}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data}}{the data (as a json string or list) to initialize with}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{the data (as a json string or list) to initialize with}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-IncidenceDesign-toList"></a>}}
 \if{latex}{\out{\hypertarget{method-IncidenceDesign-toList}{}}}
-\subsection{Method \code{toList()}}{
-returns the R6 class elements as a list for use in jsonlite::toJSON()
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{IncidenceDesign$toList()}\if{html}{\out{</div>}}
+\subsection{\code{IncidenceDesign$toList()}}{
+  returns the R6 class elements as a list for use in jsonlite::toJSON()
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{IncidenceDesign$toList()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-IncidenceDesign-asJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-IncidenceDesign-asJSON}{}}}
-\subsection{Method \code{asJSON()}}{
-returns the JSON string for this R6 class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{IncidenceDesign$asJSON(...)}\if{html}{\out{</div>}}
+\subsection{\code{IncidenceDesign$asJSON()}}{
+  returns the JSON string for this R6 class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{IncidenceDesign$asJSON(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{paramaters that are passed forward to rjsonlite::toJSON()}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{paramaters that are passed forward to rjsonlite::toJSON()}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-IncidenceDesign-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-IncidenceDesign-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{IncidenceDesign$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{IncidenceDesign$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{IncidenceDesign$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

@@ -15,82 +15,90 @@ Note, when serializing with a library such as jsonlite, first call toList() on t
 before calling jsonlite::toJSON().
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{id}}{an integer uniquely identifying this time at risk}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{id}}{an integer uniquely identifying this time at risk}
 
-\item{\code{startWith}}{the cohort date to start the time-at-risk.  Can be either "start" or "end".}
+    \item{\code{startWith}}{the cohort date to start the time-at-risk.  Can be either "start" or "end".}
 
-\item{\code{startOffset}}{The number of days added to the date specified in startWith.}
+    \item{\code{startOffset}}{The number of days added to the date specified in startWith.}
 
-\item{\code{endWith}}{the cohort date to start the time-at-risk.  Can be either "start" or "end".}
+    \item{\code{endWith}}{the cohort date to start the time-at-risk.  Can be either "start" or "end".}
 
-\item{\code{endOffset}}{The number of days added to the date specified in startWith.}
-}
-\if{html}{\out{</div>}}
+    \item{\code{endOffset}}{The number of days added to the date specified in startWith.}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-TimeAtRisk-new}{\code{TimeAtRisk$new()}}
-\item \href{#method-TimeAtRisk-toList}{\code{TimeAtRisk$toList()}}
-\item \href{#method-TimeAtRisk-asJSON}{\code{TimeAtRisk$asJSON()}}
-\item \href{#method-TimeAtRisk-clone}{\code{TimeAtRisk$clone()}}
-}
+  \itemize{
+    \item \href{#method-TimeAtRisk-initialize}{\code{TimeAtRisk$new()}}
+    \item \href{#method-TimeAtRisk-toList}{\code{TimeAtRisk$toList()}}
+    \item \href{#method-TimeAtRisk-asJSON}{\code{TimeAtRisk$asJSON()}}
+    \item \href{#method-TimeAtRisk-clone}{\code{TimeAtRisk$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TimeAtRisk-new"></a>}}
-\if{latex}{\out{\hypertarget{method-TimeAtRisk-new}{}}}
-\subsection{Method \code{new()}}{
-creates a new instance, using the provided data param if provided.
+\if{html}{\out{<a id="method-TimeAtRisk-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-TimeAtRisk-initialize}{}}}
+\subsection{\code{TimeAtRisk$new()}}{
+  creates a new instance, using the provided data param if provided.
 The JSON takes the form: {"id":1,"start":{"dateField":"start","offset":1},"end":{"dateField":"start","offset":30}}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TimeAtRisk$new(data = list())}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TimeAtRisk$new(data = list())}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data}}{the data (as a json string or list) to initialize with}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{the data (as a json string or list) to initialize with}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TimeAtRisk-toList"></a>}}
 \if{latex}{\out{\hypertarget{method-TimeAtRisk-toList}{}}}
-\subsection{Method \code{toList()}}{
-returns the R6 class elements as a list for use in jsonlite::toJSON()
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TimeAtRisk$toList()}\if{html}{\out{</div>}}
+\subsection{\code{TimeAtRisk$toList()}}{
+  returns the R6 class elements as a list for use in jsonlite::toJSON()
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TimeAtRisk$toList()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TimeAtRisk-asJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-TimeAtRisk-asJSON}{}}}
-\subsection{Method \code{asJSON()}}{
-returns the JSON string for this R6 class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TimeAtRisk$asJSON()}\if{html}{\out{</div>}}
+\subsection{\code{TimeAtRisk$asJSON()}}{
+  returns the JSON string for this R6 class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TimeAtRisk$asJSON()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TimeAtRisk-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-TimeAtRisk-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TimeAtRisk$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{TimeAtRisk$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TimeAtRisk$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

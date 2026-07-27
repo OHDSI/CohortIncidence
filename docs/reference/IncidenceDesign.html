@@ -62,43 +62,43 @@ before calling jsonlite::toJSON(), or call toJSON directy on this class.</p>
 <dd><p>A list of cohort definitions.  Must be a list of <a href="CohortDefinition.html">CohortDefinition</a></p></dd>
 
 
-<dt><code>conceptSets</code></dt>
+    <dt><code>conceptSets</code></dt>
 <dd><p>A list of concept set expressions.  Currently unused.</p></dd>
 
 
-<dt><code>targetDefs</code></dt>
+    <dt><code>targetDefs</code></dt>
 <dd><p>A list of cohort references to be used as target cohorts.  Must be a list of <a href="CohortReference.html">CohortReference</a></p></dd>
 
 
-<dt><code>outcomeDefs</code></dt>
+    <dt><code>outcomeDefs</code></dt>
 <dd><p>A list of outcome definitions.  Must be a list of <a href="Outcome.html">Outcome</a></p></dd>
 
 
-<dt><code>timeAtRiskDefs</code></dt>
+    <dt><code>timeAtRiskDefs</code></dt>
 <dd><p>A list of time-at-risk definitions.  Must be a list of <a href="TimeAtRisk.html">TimeAtRisk</a></p></dd>
 
 
-<dt><code>analysisList</code></dt>
+    <dt><code>analysisList</code></dt>
 <dd><p>A list of analyses, containing the T-O-TAR combinations to perform.  Must be a list of <a href="IncidenceAnalysis.html">IncidenceAnalysis</a></p></dd>
 
 
-<dt><code>subgroups</code></dt>
+    <dt><code>subgroups</code></dt>
 <dd><p>A list of subgroups.  Must be a list of <a href="CohortSubgroup.html">CohortSubgroup</a></p></dd>
 
 
-<dt><code>strataSettings</code></dt>
+    <dt><code>strataSettings</code></dt>
 <dd><p>The strata settings for this design.  Must be a class <a href="StrataSettings.html">StrataSettings</a></p></dd>
 
 
-<dt><code>studyWindow</code></dt>
+    <dt><code>studyWindow</code></dt>
 <dd><p>a study window for this design.  Must be a list of class <a href="DateRange.html">DateRange</a></p></dd>
 
 
-<dt><code>firstAtRisk</code></dt>
+    <dt><code>firstAtRisk</code></dt>
 <dd><p>a boolean indicating to limit TAR to first per person.</p></dd>
 
 
-<dt><code>firstPostOutcome</code></dt>
+    <dt><code>firstPostOutcome</code></dt>
 <dd><p>a boolean indicating to limit TAR to first per person.</p></dd>
 
 
@@ -109,19 +109,16 @@ before calling jsonlite::toJSON(), or call toJSON directy on this class.</p>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-IncidenceDesign-new"><code>IncidenceDesign$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-IncidenceDesign-initialize"><code>IncidenceDesign$new()</code></a></p></li>
 <li><p><a href="#method-IncidenceDesign-toList"><code>IncidenceDesign$toList()</code></a></p></li>
 <li><p><a href="#method-IncidenceDesign-asJSON"><code>IncidenceDesign$asJSON()</code></a></p></li>
 <li><p><a href="#method-IncidenceDesign-clone"><code>IncidenceDesign$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-IncidenceDesign-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p></p><hr><a id="method-IncidenceDesign-initialize"></a><div class="section">
+<h3 id="incidencedesign-new-"><code>IncidenceDesign$new()</code><a class="anchor" aria-label="anchor" href="#incidencedesign-new-"></a></h3>
 <p>creates a new instance, using the provided data param if provided.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/IncidenceDesign.html">IncidenceDesign</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>data</code></dt>
 <dd><p>the data (as a json string or list) to initialize with</p></dd>
@@ -130,22 +127,23 @@ before calling jsonlite::toJSON(), or call toJSON directy on this class.</p>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-IncidenceDesign-toList"></a><div class="section">
-<h3 id="method-tolist-">Method <code>toList()</code><a class="anchor" aria-label="anchor" href="#method-tolist-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-IncidenceDesign-toList"></a><div class="section">
+<h3 id="incidencedesign-tolist-"><code>IncidenceDesign$toList()</code><a class="anchor" aria-label="anchor" href="#incidencedesign-tolist-"></a></h3>
 <p>returns the R6 class elements as a list for use in jsonlite::toJSON()</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">IncidenceDesign</span><span class="op">$</span><span class="fu">toList</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-IncidenceDesign-asJSON"></a><div class="section">
-<h3 id="method-asjson-">Method <code>asJSON()</code><a class="anchor" aria-label="anchor" href="#method-asjson-"></a></h3>
+<p></p><hr><a id="method-IncidenceDesign-asJSON"></a><div class="section">
+<h3 id="incidencedesign-asjson-"><code>IncidenceDesign$asJSON()</code><a class="anchor" aria-label="anchor" href="#incidencedesign-asjson-"></a></h3>
 <p>returns the JSON string for this R6 class</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">IncidenceDesign</span><span class="op">$</span><span class="fu">asJSON</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>paramaters that are passed forward to rjsonlite::toJSON()</p></dd>
@@ -154,14 +152,14 @@ before calling jsonlite::toJSON(), or call toJSON directy on this class.</p>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-IncidenceDesign-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-IncidenceDesign-clone"></a><div class="section">
+<h3 id="incidencedesign-clone-"><code>IncidenceDesign$clone()</code><a class="anchor" aria-label="anchor" href="#incidencedesign-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">IncidenceDesign</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -171,6 +169,7 @@ before calling jsonlite::toJSON(), or call toJSON directy on this class.</p>
 </div>
 
 </div>
+
 
     </div>
 
@@ -183,7 +182,7 @@ before calling jsonlite::toJSON(), or call toJSON directy on this class.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

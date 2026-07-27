@@ -1,7 +1,7 @@
 CohortIncidence
 =====
 [![Build Status](https://github.com/OHDSI/CohortIncidence/workflows/R-CMD-check/badge.svg)](https://github.com/OHDSI/CohortIncidence/actions?query=workflow%3AR-CMD-check)
-[![codecov.io](https://codecov.io/github/OHDSI/CohortIncidence/coverage.svg?branch=master)](https://codecov.io/github/OHDSI/CohortIncidence?branch=master)
+[![codecov.io](https://app.codecov.io/github/OHDSI/CohortIncidence?branch=master)](https://app.codecov.io/github/OHDSI/CohortIncidence?branch=master)
 
 CohortIncidence is part of [HADES](https://ohdsi.github.io/Hades).
 

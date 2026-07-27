@@ -11,75 +11,83 @@ This class is used to specify a DateRange, with start and end dates specified as
 strings formatted as YYYY-MM-DD.
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{startDate}}{a character with format YYYY-MM-DD to be used as the date range's start date.}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{startDate}}{a character with format YYYY-MM-DD to be used as the date range's start date.}
 
-\item{\code{endDate}}{a character with format YYYY-MM-DD to be used as the date range's end date.}
-}
-\if{html}{\out{</div>}}
+    \item{\code{endDate}}{a character with format YYYY-MM-DD to be used as the date range's end date.}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-DateRange-new}{\code{DateRange$new()}}
-\item \href{#method-DateRange-toList}{\code{DateRange$toList()}}
-\item \href{#method-DateRange-asJSON}{\code{DateRange$asJSON()}}
-\item \href{#method-DateRange-clone}{\code{DateRange$clone()}}
-}
+  \itemize{
+    \item \href{#method-DateRange-initialize}{\code{DateRange$new()}}
+    \item \href{#method-DateRange-toList}{\code{DateRange$toList()}}
+    \item \href{#method-DateRange-asJSON}{\code{DateRange$asJSON()}}
+    \item \href{#method-DateRange-clone}{\code{DateRange$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-DateRange-new"></a>}}
-\if{latex}{\out{\hypertarget{method-DateRange-new}{}}}
-\subsection{Method \code{new()}}{
-creates a new instance, using the provided data param if provided.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DateRange$new(data = list())}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-DateRange-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-DateRange-initialize}{}}}
+\subsection{\code{DateRange$new()}}{
+  creates a new instance, using the provided data param if provided.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DateRange$new(data = list())}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data}}{the data (as a json string or list) to initialize with}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{the data (as a json string or list) to initialize with}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DateRange-toList"></a>}}
 \if{latex}{\out{\hypertarget{method-DateRange-toList}{}}}
-\subsection{Method \code{toList()}}{
-returns the R6 class elements as a list for use in jsonlite::toJSON()
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DateRange$toList()}\if{html}{\out{</div>}}
+\subsection{\code{DateRange$toList()}}{
+  returns the R6 class elements as a list for use in jsonlite::toJSON()
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DateRange$toList()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DateRange-asJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-DateRange-asJSON}{}}}
-\subsection{Method \code{asJSON()}}{
-returns the JSON string for this R6 class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DateRange$asJSON()}\if{html}{\out{</div>}}
+\subsection{\code{DateRange$asJSON()}}{
+  returns the JSON string for this R6 class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DateRange$asJSON()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DateRange-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-DateRange-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DateRange$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{DateRange$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DateRange$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }
