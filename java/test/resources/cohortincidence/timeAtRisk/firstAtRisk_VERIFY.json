@@ -1,0 +1,21 @@
+{
+	"first_at_risk.incidence_summary": [
+		{
+			"ref_id": 1,
+			"target_cohort_definition_id": 100,
+			"tar_id": 1,
+			"subgroup_id": 0,
+			"outcome_id": 1,
+			"persons_at_risk_pe":7,
+			"persons_at_risk":7,
+			"person_days_pe":427,
+			"person_days":410,
+			"person_outcomes_pe": 1,
+			"person_outcomes":1,
+			"outcomes_pe":1,
+			"outcomes": 1,
+			"incidence_proportion_p100p": 14.2857,
+			"incidence_rate_p100py": 89.0854
+		}
+	]
+}

@@ -14,8 +14,7 @@ import org.dbunit.operation.DatabaseOperation;
 import org.dbunit.util.TableFormatter;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.ohdsi.analysis.cohortincidence.design.CohortIncidence;
-import org.ohdsi.circe.helper.ResourceHelper;
+import org.ohdsi.cohortincidence.design.CohortIncidence;
 import org.ohdsi.sql.SqlRender;
 import org.ohdsi.sql.SqlSplit;
 import org.ohdsi.sql.SqlTranslate;
@@ -542,6 +541,55 @@ public class Incidence_5_0_Test extends AbstractDatabaseTest {
 		};
 		params.designJson = ResourceHelper.GetResourceAsString("/cohortincidence/timeAtRisk/invalidTarTest.json");
 		params.verifyDataSets =  new String[]{"/cohortincidence/timeAtRisk/invalidTar_VERIFY.json"};
+		params.verifyCols = Arrays.asList(new String[]{COL_REF_ID, COL_TARGET_COHORT_ID, COL_TAR_ID, COL_SUBGROUP_ID, COL_OUTCOME_ID,
+							COL_PERSONS_PRE_EXCLUDE, COL_PERSONS_AT_RISK, COL_PERSONS_DAYS_PRE_EXCLUDE, COL_PERSON_DAYS,
+							COL_PERSON_OUTCOMES_PRE_EXCLUDE, COL_PERSON_OUTCOMES, COL_OUTCOMES_PRE_EXCLUDE, COL_OUTCOMES,
+							COL_INCIDENCE_PROPORTION_P100P, COL_INCIDENCE_RATE_P100PY});
+
+		this.executeTest(params);
+	}
+	/**
+	 * Uses the firstPostOutcome design to follow people to first outcome after TAR starts,
+	 * ignoring prior outcomes that are not within clean window of TAR-start, and 
+	 * stop follow up at first outcome.
+	 * @throws Exception 
+	 */
+	@Test
+	public void firstPostOutcomeTest() throws Exception {
+		TestParams params = new TestParams();
+		
+		params.resultSchema = "first_post_outcome"; // this must be all lower case for DBUnit to work
+		params.prepDataSets = new String[]{
+			"/datasets/vocabulary.json",
+			"/cohortincidence/timeAtRisk/firstPostOutcome_PREP.json"
+		};
+		params.designJson = ResourceHelper.GetResourceAsString("/cohortincidence/timeAtRisk/firstPostOutcomeTest.json");
+		params.verifyDataSets =  new String[]{"/cohortincidence/timeAtRisk/firstPostOutcome_VERIFY.json"};
+		params.verifyCols = Arrays.asList(new String[]{COL_REF_ID, COL_TARGET_COHORT_ID, COL_TAR_ID, COL_SUBGROUP_ID, COL_OUTCOME_ID,
+							COL_PERSONS_PRE_EXCLUDE, COL_PERSONS_AT_RISK, COL_PERSONS_DAYS_PRE_EXCLUDE, COL_PERSON_DAYS,
+							COL_PERSON_OUTCOMES_PRE_EXCLUDE, COL_PERSON_OUTCOMES, COL_OUTCOMES_PRE_EXCLUDE, COL_OUTCOMES,
+							COL_INCIDENCE_PROPORTION_P100P, COL_INCIDENCE_RATE_P100PY});
+
+		this.executeTest(params);
+	}
+
+	/**
+	 * Uses the firstAtRisk design to follow people to first outcome after TAR starts,
+	 * ignoring prior outcomes that are not within clean window of TAR-start, and 
+	 * stop follow up at first outcome.
+	 * @throws Exception 
+	 */
+	@Test
+	public void firstAtRiskTest() throws Exception {
+		TestParams params = new TestParams();
+		
+		params.resultSchema = "first_at_risk"; // this must be all lower case for DBUnit to work
+		params.prepDataSets = new String[]{
+			"/datasets/vocabulary.json",
+			"/cohortincidence/timeAtRisk/firstAtRisk_PREP.json"
+		};
+		params.designJson = ResourceHelper.GetResourceAsString("/cohortincidence/timeAtRisk/firstAtRiskTest.json");
+		params.verifyDataSets =  new String[]{"/cohortincidence/timeAtRisk/firstAtRisk_VERIFY.json"};
 		params.verifyCols = Arrays.asList(new String[]{COL_REF_ID, COL_TARGET_COHORT_ID, COL_TAR_ID, COL_SUBGROUP_ID, COL_OUTCOME_ID,
 							COL_PERSONS_PRE_EXCLUDE, COL_PERSONS_AT_RISK, COL_PERSONS_DAYS_PRE_EXCLUDE, COL_PERSON_DAYS,
 							COL_PERSON_OUTCOMES_PRE_EXCLUDE, COL_PERSON_OUTCOMES, COL_OUTCOMES_PRE_EXCLUDE, COL_OUTCOMES,
