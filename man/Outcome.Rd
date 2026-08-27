@@ -3,13 +3,16 @@
 \name{Outcome}
 \alias{Outcome}
 \title{R6 Class Representing an Outcome definition}
+\value{
+An \code{Outcome} R6 object describing one outcome definition, including the outcome cohort id, clean window, and optional exclusion cohort id.
+}
 \description{
-The Outcome class, encapsulating the id, name, outcome cohortId, 
+The Outcome class, encapsulating the id, name, outcome cohortId,
 exclusion cohortId, and clean window.
 }
 \details{
-This class is used to specify an outcome definition.  The outcome id is distinct from 
-the outcome cohort ID in that you can define multiple outcomes that use the same outcome cohort 
+This class is used to specify an outcome definition.  The outcome id is distinct from
+the outcome cohort ID in that you can define multiple outcomes that use the same outcome cohort
 with different clean windows or exclusion cohort.
 
 Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
@@ -56,6 +59,9 @@ before calling jsonlite::toJSON().
     }
     \if{html}{\out{</div>}}
   }
+  \subsection{Returns}{
+    A new \code{Outcome} object initialized from a list or JSON string.
+  }
 }
 
 \if{html}{\out{<hr>}}
@@ -68,6 +74,9 @@ before calling jsonlite::toJSON().
     \preformatted{Outcome$toList()}
     \if{html}{\out{</div>}}
   }
+  \subsection{Returns}{
+    A named list with \code{id}, \code{name}, \code{cohortId}, \code{cleanWindow}, and \code{excludeCohortId} fields.
+  }
 }
 
 \if{html}{\out{<hr>}}
@@ -79,6 +88,9 @@ before calling jsonlite::toJSON().
     \if{html}{\out{<div class="r">}}
     \preformatted{Outcome$asJSON()}
     \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A JSON string representation of the \code{Outcome} object.
   }
 }
 

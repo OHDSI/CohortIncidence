@@ -3,13 +3,16 @@
 \name{TimeAtRisk}
 \alias{TimeAtRisk}
 \title{R6 Class Representing an Time-at-Risk (TAR) definition}
+\value{
+A \code{TimeAtRisk} R6 object describing the TAR start and end anchors plus offsets used to compute person-time.
+}
 \description{
 The TimeAtRisk class, encapsulating the id, startWith, startOffset, endWith and endOffset
 }
 \details{
 This class is used to specify a time-at-risk (TAR) definition. A TAR is defined by choosing
 the start/end date of a cohort to start with (plus an offset), and a start/end date of the cohort
- to end with (plus an offset).
+to end with (plus an offset).
 
 Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
 before calling jsonlite::toJSON().
@@ -43,7 +46,7 @@ before calling jsonlite::toJSON().
 \if{latex}{\out{\hypertarget{method-TimeAtRisk-initialize}{}}}
 \subsection{\code{TimeAtRisk$new()}}{
   creates a new instance, using the provided data param if provided.
-The JSON takes the form: {"id":1,"start":{"dateField":"start","offset":1},"end":{"dateField":"start","offset":30}}
+The JSON takes the form:\verb{\{"id":1,"start":\{"dateField":"start","offset":1\},"end":\{"dateField":"start","offset":30\}\}}
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
     \preformatted{TimeAtRisk$new(data = list())}
@@ -55,6 +58,9 @@ The JSON takes the form: {"id":1,"start":{"dateField":"start","offset":1},"end":
       \item{\code{data}}{the data (as a json string or list) to initialize with}
     }
     \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{TimeAtRisk} object initialized from a list or JSON string.
   }
 }
 
@@ -68,6 +74,9 @@ The JSON takes the form: {"id":1,"start":{"dateField":"start","offset":1},"end":
     \preformatted{TimeAtRisk$toList()}
     \if{html}{\out{</div>}}
   }
+  \subsection{Returns}{
+    A named list with \code{id}, \code{start}, and \code{end} fields, where \code{start} and \code{end} are nested lists containing \code{dateField} and \code{offset}.
+  }
 }
 
 \if{html}{\out{<hr>}}
@@ -79,6 +88,9 @@ The JSON takes the form: {"id":1,"start":{"dateField":"start","offset":1},"end":
     \if{html}{\out{<div class="r">}}
     \preformatted{TimeAtRisk$asJSON()}
     \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A JSON string representation of the \code{TimeAtRisk} object.
   }
 }
 

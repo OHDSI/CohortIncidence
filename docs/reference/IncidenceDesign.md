@@ -3,14 +3,34 @@
 This class encapsulates the other R6 Class elements that define an
 IncidenceDesign
 
+## Value
+
+A `IncidenceDesign` R6 object that stores the full cohort incidence
+analysis design, including cohort definitions, target definitions,
+outcomes, time-at-risk definitions, analyses, subgroups, strata
+settings, and study window metadata used to generate SQL.
+
 ## Details
 
-The IncidenceDesign class encapsulates the following: - Cohort
-Definitions - Target Definitions - Outcome Definitions - Time At Risk
-Definitions - A List of Analyses - Concept Sets - Subgruops - Strata
-Settings Note, when serializing with a library such as jsonlite, first
-call toList() on the R6 class before calling jsonlite::toJSON(), or call
-toJSON directy on this class.
+The IncidenceDesign class encapsulates the following:
+
+- Cohort Definitions
+
+- Target Definitions
+
+- Outcome Definitions
+
+- Time At Risk Definitions
+
+- A List of Analyses
+
+- Concept Sets
+
+- Subgruops
+
+- Strata Settings Note, when serializing with a library such as
+  jsonlite, first call toList() on the R6 class before calling
+  jsonlite::toJSON(), or call toJSON directy on this class.
 
 ## Active bindings
 
@@ -95,6 +115,11 @@ creates a new instance, using the provided data param if provided.
 - `data`:
 
   the data (as a json string or list) to initialize with
+
+#### Returns
+
+A new `IncidenceDesign` object initialized from a list or JSON string
+representation of the full design.
 
 ------------------------------------------------------------------------
 

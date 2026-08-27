@@ -3,17 +3,22 @@
 The StrataSettings class, encapsulating the age, gender and start-year +
 age breaks settings.
 
+## Value
+
+A `StrataSettings` R6 object that stores the age, gender, year, and
+age-break stratification options used during analysis.
+
+Note, when serializing with a library such as jsonlite, first call
+toList() on the R6 class before calling jsonlite::toJSON().
+
 ## Details
 
 This class is used to specify the stratification settings for an
 analysis. The settings can indicate the statistics should be grouped by
 the age, gender, or start year, and any combination of those selections.
 
-Example: age = T and gender = T will produce statisics by age, by
+Example: age = TRUE and gender = TRUE will produce statisics by age, by
 gender, and by age and gender.
-
-Note, when serializing with a library such as jsonlite, first call
-toList() on the R6 class before calling jsonlite::toJSON().
 
 ## Active bindings
 
@@ -65,6 +70,10 @@ creates a new instance, using the provided data param if provided.
 
   the data (as a json string or list) to initialize with
 
+#### Returns
+
+A new `StrataSettings` object initialized from a list or JSON string.
+
 ------------------------------------------------------------------------
 
 ### `StrataSettings$toList()`
@@ -75,6 +84,11 @@ returns the R6 class elements as a list for use in jsonlite::toJSON()
 
     StrataSettings$toList()
 
+#### Returns
+
+A named list containing the logical flags and age break lists used by
+the design.
+
 ------------------------------------------------------------------------
 
 ### `StrataSettings$asJSON()`
@@ -84,6 +98,10 @@ returns the JSON string for this R6 class
 #### Usage
 
     StrataSettings$asJSON()
+
+#### Returns
+
+A JSON string representation of the `StrataSettings` object.
 
 ------------------------------------------------------------------------
 

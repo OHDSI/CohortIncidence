@@ -24,4 +24,5 @@ createIncidenceAnalysis(targets, outcomes, tars)
 
 ## Value
 
-a R6 class: IncidenceAnalysis
+An `IncidenceAnalysis` R6 object containing the target, outcome, and TAR
+identifier vectors used to define one analysis combination.

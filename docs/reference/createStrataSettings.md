@@ -6,9 +6,9 @@ Creates R6 object for StrataSettings
 
 ``` r
 createStrataSettings(
-  byAge = F,
-  byGender = F,
-  byYear = F,
+  byAge = FALSE,
+  byGender = FALSE,
+  byYear = FALSE,
   ageBreaks,
   ageBreakList
 )
@@ -18,15 +18,15 @@ createStrataSettings(
 
 - byAge:
 
-  a boolean indicating to stratify by age, defaults to F
+  a boolean indicating to stratify by age, defaults to FALSE
 
 - byGender:
 
-  a boolean indicating to stratify by gender, defaults to F
+  a boolean indicating to stratify by gender, defaults to FALSE
 
 - byYear:
 
-  a boolean indicating to stratify by year, defaults to F
+  a boolean indicating to stratify by year, defaults to FALSE
 
 - ageBreaks:
 
@@ -38,5 +38,6 @@ createStrataSettings(
 
 ## Value
 
-an R list containing name-value pairs that will serialize into a
-org.ohdsi.cohortincidence.design.StratifySettings JSON format.
+A `StrataSettings` R6 object containing the three stratification flags
+plus optional age break definitions. The serialized form matches
+`org.ohdsi.cohortincidence.design.StratifySettings` JSON.

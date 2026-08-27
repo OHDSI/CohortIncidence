@@ -3,11 +3,14 @@
 \name{IncidenceAnalysis}
 \alias{IncidenceAnalysis}
 \title{R6 Class Representing a IncidenceAnalysis}
+\value{
+A \code{IncidenceAnalysis} R6 object that stores the analysis combination as three integer ID vectors: targets, outcomes, and time-at-risk definitions.
+}
 \description{
 The IncidenceAnalysis class, encapsulating the targets, outcomes and tars.
 }
 \details{
-The targets, outcomes and tars fields are referencing IDs of the targetDef, 
+The targets, outcomes and tars fields are referencing IDs of the targetDef,
 outcomeDef and tarDefs R6 classes.
 
 Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
@@ -49,6 +52,9 @@ before calling jsonlite::toJSON().
       \item{\code{data}}{the data (as a json string or list) to initialize with}
     }
     \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{IncidenceAnalysis} object initialized from a list or JSON string representation of one analysis combination.
   }
 }
 

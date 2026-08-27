@@ -3,6 +3,11 @@
 The CohortSubgroup class, encapsulating the id, name, description, and
 CohortRef.
 
+## Value
+
+A `CohortSubgroup` R6 object containing subgroup metadata and the
+`CohortReference` used to determine subgroup membership.
+
 ## Details
 
 This class is used to specify a cohort subgroup to be used in the
@@ -48,8 +53,8 @@ toList() on the R6 class before calling jsonlite::toJSON().
 ### `CohortSubgroup$new()`
 
 creates a new instance, using the provided data param if provided. The
-JSON takes the form: "id":1,"name":"some name","description":"some
-description","cohort":"id":99, "name":"cohort"
+JSON takes the form:
+`{"id":1,"name":"some name","description":"some description","cohort":{"id":99, "name":"cohort"}}`
 
 #### Usage
 
@@ -61,6 +66,10 @@ description","cohort":"id":99, "name":"cohort"
 
   the data (as a json string or list) to initialize with
 
+#### Returns
+
+A new `CohortSubgroup` object initialized from a list or JSON string.
+
 ------------------------------------------------------------------------
 
 ### `CohortSubgroup$toList()`
@@ -71,6 +80,11 @@ returns the R6 class elements as a list for use in jsonlite::toJSON()
 
     CohortSubgroup$toList()
 
+#### Returns
+
+A named list with a single `CohortSubgroup` element that contains `id`,
+`name`, `description`, and a nested `cohort` definition.
+
 ------------------------------------------------------------------------
 
 ### `CohortSubgroup$asJSON()`
@@ -80,6 +94,10 @@ returns the JSON string for this R6 class
 #### Usage
 
     CohortSubgroup$asJSON()
+
+#### Returns
+
+A JSON string representation of the `CohortSubgroup` object.
 
 ------------------------------------------------------------------------
 

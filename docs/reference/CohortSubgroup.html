@@ -43,6 +43,10 @@
 
 
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A <code>CohortSubgroup</code> R6 object containing subgroup metadata and the <code>CohortReference</code> used to determine subgroup membership.</p>
+    </div>
+    <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This class is used to specify a cohort subgroup to be used in the analysis. A TAR will be considered
 part of the subgroup if the TAR starts between the subgroup's cohort start and cohort end.</p>
@@ -81,7 +85,7 @@ before calling jsonlite::toJSON().</p>
 </ul></div><p></p><hr><a id="method-CohortSubgroup-initialize"></a><div class="section">
 <h3 id="cohortsubgroup-new-"><code>CohortSubgroup$new()</code><a class="anchor" aria-label="anchor" href="#cohortsubgroup-new-"></a></h3>
 <p>creates a new instance, using the provided data param if provided.
-The JSON takes the form: "id":1,"name":"some name","description":"some description","cohort":"id":99, "name":"cohort"</p><div class="section">
+The JSON takes the form: <code>{"id":1,"name":"some name","description":"some description","cohort":{"id":99, "name":"cohort"}}</code></p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/CohortSubgroup.html">CohortSubgroup</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>CohortSubgroup <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
@@ -91,6 +95,9 @@ The JSON takes the form: "id":1,"name":"some name","description":"some descripti
 
 
 </dl><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
+<p>A new <code>CohortSubgroup</code> object initialized from a list or JSON string.</p>
 </div>
 
 </div>
@@ -100,6 +107,9 @@ The JSON takes the form: "id":1,"name":"some name","description":"some descripti
 <p>returns the R6 class elements as a list for use in jsonlite::toJSON()</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CohortSubgroup</span><span class="op">$</span><span class="fu">toList</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
+<p>A named list with a single <code>CohortSubgroup</code> element that contains <code>id</code>, <code>name</code>, <code>description</code>, and a nested <code>cohort</code> definition.</p>
 </div>
 
 </div>
@@ -109,6 +119,9 @@ The JSON takes the form: "id":1,"name":"some name","description":"some descripti
 <p>returns the JSON string for this R6 class</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CohortSubgroup</span><span class="op">$</span><span class="fu">asJSON</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns-2">Returns<a class="anchor" aria-label="anchor" href="#returns-2"></a></h4>
+<p>A JSON string representation of the <code>CohortSubgroup</code> object.</p>
 </div>
 
 </div>

@@ -24,7 +24,8 @@ createIncidenceDesign(
 
 - cohortDefs:
 
-  The set of cohort definitions. Optional.
+  The set of cohort definitions. Optional metadata used when building a
+  design, not required for analysis execution.
 
 - targetDefs:
 
@@ -73,4 +74,8 @@ createIncidenceDesign(
 
 ## Value
 
-a R6 class: IncidenceDesign.
+An `IncidenceDesign` R6 object containing the design metadata, cohort
+definitions, target definitions, outcome definitions, time-at-risk
+definitions, analyses, subgroups, strata settings, and study window used
+to generate SQL. The object can be serialized to JSON for analysis
+execution.

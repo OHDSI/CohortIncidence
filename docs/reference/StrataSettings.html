@@ -43,13 +43,17 @@
 
 
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A <code>StrataSettings</code> R6 object that stores the age, gender, year, and age-break stratification options used during analysis.</p>
+<p>Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
+before calling jsonlite::toJSON().</p>
+    </div>
+    <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This class is used to specify the stratification settings for an analysis.
 The settings can indicate the statistics should be grouped by the age, gender, or
 start year, and any combination of those selections.</p>
-<p>Example:  age = T and gender = T will produce statisics by age, by gender, and by age and gender.</p>
-<p>Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
-before calling jsonlite::toJSON().</p>
+<p>Example:  age = TRUE and gender = TRUE will produce statisics by age, by gender, and by age and gender.</p>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
@@ -96,6 +100,9 @@ before calling jsonlite::toJSON().</p>
 
 
 </dl><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
+<p>A new <code>StrataSettings</code> object initialized from a list or JSON string.</p>
 </div>
 
 </div>
@@ -105,6 +112,9 @@ before calling jsonlite::toJSON().</p>
 <p>returns the R6 class elements as a list for use in jsonlite::toJSON()</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">StrataSettings</span><span class="op">$</span><span class="fu">toList</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
+<p>A named list containing the logical flags and age break lists used by the design.</p>
 </div>
 
 </div>
@@ -114,6 +124,9 @@ before calling jsonlite::toJSON().</p>
 <p>returns the JSON string for this R6 class</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">StrataSettings</span><span class="op">$</span><span class="fu">asJSON</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns-2">Returns<a class="anchor" aria-label="anchor" href="#returns-2"></a></h4>
+<p>A JSON string representation of the <code>StrataSettings</code> object.</p>
 </div>
 
 </div>

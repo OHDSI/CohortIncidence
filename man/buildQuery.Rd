@@ -13,7 +13,7 @@ buildQuery(incidenceDesign, buildOptions)
 }
 \value{
 SQL code in MS Sql Server dialect, if it's required to run analysis on another DBMS
-        you have to use \code{\link[SqlRender]{translateSql}} function in the SqlRender package.
+you have to use \code{\link[SqlRender]{translateSql}} function in the SqlRender package.
 }
 \description{
 Builds SQL code to run analyses according given Cohort Characterization design

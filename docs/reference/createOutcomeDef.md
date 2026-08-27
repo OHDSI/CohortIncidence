@@ -37,4 +37,5 @@ createOutcomeDef(id, name, cohortId = 0, cleanWindow = 0, excludeCohortId)
 
 ## Value
 
-a R6 class: Outcome
+An `Outcome` R6 object describing one outcome definition, including the
+outcome id, cohort id, clean window, and optional exclusion cohort id.

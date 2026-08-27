@@ -3,6 +3,11 @@
 The TimeAtRisk class, encapsulating the id, startWith, startOffset,
 endWith and endOffset
 
+## Value
+
+A `TimeAtRisk` R6 object describing the TAR start and end anchors plus
+offsets used to compute person-time.
+
 ## Details
 
 This class is used to specify a time-at-risk (TAR) definition. A TAR is
@@ -54,8 +59,8 @@ toList() on the R6 class before calling jsonlite::toJSON().
 ### `TimeAtRisk$new()`
 
 creates a new instance, using the provided data param if provided. The
-JSON takes the form:
-"id":1,"start":"dateField":"start","offset":1,"end":"dateField":"start","offset":30
+JSON takes the
+form:`{"id":1,"start":{"dateField":"start","offset":1},"end":{"dateField":"start","offset":30}}`
 
 #### Usage
 
@@ -67,6 +72,10 @@ JSON takes the form:
 
   the data (as a json string or list) to initialize with
 
+#### Returns
+
+A new `TimeAtRisk` object initialized from a list or JSON string.
+
 ------------------------------------------------------------------------
 
 ### `TimeAtRisk$toList()`
@@ -77,6 +86,11 @@ returns the R6 class elements as a list for use in jsonlite::toJSON()
 
     TimeAtRisk$toList()
 
+#### Returns
+
+A named list with `id`, `start`, and `end` fields, where `start` and
+`end` are nested lists containing `dateField` and `offset`.
+
 ------------------------------------------------------------------------
 
 ### `TimeAtRisk$asJSON()`
@@ -86,6 +100,10 @@ returns the JSON string for this R6 class
 #### Usage
 
     TimeAtRisk$asJSON()
+
+#### Returns
+
+A JSON string representation of the `TimeAtRisk` object.
 
 ------------------------------------------------------------------------
 

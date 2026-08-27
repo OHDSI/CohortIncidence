@@ -3,11 +3,14 @@
 \name{CohortReference}
 \alias{CohortReference}
 \title{R6 Class Representing a CohortReference}
+\value{
+A \code{CohortReference} R6 object that stores the cohort id, display name, and optional description used to reference a target, outcome, or subgroup cohort.
+}
 \description{
 The CohortReference class, encapsulating the id, name and descritpion fields that refernces a cohort definition.
 }
 \details{
-This class is used to reference a cohort definition by ID, while providing a way to 
+This class is used to reference a cohort definition by ID, while providing a way to
 substitute a name for this specific reference.
 
 Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
@@ -50,6 +53,9 @@ before calling jsonlite::toJSON().
     }
     \if{html}{\out{</div>}}
   }
+  \subsection{Returns}{
+    A new \code{CohortReference} object initialized from a list or JSON string.
+  }
 }
 
 \if{html}{\out{<hr>}}
@@ -62,6 +68,9 @@ before calling jsonlite::toJSON().
     \preformatted{CohortReference$toList()}
     \if{html}{\out{</div>}}
   }
+  \subsection{Returns}{
+    A named list with \code{id}, \code{name}, and \code{description} fields.
+  }
 }
 
 \if{html}{\out{<hr>}}
@@ -73,6 +82,9 @@ before calling jsonlite::toJSON().
     \if{html}{\out{<div class="r">}}
     \preformatted{CohortReference$asJSON()}
     \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A JSON string representation of the \code{CohortReference} object.
   }
 }
 

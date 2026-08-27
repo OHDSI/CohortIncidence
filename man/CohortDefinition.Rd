@@ -3,6 +3,9 @@
 \name{CohortDefinition}
 \alias{CohortDefinition}
 \title{R6 Class Representing a CohortDefinition}
+\value{
+A \code{CohortDefinition} R6 object used to hold optional cohort metadata and a serialized cohort definition expression. This object is primarily metadata for the design and is not required for analysis generation.
+}
 \description{
 The CohortDefinition class, encapsulating the id, name and expression of a cohort definition.
 }
@@ -42,6 +45,9 @@ before calling jsonlite::toJSON().
     \preformatted{CohortDefinition$toList()}
     \if{html}{\out{</div>}}
   }
+  \subsection{Returns}{
+    A named list with \code{id}, \code{name}, and \code{expression}, where \code{expression} is itself a nested list representation of the cohort definition expression.
+  }
 }
 
 \if{html}{\out{<hr>}}
@@ -53,6 +59,9 @@ before calling jsonlite::toJSON().
     \if{html}{\out{<div class="r">}}
     \preformatted{CohortDefinition$asJSON()}
     \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A JSON string representing the \code{CohortDefinition} object.
   }
 }
 

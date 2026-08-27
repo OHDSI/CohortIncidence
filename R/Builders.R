@@ -18,7 +18,7 @@
 
 #' Creates R6 object for IncidenceDesign
 #'
-#' @param cohortDefs The set of cohort definitions.  Optional.
+#' @param cohortDefs The set of cohort definitions. Optional metadata used when building a design, not required for analysis execution.
 #' @param targetDefs A list of target definitions, each element must be class CohortReference.
 #' @param outcomeDefs A list of outcome definitions, each element must be class Outcome
 #' @param tars A list of TAR definitions, each element must be class TimeAtRisk
@@ -29,7 +29,7 @@
 #' @param studyWindow Limits time at risk to the specified study window. Must be class DateRange.
 #' @param firstAtRisk Limits time at risk to the first per person.  Must be boolean.
 #' @param firstPostOutcome Limits outcomes to first outcome within clean window of the first TAR or after. Must be boolean.
-#' @return a R6 class: IncidenceDesign.
+#' @return An `IncidenceDesign` R6 object containing the design metadata, cohort definitions, target definitions, outcome definitions, time-at-risk definitions, analyses, subgroups, strata settings, and study window used to generate SQL. The object can be serialized to JSON for analysis execution.
 #' 
 #' @export
 createIncidenceDesign <- function(cohortDefs, targetDefs, outcomeDefs, tars, analysisList, conceptSets, subgroups, strataSettings, studyWindow, firstAtRisk, firstPostOutcome) {
@@ -55,7 +55,7 @@ createIncidenceDesign <- function(cohortDefs, targetDefs, outcomeDefs, tars, ana
 #' @param targets A list or vector of target IDs from target definitions.
 #' @param outcomes A list or vector of outcome IDs from outcome definitions.
 #' @param tars A list or vector of TAR IDs from time-at-risk definitions.
-#' @return a R6 class: IncidenceAnalysis
+#' @return An `IncidenceAnalysis` R6 object containing the target, outcome, and TAR identifier vectors used to define one analysis combination.
 #' 
 #' @export
 createIncidenceAnalysis <- function(targets, outcomes, tars) {
@@ -72,7 +72,7 @@ createIncidenceAnalysis <- function(targets, outcomes, tars) {
 #' @param id the cohort id that is being referenced
 #' @param name the name to use for this reference
 #' @param description an optional description to use for this reference.
-#' @return a R6 class: CohortReference
+#' @return A `CohortReference` R6 object that stores the cohort identifier, display name, and optional description used to reference a cohort definition in the design.
 #' 
 #' @export
 createCohortRef <- function(id, name, description) {
@@ -91,7 +91,7 @@ createCohortRef <- function(id, name, description) {
 #' @param cohortId the cohort id reference for this outcome
 #' @param cleanWindow the number of days to extend the outcome cohort’s end date. See \code{executeAnalysis()} for details on how this is applied.
 #' @param excludeCohortId a cohort ID from the outcomeCohrotTable that is used to exclude time at risk. See \code{executeAnalysis()} for details on how this is applied.
-#' @return a R6 class: Outcome
+#' @return An `Outcome` R6 object describing one outcome definition, including the outcome id, cohort id, clean window, and optional exclusion cohort id.
 #' 
 #' @export
 createOutcomeDef <- function(id, name, cohortId = 0, cleanWindow = 0, excludeCohortId) {
@@ -113,7 +113,7 @@ createOutcomeDef <- function(id, name, cohortId = 0, cleanWindow = 0, excludeCoh
 #' @param startOffset The number of days to offset for the TAR start, defaults to 0.
 #' @param endWith Specifies the field (start or end) to offset from for the TAR end.  Allowed values: 'start', 'end'
 #' @param endOffset The number of days to offset for the TAR start, defaults to 0.
-#' @return a R6 class: TimeAtRisk
+#' @return A `TimeAtRisk` R6 object describing the TAR start and end anchors plus their offsets. The serialized form contains a `start` and `end` field, each with a `dateField` and `offset`.
 #' 
 #' @export
 createTimeAtRiskDef <- function(id, startWith = "start", startOffset = 0, endWith="end", endOffset=0) {
@@ -134,7 +134,7 @@ createTimeAtRiskDef <- function(id, startWith = "start", startOffset = 0, endWit
 #' @param name The subgroup name
 #' @param description The subgroup description
 #' @param cohortRef A cohort reference, as an R6 Class CohortReference
-#' @return a R6 class: CohortSubgroup
+#' @return A `CohortSubgroup` R6 object containing subgroup metadata and the `CohortReference` used to determine subgroup membership.
 #' @export
 createCohortSubgroup <- function (id, name, description, cohortRef) {
   cohortSubgroup <- CohortSubgroup$new();
@@ -148,20 +148,20 @@ createCohortSubgroup <- function (id, name, description, cohortRef) {
 
 #' Creates R6 object for StrataSettings
 #'
-#' @param byAge a boolean indicating to stratify by age, defaults to F
-#' @param byGender a boolean indicating to stratify by gender, defaults to F
-#' @param byYear a boolean indicating to stratify by year, defaults to F
+#' @param byAge a boolean indicating to stratify by age, defaults to FALSE
+#' @param byGender a boolean indicating to stratify by gender, defaults to FALSE
+#' @param byYear a boolean indicating to stratify by year, defaults to FALSE
 #' @param ageBreaks a vector of integers indicating the age group bounds.
 #' @param ageBreakList a list of ageBreaks, used to specify multiple age break strata.
-#' @return an R list containing name-value pairs that will serialize into a org.ohdsi.cohortincidence.design.StratifySettings JSON format.
+#' @return A `StrataSettings` R6 object containing the three stratification flags plus optional age break definitions. The serialized form matches `org.ohdsi.cohortincidence.design.StratifySettings` JSON.
 #' @export
-createStrataSettings <- function (byAge = F, byGender = F, byYear = F, ageBreaks, ageBreakList) {
+createStrataSettings <- function (byAge = FALSE, byGender = FALSE, byYear = FALSE, ageBreaks, ageBreakList) {
   strataSettings <- StrataSettings$new()
   
   strataSettings$byAge <- byAge;
   strataSettings$byGender <- byGender;
   strataSettings$byYear <- byYear;
-  if(byAge == T && missing(ageBreaks) && missing(ageBreakList)) stop ("Error: when byAge = TRUE, ageBreaks or ageBreakList must be provided.")
+  if (byAge == TRUE && missing(ageBreaks) && missing(ageBreakList)) stop("Error: when byAge = TRUE, ageBreaks or ageBreakList must be provided.")
   if (!missing(ageBreaks)) strataSettings$ageBreaks <- ageBreaks;
   if (!missing(ageBreakList)) strataSettings$ageBreakList <- ageBreakList;
   
@@ -172,7 +172,7 @@ createStrataSettings <- function (byAge = F, byGender = F, byYear = F, ageBreaks
 #'
 #' @param startDate a character vector representing a date in YYYY-MM-DD format
 #' @param endDate a character vector representing a date in YYYY-MM-DD format
-#' @return a new instance of CohortIncidence::DateRange
+#' @return A `DateRange` R6 object containing the start and end date strings in `YYYY-MM-DD` format.
 #' @export
 createDateRange <- function (startDate, endDate) {
   dateRange <- DateRange$new()

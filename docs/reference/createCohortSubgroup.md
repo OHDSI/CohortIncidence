@@ -28,4 +28,5 @@ createCohortSubgroup(id, name, description, cohortRef)
 
 ## Value
 
-a R6 class: CohortSubgroup
+A `CohortSubgroup` R6 object containing subgroup metadata and the
+`CohortReference` used to determine subgroup membership.

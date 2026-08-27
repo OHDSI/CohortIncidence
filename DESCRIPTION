@@ -1,11 +1,19 @@
 Package: CohortIncidence
 Type: Package
-Title: CohortIncidence Package
+Title: Cohort Incidence Analysis for the OMOP Common Data Model
 Version: 4.2.0
 Date: 2026-07-27
-Author: Christopher Knoll
-Maintainer: Christopher Knoll <cknoll@ohdsi.org>
-Description: An R package that produces SQL queries for executing Cohort Incidence analyses.
+Authors@R: person(given = "Christopher",
+                  family = "Knoll",
+                  role = c("aut", "cre"),
+                  email = "cknoll@ohdsi.org")
+Description: Provides functionality for performing cohort incidence
+    analyses against data stored in the OMOP Common Data Model (CDM).
+    The package generates database-specific SQL, executes analyses across
+    supported database platforms, and returns standardized incidence
+    estimates using configurable time-at-risk, stratification, and cohort
+    definitions. It is intended to support reproducible observational
+    research within the OHDSI analytics framework.
 License: Apache License 2.0
 VignetteBuilder: knitr
 URL: https://ohdsi.github.io/CohortIncidence/
@@ -33,3 +41,4 @@ Suggests:
     R6
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0
+Roxygen: list(markdown = TRUE)

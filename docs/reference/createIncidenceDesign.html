@@ -63,7 +63,7 @@
 
 
 <dl><dt id="arg-cohortdefs">cohortDefs<a class="anchor" aria-label="anchor" href="#arg-cohortdefs"></a></dt>
-<dd><p>The set of cohort definitions.  Optional.</p></dd>
+<dd><p>The set of cohort definitions. Optional metadata used when building a design, not required for analysis execution.</p></dd>
 
 
 <dt id="arg-targetdefs">targetDefs<a class="anchor" aria-label="anchor" href="#arg-targetdefs"></a></dt>
@@ -108,7 +108,7 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>a R6 class: IncidenceDesign.</p>
+    <p>An <code>IncidenceDesign</code> R6 object containing the design metadata, cohort definitions, target definitions, outcome definitions, time-at-risk definitions, analyses, subgroups, strata settings, and study window used to generate SQL. The object can be serialized to JSON for analysis execution.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

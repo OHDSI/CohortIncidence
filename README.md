@@ -3,7 +3,7 @@ CohortIncidence
 [![Build Status](https://github.com/OHDSI/CohortIncidence/workflows/R-CMD-check/badge.svg)](https://github.com/OHDSI/CohortIncidence/actions?query=workflow%3AR-CMD-check)
 [![codecov.io](https://app.codecov.io/github/OHDSI/CohortIncidence?branch=master)](https://app.codecov.io/github/OHDSI/CohortIncidence?branch=master)
 
-CohortIncidence is part of [HADES](https://ohdsi.github.io/Hades).
+CohortIncidence is part of [HADES](https://ohdsi.github.io/Hades/).
 
 Introduction
 ============
@@ -64,14 +64,14 @@ The Java library is hosted in an OHDSI Nexus repo, so you only need to add the r
 
 User Documentation
 ==================
-Documentation can be found on the [package website](https://ohdsi.github.io/CohortIncidence).
+Documentation can be found on the [package website](https://ohdsi.github.io/CohortIncidence/).
 
 PDF versions of the documentation are also available:
 * Vignette: [Using CohortIncidence](https://raw.githubusercontent.com/OHDSI/CohortIncidence/master/vignettes/using-cohortincidence.pdf)
 
 Support
 =======
-* Developer questions/comments/feedback: <a href="http://forums.ohdsi.org/c/developers">OHDSI Forum</a>
+* Developer questions/comments/feedback: <a href="https://forums.ohdsi.org/c/developers/7">OHDSI Forum</a>
 * We use the <a href="https://github.com/OHDSI/CohortIncidence/issues">GitHub issue tracker</a> for all bugs/issues/enhancements
  
 Contributing

@@ -20,4 +20,5 @@ createDateRange(startDate, endDate)
 
 ## Value
 
-a new instance of CohortIncidence::DateRange
+A `DateRange` R6 object containing the start and end date strings in
+`YYYY-MM-DD` format.

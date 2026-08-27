@@ -40,4 +40,6 @@ createTimeAtRiskDef(
 
 ## Value
 
-a R6 class: TimeAtRisk
+A `TimeAtRisk` R6 object describing the TAR start and end anchors plus
+their offsets. The serialized form contains a `start` and `end` field,
+each with a `dateField` and `offset`.

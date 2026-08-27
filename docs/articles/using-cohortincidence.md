@@ -12,9 +12,9 @@ cohort, with a few settings for Time At Risk and Clean Window.
 
 Before installing the `CohortIncidence` package make sure you have Java
 available. Java can be downloaded from
-[www.java.com](http://www.java.com). For Windows users, RTools is also
+[www.java.com](https://www.java.com). For Windows users, RTools is also
 necessary. RTools can be downloaded from
-[CRAN](http://cran.r-project.org/bin/windows/Rtools/).
+[CRAN](https://cran.r-project.org/bin/windows/Rtools/).
 
 The `CohortIncidence` package is currently maintained in a [Github
 repository](https://github.com/OHDSI/CohortIncidence).
@@ -25,7 +25,7 @@ remotes::install_github("ohdsi/CohortIncidence")
 ```
 
 Once installed, you can type
-[`library(CohortIncidence)`](https://github.com/OHDSI/CohortIncidence)
+[`library(CohortIncidence)`](https://ohdsi.github.io/CohortIncidence/)
 to load the package.
 
 ## Database Preparation

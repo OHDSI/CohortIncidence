@@ -3,11 +3,14 @@
 \name{DateRange}
 \alias{DateRange}
 \title{R6 Class Representing a DataRange}
+\value{
+A \code{DateRange} R6 object storing \code{startDate} and \code{endDate} as \code{YYYY-MM-DD} strings.
+}
 \description{
 The DateRange class, encapsulating the startDate and endDate of a date range.
 }
 \details{
-This class is used to specify a DateRange, with start and end dates specified as 
+This class is used to specify a DateRange, with start and end dates specified as
 strings formatted as YYYY-MM-DD.
 }
 \section{Active bindings}{
@@ -45,6 +48,9 @@ strings formatted as YYYY-MM-DD.
     }
     \if{html}{\out{</div>}}
   }
+  \subsection{Returns}{
+    A new \code{DateRange} object initialized from a list or JSON string.
+  }
 }
 
 \if{html}{\out{<hr>}}
@@ -57,6 +63,9 @@ strings formatted as YYYY-MM-DD.
     \preformatted{DateRange$toList()}
     \if{html}{\out{</div>}}
   }
+  \subsection{Returns}{
+    A named list with \code{startDate} and \code{endDate} fields.
+  }
 }
 
 \if{html}{\out{<hr>}}
@@ -68,6 +77,9 @@ strings formatted as YYYY-MM-DD.
     \if{html}{\out{<div class="r">}}
     \preformatted{DateRange$asJSON()}
     \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A JSON string representation of the \code{DateRange} object.
   }
 }
 

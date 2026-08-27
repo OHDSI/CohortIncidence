@@ -46,6 +46,10 @@ exclusion cohortId, and clean window.</p>
 
 
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>An <code>Outcome</code> R6 object describing one outcome definition, including the outcome cohort id, clean window, and optional exclusion cohort id.</p>
+    </div>
+    <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This class is used to specify an outcome definition.  The outcome id is distinct from
 the outcome cohort ID in that you can define multiple outcomes that use the same outcome cohort
@@ -98,6 +102,9 @@ before calling jsonlite::toJSON().</p>
 
 
 </dl><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
+<p>A new <code>Outcome</code> object initialized from a list or JSON string.</p>
 </div>
 
 </div>
@@ -107,6 +114,9 @@ before calling jsonlite::toJSON().</p>
 <p>returns the R6 class elements as a list for use in jsonlite::toJSON()</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Outcome</span><span class="op">$</span><span class="fu">toList</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
+<p>A named list with <code>id</code>, <code>name</code>, <code>cohortId</code>, <code>cleanWindow</code>, and <code>excludeCohortId</code> fields.</p>
 </div>
 
 </div>
@@ -116,6 +126,9 @@ before calling jsonlite::toJSON().</p>
 <p>returns the JSON string for this R6 class</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Outcome</span><span class="op">$</span><span class="fu">asJSON</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns-2">Returns<a class="anchor" aria-label="anchor" href="#returns-2"></a></h4>
+<p>A JSON string representation of the <code>Outcome</code> object.</p>
 </div>
 
 </div>

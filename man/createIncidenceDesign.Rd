@@ -19,7 +19,7 @@ createIncidenceDesign(
 )
 }
 \arguments{
-\item{cohortDefs}{The set of cohort definitions.  Optional.}
+\item{cohortDefs}{The set of cohort definitions. Optional metadata used when building a design, not required for analysis execution.}
 
 \item{targetDefs}{A list of target definitions, each element must be class CohortReference.}
 
@@ -42,7 +42,7 @@ createIncidenceDesign(
 \item{firstPostOutcome}{Limits outcomes to first outcome within clean window of the first TAR or after. Must be boolean.}
 }
 \value{
-a R6 class: IncidenceDesign.
+An \code{IncidenceDesign} R6 object containing the design metadata, cohort definitions, target definitions, outcome definitions, time-at-risk definitions, analyses, subgroups, strata settings, and study window used to generate SQL. The object can be serialized to JSON for analysis execution.
 }
 \description{
 Creates R6 object for IncidenceDesign

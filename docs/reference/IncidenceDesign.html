@@ -43,19 +43,22 @@
 
 
     <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The IncidenceDesign class encapsulates the following:
-- Cohort Definitions
-- Target Definitions
-- Outcome Definitions
-- Time At Risk Definitions
-- A List of Analyses
-- Concept Sets
-- Subgruops
-- Strata Settings
-Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
-before calling jsonlite::toJSON(), or call toJSON directy on this class.</p>
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A <code>IncidenceDesign</code> R6 object that stores the full cohort incidence analysis design, including cohort definitions, target definitions, outcomes, time-at-risk definitions, analyses, subgroups, strata settings, and study window metadata used to generate SQL.</p>
     </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The IncidenceDesign class encapsulates the following:</p><ul><li><p>Cohort Definitions</p></li>
+<li><p>Target Definitions</p></li>
+<li><p>Outcome Definitions</p></li>
+<li><p>Time At Risk Definitions</p></li>
+<li><p>A List of Analyses</p></li>
+<li><p>Concept Sets</p></li>
+<li><p>Subgruops</p></li>
+<li><p>Strata Settings
+Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
+before calling jsonlite::toJSON(), or call toJSON directy on this class.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
     <p></p><div class="r6-active-bindings"><dl><dt><code>cohortDefs</code></dt>
@@ -125,6 +128,9 @@ before calling jsonlite::toJSON(), or call toJSON directy on this class.</p>
 
 
 </dl><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
+<p>A new <code>IncidenceDesign</code> object initialized from a list or JSON string representation of the full design.</p>
 </div>
 
 </div>

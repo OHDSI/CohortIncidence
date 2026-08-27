@@ -7,7 +7,7 @@ template:
 home:
   links:
   - text: Ask a question
-    href: http://forums.ohdsi.org
+    href: https://forums.ohdsi.org
 
 navbar:
   structure:

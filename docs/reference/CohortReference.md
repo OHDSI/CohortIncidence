@@ -3,6 +3,12 @@
 The CohortReference class, encapsulating the id, name and descritpion
 fields that refernces a cohort definition.
 
+## Value
+
+A `CohortReference` R6 object that stores the cohort id, display name,
+and optional description used to reference a target, outcome, or
+subgroup cohort.
+
 ## Details
 
 This class is used to reference a cohort definition by ID, while
@@ -53,6 +59,10 @@ creates a new instance, using the provided data param if provided.
 
   the data (as a json string or list) to initialize with
 
+#### Returns
+
+A new `CohortReference` object initialized from a list or JSON string.
+
 ------------------------------------------------------------------------
 
 ### `CohortReference$toList()`
@@ -63,6 +73,10 @@ returns the R6 class elements as a list for use in jsonlite::toJSON()
 
     CohortReference$toList()
 
+#### Returns
+
+A named list with `id`, `name`, and `description` fields.
+
 ------------------------------------------------------------------------
 
 ### `CohortReference$asJSON()`
@@ -72,6 +86,10 @@ returns the JSON string for this R6 class
 #### Usage
 
     CohortReference$asJSON()
+
+#### Returns
+
+A JSON string representation of the `CohortReference` object.
 
 ------------------------------------------------------------------------
 

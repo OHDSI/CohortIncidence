@@ -3,6 +3,9 @@
 \name{CohortSubgroup}
 \alias{CohortSubgroup}
 \title{R6 Class Representing a Cohort Subgroup definition}
+\value{
+A \code{CohortSubgroup} R6 object containing subgroup metadata and the \code{CohortReference} used to determine subgroup membership.
+}
 \description{
 The CohortSubgroup class, encapsulating the id, name, description, and CohortRef.
 }
@@ -40,7 +43,7 @@ before calling jsonlite::toJSON().
 \if{latex}{\out{\hypertarget{method-CohortSubgroup-initialize}{}}}
 \subsection{\code{CohortSubgroup$new()}}{
   creates a new instance, using the provided data param if provided.
-The JSON takes the form: {"id":1,"name":"some name","description":"some description","cohort":{"id":99, "name":"cohort"}}
+The JSON takes the form: \verb{\{"id":1,"name":"some name","description":"some description","cohort":\{"id":99, "name":"cohort"\}\}}
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
     \preformatted{CohortSubgroup$new(data = list(CohortSubgroup = list()))}
@@ -52,6 +55,9 @@ The JSON takes the form: {"id":1,"name":"some name","description":"some descript
       \item{\code{data}}{the data (as a json string or list) to initialize with}
     }
     \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{CohortSubgroup} object initialized from a list or JSON string.
   }
 }
 
@@ -65,6 +71,9 @@ The JSON takes the form: {"id":1,"name":"some name","description":"some descript
     \preformatted{CohortSubgroup$toList()}
     \if{html}{\out{</div>}}
   }
+  \subsection{Returns}{
+    A named list with a single \code{CohortSubgroup} element that contains \code{id}, \code{name}, \code{description}, and a nested \code{cohort} definition.
+  }
 }
 
 \if{html}{\out{<hr>}}
@@ -76,6 +85,9 @@ The JSON takes the form: {"id":1,"name":"some name","description":"some descript
     \if{html}{\out{<div class="r">}}
     \preformatted{CohortSubgroup$asJSON()}
     \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A JSON string representation of the \code{CohortSubgroup} object.
   }
 }
 

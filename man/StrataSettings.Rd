@@ -3,18 +3,21 @@
 \name{StrataSettings}
 \alias{StrataSettings}
 \title{R6 Class Representing the Stratification Settings of a IncidenceDesign}
+\value{
+A \code{StrataSettings} R6 object that stores the age, gender, year, and age-break stratification options used during analysis.
+
+Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
+before calling jsonlite::toJSON().
+}
 \description{
 The StrataSettings class, encapsulating the age, gender and start-year + age breaks settings.
 }
 \details{
 This class is used to specify the stratification settings for an analysis.
-The settings can indicate the statistics should be grouped by the age, gender, or 
+The settings can indicate the statistics should be grouped by the age, gender, or
 start year, and any combination of those selections.
 
-Example:  age = T and gender = T will produce statisics by age, by gender, and by age and gender.
-
-Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
-before calling jsonlite::toJSON().
+Example:  age = TRUE and gender = TRUE will produce statisics by age, by gender, and by age and gender.
 }
 \section{Active bindings}{
   \if{html}{\out{<div class="r6-active-bindings">}}
@@ -57,6 +60,9 @@ before calling jsonlite::toJSON().
     }
     \if{html}{\out{</div>}}
   }
+  \subsection{Returns}{
+    A new \code{StrataSettings} object initialized from a list or JSON string.
+  }
 }
 
 \if{html}{\out{<hr>}}
@@ -69,6 +75,9 @@ before calling jsonlite::toJSON().
     \preformatted{StrataSettings$toList()}
     \if{html}{\out{</div>}}
   }
+  \subsection{Returns}{
+    A named list containing the logical flags and age break lists used by the design.
+  }
 }
 
 \if{html}{\out{<hr>}}
@@ -80,6 +89,9 @@ before calling jsonlite::toJSON().
     \if{html}{\out{<div class="r">}}
     \preformatted{StrataSettings$asJSON()}
     \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A JSON string representation of the \code{StrataSettings} object.
   }
 }
 

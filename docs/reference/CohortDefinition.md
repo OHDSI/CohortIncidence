@@ -3,6 +3,12 @@
 The CohortDefinition class, encapsulating the id, name and expression of
 a cohort definition.
 
+## Value
+
+A `CohortDefinition` R6 object used to hold optional cohort metadata and
+a serialized cohort definition expression. This object is primarily
+metadata for the design and is not required for analysis generation.
+
 ## Details
 
 This R6 class is intended to wrap the Cohort Defintion expression used
@@ -46,6 +52,11 @@ returns the R6 class elements as a list for use in jsonlite::toJSON()
 
     CohortDefinition$toList()
 
+#### Returns
+
+A named list with `id`, `name`, and `expression`, where `expression` is
+itself a nested list representation of the cohort definition expression.
+
 ------------------------------------------------------------------------
 
 ### `CohortDefinition$asJSON()`
@@ -55,6 +66,10 @@ returns the JSON string for this R6 class
 #### Usage
 
     CohortDefinition$asJSON()
+
+#### Returns
+
+A JSON string representing the `CohortDefinition` object.
 
 ------------------------------------------------------------------------
 

@@ -3,6 +3,12 @@
 The IncidenceAnalysis class, encapsulating the targets, outcomes and
 tars.
 
+## Value
+
+A `IncidenceAnalysis` R6 object that stores the analysis combination as
+three integer ID vectors: targets, outcomes, and time-at-risk
+definitions.
+
 ## Details
 
 The targets, outcomes and tars fields are referencing IDs of the
@@ -52,6 +58,11 @@ creates a new instance, using the provided data param if provided.
 - `data`:
 
   the data (as a json string or list) to initialize with
+
+#### Returns
+
+A new `IncidenceAnalysis` object initialized from a list or JSON string
+representation of one analysis combination.
 
 ------------------------------------------------------------------------
 

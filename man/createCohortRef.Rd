@@ -14,7 +14,7 @@ createCohortRef(id, name, description)
 \item{description}{an optional description to use for this reference.}
 }
 \value{
-a R6 class: CohortReference
+A \code{CohortReference} R6 object that stores the cohort identifier, display name, and optional description used to reference a cohort definition in the design.
 }
 \description{
 Creates R6 object for CohortReference

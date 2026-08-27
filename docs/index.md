@@ -4,7 +4,7 @@
 Status](https://github.com/OHDSI/CohortIncidence/workflows/R-CMD-check/badge.svg)](https://github.com/OHDSI/CohortIncidence/actions?query=workflow%3AR-CMD-check)
 [![codecov.io](https://app.codecov.io/github/OHDSI/CohortIncidence?branch=master)](https://app.codecov.io/github/OHDSI/CohortIncidence?branch=master)
 
-CohortIncidence is part of [HADES](https://ohdsi.github.io/Hades).
+CohortIncidence is part of [HADES](https://ohdsi.github.io/Hades/).
 
 # Introduction
 
@@ -77,7 +77,7 @@ it in your own Java project.
 # User Documentation
 
 Documentation can be found on the [package
-website](https://ohdsi.github.io/CohortIncidence).
+website](https://ohdsi.github.io/CohortIncidence/).
 
 PDF versions of the documentation are also available: \* Vignette:
 [Using
@@ -86,7 +86,7 @@ CohortIncidence](https://raw.githubusercontent.com/OHDSI/CohortIncidence/master/
 # Support
 
 - Developer questions/comments/feedback: [OHDSI
-  Forum](http://forums.ohdsi.org/c/developers)
+  Forum](https://forums.ohdsi.org/c/developers/7)
 - We use the [GitHub issue
   tracker](https://github.com/OHDSI/CohortIncidence/issues) for all
   bugs/issues/enhancements

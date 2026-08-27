@@ -24,4 +24,6 @@ createCohortRef(id, name, description)
 
 ## Value
 
-a R6 class: CohortReference
+A `CohortReference` R6 object that stores the cohort identifier, display
+name, and optional description used to reference a cohort definition in
+the design.

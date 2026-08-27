@@ -5,14 +5,14 @@ Gets the results schema DDL for Incidence Analysis
 ## Usage
 
 ``` r
-getResultsDdl(useTempTables = F)
+getResultsDdl(useTempTables = FALSE)
 ```
 
 ## Arguments
 
 - useTempTables:
 
-  if true, then temp table notation will be used.
+  if TRUE, then temp table notation will be used.
 
 ## Value
 

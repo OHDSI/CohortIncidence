@@ -3,6 +3,11 @@
 The Outcome class, encapsulating the id, name, outcome cohortId,
 exclusion cohortId, and clean window.
 
+## Value
+
+An `Outcome` R6 object describing one outcome definition, including the
+outcome cohort id, clean window, and optional exclusion cohort id.
+
 ## Details
 
 This class is used to specify an outcome definition. The outcome id is
@@ -63,6 +68,10 @@ creates a new instance, using the provided data param if provided.
 
   the data (as a json string or list) to initialize with
 
+#### Returns
+
+A new `Outcome` object initialized from a list or JSON string.
+
 ------------------------------------------------------------------------
 
 ### `Outcome$toList()`
@@ -73,6 +82,11 @@ returns the R6 class elements as a list for use in jsonlite::toJSON()
 
     Outcome$toList()
 
+#### Returns
+
+A named list with `id`, `name`, `cohortId`, `cleanWindow`, and
+`excludeCohortId` fields.
+
 ------------------------------------------------------------------------
 
 ### `Outcome$asJSON()`
@@ -82,6 +96,10 @@ returns the JSON string for this R6 class
 #### Usage
 
     Outcome$asJSON()
+
+#### Returns
+
+A JSON string representation of the `Outcome` object.
 
 ------------------------------------------------------------------------
 
