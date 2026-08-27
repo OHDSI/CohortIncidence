@@ -3,94 +3,114 @@
 \name{Outcome}
 \alias{Outcome}
 \title{R6 Class Representing an Outcome definition}
+\value{
+An \code{Outcome} R6 object describing one outcome definition, including the outcome cohort id, clean window, and optional exclusion cohort id.
+}
 \description{
-The Outcome class, encapsulating the id, name, outcome cohortId, 
+The Outcome class, encapsulating the id, name, outcome cohortId,
 exclusion cohortId, and clean window.
 }
 \details{
-This class is used to specify an outcome definition.  The outcome id is distinct from 
-the outcome cohort ID in that you can define multiple outcomes that use the same outcome cohort 
+This class is used to specify an outcome definition.  The outcome id is distinct from
+the outcome cohort ID in that you can define multiple outcomes that use the same outcome cohort
 with different clean windows or exclusion cohort.
 
 Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
 before calling jsonlite::toJSON().
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{id}}{an integer uniquely identifying this outcome definition}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{id}}{an integer uniquely identifying this outcome definition}
 
-\item{\code{name}}{the name given to this outcome definition}
+    \item{\code{name}}{the name given to this outcome definition}
 
-\item{\code{cohortId}}{The outcome cohort ID for this outcome.}
+    \item{\code{cohortId}}{The outcome cohort ID for this outcome.}
 
-\item{\code{cleanWindow}}{The clean window for this outcome.}
+    \item{\code{cleanWindow}}{The clean window for this outcome.}
 
-\item{\code{excludeCohortId}}{The cohort that will be used to exclude time at risk.}
-}
-\if{html}{\out{</div>}}
+    \item{\code{excludeCohortId}}{The cohort that will be used to exclude time at risk.}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-Outcome-new}{\code{Outcome$new()}}
-\item \href{#method-Outcome-toList}{\code{Outcome$toList()}}
-\item \href{#method-Outcome-asJSON}{\code{Outcome$asJSON()}}
-\item \href{#method-Outcome-clone}{\code{Outcome$clone()}}
-}
+  \itemize{
+    \item \href{#method-Outcome-initialize}{\code{Outcome$new()}}
+    \item \href{#method-Outcome-toList}{\code{Outcome$toList()}}
+    \item \href{#method-Outcome-asJSON}{\code{Outcome$asJSON()}}
+    \item \href{#method-Outcome-clone}{\code{Outcome$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Outcome-new"></a>}}
-\if{latex}{\out{\hypertarget{method-Outcome-new}{}}}
-\subsection{Method \code{new()}}{
-creates a new instance, using the provided data param if provided.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Outcome$new(data = list())}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-Outcome-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-Outcome-initialize}{}}}
+\subsection{\code{Outcome$new()}}{
+  creates a new instance, using the provided data param if provided.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Outcome$new(data = list())}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data}}{the data (as a json string or list) to initialize with}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{Outcome} object initialized from a list or JSON string.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{the data (as a json string or list) to initialize with}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Outcome-toList"></a>}}
 \if{latex}{\out{\hypertarget{method-Outcome-toList}{}}}
-\subsection{Method \code{toList()}}{
-returns the R6 class elements as a list for use in jsonlite::toJSON()
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Outcome$toList()}\if{html}{\out{</div>}}
+\subsection{\code{Outcome$toList()}}{
+  returns the R6 class elements as a list for use in jsonlite::toJSON()
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Outcome$toList()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A named list with \code{id}, \code{name}, \code{cohortId}, \code{cleanWindow}, and \code{excludeCohortId} fields.
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Outcome-asJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-Outcome-asJSON}{}}}
-\subsection{Method \code{asJSON()}}{
-returns the JSON string for this R6 class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Outcome$asJSON()}\if{html}{\out{</div>}}
+\subsection{\code{Outcome$asJSON()}}{
+  returns the JSON string for this R6 class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Outcome$asJSON()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A JSON string representation of the \code{Outcome} object.
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Outcome-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-Outcome-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Outcome$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{Outcome$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Outcome$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

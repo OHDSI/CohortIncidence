@@ -114,7 +114,7 @@
 #' |SUBGROUP_NAME|The name of the subgroup|
 #' 
 #' 
-#' @return a \code{data.frame} containing the IR results
+#' @return A named list of `data.frame` objects containing the IR results. The list includes `incidence_summary`, `target_def`, `outcome_def`, `tar_def`, `age_group_def`, and `subgroup_def`, each representing one result table produced during execution.
 #' 
 #' @export
 executeAnalysis <- function(connectionDetails = NULL, 
@@ -151,14 +151,14 @@ executeAnalysis <- function(connectionDetails = NULL,
   }
   
   # Force useTempTables for analysis
-  buildOptions$useTempTables = T
+  buildOptions$useTempTables = TRUE
   if (rJava::is.jnull(buildOptions$sourceName)) {
     buildOptions$sourceName = sourceName;
   }
   
   targetDialect <- attr(conn, "dbms");
 
-  tempDDL <- SqlRender::translate(CohortIncidence::getResultsDdl(useTempTables=T), targetDialect = targetDialect);
+  tempDDL <- SqlRender::translate(CohortIncidence::getResultsDdl(useTempTables = TRUE), targetDialect = targetDialect);
   rlang::inform("Building temporary DDL in database for Incidence Analysis")
   DatabaseConnector::executeSql(conn, tempDDL);
   
@@ -168,7 +168,6 @@ executeAnalysis <- function(connectionDetails = NULL,
   
   analysisSql <- SqlRender::translate(analysisSql, targetDialect = targetDialect);
 
-  analysisSqlQuries <- SqlRender::splitSql(analysisSql);
   rlang::inform("Executing Incidence Analysis on database")
   DatabaseConnector::executeSql(conn, analysisSql);
   
@@ -182,7 +181,7 @@ executeAnalysis <- function(connectionDetails = NULL,
   results$subgroup_def <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #subgroup_def", targetDialect = targetDialect));
   
   # use the getCleanupSql to fetch the DROP TABLE expressions for the tables that were created in tempDDL.
-  cleanupSql <- SqlRender::translate(CohortIncidence::getCleanupSql(useTempTables=T), targetDialect);  
+  cleanupSql <- SqlRender::translate(CohortIncidence::getCleanupSql(useTempTables = TRUE), targetDialect);
   rlang::inform("Drop tables created from temporary DDL")
   DatabaseConnector::executeSql(conn, cleanupSql);
   

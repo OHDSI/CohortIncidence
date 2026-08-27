@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>CohortIncidence Package • CohortIncidence</title>
+<title>Cohort Incidence Analysis for the OMOP Common Data Model • CohortIncidence</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="CohortIncidence Package">
-<meta name="description" content="An R package that produces SQL queries for executing Cohort Incidence analyses.">
-<meta property="og:description" content="An R package that produces SQL queries for executing Cohort Incidence analyses.">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Cohort Incidence Analysis for the OMOP Common Data Model">
+<meta name="description" content="Provides functionality for performing cohort incidence analyses against data stored in the OMOP Common Data Model (CDM). The package generates database-specific SQL, executes analyses across supported database platforms, and returns standardized incidence estimates using configurable time-at-risk, stratification, and cohort definitions. It is intended to support reproducible observational research within the OHDSI analytics framework.">
+<meta property="og:description" content="Provides functionality for performing cohort incidence analyses against data stored in the OMOP Common Data Model (CDM). The package generates database-specific SQL, executes analyses across supported database platforms, and returns standardized incidence estimates using configurable time-at-risk, stratification, and cohort definitions. It is intended to support reproducible observational research within the OHDSI analytics framework.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -54,8 +54,8 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="cohortincidence">CohortIncidence<a class="anchor" aria-label="anchor" href="#cohortincidence"></a>
 </h1></div>
-<p><a href="https://github.com/OHDSI/CohortIncidence/actions?query=workflow%3AR-CMD-check" class="external-link"><img src="https://github.com/OHDSI/CohortIncidence/workflows/R-CMD-check/badge.svg" alt="Build Status"></a> <a href="https://codecov.io/github/OHDSI/CohortIncidence?branch=master" class="external-link"><img src="https://codecov.io/github/OHDSI/CohortIncidence/coverage.svg?branch=master" alt="codecov.io"></a></p>
-<p>CohortIncidence is part of <a href="https://ohdsi.github.io/Hades" class="external-link">HADES</a>.</p>
+<p><a href="https://github.com/OHDSI/CohortIncidence/actions?query=workflow%3AR-CMD-check" class="external-link"><img src="https://github.com/OHDSI/CohortIncidence/workflows/R-CMD-check/badge.svg" alt="Build Status"></a> <a href="https://app.codecov.io/github/OHDSI/CohortIncidence?branch=master" class="external-link"><img src="https://app.codecov.io/github/OHDSI/CohortIncidence?branch=master" alt="codecov.io"></a></p>
+<p>CohortIncidence is part of <a href="https://ohdsi.github.io/Hades/" class="external-link">HADES</a>.</p>
 </div>
 <div class="section level1">
 <h1 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -121,14 +121,14 @@
 <div class="section level1">
 <h1 id="user-documentation">User Documentation<a class="anchor" aria-label="anchor" href="#user-documentation"></a>
 </h1>
-<p>Documentation can be found on the <a href="https://ohdsi.github.io/CohortIncidence" class="external-link">package website</a>.</p>
+<p>Documentation can be found on the <a href="https://ohdsi.github.io/CohortIncidence/">package website</a>.</p>
 <p>PDF versions of the documentation are also available: * Vignette: <a href="https://raw.githubusercontent.com/OHDSI/CohortIncidence/master/vignettes/using-cohortincidence.pdf" class="external-link">Using CohortIncidence</a></p>
 </div>
 <div class="section level1">
 <h1 id="support">Support<a class="anchor" aria-label="anchor" href="#support"></a>
 </h1>
 <ul>
-<li>Developer questions/comments/feedback: <a href="http://forums.ohdsi.org/c/developers" class="external-link">OHDSI Forum</a>
+<li>Developer questions/comments/feedback: <a href="https://forums.ohdsi.org/c/developers/7" class="external-link">OHDSI Forum</a>
 </li>
 <li>We use the <a href="https://github.com/OHDSI/CohortIncidence/issues" class="external-link">GitHub issue tracker</a> for all bugs/issues/enhancements</li>
 </ul>
@@ -159,7 +159,7 @@
 <ul class="list-unstyled">
 <li><a href="https://github.com/OHDSI/CohortIncidence/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/OHDSI/CohortIncidence/issues" class="external-link">Report a bug</a></li>
-<li><a href="http://forums.ohdsi.org" class="external-link">Ask a question</a></li>
+<li><a href="https://forums.ohdsi.org" class="external-link">Ask a question</a></li>
 </ul>
 </div>
 
@@ -181,7 +181,7 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Christopher Knoll <br><small class="roles"> Maintainer </small>   </li>
+<li>Christopher Knoll <br><small class="roles"> Author, maintainer </small>   </li>
 </ul>
 </div>
 
@@ -196,7 +196,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

@@ -43,6 +43,10 @@
 
 
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A <code>DateRange</code> R6 object storing <code>startDate</code> and <code>endDate</code> as <code>YYYY-MM-DD</code> strings.</p>
+    </div>
+    <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This class is used to specify a DateRange, with start and end dates specified as
 strings formatted as YYYY-MM-DD.</p>
@@ -53,7 +57,7 @@ strings formatted as YYYY-MM-DD.</p>
 <dd><p>a character with format YYYY-MM-DD to be used as the date range's start date.</p></dd>
 
 
-<dt><code>endDate</code></dt>
+    <dt><code>endDate</code></dt>
 <dd><p>a character with format YYYY-MM-DD to be used as the date range's end date.</p></dd>
 
 
@@ -64,51 +68,59 @@ strings formatted as YYYY-MM-DD.</p>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-DateRange-new"><code>DateRange$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-DateRange-initialize"><code>DateRange$new()</code></a></p></li>
 <li><p><a href="#method-DateRange-toList"><code>DateRange$toList()</code></a></p></li>
 <li><p><a href="#method-DateRange-asJSON"><code>DateRange$asJSON()</code></a></p></li>
 <li><p><a href="#method-DateRange-clone"><code>DateRange$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-DateRange-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p></p><hr><a id="method-DateRange-initialize"></a><div class="section">
+<h3 id="daterange-new-"><code>DateRange$new()</code><a class="anchor" aria-label="anchor" href="#daterange-new-"></a></h3>
 <p>creates a new instance, using the provided data param if provided.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/DateRange.html">DateRange</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>data</code></dt>
 <dd><p>the data (as a json string or list) to initialize with</p></dd>
 
 
 </dl><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
+<p>A new <code>DateRange</code> object initialized from a list or JSON string.</p>
 </div>
 
-</div><p></p><hr><a id="method-DateRange-toList"></a><div class="section">
-<h3 id="method-tolist-">Method <code>toList()</code><a class="anchor" aria-label="anchor" href="#method-tolist-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-DateRange-toList"></a><div class="section">
+<h3 id="daterange-tolist-"><code>DateRange$toList()</code><a class="anchor" aria-label="anchor" href="#daterange-tolist-"></a></h3>
 <p>returns the R6 class elements as a list for use in jsonlite::toJSON()</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DateRange</span><span class="op">$</span><span class="fu">toList</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
+<p>A named list with <code>startDate</code> and <code>endDate</code> fields.</p>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-DateRange-asJSON"></a><div class="section">
-<h3 id="method-asjson-">Method <code>asJSON()</code><a class="anchor" aria-label="anchor" href="#method-asjson-"></a></h3>
+<p></p><hr><a id="method-DateRange-asJSON"></a><div class="section">
+<h3 id="daterange-asjson-"><code>DateRange$asJSON()</code><a class="anchor" aria-label="anchor" href="#daterange-asjson-"></a></h3>
 <p>returns the JSON string for this R6 class</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DateRange</span><span class="op">$</span><span class="fu">asJSON</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns-2">Returns<a class="anchor" aria-label="anchor" href="#returns-2"></a></h4>
+<p>A JSON string representation of the <code>DateRange</code> object.</p>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-DateRange-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+<p></p><hr><a id="method-DateRange-clone"></a><div class="section">
+<h3 id="daterange-clone-"><code>DateRange$clone()</code><a class="anchor" aria-label="anchor" href="#daterange-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DateRange</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -118,6 +130,7 @@ strings formatted as YYYY-MM-DD.</p>
 </div>
 
 </div>
+
 
     </div>
 
@@ -130,7 +143,7 @@ strings formatted as YYYY-MM-DD.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

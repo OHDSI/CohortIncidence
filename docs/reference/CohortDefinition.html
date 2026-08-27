@@ -43,6 +43,10 @@
 
 
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A <code>CohortDefinition</code> R6 object used to hold optional cohort metadata and a serialized cohort definition expression. This object is primarily metadata for the design and is not required for analysis generation.</p>
+    </div>
+    <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This R6 class is intended to wrap the Cohort Defintion expression used to generate the cohort,
 and provide the id and name attribute for this cohort.</p>
@@ -55,11 +59,11 @@ before calling jsonlite::toJSON().</p>
 <dd><p>The cohort ID</p></dd>
 
 
-<dt><code>name</code></dt>
+    <dt><code>name</code></dt>
 <dd><p>The cohort name</p></dd>
 
 
-<dt><code>expression</code></dt>
+    <dt><code>expression</code></dt>
 <dd><p>The cohort expression</p></dd>
 
 
@@ -70,34 +74,39 @@ before calling jsonlite::toJSON().</p>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-CohortDefinition-toList"><code>CohortDefinition$toList()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-CohortDefinition-toList"><code>CohortDefinition$toList()</code></a></p></li>
 <li><p><a href="#method-CohortDefinition-asJSON"><code>CohortDefinition$asJSON()</code></a></p></li>
 <li><p><a href="#method-CohortDefinition-clone"><code>CohortDefinition$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-CohortDefinition-toList"></a><div class="section">
-<h3 id="method-tolist-">Method <code>toList()</code><a class="anchor" aria-label="anchor" href="#method-tolist-"></a></h3>
+<h3 id="cohortdefinition-tolist-"><code>CohortDefinition$toList()</code><a class="anchor" aria-label="anchor" href="#cohortdefinition-tolist-"></a></h3>
 <p>returns the R6 class elements as a list for use in jsonlite::toJSON()</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CohortDefinition</span><span class="op">$</span><span class="fu">toList</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
+<p>A named list with <code>id</code>, <code>name</code>, and <code>expression</code>, where <code>expression</code> is itself a nested list representation of the cohort definition expression.</p>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-CohortDefinition-asJSON"></a><div class="section">
-<h3 id="method-asjson-">Method <code>asJSON()</code><a class="anchor" aria-label="anchor" href="#method-asjson-"></a></h3>
+<p></p><hr><a id="method-CohortDefinition-asJSON"></a><div class="section">
+<h3 id="cohortdefinition-asjson-"><code>CohortDefinition$asJSON()</code><a class="anchor" aria-label="anchor" href="#cohortdefinition-asjson-"></a></h3>
 <p>returns the JSON string for this R6 class</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CohortDefinition</span><span class="op">$</span><span class="fu">asJSON</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
+<p>A JSON string representing the <code>CohortDefinition</code> object.</p>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-CohortDefinition-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+<p></p><hr><a id="method-CohortDefinition-clone"></a><div class="section">
+<h3 id="cohortdefinition-clone-"><code>CohortDefinition$clone()</code><a class="anchor" aria-label="anchor" href="#cohortdefinition-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CohortDefinition</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -107,6 +116,7 @@ before calling jsonlite::toJSON().</p>
 </div>
 
 </div>
+
 
     </div>
 
@@ -119,7 +129,7 @@ before calling jsonlite::toJSON().</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

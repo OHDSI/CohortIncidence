@@ -3,95 +3,115 @@
 \name{StrataSettings}
 \alias{StrataSettings}
 \title{R6 Class Representing the Stratification Settings of a IncidenceDesign}
+\value{
+A \code{StrataSettings} R6 object that stores the age, gender, year, and age-break stratification options used during analysis.
+
+Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
+before calling jsonlite::toJSON().
+}
 \description{
 The StrataSettings class, encapsulating the age, gender and start-year + age breaks settings.
 }
 \details{
 This class is used to specify the stratification settings for an analysis.
-The settings can indicate the statistics should be grouped by the age, gender, or 
+The settings can indicate the statistics should be grouped by the age, gender, or
 start year, and any combination of those selections.
 
-Example:  age = T and gender = T will produce statisics by age, by gender, and by age and gender.
-
-Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
-before calling jsonlite::toJSON().
+Example:  age = TRUE and gender = TRUE will produce statisics by age, by gender, and by age and gender.
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{byAge}}{enables stratification by age}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{byAge}}{enables stratification by age}
 
-\item{\code{byGender}}{enables stratification by gender}
+    \item{\code{byGender}}{enables stratification by gender}
 
-\item{\code{byYear}}{enables stratification by start year of TAR}
+    \item{\code{byYear}}{enables stratification by start year of TAR}
 
-\item{\code{ageBreaks}}{a list of age breaks with at least 1 member}
+    \item{\code{ageBreaks}}{a list of age breaks with at least 1 member}
 
-\item{\code{ageBreakList}}{a list of age breaks}
-}
-\if{html}{\out{</div>}}
+    \item{\code{ageBreakList}}{a list of age breaks}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-StrataSettings-new}{\code{StrataSettings$new()}}
-\item \href{#method-StrataSettings-toList}{\code{StrataSettings$toList()}}
-\item \href{#method-StrataSettings-asJSON}{\code{StrataSettings$asJSON()}}
-\item \href{#method-StrataSettings-clone}{\code{StrataSettings$clone()}}
-}
+  \itemize{
+    \item \href{#method-StrataSettings-initialize}{\code{StrataSettings$new()}}
+    \item \href{#method-StrataSettings-toList}{\code{StrataSettings$toList()}}
+    \item \href{#method-StrataSettings-asJSON}{\code{StrataSettings$asJSON()}}
+    \item \href{#method-StrataSettings-clone}{\code{StrataSettings$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-StrataSettings-new"></a>}}
-\if{latex}{\out{\hypertarget{method-StrataSettings-new}{}}}
-\subsection{Method \code{new()}}{
-creates a new instance, using the provided data param if provided.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StrataSettings$new(data = list())}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-StrataSettings-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-StrataSettings-initialize}{}}}
+\subsection{\code{StrataSettings$new()}}{
+  creates a new instance, using the provided data param if provided.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{StrataSettings$new(data = list())}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data}}{the data (as a json string or list) to initialize with}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{StrataSettings} object initialized from a list or JSON string.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{the data (as a json string or list) to initialize with}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-StrataSettings-toList"></a>}}
 \if{latex}{\out{\hypertarget{method-StrataSettings-toList}{}}}
-\subsection{Method \code{toList()}}{
-returns the R6 class elements as a list for use in jsonlite::toJSON()
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StrataSettings$toList()}\if{html}{\out{</div>}}
+\subsection{\code{StrataSettings$toList()}}{
+  returns the R6 class elements as a list for use in jsonlite::toJSON()
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{StrataSettings$toList()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A named list containing the logical flags and age break lists used by the design.
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-StrataSettings-asJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-StrataSettings-asJSON}{}}}
-\subsection{Method \code{asJSON()}}{
-returns the JSON string for this R6 class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StrataSettings$asJSON()}\if{html}{\out{</div>}}
+\subsection{\code{StrataSettings$asJSON()}}{
+  returns the JSON string for this R6 class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{StrataSettings$asJSON()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A JSON string representation of the \code{StrataSettings} object.
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-StrataSettings-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-StrataSettings-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StrataSettings$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{StrataSettings$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{StrataSettings$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

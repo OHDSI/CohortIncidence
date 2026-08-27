@@ -3,6 +3,9 @@
 \name{CohortDefinition}
 \alias{CohortDefinition}
 \title{R6 Class Representing a CohortDefinition}
+\value{
+A \code{CohortDefinition} R6 object used to hold optional cohort metadata and a serialized cohort definition expression. This object is primarily metadata for the design and is not required for analysis generation.
+}
 \description{
 The CohortDefinition class, encapsulating the id, name and expression of a cohort definition.
 }
@@ -14,59 +17,71 @@ Note, when serializing with a library such as jsonlite, first call toList() on t
 before calling jsonlite::toJSON().
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{id}}{The cohort ID}
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{id}}{The cohort ID}
 
-\item{\code{name}}{The cohort name}
+    \item{\code{name}}{The cohort name}
 
-\item{\code{expression}}{The cohort expression}
-}
-\if{html}{\out{</div>}}
+    \item{\code{expression}}{The cohort expression}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-CohortDefinition-toList}{\code{CohortDefinition$toList()}}
-\item \href{#method-CohortDefinition-asJSON}{\code{CohortDefinition$asJSON()}}
-\item \href{#method-CohortDefinition-clone}{\code{CohortDefinition$clone()}}
-}
+  \itemize{
+    \item \href{#method-CohortDefinition-toList}{\code{CohortDefinition$toList()}}
+    \item \href{#method-CohortDefinition-asJSON}{\code{CohortDefinition$asJSON()}}
+    \item \href{#method-CohortDefinition-clone}{\code{CohortDefinition$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CohortDefinition-toList"></a>}}
 \if{latex}{\out{\hypertarget{method-CohortDefinition-toList}{}}}
-\subsection{Method \code{toList()}}{
-returns the R6 class elements as a list for use in jsonlite::toJSON()
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CohortDefinition$toList()}\if{html}{\out{</div>}}
+\subsection{\code{CohortDefinition$toList()}}{
+  returns the R6 class elements as a list for use in jsonlite::toJSON()
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{CohortDefinition$toList()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A named list with \code{id}, \code{name}, and \code{expression}, where \code{expression} is itself a nested list representation of the cohort definition expression.
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CohortDefinition-asJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-CohortDefinition-asJSON}{}}}
-\subsection{Method \code{asJSON()}}{
-returns the JSON string for this R6 class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CohortDefinition$asJSON()}\if{html}{\out{</div>}}
+\subsection{\code{CohortDefinition$asJSON()}}{
+  returns the JSON string for this R6 class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{CohortDefinition$asJSON()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A JSON string representing the \code{CohortDefinition} object.
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CohortDefinition-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-CohortDefinition-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CohortDefinition$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{CohortDefinition$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{CohortDefinition$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

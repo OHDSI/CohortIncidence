@@ -16,7 +16,7 @@ createCohortSubgroup(id, name, description, cohortRef)
 \item{cohortRef}{A cohort reference, as an R6 Class CohortReference}
 }
 \value{
-a R6 class: CohortSubgroup
+A \code{CohortSubgroup} R6 object containing subgroup metadata and the \code{CohortReference} used to determine subgroup membership.
 }
 \description{
 Creates R6 object for CohortSubgroup

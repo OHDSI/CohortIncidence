@@ -4,15 +4,24 @@
 \name{CohortIncidence-package}
 \alias{CohortIncidence}
 \alias{CohortIncidence-package}
-\title{CohortIncidence: CohortIncidence Package}
+\title{CohortIncidence: Cohort Incidence Analysis for the OMOP Common Data Model}
 \description{
-An R package that produces SQL queries for executing Cohort Incidence analyses.
+Provides functionality for performing cohort incidence analyses against data stored in the OMOP Common Data Model (CDM). The package generates database-specific SQL, executes analyses across supported database platforms, and returns standardized incidence estimates using configurable time-at-risk, stratification, and cohort definitions. It is intended to support reproducible observational research within the OHDSI analytics framework.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/OHDSI/CohortIncidence}
+  \item \url{https://ohdsi.github.io/CohortIncidence/}
   \item Report bugs at \url{https://github.com/OHDSI/CohortIncidence/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Christopher Knoll \email{cknoll@ohdsi.org}
+
+Authors:
+\itemize{
+  \item Christopher Knoll \email{cknoll@ohdsi.org}
 }
 
 }

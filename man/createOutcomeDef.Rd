@@ -18,7 +18,7 @@ createOutcomeDef(id, name, cohortId = 0, cleanWindow = 0, excludeCohortId)
 \item{excludeCohortId}{a cohort ID from the outcomeCohrotTable that is used to exclude time at risk. See \code{executeAnalysis()} for details on how this is applied.}
 }
 \value{
-a R6 class: Outcome
+An \code{Outcome} R6 object describing one outcome definition, including the outcome id, cohort id, clean window, and optional exclusion cohort id.
 }
 \description{
 Creates R6 object for Outcome

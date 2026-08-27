@@ -3,88 +3,102 @@
 \name{IncidenceAnalysis}
 \alias{IncidenceAnalysis}
 \title{R6 Class Representing a IncidenceAnalysis}
+\value{
+A \code{IncidenceAnalysis} R6 object that stores the analysis combination as three integer ID vectors: targets, outcomes, and time-at-risk definitions.
+}
 \description{
 The IncidenceAnalysis class, encapsulating the targets, outcomes and tars.
 }
 \details{
-The targets, outcomes and tars fields are referencing IDs of the targetDef, 
+The targets, outcomes and tars fields are referencing IDs of the targetDef,
 outcomeDef and tarDefs R6 classes.
 
 Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
 before calling jsonlite::toJSON().
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{targets}}{A vector of target IDs from target definitions.  Must be a vector.}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{targets}}{A vector of target IDs from target definitions.  Must be a vector.}
 
-\item{\code{outcomes}}{A vector of outcome IDs from outcome definitions.  Must be a vector.}
+    \item{\code{outcomes}}{A vector of outcome IDs from outcome definitions.  Must be a vector.}
 
-\item{\code{tars}}{A vector of TAR IDs from time-at-risk definitions.  Must be a vector.}
-}
-\if{html}{\out{</div>}}
+    \item{\code{tars}}{A vector of TAR IDs from time-at-risk definitions.  Must be a vector.}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-IncidenceAnalysis-new}{\code{IncidenceAnalysis$new()}}
-\item \href{#method-IncidenceAnalysis-toList}{\code{IncidenceAnalysis$toList()}}
-\item \href{#method-IncidenceAnalysis-asJSON}{\code{IncidenceAnalysis$asJSON()}}
-\item \href{#method-IncidenceAnalysis-clone}{\code{IncidenceAnalysis$clone()}}
-}
+  \itemize{
+    \item \href{#method-IncidenceAnalysis-initialize}{\code{IncidenceAnalysis$new()}}
+    \item \href{#method-IncidenceAnalysis-toList}{\code{IncidenceAnalysis$toList()}}
+    \item \href{#method-IncidenceAnalysis-asJSON}{\code{IncidenceAnalysis$asJSON()}}
+    \item \href{#method-IncidenceAnalysis-clone}{\code{IncidenceAnalysis$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-IncidenceAnalysis-new"></a>}}
-\if{latex}{\out{\hypertarget{method-IncidenceAnalysis-new}{}}}
-\subsection{Method \code{new()}}{
-creates a new instance, using the provided data param if provided.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{IncidenceAnalysis$new(data = list())}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-IncidenceAnalysis-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-IncidenceAnalysis-initialize}{}}}
+\subsection{\code{IncidenceAnalysis$new()}}{
+  creates a new instance, using the provided data param if provided.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{IncidenceAnalysis$new(data = list())}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data}}{the data (as a json string or list) to initialize with}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{IncidenceAnalysis} object initialized from a list or JSON string representation of one analysis combination.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{the data (as a json string or list) to initialize with}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-IncidenceAnalysis-toList"></a>}}
 \if{latex}{\out{\hypertarget{method-IncidenceAnalysis-toList}{}}}
-\subsection{Method \code{toList()}}{
-returns the R6 class elements as a list for use in jsonlite::toJSON()
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{IncidenceAnalysis$toList()}\if{html}{\out{</div>}}
+\subsection{\code{IncidenceAnalysis$toList()}}{
+  returns the R6 class elements as a list for use in jsonlite::toJSON()
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{IncidenceAnalysis$toList()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-IncidenceAnalysis-asJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-IncidenceAnalysis-asJSON}{}}}
-\subsection{Method \code{asJSON()}}{
-returns the JSON string for this R6 class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{IncidenceAnalysis$asJSON()}\if{html}{\out{</div>}}
+\subsection{\code{IncidenceAnalysis$asJSON()}}{
+  returns the JSON string for this R6 class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{IncidenceAnalysis$asJSON()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-IncidenceAnalysis-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-IncidenceAnalysis-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{IncidenceAnalysis$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{IncidenceAnalysis$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{IncidenceAnalysis$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

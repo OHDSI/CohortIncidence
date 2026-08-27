@@ -12,7 +12,7 @@ buildOptions(
   cdmDatabaseSchema,
   resultsDatabaseSchema,
   vocabularySchema = cdmDatabaseSchema,
-  useTempTables = F,
+  useTempTables = FALSE,
   refId
 )
 }

@@ -3,6 +3,9 @@
 \name{CohortSubgroup}
 \alias{CohortSubgroup}
 \title{R6 Class Representing a Cohort Subgroup definition}
+\value{
+A \code{CohortSubgroup} R6 object containing subgroup metadata and the \code{CohortReference} used to determine subgroup membership.
+}
 \description{
 The CohortSubgroup class, encapsulating the id, name, description, and CohortRef.
 }
@@ -14,80 +17,97 @@ Note, when serializing with a library such as jsonlite, first call toList() on t
 before calling jsonlite::toJSON().
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{id}}{an integer uniquely identifying this subgroup}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{id}}{an integer uniquely identifying this subgroup}
 
-\item{\code{name}}{The name to use for this cohort reference}
+    \item{\code{name}}{The name to use for this cohort reference}
 
-\item{\code{description}}{The description for this subgroup}
+    \item{\code{description}}{The description for this subgroup}
 
-\item{\code{cohort}}{the cohort used to represent this subgroup.  Must be class CohortReference}
-}
-\if{html}{\out{</div>}}
+    \item{\code{cohort}}{the cohort used to represent this subgroup.  Must be class CohortReference}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-CohortSubgroup-new}{\code{CohortSubgroup$new()}}
-\item \href{#method-CohortSubgroup-toList}{\code{CohortSubgroup$toList()}}
-\item \href{#method-CohortSubgroup-asJSON}{\code{CohortSubgroup$asJSON()}}
-\item \href{#method-CohortSubgroup-clone}{\code{CohortSubgroup$clone()}}
-}
+  \itemize{
+    \item \href{#method-CohortSubgroup-initialize}{\code{CohortSubgroup$new()}}
+    \item \href{#method-CohortSubgroup-toList}{\code{CohortSubgroup$toList()}}
+    \item \href{#method-CohortSubgroup-asJSON}{\code{CohortSubgroup$asJSON()}}
+    \item \href{#method-CohortSubgroup-clone}{\code{CohortSubgroup$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CohortSubgroup-new"></a>}}
-\if{latex}{\out{\hypertarget{method-CohortSubgroup-new}{}}}
-\subsection{Method \code{new()}}{
-creates a new instance, using the provided data param if provided.
-The JSON takes the form: {"id":1,"name":"some name","description":"some description","cohort":{"id":99, "name":"cohort"}}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CohortSubgroup$new(data = list(CohortSubgroup = list()))}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-CohortSubgroup-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-CohortSubgroup-initialize}{}}}
+\subsection{\code{CohortSubgroup$new()}}{
+  creates a new instance, using the provided data param if provided.
+The JSON takes the form: \verb{\{"id":1,"name":"some name","description":"some description","cohort":\{"id":99, "name":"cohort"\}\}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{CohortSubgroup$new(data = list(CohortSubgroup = list()))}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data}}{the data (as a json string or list) to initialize with}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{CohortSubgroup} object initialized from a list or JSON string.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{the data (as a json string or list) to initialize with}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CohortSubgroup-toList"></a>}}
 \if{latex}{\out{\hypertarget{method-CohortSubgroup-toList}{}}}
-\subsection{Method \code{toList()}}{
-returns the R6 class elements as a list for use in jsonlite::toJSON()
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CohortSubgroup$toList()}\if{html}{\out{</div>}}
+\subsection{\code{CohortSubgroup$toList()}}{
+  returns the R6 class elements as a list for use in jsonlite::toJSON()
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{CohortSubgroup$toList()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A named list with a single \code{CohortSubgroup} element that contains \code{id}, \code{name}, \code{description}, and a nested \code{cohort} definition.
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CohortSubgroup-asJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-CohortSubgroup-asJSON}{}}}
-\subsection{Method \code{asJSON()}}{
-returns the JSON string for this R6 class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CohortSubgroup$asJSON()}\if{html}{\out{</div>}}
+\subsection{\code{CohortSubgroup$asJSON()}}{
+  returns the JSON string for this R6 class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{CohortSubgroup$asJSON()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A JSON string representation of the \code{CohortSubgroup} object.
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CohortSubgroup-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-CohortSubgroup-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CohortSubgroup$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{CohortSubgroup$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{CohortSubgroup$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

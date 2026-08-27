@@ -12,7 +12,7 @@ createDateRange(startDate, endDate)
 \item{endDate}{a character vector representing a date in YYYY-MM-DD format}
 }
 \value{
-a new instance of CohortIncidence::DateRange
+A \code{DateRange} R6 object containing the start and end date strings in \code{YYYY-MM-DD} format.
 }
 \description{
 Creates R6 object for DateRange

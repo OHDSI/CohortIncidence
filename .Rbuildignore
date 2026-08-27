@@ -10,3 +10,6 @@ compare_versions
 ^extras$
 ^pom.xml$
 
+^CRAN-SUBMISSION$
+^cran-comments.md$
+^nbactions.xml$

@@ -58,7 +58,7 @@ buildOptions <- function(cohortTable,
                          cdmDatabaseSchema,
                          resultsDatabaseSchema,
                          vocabularySchema = cdmDatabaseSchema,
-                         useTempTables = F,
+                         useTempTables = FALSE,
                          refId) {
   builderOptions <- rJava::new(rJava::J("org.ohdsi.cohortincidence.BuilderOptions"));
   
@@ -112,7 +112,7 @@ buildOptions <- function(cohortTable,
   }
 
   if (missing(useTempTables) || is.null(useTempTables)) {
-    builderOptions$useTempTables = F;
+    builderOptions$useTempTables = FALSE;
   }
   else {
     builderOptions$useTempTables = useTempTables;

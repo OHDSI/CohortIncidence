@@ -43,6 +43,10 @@
 
 
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A <code>IncidenceAnalysis</code> R6 object that stores the analysis combination as three integer ID vectors: targets, outcomes, and time-at-risk definitions.</p>
+    </div>
+    <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The targets, outcomes and tars fields are referencing IDs of the targetDef,
 outcomeDef and tarDefs R6 classes.</p>
@@ -55,11 +59,11 @@ before calling jsonlite::toJSON().</p>
 <dd><p>A vector of target IDs from target definitions.  Must be a vector.</p></dd>
 
 
-<dt><code>outcomes</code></dt>
+    <dt><code>outcomes</code></dt>
 <dd><p>A vector of outcome IDs from outcome definitions.  Must be a vector.</p></dd>
 
 
-<dt><code>tars</code></dt>
+    <dt><code>tars</code></dt>
 <dd><p>A vector of TAR IDs from time-at-risk definitions.  Must be a vector.</p></dd>
 
 
@@ -70,51 +74,53 @@ before calling jsonlite::toJSON().</p>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-IncidenceAnalysis-new"><code>IncidenceAnalysis$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-IncidenceAnalysis-initialize"><code>IncidenceAnalysis$new()</code></a></p></li>
 <li><p><a href="#method-IncidenceAnalysis-toList"><code>IncidenceAnalysis$toList()</code></a></p></li>
 <li><p><a href="#method-IncidenceAnalysis-asJSON"><code>IncidenceAnalysis$asJSON()</code></a></p></li>
 <li><p><a href="#method-IncidenceAnalysis-clone"><code>IncidenceAnalysis$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-IncidenceAnalysis-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p></p><hr><a id="method-IncidenceAnalysis-initialize"></a><div class="section">
+<h3 id="incidenceanalysis-new-"><code>IncidenceAnalysis$new()</code><a class="anchor" aria-label="anchor" href="#incidenceanalysis-new-"></a></h3>
 <p>creates a new instance, using the provided data param if provided.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/IncidenceAnalysis.html">IncidenceAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>data</code></dt>
 <dd><p>the data (as a json string or list) to initialize with</p></dd>
 
 
 </dl><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
+<p>A new <code>IncidenceAnalysis</code> object initialized from a list or JSON string representation of one analysis combination.</p>
 </div>
 
-</div><p></p><hr><a id="method-IncidenceAnalysis-toList"></a><div class="section">
-<h3 id="method-tolist-">Method <code>toList()</code><a class="anchor" aria-label="anchor" href="#method-tolist-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-IncidenceAnalysis-toList"></a><div class="section">
+<h3 id="incidenceanalysis-tolist-"><code>IncidenceAnalysis$toList()</code><a class="anchor" aria-label="anchor" href="#incidenceanalysis-tolist-"></a></h3>
 <p>returns the R6 class elements as a list for use in jsonlite::toJSON()</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">IncidenceAnalysis</span><span class="op">$</span><span class="fu">toList</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-IncidenceAnalysis-asJSON"></a><div class="section">
-<h3 id="method-asjson-">Method <code>asJSON()</code><a class="anchor" aria-label="anchor" href="#method-asjson-"></a></h3>
+<p></p><hr><a id="method-IncidenceAnalysis-asJSON"></a><div class="section">
+<h3 id="incidenceanalysis-asjson-"><code>IncidenceAnalysis$asJSON()</code><a class="anchor" aria-label="anchor" href="#incidenceanalysis-asjson-"></a></h3>
 <p>returns the JSON string for this R6 class</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">IncidenceAnalysis</span><span class="op">$</span><span class="fu">asJSON</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-IncidenceAnalysis-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+<p></p><hr><a id="method-IncidenceAnalysis-clone"></a><div class="section">
+<h3 id="incidenceanalysis-clone-"><code>IncidenceAnalysis$clone()</code><a class="anchor" aria-label="anchor" href="#incidenceanalysis-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">IncidenceAnalysis</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -124,6 +130,7 @@ before calling jsonlite::toJSON().</p>
 </div>
 
 </div>
+
 
     </div>
 
@@ -136,7 +143,7 @@ before calling jsonlite::toJSON().</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

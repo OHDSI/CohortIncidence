@@ -14,12 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-#' 
+#'
 #' R6 Class Representing a IncidenceDesign
-#' 
+#'
 #' @description 
 #' This class encapsulates the other R6 Class elements that define an IncidenceDesign
-#' 
+#' @return A `IncidenceDesign` R6 object that stores the full cohort incidence analysis design, including cohort definitions, target definitions, outcomes, time-at-risk definitions, analyses, subgroups, strata settings, and study window metadata used to generate SQL.
+#'
 #' @details 
 #' The IncidenceDesign class encapsulates the following:
 #' - Cohort Definitions
@@ -174,6 +175,7 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
   public = list(
     #' @description
     #' creates a new instance, using the provided data param if provided.
+    #' @return A new `IncidenceDesign` object initialized from a list or JSON string representation of the full design.
     #' @param data the data (as a json string or list) to initialize with
     initialize = function(data = list()) {
       dataList <- .convertJSON(data)
@@ -218,14 +220,15 @@ IncidenceDesign <- R6::R6Class("IncidenceDesign",
 )
 
 #' R6 Class Representing a IncidenceAnalysis
-#' 
+#'
 #' @description 
 #' The IncidenceAnalysis class, encapsulating the targets, outcomes and tars.
-#' 
+#' @return A `IncidenceAnalysis` R6 object that stores the analysis combination as three integer ID vectors: targets, outcomes, and time-at-risk definitions.
+#'
 #' @details 
 #' The targets, outcomes and tars fields are referencing IDs of the targetDef, 
 #' outcomeDef and tarDefs R6 classes.
-#' 
+#'
 #' Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
 #' before calling jsonlite::toJSON().
 
@@ -274,6 +277,7 @@ IncidenceAnalysis <- R6::R6Class("IncidenceAnalysis",
   public = list(
     #' @description
     #' creates a new instance, using the provided data param if provided.
+    #' @return A new `IncidenceAnalysis` object initialized from a list or JSON string representation of one analysis combination.
     #' @param data the data (as a json string or list) to initialize with
     initialize = function(data = list()) {
       dataList <- .convertJSON(data)
@@ -300,14 +304,14 @@ IncidenceAnalysis <- R6::R6Class("IncidenceAnalysis",
 )
 
 #' R6 Class Representing a CohortDefinition
-#' 
-#' @description 
+#'
+#' @description
 #' The CohortDefinition class, encapsulating the id, name and expression of a cohort definition.
-#' 
-#' @details 
+#' @return A `CohortDefinition` R6 object used to hold optional cohort metadata and a serialized cohort definition expression. This object is primarily metadata for the design and is not required for analysis generation.
+#' @details
 #' This R6 class is intended to wrap the Cohort Defintion expression used to generate the cohort,
 #' and provide the id and name attribute for this cohort.
-#' 
+#'
 #' Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
 #' before calling jsonlite::toJSON().
 
@@ -322,6 +326,7 @@ CohortDefinition <- R6::R6Class("CohortDefinition",
     expression = NA,
     #' @description
     #' returns the R6 class elements as a list for use in jsonlite::toJSON()
+    #' @return A named list with `id`, `name`, and `expression`, where `expression` is itself a nested list representation of the cohort definition expression.
     toList = function() {
       .removeEmpty(list(
         id = jsonlite::unbox(private$id),
@@ -331,6 +336,7 @@ CohortDefinition <- R6::R6Class("CohortDefinition",
     },
     #' @description
     #' returns the JSON string for this R6 class
+    #' @return A JSON string representing the `CohortDefinition` object.
     asJSON = function() {
       jsonlite::toJSON(self$toList(), null="null")
     }
@@ -339,13 +345,13 @@ CohortDefinition <- R6::R6Class("CohortDefinition",
 
 #' R6 Class Representing a CohortReference
 #' 
-#' @description 
+#' @description
 #' The CohortReference class, encapsulating the id, name and descritpion fields that refernces a cohort definition.
-#' 
-#' @details 
+#' @return A `CohortReference` R6 object that stores the cohort id, display name, and optional description used to reference a target, outcome, or subgroup cohort.
+#' @details
 #' This class is used to reference a cohort definition by ID, while providing a way to 
 #' substitute a name for this specific reference.
-#' 
+#'
 #' Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
 #' before calling jsonlite::toJSON().
 
@@ -394,6 +400,7 @@ CohortReference <- R6::R6Class("CohortReference",
   public = list(
     #' @description
     #' creates a new instance, using the provided data param if provided.
+    #' @return A new `CohortReference` object initialized from a list or JSON string.
     #' @param data the data (as a json string or list) to initialize with
     initialize = function(data = list()) {
       dataList <- .convertJSON(data)
@@ -404,6 +411,7 @@ CohortReference <- R6::R6Class("CohortReference",
     },
     #' @description
     #' returns the R6 class elements as a list for use in jsonlite::toJSON()
+    #' @return A named list with `id`, `name`, and `description` fields.
     toList = function() {
      .removeEmpty(list(
        id = jsonlite::unbox(private$.id),
@@ -413,6 +421,7 @@ CohortReference <- R6::R6Class("CohortReference",
     },
     #' @description
     #' returns the JSON string for this R6 class
+    #' @return A JSON string representation of the `CohortReference` object.
     asJSON = function() {
      jsonlite::toJSON(self$toList(), null="null")
     }
@@ -421,15 +430,15 @@ CohortReference <- R6::R6Class("CohortReference",
 
 #' R6 Class Representing an Outcome definition
 #' 
-#' @description 
-#' The Outcome class, encapsulating the id, name, outcome cohortId, 
+#' @description
+#' The Outcome class, encapsulating the id, name, outcome cohortId,
 #' exclusion cohortId, and clean window.
-#' 
-#' @details 
+#' @return An `Outcome` R6 object describing one outcome definition, including the outcome cohort id, clean window, and optional exclusion cohort id.
+#' @details
 #' This class is used to specify an outcome definition.  The outcome id is distinct from 
 #' the outcome cohort ID in that you can define multiple outcomes that use the same outcome cohort 
 #' with different clean windows or exclusion cohort.
-#' 
+#'
 #' Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
 #' before calling jsonlite::toJSON().
 
@@ -502,6 +511,7 @@ Outcome <- R6::R6Class("Outcome",
   public = list(
     #' @description
     #' creates a new instance, using the provided data param if provided.
+    #' @return A new `Outcome` object initialized from a list or JSON string.
     #' @param data the data (as a json string or list) to initialize with
     initialize = function(data = list()) {
       dataList <- .convertJSON(data)
@@ -515,6 +525,7 @@ Outcome <- R6::R6Class("Outcome",
     },
     #' @description
     #' returns the R6 class elements as a list for use in jsonlite::toJSON()
+    #' @return A named list with `id`, `name`, `cohortId`, `cleanWindow`, and `excludeCohortId` fields.
     toList = function() {
       .removeEmpty(list(
         id = jsonlite::unbox(private$.id),
@@ -526,6 +537,7 @@ Outcome <- R6::R6Class("Outcome",
     },
     #' @description
     #' returns the JSON string for this R6 class
+    #' @return A JSON string representation of the `Outcome` object.
     asJSON = function() {
       jsonlite::toJSON(self$toList(), null="null")
     }
@@ -534,14 +546,14 @@ Outcome <- R6::R6Class("Outcome",
 
 #' R6 Class Representing an Time-at-Risk (TAR) definition
 #' 
-#' @description 
+#' @description
 #' The TimeAtRisk class, encapsulating the id, startWith, startOffset, endWith and endOffset
-#' 
-#' @details 
+#' @return A `TimeAtRisk` R6 object describing the TAR start and end anchors plus offsets used to compute person-time.
+#' @details
 #' This class is used to specify a time-at-risk (TAR) definition. A TAR is defined by choosing
 #' the start/end date of a cohort to start with (plus an offset), and a start/end date of the cohort
 #'  to end with (plus an offset).
-#' 
+#'
 #' Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
 #' before calling jsonlite::toJSON().
 
@@ -614,7 +626,8 @@ TimeAtRisk <- R6::R6Class("TimeAtRisk",
   public = list(
     #' @description
     #' creates a new instance, using the provided data param if provided.
-    #' The JSON takes the form: {"id":1,"start":{"dateField":"start","offset":1},"end":{"dateField":"start","offset":30}}
+    #' The JSON takes the form:`{"id":1,"start":{"dateField":"start","offset":1},"end":{"dateField":"start","offset":30}}`
+    #' @return A new `TimeAtRisk` object initialized from a list or JSON string.
     #' @param data the data (as a json string or list) to initialize with
     initialize = function(data = list()) {
       dataList <- .convertJSON(data)
@@ -648,6 +661,7 @@ TimeAtRisk <- R6::R6Class("TimeAtRisk",
     },
     #' @description
     #' returns the R6 class elements as a list for use in jsonlite::toJSON()
+    #' @return A named list with `id`, `start`, and `end` fields, where `start` and `end` are nested lists containing `dateField` and `offset`.
     toList = function() {
      .removeEmpty(list(
        id = jsonlite::unbox(private$.id),
@@ -657,6 +671,7 @@ TimeAtRisk <- R6::R6Class("TimeAtRisk",
     },
     #' @description
     #' returns the JSON string for this R6 class
+    #' @return A JSON string representation of the `TimeAtRisk` object.
     asJSON = function() {
      jsonlite::toJSON(self$toList(), null="null")
     }
@@ -665,13 +680,13 @@ TimeAtRisk <- R6::R6Class("TimeAtRisk",
 
 #' R6 Class Representing a Cohort Subgroup definition
 #' 
-#' @description 
+#' @description
 #' The CohortSubgroup class, encapsulating the id, name, description, and CohortRef.
-#' 
-#' @details 
+#' @return A `CohortSubgroup` R6 object containing subgroup metadata and the `CohortReference` used to determine subgroup membership.
+#' @details
 #' This class is used to specify a cohort subgroup to be used in the analysis. A TAR will be considered
 #' part of the subgroup if the TAR starts between the subgroup's cohort start and cohort end.
-#' 
+#'
 #' Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
 #' before calling jsonlite::toJSON().
 
@@ -732,7 +747,8 @@ CohortSubgroup <- R6::R6Class("CohortSubgroup",
   public = list(
     #' @description
     #' creates a new instance, using the provided data param if provided.
-    #' The JSON takes the form: {"id":1,"name":"some name","description":"some description","cohort":{"id":99, "name":"cohort"}}
+    #' The JSON takes the form: `{"id":1,"name":"some name","description":"some description","cohort":{"id":99, "name":"cohort"}}`
+    #' @return A new `CohortSubgroup` object initialized from a list or JSON string.
     #' @param data the data (as a json string or list) to initialize with
     initialize = function(data = list("CohortSubgroup"=list())) {
       dataList <- .convertJSON(data)
@@ -748,6 +764,7 @@ CohortSubgroup <- R6::R6Class("CohortSubgroup",
     },
     #' @description
     #' returns the R6 class elements as a list for use in jsonlite::toJSON()
+    #' @return A named list with a single `CohortSubgroup` element that contains `id`, `name`, `description`, and a nested `cohort` definition.
     toList = function() {
       list("CohortSubgroup" = .removeEmpty(list(
         id = jsonlite::unbox(private$.id),
@@ -758,6 +775,7 @@ CohortSubgroup <- R6::R6Class("CohortSubgroup",
     },
     #' @description
     #' returns the JSON string for this R6 class
+    #' @return A JSON string representation of the `CohortSubgroup` object.
     asJSON = function() {
       jsonlite::toJSON(self$toList(), null="null")
     }
@@ -766,25 +784,26 @@ CohortSubgroup <- R6::R6Class("CohortSubgroup",
 
 #' R6 Class Representing the Stratification Settings of a IncidenceDesign
 #' 
-#' @description 
+#' @description
 #' The StrataSettings class, encapsulating the age, gender and start-year + age breaks settings.
-#' 
-#' @details 
+#' @details
 #' This class is used to specify the stratification settings for an analysis.
 #' The settings can indicate the statistics should be grouped by the age, gender, or 
 #' start year, and any combination of those selections.
-#' 
-#' Example:  age = T and gender = T will produce statisics by age, by gender, and by age and gender.
-#' 
+#'
+#' Example:  age = TRUE and gender = TRUE will produce statisics by age, by gender, and by age and gender.
+#'
+#' @return A `StrataSettings` R6 object that stores the age, gender, year, and age-break stratification options used during analysis.
+#'
 #' Note, when serializing with a library such as jsonlite, first call toList() on the R6 class
 #' before calling jsonlite::toJSON().
 
 #' @export
 StrataSettings <- R6::R6Class("StrataSettings",
   private = list (
-    .byAge = F,
-    .byGender = F,
-    .byYear = F,
+    .byAge = FALSE,
+    .byGender = FALSE,
+    .byYear = FALSE,
     .ageBreaks = NA,
     .ageBreakList = NA
   ),
@@ -852,6 +871,7 @@ StrataSettings <- R6::R6Class("StrataSettings",
   public = list(
     #' @description
     #' creates a new instance, using the provided data param if provided.
+    #' @return A new `StrataSettings` object initialized from a list or JSON string.
     #' @param data the data (as a json string or list) to initialize with
     initialize = function(data = list()) {
       dataList <- .convertJSON(data)
@@ -865,6 +885,7 @@ StrataSettings <- R6::R6Class("StrataSettings",
     },
     #' @description
     #' returns the R6 class elements as a list for use in jsonlite::toJSON()
+    #' @return A named list containing the logical flags and age break lists used by the design.
     toList = function() {
       .removeEmpty(list(
         byAge = jsonlite::unbox(private$.byAge),
@@ -876,6 +897,7 @@ StrataSettings <- R6::R6Class("StrataSettings",
     },
     #' @description
     #' returns the JSON string for this R6 class
+    #' @return A JSON string representation of the `StrataSettings` object.
     asJSON = function() {
       jsonlite::toJSON(self$toList(), null="null")
     }
@@ -885,10 +907,10 @@ StrataSettings <- R6::R6Class("StrataSettings",
 
 #' R6 Class Representing a DataRange
 #' 
-#' @description 
+#' @description
 #' The DateRange class, encapsulating the startDate and endDate of a date range.
-#' 
-#' @details 
+#' @return A `DateRange` R6 object storing `startDate` and `endDate` as `YYYY-MM-DD` strings.
+#' @details
 #' This class is used to specify a DateRange, with start and end dates specified as 
 #' strings formatted as YYYY-MM-DD.
 
@@ -906,7 +928,7 @@ DateRange <- R6::R6Class("DateRange",
       } else {
         # check type
         checkmate::assertCharacter(startDate)
-        checkmate::assertDate(as.Date(startDate, format = '%Y-%m-%d'), len=1, any.missing=F)
+        checkmate::assertDate(as.Date(startDate, format = '%Y-%m-%d'), len=1, any.missing = FALSE)
         private$.startDate <- startDate
         self
       }
@@ -918,7 +940,7 @@ DateRange <- R6::R6Class("DateRange",
       } else {
         # check type
         checkmate::assertCharacter(endDate)
-        checkmate::assertDate(as.Date(endDate, format = '%Y-%m-%d'), len=1, any.missing=F)
+        checkmate::assertDate(as.Date(endDate, format = '%Y-%m-%d'), len=1, any.missing = FALSE)
         private$.endDate <- endDate
         self
       }
@@ -927,6 +949,7 @@ DateRange <- R6::R6Class("DateRange",
   public = list(
     #' @description
     #' creates a new instance, using the provided data param if provided.
+    #' @return A new `DateRange` object initialized from a list or JSON string.
     #' @param data the data (as a json string or list) to initialize with
     initialize = function(data = list()) {
       dataList <- .convertJSON(data)
@@ -937,6 +960,7 @@ DateRange <- R6::R6Class("DateRange",
     },
     #' @description
     #' returns the R6 class elements as a list for use in jsonlite::toJSON()
+    #' @return A named list with `startDate` and `endDate` fields.
     toList = function() {
       .removeEmpty(list(
         startDate = jsonlite::unbox(private$.startDate),
@@ -945,6 +969,7 @@ DateRange <- R6::R6Class("DateRange",
     },
     #' @description
     #' returns the JSON string for this R6 class
+    #' @return A JSON string representation of the `DateRange` object.
     asJSON = function() {
       jsonlite::toJSON(self$toList(), null="null")
     }

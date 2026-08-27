@@ -43,6 +43,10 @@
 
 
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A <code>CohortSubgroup</code> R6 object containing subgroup metadata and the <code>CohortReference</code> used to determine subgroup membership.</p>
+    </div>
+    <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This class is used to specify a cohort subgroup to be used in the analysis. A TAR will be considered
 part of the subgroup if the TAR starts between the subgroup's cohort start and cohort end.</p>
@@ -55,15 +59,15 @@ before calling jsonlite::toJSON().</p>
 <dd><p>an integer uniquely identifying this subgroup</p></dd>
 
 
-<dt><code>name</code></dt>
+    <dt><code>name</code></dt>
 <dd><p>The name to use for this cohort reference</p></dd>
 
 
-<dt><code>description</code></dt>
+    <dt><code>description</code></dt>
 <dd><p>The description for this subgroup</p></dd>
 
 
-<dt><code>cohort</code></dt>
+    <dt><code>cohort</code></dt>
 <dd><p>the cohort used to represent this subgroup.  Must be class CohortReference</p></dd>
 
 
@@ -74,52 +78,60 @@ before calling jsonlite::toJSON().</p>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-CohortSubgroup-new"><code>CohortSubgroup$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-CohortSubgroup-initialize"><code>CohortSubgroup$new()</code></a></p></li>
 <li><p><a href="#method-CohortSubgroup-toList"><code>CohortSubgroup$toList()</code></a></p></li>
 <li><p><a href="#method-CohortSubgroup-asJSON"><code>CohortSubgroup$asJSON()</code></a></p></li>
 <li><p><a href="#method-CohortSubgroup-clone"><code>CohortSubgroup$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-CohortSubgroup-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p></p><hr><a id="method-CohortSubgroup-initialize"></a><div class="section">
+<h3 id="cohortsubgroup-new-"><code>CohortSubgroup$new()</code><a class="anchor" aria-label="anchor" href="#cohortsubgroup-new-"></a></h3>
 <p>creates a new instance, using the provided data param if provided.
-The JSON takes the form: "id":1,"name":"some name","description":"some description","cohort":"id":99, "name":"cohort"</p><div class="section">
+The JSON takes the form: <code>{"id":1,"name":"some name","description":"some description","cohort":{"id":99, "name":"cohort"}}</code></p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/CohortSubgroup.html">CohortSubgroup</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>CohortSubgroup <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>data</code></dt>
 <dd><p>the data (as a json string or list) to initialize with</p></dd>
 
 
 </dl><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
+<p>A new <code>CohortSubgroup</code> object initialized from a list or JSON string.</p>
 </div>
 
-</div><p></p><hr><a id="method-CohortSubgroup-toList"></a><div class="section">
-<h3 id="method-tolist-">Method <code>toList()</code><a class="anchor" aria-label="anchor" href="#method-tolist-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-CohortSubgroup-toList"></a><div class="section">
+<h3 id="cohortsubgroup-tolist-"><code>CohortSubgroup$toList()</code><a class="anchor" aria-label="anchor" href="#cohortsubgroup-tolist-"></a></h3>
 <p>returns the R6 class elements as a list for use in jsonlite::toJSON()</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CohortSubgroup</span><span class="op">$</span><span class="fu">toList</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
+<p>A named list with a single <code>CohortSubgroup</code> element that contains <code>id</code>, <code>name</code>, <code>description</code>, and a nested <code>cohort</code> definition.</p>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-CohortSubgroup-asJSON"></a><div class="section">
-<h3 id="method-asjson-">Method <code>asJSON()</code><a class="anchor" aria-label="anchor" href="#method-asjson-"></a></h3>
+<p></p><hr><a id="method-CohortSubgroup-asJSON"></a><div class="section">
+<h3 id="cohortsubgroup-asjson-"><code>CohortSubgroup$asJSON()</code><a class="anchor" aria-label="anchor" href="#cohortsubgroup-asjson-"></a></h3>
 <p>returns the JSON string for this R6 class</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CohortSubgroup</span><span class="op">$</span><span class="fu">asJSON</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="returns-2">Returns<a class="anchor" aria-label="anchor" href="#returns-2"></a></h4>
+<p>A JSON string representation of the <code>CohortSubgroup</code> object.</p>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-CohortSubgroup-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+<p></p><hr><a id="method-CohortSubgroup-clone"></a><div class="section">
+<h3 id="cohortsubgroup-clone-"><code>CohortSubgroup$clone()</code><a class="anchor" aria-label="anchor" href="#cohortsubgroup-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">CohortSubgroup</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -129,6 +141,7 @@ The JSON takes the form: "id":1,"name":"some name","description":"some descripti
 </div>
 
 </div>
+
 
     </div>
 
@@ -141,7 +154,7 @@ The JSON takes the form: "id":1,"name":"some name","description":"some descripti
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

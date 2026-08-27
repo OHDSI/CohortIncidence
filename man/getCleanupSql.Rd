@@ -4,14 +4,13 @@
 \alias{getCleanupSql}
 \title{Gets the sql that drops the results tables}
 \usage{
-getCleanupSql(useTempTables = F)
+getCleanupSql(useTempTables = FALSE)
 }
 \arguments{
-\item{useTempTables}{if true, then temp table notation will be used.}
+\item{useTempTables}{if TRUE, then temp table notation will be used.}
 }
 \value{
-SQL code in MS Sql Server dialect, if it's required to run analysis on another DBMS
-        you have to use \code{\link[SqlRender]{translateSql}} function in the SqlRender package.
+SQL code in MS Sql Server dialect. If analysis will run on another DBMS, translate the SQL with \code{SqlRender::translateSql()} before execution.
 }
 \description{
 Gets the sql that drops the results tables

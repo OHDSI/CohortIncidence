@@ -17,25 +17,24 @@
 #
 
 #' Gets the results schema DDL for Incidence Analysis
-#' @param useTempTables if true, then temp table notation will be used.
+#' @param useTempTables if TRUE, then temp table notation will be used.
 #'
 #' @return SQL code in MS Sql Server dialect, if it's required to run analysis on another DBMS
 #'         you have to use \code{\link[SqlRender]{translateSql}} function in the SqlRender package.
 #' 
 #' @export
-getResultsDdl <- function(useTempTables = F) {
+getResultsDdl <- function(useTempTables = FALSE) {
   utils <- rJava::new(rJava::J("org.ohdsi.cohortincidence.Utils"));
   
   return(utils$getResultsSchemaDDL(useTempTables));
 }
 
 #' Gets the sql that drops the results tables
-#' @param useTempTables if true, then temp table notation will be used.
-#' @return SQL code in MS Sql Server dialect, if it's required to run analysis on another DBMS
-#'         you have to use \code{\link[SqlRender]{translateSql}} function in the SqlRender package.
+#' @param useTempTables if TRUE, then temp table notation will be used.
+#' @return SQL code in MS Sql Server dialect. If analysis will run on another DBMS, translate the SQL with `SqlRender::translateSql()` before execution.
 #' 
 #' @export
-getCleanupSql <- function(useTempTables = F) {
+getCleanupSql <- function(useTempTables = FALSE) {
   utils <- rJava::new(rJava::J("org.ohdsi.cohortincidence.Utils"));
   
   return(utils$getCleanupSql(useTempTables));

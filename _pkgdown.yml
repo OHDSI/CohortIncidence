@@ -1,3 +1,5 @@
+url: https://ohdsi.github.io/CohortIncidence/
+
 template:
   bootstrap: 5
   bootswatch: cosmo
@@ -5,7 +7,7 @@ template:
 home:
   links:
   - text: Ask a question
-    href: http://forums.ohdsi.org
+    href: https://forums.ohdsi.org
 
 navbar:
   structure:

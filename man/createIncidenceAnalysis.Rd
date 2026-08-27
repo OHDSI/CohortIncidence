@@ -14,7 +14,7 @@ createIncidenceAnalysis(targets, outcomes, tars)
 \item{tars}{A list or vector of TAR IDs from time-at-risk definitions.}
 }
 \value{
-a R6 class: IncidenceAnalysis
+An \code{IncidenceAnalysis} R6 object containing the target, outcome, and TAR identifier vectors used to define one analysis combination.
 }
 \description{
 Creates R6 object for IncidenceAnalysis

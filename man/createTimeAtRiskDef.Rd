@@ -24,7 +24,7 @@ createTimeAtRiskDef(
 \item{endOffset}{The number of days to offset for the TAR start, defaults to 0.}
 }
 \value{
-a R6 class: TimeAtRisk
+A \code{TimeAtRisk} R6 object describing the TAR start and end anchors plus their offsets. The serialized form contains a \code{start} and \code{end} field, each with a \code{dateField} and \code{offset}.
 }
 \description{
 Creates R6 object for TimeAtRisk

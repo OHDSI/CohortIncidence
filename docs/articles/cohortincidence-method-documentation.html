@@ -121,8 +121,9 @@ the first episode into the second. This person also has 6 outcome events
 represented by the gold stars, and the clean window extending from each
 outcome, causing time at risk to be excluded and certain outcomes to be
 ignored.</p>
-<p><img src="../reference/figures/example1_s1.png"> Figure 1: The initial
-intervals of time-at-risk, outcomes and clean windows.</p>
+<p><img src="../reference/figures/example1_s1.png" alt="Example 1 - Step 1">
+Figure 1: The initial intervals of time-at-risk, outcomes and clean
+windows.</p>
 </div>
 <div class="section level3">
 <h3 id="step-2-collapse-tar-and-clean-windows">Step 2: Collapse TAR and Clean Windows<a class="anchor" aria-label="anchor" href="#step-2-collapse-tar-and-clean-windows"></a>
@@ -130,24 +131,24 @@ intervals of time-at-risk, outcomes and clean windows.</p>
 <p>Overlapping intervals of TAR and clean windows need to be ‘flattened’
 and outcomes that occur during clean windows are removed. After this is
 done, the person TAR, clean window and outcomes look like the following
-figure: <img src="../reference/figures/example1_s2.png"> Figure 2: Merging
-TAR and clean windows, and removing outcomes from clean windows.</p>
+figure: <img src="../reference/figures/example1_s2.png" alt="Example 1 - Step 2"> Figure 2: Merging TAR and clean windows, and
+removing outcomes from clean windows.</p>
 </div>
 <div class="section level3">
 <h3 id="step-3-remove-immortal-time">Step 3: Remove Immortal Time<a class="anchor" aria-label="anchor" href="#step-3-remove-immortal-time"></a>
 </h3>
 <p>With the time at risk and clean windows merged, all time at risk that
 overlaps with clean window periods are removed from the person. The
-result looks like the following: <img src="../reference/figures/example1_s3.png"> Figure 3: TAR excluded from
-patient timeline.</p>
+result looks like the following: <img src="../reference/figures/example1_s3.png" alt="Example 1 - Step 3"> Figure
+3: TAR excluded from patient timeline.</p>
 </div>
 <div class="section level3">
 <h3 id="step-4-calculate-incidence-rate-and-proportion">Step 4: Calculate Incidence Rate and Proportion<a class="anchor" aria-label="anchor" href="#step-4-calculate-incidence-rate-and-proportion"></a>
 </h3>
 <p>With the TAR cleaned up, the final timeline is used to calculate the
 incidence rates and proportions:</p>
-<p><img src="../reference/figures/example1_s4.png"> Figure 4: The final
-timeline used to calculate incidence.</p>
+<p><img src="../reference/figures/example1_s4.png" alt="Example 1 - Step 4">
+Figure 4: The final timeline used to calculate incidence.</p>
 <p>Incidence Rate = cases / TAR. In this example, there are only 2 cases
 during TAR. Incidence Proportion = (distinct people with cases) /
 (distinct people). This person contributes one person count and one
@@ -162,7 +163,9 @@ first outcome. This means, in a CohortIncidence context, that after an
 outcome, no further outcomes are allowed and no post-outcome
 time-at-risk should be counted. This is handled by setting a ‘9999’
 clean window so that all time after an outcome is excluded.</p>
-<p><img src="../reference/figures/first-outcome.png"></p>
+<div class="float">
+<img src="../reference/figures/first-outcome.png" alt="First Outcome Example"><div class="figcaption">First Outcome Example</div>
+</div>
 <p>Note: using this approach will exclude anyone with a prior outcome,
 since their time-at-risk will be completely excluded. In order to ignore
 prior outcomes but exclude all time after the first outcome after
@@ -234,7 +237,7 @@ years.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
