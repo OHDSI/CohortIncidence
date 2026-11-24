@@ -133,6 +133,9 @@ executeAnalysis <- function(connectionDetails = NULL,
                             sourceName = "default",
                             resultType = "data.frame") {
   resultType <- match.arg(resultType, c("data.frame", "andromeda"))
+  if (resultType == "andromeda" && !requireNamespace("Andromeda", quietly = TRUE)) {
+    stop("The Andromeda package is required when resultType = \"andromeda\".")
+  }
 
   irDesign <- incidenceDesign;
   if (checkmate::testClass(incidenceDesign,"IncidenceDesign")) {
@@ -230,9 +233,6 @@ executeAnalysis <- function(connectionDetails = NULL,
   )
 
   if (resultType == "andromeda") {
-    if (!requireNamespace("Andromeda", quietly = TRUE)) {
-      stop("The Andromeda package is required when resultType = \"andromeda\".")
-    }
     results <- Andromeda::andromeda()
     resultDownloadSucceeded <- FALSE
     on.exit({
