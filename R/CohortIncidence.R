@@ -28,6 +28,11 @@
 #' @param incidenceDesign  A string object containing valid JSON that represents cohort incidence design
 #' @param buildOptions the parameters to use in building the analysis queries, created by buildOptions()
 #' @param sourceName the source name to attach to the results
+#' @param resultType The type of object used to store the results. Use `"data.frame"`
+#'                   (the default) to return the results in memory, or `"andromeda"`
+#'                   to stream the results to a disk-backed [Andromeda::Andromeda]
+#'                   object. The caller is responsible for closing an Andromeda result
+#'                   using `Andromeda::close()`.
 #' @details
 #' This method performs the entire cohort incidence analysis in one step without the need for creating any permenant tables.
 #'
@@ -114,14 +119,21 @@
 #' |SUBGROUP_NAME|The name of the subgroup|
 #' 
 #' 
-#' @return A named list of `data.frame` objects containing the IR results. The list includes `incidence_summary`, `target_def`, `outcome_def`, `tar_def`, `age_group_def`, and `subgroup_def`, each representing one result table produced during execution.
+#' @return When `resultType = "data.frame"`, a named list of `data.frame`
+#' objects containing the IR results. When `resultType = "andromeda"`, an
+#' [Andromeda::Andromeda] object containing the same named result tables. The
+#' tables are `incidence_summary`, `target_def`, `outcome_def`, `tar_def`,
+#' `age_group_def`, and `subgroup_def`.
 #' 
 #' @export
 executeAnalysis <- function(connectionDetails = NULL, 
                             connection = NULL,
                             incidenceDesign, 
                             buildOptions,
-                            sourceName = "default") {
+                            sourceName = "default",
+                            resultType = "data.frame") {
+  resultType <- match.arg(resultType, c("data.frame", "andromeda"))
+
   irDesign <- incidenceDesign;
   if (checkmate::testClass(incidenceDesign,"IncidenceDesign")) {
     irDesign <- as.character(irDesign$asJSON()); 
@@ -161,6 +173,19 @@ executeAnalysis <- function(connectionDetails = NULL,
   tempDDL <- SqlRender::translate(CohortIncidence::getResultsDdl(useTempTables = TRUE), targetDialect = targetDialect);
   rlang::inform("Building temporary DDL in database for Incidence Analysis")
   DatabaseConnector::executeSql(conn, tempDDL);
+
+  # Fetch the DROP TABLE expressions as soon as the temporary tables exist so
+  # they can also be cleaned up when analysis or result retrieval fails.
+  cleanupSql <- SqlRender::translate(
+    CohortIncidence::getCleanupSql(useTempTables = TRUE),
+    targetDialect
+  )
+  cleanupNeeded <- TRUE
+  on.exit({
+    if (cleanupNeeded) {
+      try(DatabaseConnector::executeSql(conn, cleanupSql), silent = TRUE)
+    }
+  }, add = TRUE)
   
   #execute analysis
   analysisSql <- CohortIncidence::buildQuery(incidenceDesign =  irDesign,
@@ -171,20 +196,75 @@ executeAnalysis <- function(connectionDetails = NULL,
   rlang::inform("Executing Incidence Analysis on database")
   DatabaseConnector::executeSql(conn, analysisSql);
   
-  results = list()
-  #download results into dataframe.  We don't specify ref_id because the temp table will only contain this session results
-  results$incidence_summary <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #incidence_summary", targetDialect = targetDialect));
-  results$target_def <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #target_def", targetDialect = targetDialect));
-  results$outcome_def <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #outcome_def", targetDialect = targetDialect));
-  results$tar_def <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #tar_def", targetDialect = targetDialect));
-  results$age_group_def <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #age_group_def", targetDialect = targetDialect));
-  results$subgroup_def <- DatabaseConnector::querySql(conn, SqlRender::translate("select * from #subgroup_def", targetDialect = targetDialect));
+  results <- .downloadResults(
+    connection = conn,
+    targetDialect = targetDialect,
+    resultType = resultType
+  )
+  resultReturnSucceeded <- FALSE
+  if (resultType == "andromeda") {
+    on.exit({
+      if (!resultReturnSucceeded) {
+        Andromeda::close(results)
+      }
+    }, add = TRUE)
+  }
   
-  # use the getCleanupSql to fetch the DROP TABLE expressions for the tables that were created in tempDDL.
-  cleanupSql <- SqlRender::translate(CohortIncidence::getCleanupSql(useTempTables = TRUE), targetDialect);
   rlang::inform("Drop tables created from temporary DDL")
   DatabaseConnector::executeSql(conn, cleanupSql);
-  
+  cleanupNeeded <- FALSE
+  resultReturnSucceeded <- TRUE
+
   return(invisible(results))
 
+}
+
+.downloadResults <- function(connection, targetDialect, resultType) {
+  resultTableNames <- c(
+    "incidence_summary",
+    "target_def",
+    "outcome_def",
+    "tar_def",
+    "age_group_def",
+    "subgroup_def"
+  )
+
+  if (resultType == "andromeda") {
+    if (!requireNamespace("Andromeda", quietly = TRUE)) {
+      stop("The Andromeda package is required when resultType = \"andromeda\".")
+    }
+    results <- Andromeda::andromeda()
+    resultDownloadSucceeded <- FALSE
+    on.exit({
+      if (!resultDownloadSucceeded) {
+        Andromeda::close(results)
+      }
+    }, add = TRUE)
+  } else {
+    results <- list()
+  }
+
+  # We don't specify ref_id because each temp table contains only this session's results.
+  for (tableName in resultTableNames) {
+    resultSql <- SqlRender::translate(
+      sprintf("select * from #%s", tableName),
+      targetDialect = targetDialect
+    )
+    if (resultType == "andromeda") {
+      DatabaseConnector::querySqlToAndromeda(
+        connection = connection,
+        sql = resultSql,
+        andromeda = results,
+        andromedaTableName = tableName
+      )
+    } else {
+      results[[tableName]] <- DatabaseConnector::querySql(connection, resultSql)
+    }
+  }
+
+  if (resultType == "andromeda") {
+    resultDownloadSucceeded <- TRUE
+  }
+
+  return(results)
 }

@@ -1,3 +1,12 @@
+# CohortIncidence 4.3.0
+
+## New Features
+
+`executeAnalysis()` can now stream result tables to a disk-backed Andromeda
+object by setting `resultType = "andromeda"`, avoiding materialization of the
+complete result set in memory.
+
+
 # CohortIncidence 4.2.0
 
 ## New Features

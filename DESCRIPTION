@@ -1,8 +1,8 @@
 Package: CohortIncidence
 Type: Package
 Title: Cohort Incidence Analysis for the OMOP Common Data Model
-Version: 4.2.0
-Date: 2026-07-27
+Version: 4.3.0
+Date: 2026-11-24
 Authors@R: person(given = "Christopher",
                   family = "Knoll",
                   role = c("aut", "cre"),
@@ -31,6 +31,7 @@ NeedsCompilation: yes
 LazyData: TRUE
 Encoding: UTF-8
 Suggests: 
+    Andromeda (>= 1.0.0),
     testthat (>= 3.0.0),
     knitr,
     rmarkdown,

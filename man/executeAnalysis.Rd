@@ -9,7 +9,8 @@ executeAnalysis(
   connection = NULL,
   incidenceDesign,
   buildOptions,
-  sourceName = "default"
+  sourceName = "default",
+  resultType = "data.frame"
 )
 }
 \arguments{
@@ -28,9 +29,19 @@ should be specified.}
 \item{buildOptions}{the parameters to use in building the analysis queries, created by buildOptions()}
 
 \item{sourceName}{the source name to attach to the results}
+
+\item{resultType}{The type of object used to store the results. Use \code{"data.frame"}
+(the default) to return the results in memory, or \code{"andromeda"}
+to stream the results to a disk-backed \link[Andromeda:Andromeda]{Andromeda::Andromeda}
+object. The caller is responsible for closing an Andromeda result
+using \code{Andromeda::close()}.}
 }
 \value{
-A named list of \code{data.frame} objects containing the IR results. The list includes \code{incidence_summary}, \code{target_def}, \code{outcome_def}, \code{tar_def}, \code{age_group_def}, and \code{subgroup_def}, each representing one result table produced during execution.
+When \code{resultType = "data.frame"}, a named list of \code{data.frame}
+objects containing the IR results. When \code{resultType = "andromeda"}, an
+\link[Andromeda:Andromeda]{Andromeda::Andromeda} object containing the same named result tables. The
+tables are \code{incidence_summary}, \code{target_def}, \code{outcome_def}, \code{tar_def},
+\code{age_group_def}, and \code{subgroup_def}.
 }
 \description{
 Executes IR analysis given a design, options, and connection settings.
