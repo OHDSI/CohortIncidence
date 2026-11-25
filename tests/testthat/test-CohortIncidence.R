@@ -38,10 +38,20 @@ test_that("result tables can be streamed to Andromeda", {
     DatabaseConnector::executeSql(connection, ddl)
   }
 
-  executeResults <- CohortIncidence:::.downloadResults(
-    connection = connection,
-    targetDialect = "duckdb",
-    resultType = "andromeda"
+  messages <- character()
+  executeResults <- withCallingHandlers(
+    CohortIncidence:::.downloadResults(
+      connection = connection,
+      targetDialect = "duckdb",
+      resultType = "andromeda"
+    ),
+    message = function(condition) {
+      messageText <- conditionMessage(condition)
+      if (startsWith(messageText, "Downloading result table")) {
+        messages <<- c(messages, messageText)
+      }
+      invokeRestart("muffleMessage")
+    }
   )
   on.exit(Andromeda::close(executeResults), add = TRUE)
 
@@ -50,6 +60,10 @@ test_that("result tables can be streamed to Andromeda", {
   expect_true(all(vapply(requiredNames, function(tableName) {
     Andromeda::isAndromedaTable(executeResults[[tableName]])
   }, logical(1))))
+  expect_equal(
+    messages,
+    sprintf("Downloading result table '%s' to Andromeda", requiredNames)
+  )
 })
 
 test_that("executeAnalysis() validates resultType", {

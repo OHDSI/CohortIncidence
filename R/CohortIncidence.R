@@ -198,7 +198,12 @@ executeAnalysis <- function(connectionDetails = NULL,
 
   rlang::inform("Executing Incidence Analysis on database")
   DatabaseConnector::executeSql(conn, analysisSql);
-  
+
+  if (resultType == "andromeda") {
+    rlang::inform("Downloading Incidence Analysis results to Andromeda")
+  } else {
+    rlang::inform("Downloading Incidence Analysis results")
+  }
   results <- .downloadResults(
     connection = conn,
     targetDialect = targetDialect,
@@ -246,6 +251,11 @@ executeAnalysis <- function(connectionDetails = NULL,
 
   # We don't specify ref_id because each temp table contains only this session's results.
   for (tableName in resultTableNames) {
+    if (resultType == "andromeda") {
+      rlang::inform(sprintf("Downloading result table '%s' to Andromeda", tableName))
+    } else {
+      rlang::inform(sprintf("Downloading result table '%s'", tableName))
+    }
     resultSql <- SqlRender::translate(
       sprintf("select * from #%s", tableName),
       targetDialect = targetDialect
